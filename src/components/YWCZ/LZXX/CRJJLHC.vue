@@ -366,7 +366,7 @@
           </el-col>
           <el-col :span="16" v-show="shm"  class="crcolor">
             <span class="yy-input-text" title="标准化地址">标准化地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzid" class="yy-input-input"  style="width:80%!important;"></el-input>
+            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzid"  class="input-input" style="width:87%!important;"></el-input>
           </el-col>
 
           <!-- <el-col :span="8" v-show="shm"  class="crcolor">
@@ -452,7 +452,7 @@
         <el-row :gutter="1">
           <el-col :span="24">
             <span class="yy-input-text" style="width:11.5%;">备注：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bz"  class="input-input" style="width:87%!important;"></el-input>
+            <el-input placeholder="请输入内容" size="small" v-model="form.bz"   class="input-input" style="width:87%!important;"></el-input>
           </el-col>
         </el-row>
             <el-row :gutter="3">
@@ -600,6 +600,9 @@ export default {
         r => {
           this.xzqh = ToArray(r.data);
         })
+        //国内
+  
+        //国外
     },
     getList(currentPage, showCount, pd) {
       let p = {
