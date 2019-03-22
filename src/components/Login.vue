@@ -120,7 +120,7 @@ export default {
             this.$store.commit('getToken',r.data.token)
 
             console.log(this.$store.state.token)
-            // this.Global.token=r.data.token;
+            // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
             this.$router.push({name: 'Index',params:{ id:'1'}});
           }else {

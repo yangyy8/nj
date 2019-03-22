@@ -271,7 +271,7 @@ export default {
     getCompany(){
          var formData = new FormData();
          formData.append("org",this.Global.org);
-         formData.append("token",this.Global.token);
+         formData.append("token",this.$store.state.token);
          let p=formData;
          var url=this.Global.aport1+'/org/getSelfAndChilds';
          this.$api.post(url, p,
@@ -285,7 +285,7 @@ export default {
          formData.append("showCount", showCount);
          formData.append("org", this.pd.org==undefined?this.Global.org:this.pd.org);
          formData.append("mc", this.pd.mc==undefined?"":this.pd.mc);
-         formData.append("token", this.Global.token);
+         formData.append("token", this.$store.state.token);
          let p=formData;
          var url=this.Global.aport1+'/user/getAll';
          this.$api.post(url, p,
@@ -319,7 +319,7 @@ export default {
               if(!canSumit) return;
               // 只有验证全部通过才会执行
       var formData = new FormData();
-        formData.append("token", this.Global.token);
+        formData.append("token", this.$store.state.token);
         formData.append("dlm", this.from.dlm);
         formData.append("pwd", this.from.pwd);
         formData.append("mc", this.from.mc);
@@ -366,7 +366,7 @@ export default {
     //删除
   deletes(i) {
     var ff=new FormData();
-      ff.append("token",this.Global.token);
+      ff.append("token",this.$store.state.token);
       ff.append("id",i.id);
       let p = ff;
       var url=this.Global.aport1+'/user/deleteUser';
@@ -399,7 +399,7 @@ export default {
     //重置密码
   resetpwd(i) {
     var ff=new FormData();
-      ff.append("token",this.Global.token);
+      ff.append("token",this.$store.state.token);
       ff.append("id",i.id);
       let p = ff;
         var url=this.Global.aport1+'/user/resetPassword';
@@ -432,7 +432,7 @@ export default {
    //停用
   stop(i,type) {
     var ff=new FormData();
-      ff.append("token",this.Global.token);
+      ff.append("token",this.$store.state.token);
       ff.append("id",i.id);
       ff.append("use",type);
       let p = ff;
@@ -462,7 +462,7 @@ menus(i) {
     this.menuDialogVisible = true;
     this.userid=i.id;
     var ff=new FormData();
-    ff.append("token",this.Global.token);
+    ff.append("token",this.$store.state.token);
     ff.append("userid",this.userid);
     let p =ff;
     var lists=new Array();
@@ -498,7 +498,7 @@ menus(i) {
    }
     // console.log('-----',childrenlist);
     var ff=new FormData();
-    ff.append("token",this.Global.token);
+    ff.append("token",this.$store.state.token);
     ff.append("userid",this.userid);
     ff.append("funids",childrenlist);
       let p=ff;

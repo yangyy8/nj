@@ -268,7 +268,7 @@ export default {
     getCompany(){
          var formData = new FormData();
          formData.append("org",this.Global.org);
-         formData.append("token",this.Global.token);
+         formData.append("token",this.$store.state.token);
          let p=formData;
          var url=this.Global.aport1+'/org/getSelfAndChilds';
          this.$api.post(url, p,
@@ -282,7 +282,7 @@ export default {
         formData.append("showCount", showCount);
         formData.append("org", this.pd.org==undefined?this.Global.org:this.pd.org);
         formData.append("mc", this.pd.mc==undefined?"":this.pd.mc);
-        formData.append("token", this.Global.token);
+        formData.append("token", this.$store.state.token);
         let p=formData;
         var url=this.Global.aport1+'/role/getAll';
         this.$api.post(url, p,
@@ -310,7 +310,7 @@ export default {
        this.V.$submit('demo', (canSumit,data) =>{
          if(!canSumit) return;
          var formData = new FormData();
-           formData.append("token", this.Global.token);
+           formData.append("token", this.$store.state.token);
            formData.append("mc", this.from.mc);
            formData.append("ssdw.dm", this.from.ssdwdm);
            formData.append("ssdw.mc", this.from.ssdwmc);
@@ -353,7 +353,7 @@ export default {
         //删除
       deletes(i) {
         var ff=new FormData();
-          ff.append("token",this.Global.token);
+          ff.append("token",this.$store.state.token);
           ff.append("id",i.id);
           let p = ff;
           var url=this.Global.aport1+'/role/deleteRole';
@@ -386,7 +386,7 @@ export default {
     //停用
    stop(i,type) {
      var ff=new FormData();
-       ff.append("token",this.Global.token);
+       ff.append("token",this.$store.state.token);
        ff.append("id",i.id);
        ff.append("use",type);
        let p = ff;
@@ -416,7 +416,7 @@ export default {
          this.menuDialogVisible = true;
          this.roleid=i.id;
          var ff=new FormData();
-         ff.append("token",this.Global.token);
+         ff.append("token",this.$store.state.token);
          ff.append("roleid",this.roleid);
          let p =ff;
          var lists=new Array();
@@ -451,7 +451,7 @@ export default {
         }
          // console.log('-----',childrenlist);
          var ff=new FormData();
-         ff.append("token",this.Global.token);
+         ff.append("token",this.$store.state.token);
          ff.append("roleid",this.roleid);
          ff.append("funids",childrenlist);
          let p=ff;

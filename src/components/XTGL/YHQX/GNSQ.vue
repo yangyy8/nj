@@ -106,7 +106,7 @@ export default {
     getCompany(){
          var formData = new FormData();
          formData.append("org",this.Global.org);
-         formData.append("token",this.Global.token);
+         formData.append("token",this.$store.state.token);
          let p=formData;
          var url=this.Global.aport1+'/org/getSelfAndChilds';
          this.$api.post(url, p,
@@ -120,7 +120,7 @@ export default {
         formData.append("showCount", showCount);
         formData.append("org", this.pd.org==undefined?this.Global.org:this.pd.org);
         formData.append("mc", this.pd.mc==undefined?"":this.pd.mc);
-        formData.append("token", this.Global.token);
+        formData.append("token", this.$store.state.token);
         let p=formData;
         var url=this.Global.aport1+'/role/getAll';
         this.$api.post(url, p,
@@ -132,7 +132,7 @@ export default {
     getMenu(row,event,column){
      this.roleid=row.id
       var ff=new FormData();
-      ff.append("token",this.Global.token);
+      ff.append("token",this.$store.state.token);
       ff.append("roleid",this.roleid);
       let p =ff;
       var lists=new Array();
@@ -170,7 +170,7 @@ export default {
      }
 
       var ff=new FormData();
-      ff.append("token",this.Global.token);
+      ff.append("token",this.$store.state.token);
       ff.append("roleid",this.roleid);
       ff.append("funids",childrenlist);
         let p=ff;

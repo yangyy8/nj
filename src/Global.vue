@@ -1,5 +1,5 @@
 <script>
-const token=sessionStorage.getItem('token');
+const token='';//this.$store.state.token
 const userName='';
 const hasEnter=false;
 const org="320116000000";
