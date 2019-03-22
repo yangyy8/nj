@@ -141,7 +141,7 @@
         </el-pagination>
       </div>
     </div>
-    <el-dialog title="编辑" :visible.sync="eidtsDialogVisible" custom-class="big_dialog" :append-to-body="false">
+    <el-dialog title="编辑" :visible.sync="eidtsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
       <el-form :model="form" ref="addForm" class="crcolor" style="padding:10px">
         <el-row type="flex">
           <el-col :span="16">
