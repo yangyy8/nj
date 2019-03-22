@@ -185,7 +185,7 @@
 
   </template>
   <script>
-  import {ToArray,getNation} from '@/assets/js/ToArray.js'
+  import {ToArray} from '@/assets/js/ToArray.js'
   export default {
     data() {
       return {
