@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="bg">
+
     <div class="index_nav_1">
       <div class="nav_1" :class="{'nav_1_check':nav1Id==a.dm}" v-for="(a,ind) in nav1" @mouseover="getNav(a,ind)">
         <i :class="a.icon" :style="{'color':color[ind]}"></i>

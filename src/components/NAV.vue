@@ -120,7 +120,7 @@ export default {
 }
 .h3{
   position: absolute;
-  width: 420px;
+  width: 380px;
   right:-400px;
   top:0;
   background: rgb(255, 255, 255);

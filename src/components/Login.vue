@@ -118,7 +118,7 @@ export default {
               type: 'success'
             });
             this.$store.commit('getToken',r.data.token)
-          
+
             console.log(this.$store.state.token)
             // this.Global.token=r.data.token;
             this.Global.hasEnter="1";
@@ -130,66 +130,6 @@ export default {
       });
     }
   },
-<<<<<<< .mine
-  getLogin(){
-
-    this.V.$submit('demo', (canSumit,data) => {
-           // canSumit为true时，则所有该scope的所有表单验证通过
-            if(!canSumit) return;
-            var ff=new FormData();
-            ff.append("userName",this.user.userName);
-            ff.append("password",this.user.password);
-            ff.append("org",this.org);
-            let p=ff;
-            var url=this.Global.aport1+'/user/doLogin';
-            this.$api.post(url,p,
-                 r => {
-                  if(r.success){
-                    this.$message({
-                      message: '登录成功',
-                      type: 'success'
-                    });
-                   this.Global.token=r.data.token;
-                   this.Global.hasEnter="1";
-                   this.$router.push({name: 'Index',params:{ id:'1'}});
-                  }else {
-                    this.$error("登录失败！");
-                  }
-                })
-          });
-  }
-  },
-||||||| .r3444
-  getLogin(){
-
-    this.V.$submit('demo', (canSumit,data) => {
-           // canSumit为true时，则所有该scope的所有表单验证通过
-            if(!canSumit) return;
-            var ff=new FormData();
-            ff.append("userName",this.user.userName);
-            ff.append("password",this.user.password);
-            ff.append("org",this.org);
-            let p=ff;
-            var url=this.Global.aport1+'/user/doLogin';
-            this.$api.post(url,p,
-                 r => {
-                  if(r.success){
-                    this.$message({
-                      message: '登录成功',
-                      type: 'success'
-                    });
-                   this.Global.token="da7dc5f1-b2cb-46fc-8c55-9ef862472d66";
-                   this.Global.hasEnter="1";
-                   this.$router.push({name: 'Index',params:{ id:'1'}});
-                  }else {
-                    this.$error("登录失败！");
-                  }
-                })
-          });
-  }
-  },
-=======
->>>>>>> .r3445
 }
 </script>
 <style scoped>
