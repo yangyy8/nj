@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 出入境记录核查 -->
-  <div class="yymain">
+  <div class="yymain tshu">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
@@ -141,8 +141,8 @@
         </el-pagination>
       </div>
     </div>
-      <el-dialog title="编辑" :visible.sync="eidtsDialogVisible" class="jbxx">
-      <el-form :model="form" ref="addForm">
+    <el-dialog title="编辑" :visible.sync="eidtsDialogVisible" custom-class="big_dialog" :append-to-body="false">
+      <el-form :model="form" ref="addForm" class="crcolor" style="padding:10px">
         <el-row type="flex">
           <el-col :span="16">
             <el-row :gutter="2">
@@ -365,8 +365,8 @@
             <el-radio v-model="form.type" label="2" @change="getTS('2')">旅馆</el-radio>
           </el-col>
           <el-col :span="16" v-show="shm"  class="crcolor">
-            <span class="yy-input-text" title="标准化地址">标准化地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzid"  class="input-input" style="width:87%!important;"></el-input>
+            <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzid"  class="input-input" style="width:80%!important"></el-input>
           </el-col>
 
           <!-- <el-col :span="8" v-show="shm"  class="crcolor">
@@ -448,30 +448,29 @@
             <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
           </el-col> -->
 
-        </el-row>
-        <el-row :gutter="1">
-          <el-col :span="24">
-            <span class="yy-input-text" style="width:11.5%;">备注：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bz"   class="input-input" style="width:87%!important;"></el-input>
-          </el-col>
-        </el-row>
-            <el-row :gutter="3">
-              <el-col :span="8">
-                <span class="yy-input-text">录入人：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
-              </el-col>
-              <el-col :span="8">
-                <span class="yy-input-text">录入单位：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
-              </el-col>
-              <el-col :span="8">
-                <span class="yy-input-text">录入日期：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="form.lrsj"  class="yy-input-input"></el-input>
-              </el-col>
+          </el-row>
+          <el-row :gutter="1">
+            <el-col :span="24">
+              <span class="yy-input-text" style="width:11.5%;">备注：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.bz"   class="input-input" style="width:87%!important;"></el-input>
+            </el-col>
+          </el-row>
+          <el-row :gutter="3">
+            <el-col :span="8">
+              <span class="yy-input-text">录入人：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">录入单位：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">录入日期：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.lrsj"  class="yy-input-input"></el-input>
+            </el-col>
+          </el-row>
 
-            </el-row>
-
-    </el-form>
+        </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
           <el-button @click="eidtsDialogVisible = false" size="small">取 消</el-button>
@@ -690,25 +689,4 @@ export default {
   .block{padding-top: 5px;}
   .crcolor{background: #EFF3F6;}
   .yy-input-text{text-align:left!important;}
-</style>
-<style>
-.jbxx .el-dialog__body {
-    line-height: 22px!important;
-    padding: 10px!important;
-    font-size: 12px!important;
-    margin: 10px 20px;
-    background: #EFF3F6;
-}
-.jbxx .el-input--small .el-input__inner {
-    height: 22px!important;
-    line-height: 22px!important;
-}
-.jbxx .el-input--small .el-input__icon {
-    line-height: 22px;
-}
-.jbxx .el-dialog{
-  width: 60%!important;
-   min-width:700px!important;
-  /*overflow-y: scroll; */
-}
 </style>

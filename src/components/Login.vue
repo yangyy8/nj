@@ -139,7 +139,8 @@ export default {
 .loginbg{
   width: 100%;
   height: 100%;
-  min-height: 1000px;
+  position: fixed;
+  /* min-height: 1000px; */
   background: url('../assets/img/loginbg.png');
   background-size: 100% 100%;
   color: #fff;

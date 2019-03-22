@@ -197,3 +197,18 @@ table td,thead th{
    top:-5px;
    right:0;
  }
+.big_dialog{
+  width: 100%;
+  /* height: 100%; */
+  /* position: absolute!important; */
+  margin: 0!important;
+
+
+}
+.tab-content{
+  position: relative;
+}
+.tshu .el-dialog__wrapper{
+  position: absolute!important;
+
+}
