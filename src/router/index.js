@@ -72,7 +72,7 @@ export default new Router({
         {
           path: 'JYTZSYJ-XQ',
           name: 'JYTZSYJ-XQ',
-          meta:{title:['预警研判','预警','留学生预警','教育厅招生预警、审核']},
+          meta:{title:['预警研判','预警','留学生预警','教育厅招生预警、审核详情']},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/JYTZSYJ-XQ'], resolve),
         },
         {
@@ -88,14 +88,16 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
         },
         {
-        path: "StuWarning",
-        name: "StuWarning",
-        component: resolve => require(['@/components/YJYP/YJ/LXSYJ/StuWarning'], resolve),
+          path: "StuWarning",
+          name: "StuWarning",
+          meta:{title:['预警研判','预警','留学生预警','留学生信息管理预警详情']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/StuWarning'], resolve),
         },
         {
-        path: "StuBaseInfo",
-        name: "StuBaseInfo",
-        component: resolve => require(['@/components/YJYP/YJ/LXSYJ/StuBaseInfo'], resolve),
+          path: "StuBaseInfo",
+          name: "StuBaseInfo",
+          meta:{title:['预警研判','预警','留学生预警','留学生信息管理预警详情']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/StuBaseInfo'], resolve),
         },
         {
           path: 'ZXSTFZLYJ',
@@ -153,6 +155,12 @@ export default new Router({
           name: 'SKGJRYXXYJ',
           meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SKGJRYXXYJ'], resolve),
+        },
+        {
+          path: 'SKGJRYXXYJ_XQ',
+          name: 'SKGJRYXXYJ_XQ',
+          meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警详情']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SKGJRYXXYJ_XQ'], resolve),
         },
         {
           path: 'ZDQYJKFX',
