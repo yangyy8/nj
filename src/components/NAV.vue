@@ -60,8 +60,7 @@ export default {
       this.h2Id=serial;
     },
 
-    getNav()
-    {
+    getNav(){
       var formData = new FormData();
       formData.append("token", this.$store.state.token);
       let p=formData;

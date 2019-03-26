@@ -104,6 +104,7 @@ export default {
 }
 .index_nav_1{
   position: fixed;
+  height: 568px;
   top:50%;
   margin-top: -284px;
   left: 0;

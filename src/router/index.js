@@ -115,7 +115,7 @@ export default new Router({
         {
           path: 'NMXQPHZYJ_XQ',
           name: 'NMXQPHZYJ_XQ',
-          meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警详情']},
+          meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警详情'],father:'NMXQPHZYJ'},
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ_XQ'], resolve),
         },
 
@@ -159,7 +159,7 @@ export default new Router({
         {
           path: 'SKGJRYXXYJ_XQ',
           name: 'SKGJRYXXYJ_XQ',
-          meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警详情']},
+          meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警详情'],father:'SKGJRYXXYJ'},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SKGJRYXXYJ_XQ'], resolve),
         },
         {
@@ -306,7 +306,7 @@ export default new Router({
 
           path: 'LZSJHE',
           name: 'LZSJHE',
-          meta:{title:['业务操作','临住信息','临住数据核查']},
+          meta:{title:['业务操作','临住信息','临住数据核查'],father:'CRJJLHC'},
           component: resolve => require(['@/components/YWCZ/LZXX/LZSJHE'], resolve),
         },
         {
