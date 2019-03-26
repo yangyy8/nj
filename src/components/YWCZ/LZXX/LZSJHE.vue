@@ -57,7 +57,7 @@
 
             <el-col :span="2" class="down-btn-area">
               <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-              <el-button  size="small" @click="getList(CurrentPage,pageSize,pd)">返回</el-button>
+              <el-button  size="small" @click="$router.push({name:'CRJJLHC'})">返回</el-button>
             </el-col>
           </el-row>
     </div>
@@ -156,7 +156,7 @@
               <el-input placeholder="请输入内容" size="small" v-model="form.ywm"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="12">
-            <span class="yy-input-text" >英文姓名：</span>
+            <span :class="{'yy-input-text yyred':form.ywxm_t == true,'yy-input-text':form.ywxm_t== false}">英文姓名：</span>
               <el-input placeholder="请输入内容" size="small" v-model="form.ywxm"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="12">
@@ -488,8 +488,8 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {type:'1',hcq_gnw:'0',hcq_gnl:'0'},
-      form:{},
+      pd: {},
+      form:{type:'1',hcq_gnw:'0',hcq_gnl:'0'},
       nation:[],
       zjzl:[],
       qzzl:[],
@@ -678,7 +678,9 @@ export default {
 </script>
 
 <style scoped>
-
+.el-button+.el-button {
+    margin-left: 0px; margin-top: 10px;
+}
 
 .el-carousel__item h3 {
     color: #475669;

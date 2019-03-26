@@ -51,7 +51,7 @@
              prop="jsts"
              label="接收条数">
              <template slot-scope="scope">
-             <a @click="toLink(scope.row,'jsts')" href="#"> {{scope.row.cgts}} </a>
+             <a @click="toLink(scope.row,'jsts')" href="#"> {{scope.row.jsts}} </a>
              </template>
            </el-table-column>
            <el-table-column
@@ -64,15 +64,25 @@
            <el-table-column
              prop="sbts"
              label="失败条数">
+             <template slot-scope="scope">
+             <a @click="toLink(scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
+             </template>
            </el-table-column>
            <el-table-column
              prop="rgsbts"
              label="人工上报条数">
+             <template slot-scope="scope">
+             <a @click="toLink(scope.row,'rgsbts')" href="#"> {{scope.row.rgsbts}} </a>
+             </template>
            </el-table-column>
            <el-table-column
              prop="sbzts"
              label="上报条数">
+             <template slot-scope="scope">
+                <a @click="toLink(scope.row,'sbzts')" href="#"> {{scope.row.sbzts}} </a>
+             </template>
            </el-table-column>
+
          </el-table>
      <!-- <div class="middle-foot">
         <div class="page-msg">
@@ -181,7 +191,7 @@ export default {
 </script>
 
 <style scoped>
-
+a{color: blue}
 
 .el-carousel__item h3 {
     color: #475669;
