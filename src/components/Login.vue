@@ -26,9 +26,11 @@
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">{{msg}}</div>
     </div>
-<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%">
+
+<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="20%">
+
   <el-row align="center"   :gutter="1">
-        <el-col  :span="24"  class="input-item yzform"  data-scope="demo" data-name="org" data-type="input"
+        <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="input"
          v-validate-easy="[['required']]">
           <span class="input-text">所属单位：</span>
            <el-select v-model="org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
@@ -83,19 +85,26 @@ export default {
     },
     login(){
         this.V.$submit('demo', (canSumit,data) => {
+          console.log(data)
           if(!canSumit) return;
           var ff=new FormData();
           ff.append("userName",this.user.userName);
           ff.append("password",this.user.password);
           let p=ff;
           var url=this.Global.aport1+'/user/doLogin';
+            this.msg="";
           this.$api.post(url,p,
              r => {
               if(r.success){
                 console.log('r.data.ssdw',ToData(r.data.ssdw));
                 this.companys=ToData(r.data.ssdw);
-                this.msg="";
-                this.companyDialogVisible=true;
+
+                // this.companyDialogVisible=true;
+                  if(r.code=="302"){
+                    this.companyDialogVisible=true;
+                  }else {
+                    this.getLogin();
+                  }
               }else {
                 this.msg=r.message;
               }
@@ -103,7 +112,7 @@ export default {
       });
     },
     getLogin(){
-      this.V.$submit('demo', (canSumit,data) => {
+      this.V.$submit('demo2', (canSumit,data) => {
         if(!canSumit) return;
         var ff=new FormData();
         ff.append("userName",this.user.userName);
@@ -139,7 +148,8 @@ export default {
 .loginbg{
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
+  /* z-index: 2001; */
   /* min-height: 1000px; */
   background: url('../assets/img/loginbg.png');
   background-size: 100% 100%;
@@ -153,7 +163,7 @@ export default {
   left:50%;
   background: #ffffff;
   border-radius: 10px;
-  margin-left: -200px;
+  margin-left: -12.5%;
   margin-top: -200px;
   z-index: 7;
   display: flex;
@@ -208,4 +218,7 @@ export default {
   height: 45px!important;
   line-height: 45px!important;
 }
+  .loginbg .el-dialog__wrapper{
+   padding-top: 10%;
+  }
 </style>

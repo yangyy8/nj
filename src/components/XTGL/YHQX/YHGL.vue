@@ -466,7 +466,8 @@ menus(i) {
     ff.append("userid",this.userid);
     let p =ff;
     var lists=new Array();
-    this.$api.post('/api-permission/fun/getByUserID', p,
+         var url1=this.Global.aport1+'/fun/getByUserID';
+    this.$api.post(url1, p,
     rr=>{
       var arrs=rr.data;
       for (var i = 0; i < arrs.length; i++) {
