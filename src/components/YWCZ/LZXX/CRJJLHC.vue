@@ -50,6 +50,9 @@
            <el-table-column
              prop="jsts"
              label="接收条数">
+             <template slot-scope="scope">
+             <a @click="toLink(scope.row,'jsts')" href="#"> {{scope.row.cgts}} </a>
+             </template>
            </el-table-column>
            <el-table-column
              prop="cgts"

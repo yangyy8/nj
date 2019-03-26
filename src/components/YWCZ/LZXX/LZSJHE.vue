@@ -502,6 +502,7 @@ export default {
       jzzt:[],
       xzqh:[],
       tableData:[],
+      cdt:[],
       eidtsDialogVisible:false,
       options: [{
         value: 10,
@@ -525,8 +526,7 @@ export default {
   },
   activated(){
   this.cdt = this.$route.query.cdt
-  console.log('this.cdt',this.cdt.beginTime)
-  
+  this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
     this.getGJDQ();
@@ -612,7 +612,11 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "beginTime": this.cdt.beginTime,
+        "endTime":this.cdt.endTime,
+        "ssfjmc":this.cdt.ssfjmc,
+        "sblx":this.cdt.sblx,
+        "pd":pd
       };
       var url=this.Global.aport2+'/data_report/findAll';
       this.$api.post(url, p,
