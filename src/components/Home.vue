@@ -62,7 +62,7 @@ export default {
       }
     },
     $route:function(val){
-      if(val.meta.title){
+      if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
         if(this.tabList.length>0){
@@ -74,15 +74,20 @@ export default {
         }
         this.tabList.push(val)
         console.log("tabList",this.tabList)
-
       }
     }
   },
   mounted() {
-    console.log(this.$route.name)
+    // console.log(this.$route.name&&this.$route.meta.father)
     if(this.$route.name!="Home"){
-      this.tabList.push(this.$route)
-      this.tabListCheck=this.$route.name
+      if(this.$route.meta.father){
+        this.$router.push({name:this.$route.meta.father})
+        this.tabListCheck=this.$route.meta.father
+      }else{
+        this.tabList.push(this.$route)
+        this.tabListCheck=this.$route.name
+      }
+
     }
 
   },
