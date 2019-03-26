@@ -26,9 +26,9 @@
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">{{msg}}</div>
     </div>
-<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%">
+<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%" :modal="false">
   <el-row align="center"   :gutter="1">
-        <el-col  :span="24"  class="input-item yzform"  data-scope="demo" data-name="org" data-type="input"
+        <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="input"
          v-validate-easy="[['required']]">
           <span class="input-text">所属单位：</span>
            <el-select v-model="org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
@@ -83,6 +83,7 @@ export default {
     },
     login(){
         this.V.$submit('demo', (canSumit,data) => {
+          console.log(data)
           if(!canSumit) return;
           var ff=new FormData();
           ff.append("userName",this.user.userName);
@@ -109,7 +110,7 @@ export default {
       });
     },
     getLogin(){
-      this.V.$submit('demo', (canSumit,data) => {
+      this.V.$submit('demo2', (canSumit,data) => {
         if(!canSumit) return;
         var ff=new FormData();
         ff.append("userName",this.user.userName);
@@ -146,6 +147,7 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
+  z-index: 2001;
   /* min-height: 1000px; */
   background: url('../assets/img/loginbg.png');
   background-size: 100% 100%;
@@ -159,7 +161,7 @@ export default {
   left:50%;
   background: #ffffff;
   border-radius: 10px;
-  margin-left: -200px;
+  margin-left: -12.5%;
   margin-top: -200px;
   z-index: 7;
   display: flex;
