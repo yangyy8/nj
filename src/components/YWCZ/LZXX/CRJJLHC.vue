@@ -7,17 +7,17 @@
           <el-row align="center"   :gutter="1">
 
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
-                  <span class="input-text">出生日期：</span>
+                  <span class="input-text">时间范围：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.csrqBegin" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       v-model="pd.beginTime" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyymmddhhmmss"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.csrqEnd" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        v-model="pd.endTime" format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyymmddhhmmss"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -42,37 +42,36 @@
              type="selection"
              width="55">
            </el-table-column> -->
+
            <el-table-column
-             prop="ywx"
-             label="英文姓">
-           </el-table-column>
-           <el-table-column
-             prop="ywm"
+             prop="fj"
              label="分局">
            </el-table-column>
            <el-table-column
-             prop="zwxm"
+             prop="jsts"
              label="接收条数">
            </el-table-column>
            <el-table-column
-             prop="zjhm"
+             prop="cgts"
              label="成功上报条数">
+             <template slot-scope="scope">
+             <a @click="toLink(scope.row,'cgts')" href="#"> {{scope.row.cgts}} </a>
+             </template>
            </el-table-column>
            <el-table-column
-             prop="gjdq"
+             prop="sbts"
              label="失败条数">
            </el-table-column>
            <el-table-column
-             prop="lsdwhz"
+             prop="rgsbts"
              label="人工上报条数">
            </el-table-column>
            <el-table-column
-             prop="lsdwhzdz"
+             prop="sbzts"
              label="上报条数">
            </el-table-column>
-
          </el-table>
-     <div class="middle-foot">
+     <!-- <div class="middle-foot">
         <div class="page-msg">
           <div class="">
         共{{TotalResult}}条记录
@@ -101,7 +100,7 @@
           layout="prev, pager, next"
           :total="TotalResult">
         </el-pagination>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -155,19 +154,24 @@ export default {
 
     getList(currentPage, showCount, pd) {
       let p = {
-        "currentPage": currentPage,
-        "showCount": showCount,
-        "pd": pd
+        "beginTime": this.pd.beginTime,
+        "endTime": this.pd.endTime,
       };
-      var url=this.Global.aport2+'/data_report/findAll';
+      var url=this.Global.aport2+'/data_report/selectSbList';
       this.$api.post(url, p,
         r => {
-          this.tableData = r.data.pdList;
-          this.TotalResult = r.data.totalResult;
+          this.tableData = r.data;
         })
     },
-
-
+    toLink(i,type){
+        let p={
+           "beginTime":this.pd.beginTime,
+           "endTime":this.pd.endTime,
+           "ssfjmc":i.fj,
+           "sblx":type,
+        }
+        this.$router.push({name: 'LZSJHE',query:{ cdt:p}});
+    }
 
   }
 }

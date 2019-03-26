@@ -57,6 +57,7 @@
 
             <el-col :span="2" class="down-btn-area">
               <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+              <el-button  size="small" @click="getList(CurrentPage,pageSize,pd)">返回</el-button>
             </el-col>
           </el-row>
     </div>
@@ -522,10 +523,14 @@ export default {
 
     }
   },
+  activated(){
+  this.cdt = this.$route.query.cdt
+  console.log('this.cdt',this.cdt.beginTime)
+  
+  },
   mounted() {
     this.getGJDQ();
     this.getDMXX();
-
   },
   methods: {
     handleSelectionChange(val) {

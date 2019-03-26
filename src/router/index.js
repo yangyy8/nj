@@ -347,6 +347,18 @@ export default new Router({
           component: resolve => require(['@/components/YWCZ/SJDR/YMDR'], resolve),
         },
         {
+          path: 'FFJLRY',
+          name: 'FFJLRY',
+          meta:{title:['业务操作','数据导入','非法居留人员导入']},
+          component: resolve => require(['@/components/YWCZ/SJDR/FFJLRY'], resolve),
+        },
+        {
+          path: 'TBRY',
+          name: 'TBRY',
+          meta:{title:['业务操作','数据导入','247数据导入']},
+          component: resolve => require(['@/components/YWCZ/SJDR/TBRY'], resolve),
+        },
+        {
           path: 'YYGSBA',
           name: 'YYGSBA',
           meta:{title:['业务操作','涉外单位','演绎公司备案']},
