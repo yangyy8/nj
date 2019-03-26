@@ -32,11 +32,10 @@
 </template>
 
 <script>
-import pl from '../assets/js/pl.js'
 export default {
   data(){
     return{
-      memuData: pl.menu,
+      memuData: this.pl.menu,
       h2Id:null,
       menuPath:null,
       color:['#02ffd0','#e09144','#50c6ea']

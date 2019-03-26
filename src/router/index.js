@@ -110,6 +110,12 @@ export default new Router({
           meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警']},
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ'], resolve),
         },
+        {
+          path: 'NMXQPHZYJ_XQ',
+          name: 'NMXQPHZYJ_XQ',
+          meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警详情']},
+          component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ_XQ'], resolve),
+        },
 
         {
           path: 'SWDWFXYJ',
@@ -340,6 +346,7 @@ export default new Router({
           meta:{title:['业务操作','数据导入','难民和寻求庇护者数据采集']},
           component: resolve => require(['@/components/YWCZ/SJDR/NMSJCJ'], resolve),
         },
+
         {
           path: 'YMDR',
           name: 'YMDR',

@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import api from './api/index.js';
 import App from './App'
 import global_ from './Global'
+import pl from './assets/js/pl.js'
 import router from './router'
 import './assets/icon/iconfont.css'
 import vueValidateEasy from './assets/js/vue-validate-easy'
@@ -37,10 +38,11 @@ var validators ={
 Vue.use(vueValidateEasy,{validators});
 Vue.use(ElementUI);
 Vue.use(Vuex);
-
+console.log(pl)
 Vue.prototype.$api = api;
 Vue.config.productionTip = false
 Vue.prototype.Global = global_;
+Vue.prototype.pl = pl;
 
 
 var store =new Vuex.Store({
