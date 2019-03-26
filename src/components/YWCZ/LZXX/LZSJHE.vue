@@ -57,6 +57,7 @@
 
             <el-col :span="2" class="down-btn-area">
               <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+              <el-button  size="small" @click="getList(CurrentPage,pageSize,pd)">返回</el-button>
             </el-col>
           </el-row>
     </div>
@@ -501,6 +502,7 @@ export default {
       jzzt:[],
       xzqh:[],
       tableData:[],
+      cdt:[],
       eidtsDialogVisible:false,
       options: [{
         value: 10,
@@ -522,10 +524,13 @@ export default {
 
     }
   },
+  activated(){
+  this.cdt = this.$route.query.cdt
+  this.getList(this.CurrentPage, this.pageSize, this.pd);
+  },
   mounted() {
     this.getGJDQ();
     this.getDMXX();
-
   },
   methods: {
     handleSelectionChange(val) {
@@ -607,7 +612,11 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "beginTime": this.cdt.beginTime,
+        "endTime":this.cdt.endTime,
+        "ssfjmc":this.cdt.ssfjmc,
+        "sblx":this.cdt.sblx,
+        "pd":pd
       };
       var url=this.Global.aport2+'/data_report/findAll';
       this.$api.post(url, p,
