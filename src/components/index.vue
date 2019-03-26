@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import pl from '../assets/js/pl.js'
 import NAV from './NAV'
 export default {
   components:{NAV},
@@ -55,7 +54,7 @@ export default {
   data(){
     return{
       nav1Id:0,
-      nav1:pl.menu,
+      nav1:this.pl.menu,
       color:['#02ffd0','#e09144','#50c6ea'],
       navShow:false,
       iURL:'https://www.amap.com/',

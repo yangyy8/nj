@@ -110,6 +110,12 @@ export default new Router({
           meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警']},
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ'], resolve),
         },
+        {
+          path: 'NMXQPHZYJ_XQ',
+          name: 'NMXQPHZYJ_XQ',
+          meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警详情']},
+          component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ_XQ'], resolve),
+        },
 
         {
           path: 'SWDWFXYJ',
@@ -289,12 +295,6 @@ export default new Router({
           component: resolve => require(['@/components/YWCZ/LZXX/CRJJLHC'], resolve),
         },
         {
-<<<<<<< HEAD
-          path: 'LZSJHE',
-          name: 'LZSJHE',
-          meta:{title:['业务操作','临住信息','临住数据核查']},
-          component: resolve => require(['@/components/YWCZ/LZXX/LZSJHE'], resolve),
-=======
           path: 'JSQKKH',
           name: 'JSQKKH',
           meta:{title:['业务操作','临住信息','临住登记及时情况考核']},
@@ -318,7 +318,6 @@ export default new Router({
           name: 'NMDXFS',
           meta:{title:['业务操作','常住信息','常住、难民短信发送']},
           component: resolve => require(['@/components/YWCZ/CZXX/NMDXFS'], resolve),
->>>>>>> 922a45e1acf5bee692a3af61054c0edef45ebfe6
         },
 
         {
@@ -339,6 +338,7 @@ export default new Router({
           meta:{title:['业务操作','数据导入','难民和寻求庇护者数据采集']},
           component: resolve => require(['@/components/YWCZ/SJDR/NMSJCJ'], resolve),
         },
+
         {
           path: 'YMDR',
           name: 'YMDR',

@@ -198,8 +198,38 @@ const menu=[
       }
     ]
   },
-]
+];
+const tableData=[{
+  date: '2016-05-02',
+  name: '王小虎',
+  address: 'XXXXX'
+}, {
+  date: '2016-05-04',
+  name: '王小虎',
+  address: 'XXXXX'
+}, {
+  date: '2016-05-01',
+  name: '王小虎',
+  address: 'XXXXX'
+}, {
+  date: '2016-05-03',
+  name: '王小虎',
+  address: 'XXXXX'
+}];
+const ps=[{
+    value: 10,
+    label: "10"
+  },
+  {
+    value: 20,
+    label: "20"
+  },
+  {
+    value: 30,
+    label: "30"
+  }
+];
 export default
 {
-	menu,
+	menu,tableData,ps
 }
