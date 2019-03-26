@@ -26,7 +26,7 @@
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">{{msg}}</div>
     </div>
-<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%" :modal="false">
+<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%">
   <el-row align="center"   :gutter="1">
         <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="input"
          v-validate-easy="[['required']]">
@@ -140,8 +140,8 @@ export default {
 .loginbg{
   width: 100%;
   height: 100%;
-  position: fixed;
-  z-index: 2001;
+  position: absolute;
+  /* z-index: 2001; */
   /* min-height: 1000px; */
   background: url('../assets/img/loginbg.png');
   background-size: 100% 100%;
