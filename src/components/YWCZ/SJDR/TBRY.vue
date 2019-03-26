@@ -141,17 +141,25 @@
            border
            style="width: 100%"
            @selection-change="handleSelectionChange">
-           <el-table-column
+           <!-- <el-table-column
              type="selection"
              width="55">
+           </el-table-column> -->
+           <el-table-column
+             prop="address"
+             label="通报类型">
            </el-table-column>
            <el-table-column
-             prop="date"
-             label="案卷编号">
+             prop="address"
+             label="通报编号">
            </el-table-column>
            <el-table-column
-             prop="name"
-             label="姓名">
+             prop="address"
+             label="英文姓">
+           </el-table-column>
+           <el-table-column
+             prop="address"
+             label="英文名">
            </el-table-column>
            <el-table-column
              prop="address"
@@ -163,7 +171,11 @@
            </el-table-column>
            <el-table-column
              prop="address"
-             label="护照号码">
+             label="证件类型">
+           </el-table-column>
+           <el-table-column
+             prop="address"
+             label="证件号码">
            </el-table-column>
            <el-table-column
              prop="address"
@@ -171,15 +183,18 @@
            </el-table-column>
            <el-table-column
              prop="address"
-             label="登记日期">
+             label="请求国">
+           </el-table-column>
+           <el-table-column
+             prop="address"
+             label="发布时间">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edits(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click=""></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
-
              </template>
            </el-table-column>
          </el-table>
@@ -216,8 +231,16 @@
     </div>
     <el-dialog title="上传模板" :visible.sync="uploadDialogVisible"  width="640px">
     <el-form>
-    <el-row type="flex" class="mb-6">
-     <el-col :span="24" class="input-item">
+  <el-row  type="flex">
+     <el-col :span="24">
+       <span >上传类型：</span>
+       <el-radio v-model="type" label="1" @change="getTS('1')">数据上传(XML文件)</el-radio>
+       <el-radio v-model="type" label="2" @change="getTS('2')">资料上传(PDF文件)</el-radio>
+     </el-col>
+  </el-row>
+    <el-row  type="flex">
+
+     <el-col :span="24">
           <el-upload
             class="input-input"
             ref="upload"
@@ -441,6 +464,7 @@ export default {
         name: '王小虎',
         address: 'XXXXX'
       }],
+      type:'',
 
     }
   },

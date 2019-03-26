@@ -45,39 +45,39 @@
 
            <el-table-column
              prop="fj"
-             label="分局">
+             label="所属分局">
            </el-table-column>
            <el-table-column
              prop="jsts"
-             label="接收条数">
+             label="接收数据">
              <template slot-scope="scope">
              <a @click="toLink(scope.row,'jsts')" href="#"> {{scope.row.jsts}} </a>
              </template>
            </el-table-column>
            <el-table-column
              prop="cgts"
-             label="成功上报条数">
+             label="核查成功上报">
              <template slot-scope="scope">
              <a @click="toLink(scope.row,'cgts')" href="#"> {{scope.row.cgts}} </a>
              </template>
            </el-table-column>
            <el-table-column
              prop="sbts"
-             label="失败条数">
+             label="错误数据">
              <template slot-scope="scope">
              <a @click="toLink(scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
              </template>
            </el-table-column>
            <el-table-column
              prop="rgsbts"
-             label="人工上报条数">
+             label="人工处理">
              <template slot-scope="scope">
              <a @click="toLink(scope.row,'rgsbts')" href="#"> {{scope.row.rgsbts}} </a>
              </template>
            </el-table-column>
            <el-table-column
              prop="sbzts"
-             label="上报条数">
+             label="上报数据">
              <template slot-scope="scope">
                 <a @click="toLink(scope.row,'sbzts')" href="#"> {{scope.row.sbzts}} </a>
              </template>

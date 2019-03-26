@@ -57,7 +57,7 @@ export default {
       nav1:this.pl.menu,
       color:['#02ffd0','#e09144','#50c6ea'],
       navShow:false,
-      iURL:'https://www.amap.com/',
+      iURL:this.Global.aport1+'/home/index?token='+this.$store.state.token,
       nav2Id:0,
       nav2:[],
       nav3Id:0,
