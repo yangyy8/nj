@@ -89,13 +89,19 @@ export default {
           ff.append("password",this.user.password);
           let p=ff;
           var url=this.Global.aport1+'/user/doLogin';
+            this.msg="";
           this.$api.post(url,p,
              r => {
               if(r.success){
                 console.log('r.data.ssdw',ToData(r.data.ssdw));
                 this.companys=ToData(r.data.ssdw);
-                this.msg="";
+
                 this.companyDialogVisible=true;
+              //   if(r.code=="302"){
+              //   this.companyDialogVisible=true;
+              // }else {
+              //   this.getLogin();
+              // }
               }else {
                 this.msg=r.message;
               }
