@@ -28,7 +28,7 @@
     </div>
 <el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%">
   <el-row align="center"   :gutter="1">
-        <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="input"
+        <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="select"
          v-validate-easy="[['required']]">
           <span class="input-text">所属单位：</span>
            <el-select v-model="org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
