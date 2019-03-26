@@ -113,10 +113,11 @@ export default {
   padding:0 20px;
   border-radius: 0 8px 8px 0;
   border: 1px solid #133358;
+  font-size: 14px;
 }
 .nav_1{
   width: 16px;
-  font-size: 18px;
+  font-size: 16px;
   color: #787e8c;
   display: flex;
   flex-direction: column;
@@ -148,14 +149,14 @@ export default {
 }
 .index_nav2{
   background: rgba(6, 44, 83, 0.81);
-  width: 134px;
+  width: 125px;
   height: 568px;
   color: #8aacd1;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px 0px;
-  box-sizing: border-box;
+  box-sizing: border-box;font-size: 16px;
 }
 .index_nav2_box{
   width: 100%;
@@ -170,9 +171,10 @@ export default {
 .index_nav3{
   background:rgba(6, 62, 121, 0.95);
   color: #148de0;
-  width: 400px;
+  width: 380px;
   padding:20px 15px;
   line-height: 32px;
+  font-size: 14px;
 }
 .h3_2{
   color: #95b9db;

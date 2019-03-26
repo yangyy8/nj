@@ -120,14 +120,14 @@ export default {
 }
 .h3{
   position: absolute;
-  width: 380px;
+  width:380px;
   right:-400px;
   top:0;
   background: rgb(255, 255, 255);
   z-index: 7;
   color: #212121;
   padding: 10px;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 0 7px 7px 0;
   box-shadow: 1px -1px 2px 1px rgba(35, 214, 238, 0.5);
 }
@@ -145,6 +145,7 @@ export default {
   display: block;
   color: #008fe8;
   margin-bottom: 10px;
+  font-size: 14px;
 }
 .h3_2{
   margin-right: 5px;

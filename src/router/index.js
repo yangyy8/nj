@@ -289,12 +289,13 @@ export default new Router({
           component: resolve => require(['@/components/YWCZ/LZXX/CRJJLHC'], resolve),
         },
         {
-<<<<<<< HEAD
+
           path: 'LZSJHE',
           name: 'LZSJHE',
           meta:{title:['业务操作','临住信息','临住数据核查']},
           component: resolve => require(['@/components/YWCZ/LZXX/LZSJHE'], resolve),
-=======
+        },
+        {
           path: 'JSQKKH',
           name: 'JSQKKH',
           meta:{title:['业务操作','临住信息','临住登记及时情况考核']},
@@ -318,7 +319,7 @@ export default new Router({
           name: 'NMDXFS',
           meta:{title:['业务操作','常住信息','常住、难民短信发送']},
           component: resolve => require(['@/components/YWCZ/CZXX/NMDXFS'], resolve),
->>>>>>> 922a45e1acf5bee692a3af61054c0edef45ebfe6
+
         },
 
         {
@@ -345,7 +346,6 @@ export default new Router({
           meta:{title:['业务操作','数据导入','移民导入']},
           component: resolve => require(['@/components/YWCZ/SJDR/YMDR'], resolve),
         },
-
         {
           path: 'YYGSBA',
           name: 'YYGSBA',
