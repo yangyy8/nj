@@ -26,7 +26,9 @@
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">{{msg}}</div>
     </div>
-<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="25%">
+
+<el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="20%">
+
   <el-row align="center"   :gutter="1">
         <el-col  :span="24"  class="input-item yzform"  data-scope="demo2" data-name="org" data-type="select"
          v-validate-easy="[['required']]">
@@ -97,12 +99,17 @@ export default {
                 console.log('r.data.ssdw',ToData(r.data.ssdw));
                 this.companys=ToData(r.data.ssdw);
 
-                this.companyDialogVisible=true;
-              //   if(r.code=="302"){
-              //   this.companyDialogVisible=true;
-              // }else {
-              //   this.getLogin();
-              // }
+                  if(r.code=="302"){
+                    this.companyDialogVisible=true;
+                  }else {
+
+                    this.$store.commit('getToken',r.data.token)
+
+                    console.log(this.$store.state.token)
+                    this.Global.hasEnter="1";
+                    this.$router.push({name: 'Index',params:{ id:'1'}});
+
+                  }
               }else {
                 this.msg=r.message;
               }
@@ -110,6 +117,7 @@ export default {
       });
     },
     getLogin(){
+
       this.V.$submit('demo2', (canSumit,data) => {
         if(!canSumit) return;
         var ff=new FormData();
@@ -125,7 +133,6 @@ export default {
               type: 'success'
             });
             this.$store.commit('getToken',r.data.token)
-
             console.log(this.$store.state.token)
             // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
@@ -216,4 +223,7 @@ export default {
   height: 45px!important;
   line-height: 45px!important;
 }
+  .loginbg .el-dialog__wrapper{
+   padding-top: 10%;
+  }
 </style>
