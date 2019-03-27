@@ -8,31 +8,31 @@
            <el-row  class="stu-row2">
              <el-col :span="8" class="stu-col-row2">
                <span>姓名：</span>
-               XXXX
+                  {{baseData.ywxm}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>性别：</span>
-                  XXXX
+                  {{baseData.xb}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>国籍：</span>
-                  XXXX
+                  {{baseData.gj}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>证件种类：</span>
-                  XXXX
+                  {{baseData.zhzl}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span >证件号码：</span>
-                  XXXX
+                  {{baseData.zjhm}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>证件有效期：</span>
-                  XXXX
+                  {{baseData.zjyxq}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>签证号码：</span>
-                  XXXX
+                  {{baseData.qzhm}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span></span>
@@ -56,11 +56,11 @@
           border
           style="width: 100%" class="stu-table">
           <el-table-column
-          prop="date"
+          prop="RYBH"
           label="人员编号">
           </el-table-column>
           <el-table-column
-          prop="name"
+          prop="BRLXDH"
           label="本人联系电话">
           </el-table-column>
           <el-table-column
@@ -68,11 +68,11 @@
           label="住房性质">
           </el-table-column>
           <el-table-column
-          prop="address"
+          prop="DJDW"
           label="登记单位">
           </el-table-column>
           <el-table-column
-          prop="address"
+          prop="DJRQ"
           label="登记日期">
           </el-table-column>
           <el-table-column
@@ -82,27 +82,59 @@
           <el-table-column
           label="操作" width="80">
           <template slot-scope="scope">
-          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
+          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="openTc(6,scope.row.dtid)"></el-button>
           </template>
           </el-table-column>
         </el-table>
       </div>
     </div>
+    <el-dialog title="详情" :visible.sync="detailsDialogVisible" width="1100px">
+      <XQTC :type="xtype"></XQTC>
+    </el-dialog>
   </div>
 </template>
 <script>
+import XQTC from '../../../GYZJ/XQ_TC'
 export default {
+  components:{XQTC},
   data() {
     return {
+      baseData:{},
       tableData1:this.pl.tableData,
       pd:{},
+      detailsDialogVisible:false,
+      xtype:0,
+      xid:''
     }
+  },
+  activated(){
+    this.rybh=this.$route.query.rybh;
+    this.getList('/wadeCouldWarningController/getBasicPersonnelInfo',0);
+    this.getList('/wadeCouldWarningController/getESLZLZXXInfo',1);
+
   },
   mounted() {
 
   },
   methods: {
-
+    openTc(type,id){
+      this.xtype=type;
+      this.xid=id;
+      this.detailsDialogVisible=true;
+    },
+    getList() {
+      let p = {
+        "rybh": this.rybh
+      };
+      this.$api.post(url, p,
+        r => {
+          if(type==0){
+            this.baseData=r.data
+          }else if(type==1){
+            this.tableData1=r.data
+          }
+        })
+    },
 
   }
 

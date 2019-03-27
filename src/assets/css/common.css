@@ -89,7 +89,28 @@ a{color: #333;text-decoration: none;}
 .input-input{
   width: 70%!important;
 }
-
+.xq_t{
+  display: inline-block;
+  width: 35%;
+  font-size: 14px;
+  text-align: right;
+  line-height: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.xq_txt{
+  display: inline-block;
+  width: 63%;
+  font-size: 14px;
+  /* text-align: right; */
+  line-height: 32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
 /* 时间控件起止时间 */
 .t-date .el-input__icon{
     width: 9px!important;
