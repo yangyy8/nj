@@ -68,7 +68,7 @@
            </el-row>
          </el-col>
          <el-col :span="4" class="stu-right2">
-           <el-button type="primary" class="mb-5" size="small" @click="chuli">处理</el-button>
+           <el-button type="primary" class="mb-5" size="small" @click="clDialogVisible=true">处理</el-button>
            <el-button type="warning" class="m0" size="small" @click="$router.go(-1)">返回</el-button>
          </el-col>
         </el-row>
@@ -297,6 +297,20 @@
     <el-dialog :title="xtitle" :visible.sync="detailsDialogVisible" width="1100px">
       <XQTC :type="xtype" :xid="xid"></XQTC>
     </el-dialog>
+    <el-dialog title="处理" :visible.sync="clDialogVisible" width="600px">
+      <el-form :model="form">
+        <el-row :gutter="1">
+          <el-col :span="24" class="input-item">
+            <span class="input-text">处理结果：</span>
+            <el-input type="textarea" placeholder="请输入内容" :autosize="{ minRows: 3, maxRows: 6}" v-model="form.cljg" class="yy-input-input"></el-input>
+          </el-col>
+        </el-row>
+      </el-form>
+       <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="chuli" size="small">提 交</el-button>
+        <el-button @click="clDialogVisible = false" size="small">取 消</el-button>
+       </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -306,6 +320,7 @@ export default {
   data() {
     return {
       rybh:'',
+      yjid:'',
       baseData:{},
       tableData1:this.pl.tableData,
       tableData2:this.pl.tableData,
@@ -317,10 +332,14 @@ export default {
       detailsDialogVisible:false,
       xtype:0,
       xid:'',
+      form:{},
+      clDialogVisible:false
     }
   },
   activated(){
     this.rybh=this.$route.query.rybh;
+    this.yjid=this.$route.query.yjid;
+
     this.getList('/refugeesWarningController/getRefugeesPersBasicInfo',0);
     this.getList('/refugeesWarningController/getPermanentResidenceInfo',1);
     this.getList('/refugeesWarningController/getMovementRecord',2);
@@ -361,11 +380,11 @@ export default {
     },
     chuli(){
       let p = {
-        "yjid": currentPage,
-        "cljg": showCount,
-        "cldw": pd,
-        "clr":clr,
-        "shjg":shjg,
+        "yjid": this.yjid,
+        "cljg": this.form.cljg,
+        "cldw": '',
+        "clr":'',
+        "shjg":'',
       };
       this.$api.post('/educationParController/saveWarningInfo', p,
         r => {

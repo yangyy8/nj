@@ -101,7 +101,7 @@
         <el-table-column
          label="操作" width="120">
          <template slot-scope="scope">
-         <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'NMXQPHZYJ_XQ',query:{rybh:scope.row.rybh}})"></el-button>
+         <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'NMXQPHZYJ_XQ',query:{rybh:scope.row.rybh,yjid:scope.row.yjid}})"></el-button>
          </template>
         </el-table-column>
       </el-table>

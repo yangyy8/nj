@@ -43,7 +43,7 @@
            </el-row>
          </el-col>
          <el-col :span="4" class="stu-right2">
-           <el-button type="primary" class="mb-5" size="small">处理</el-button>
+           <el-button type="primary" class="mb-5" size="small" @click="clDialogVisible=true">处理</el-button>
            <el-button type="warning" class="m0" size="small" @click="$router.go(-1)">返回</el-button>
 
          </el-col>
@@ -64,7 +64,7 @@
           label="本人联系电话">
           </el-table-column>
           <el-table-column
-          prop="address"
+          prop="LB_SFBG"
           label="住房性质">
           </el-table-column>
           <el-table-column
@@ -76,8 +76,8 @@
           label="登记日期">
           </el-table-column>
           <el-table-column
-          prop="address"
-          label="居住状态类型">
+          prop="ZFZL"
+          label="住房种类">
           </el-table-column>
           <el-table-column
           label="操作" width="80">
@@ -91,6 +91,20 @@
     <el-dialog title="详情" :visible.sync="detailsDialogVisible" width="1100px">
       <XQTC :type="xtype"></XQTC>
     </el-dialog>
+    <el-dialog title="处理" :visible.sync="clDialogVisible" width="600px">
+      <el-form :model="form">
+        <el-row :gutter="1">
+          <el-col :span="24" class="input-item">
+            <span class="input-text">处理结果：</span>
+            <el-input type="textarea" placeholder="请输入内容" :autosize="{ minRows: 3, maxRows: 6}" v-model="form.cljg" class="yy-input-input"></el-input>
+          </el-col>
+        </el-row>
+      </el-form>
+       <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="chuli" size="small">提 交</el-button>
+        <el-button @click="clDialogVisible = false" size="small">取 消</el-button>
+       </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -99,19 +113,24 @@ export default {
   components:{XQTC},
   data() {
     return {
+      rybh:'',
+      yjid:'',
       baseData:{},
       tableData1:this.pl.tableData,
       pd:{},
       detailsDialogVisible:false,
       xtype:0,
-      xid:''
+      xid:'',
+      form:{},
+      clDialogVisible:false
     }
   },
   activated(){
     this.rybh=this.$route.query.rybh;
+    this.yjid=this.$route.query.yjid;
+
     this.getList('/wadeCouldWarningController/getBasicPersonnelInfo',0);
     this.getList('/wadeCouldWarningController/getESLZLZXXInfo',1);
-
   },
   mounted() {
 
@@ -122,7 +141,7 @@ export default {
       this.xid=id;
       this.detailsDialogVisible=true;
     },
-    getList() {
+    getList(url,type) {
       let p = {
         "rybh": this.rybh
       };
@@ -135,6 +154,19 @@ export default {
           }
         })
     },
+    chuli(){
+      let p = {
+        "yjid": this.yjid,
+        "cljg": this.form.cljg,
+        "cldw": '',
+        "clr":'',
+        "shjg":'',
+      };
+      this.$api.post('/educationParController/saveWarningInfo', p,
+        r => {
+
+        })
+    }
 
   }
 
