@@ -96,12 +96,15 @@ export default {
           this.$api.post(url,p,
              r => {
               if(r.success){
-                console.log('r.data.ssdw',ToData(r.data.ssdw));
-                this.companys=ToData(r.data.ssdw);
 
-                  if(r.code=="302"){
+
+                  if(r.code==302){
+
+              
+                    this.companys=r.data;
+
                     this.companyDialogVisible=true;
-                  }else {
+                  }else if(r.code==200){
 
                     this.$store.commit('getToken',r.data.token)
                     this.$store.commit('getUname',r.data.mc)

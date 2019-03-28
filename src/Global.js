@@ -1,7 +1,7 @@
 const token='';//this.$store.state.token
 const userName='';
 const hasEnter=false;
-const org="320116000000";
+const org="";
 const aport="http://192.168.3.217:9420";
 const aport1="http://192.168.3.217:9424";//api-permission
 const aport2="http://192.168.3.217:9439";
