@@ -2,7 +2,9 @@
 var root = ''
 
 // 引用axios
-var axios = require('axios')
+var axios = require('axios');
+import store from '../assets/js/store' //注册store
+console.log(store)
 // 自定义判断元素类型JS
 function toType (obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -26,6 +28,9 @@ function filterNull (o) {
 function apiAxios (method, url, params, success, failure) {
     if (params) {
         // params = filterNull(params);
+        if(store.state.token){
+          // params.token=store.state.token
+        }
     }
     axios({
         method: method,

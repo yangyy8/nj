@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import 'es6-promise/auto'
-import Vuex from 'vuex'
+import store from './assets/js/store' //注册store
 import './assets/css/normalize.css'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -37,25 +37,11 @@ var validators ={
 };
 Vue.use(vueValidateEasy,{validators});
 Vue.use(ElementUI);
-Vue.use(Vuex);
-console.log(pl)
 Vue.prototype.$api = api;
 Vue.config.productionTip = false
 Vue.prototype.Global = global_;
 Vue.prototype.pl = pl;
 
-
-var store =new Vuex.Store({
-  state:{
-    token:''||localStorage.getItem('TOKEN')
-  },
-  mutations:{
-    getToken(state,data){
-      localStorage.setItem('TOKEN',data)
-      state.token=data;
-    }
-  }
-})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
