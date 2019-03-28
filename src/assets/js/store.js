@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 var store =new Vuex.Store({
   state:{
-    token:''||localStorage.getItem('TOKEN'),
-    token:''||localStorage.getItem('UNAME')
+    token:localStorage.getItem('TOKEN')||'',
+    uname:localStorage.getItem('UNAME')||''
   },
   mutations:{
     getToken(state,data){

@@ -131,7 +131,7 @@ this.getname();
               type: 'success'
             });
           }
-          this.$router.push('Login')
+          this.$router.push('/')
         })
     },
   }
