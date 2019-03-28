@@ -56,11 +56,11 @@
               <el-col :span="16" class=" pr-20">
                 <el-row align="center"   :gutter="2">
                  <el-col  :sm="24" :md="12" :lg="20"   class="input-item">
-                    <span class="input-text" style="width:25%!important">用户名：</span>
-                    <el-input placeholder="请输入内容" size="small" v-model="pd.mc"   class="input-input"></el-input>
+                    <span class="input-text" style="width:25%!important">姓名：</span>
+                    <el-input placeholder="请输入内容" size="small" v-model="pd1.mc"   class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="4"  class="input-item">
-                    <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+                    <el-button type="success" size="small" @click="getroleUser(CurrentPage,pageSize,pd)">查询</el-button>
                 </el-col>
               </el-row>
              </el-col>
@@ -83,7 +83,7 @@
               </el-table-column>
                <el-table-column
                  prop="mc"
-                 label="用户名称">
+                 label="姓名">
                </el-table-column>
                <el-table-column
                  prop="dlm"
@@ -111,7 +111,7 @@
         <el-col :span="14" class=" pr-20">
           <el-row align="center"   :gutter="1">
            <el-col  :span="24"   class="input-item">
-              <span class="input-text">用户名称：</span>
+              <span class="input-text">姓名：</span>
               <el-input placeholder="请输入内容" size="small" v-model="pd2.mc"   class="input-input"></el-input>
           </el-col>
         </el-row>
@@ -134,7 +134,7 @@
          </el-table-column>
          <el-table-column
            prop="mc"
-           label="用户名称">
+           label="姓名">
          </el-table-column>
          <el-table-column
            prop="dlm"
@@ -276,6 +276,7 @@ export default {
       var ff=new FormData();
       ff.append("token",this.$store.state.token);
       ff.append("roleid",this.roleid);
+      ff.append("mc",this.pd1.mc);
       let p=ff;
       this.temp=null;
       var url=this.Global.aport1+'/user/getAssignByRoleId';

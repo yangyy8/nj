@@ -5,7 +5,6 @@
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="1">
-
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                   <span class="input-text">时间范围：</span>
                   <div class="input-input t-flex t-date">
@@ -61,13 +60,13 @@
              <a @click="toLink(scope.row,'cgts')" href="#"> {{scope.row.cgts}} </a>
              </template>
            </el-table-column>
-           <el-table-column
+           <!-- <el-table-column
              prop="sbts"
              label="错误数据">
              <template slot-scope="scope">
              <a @click="toLink(scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
              </template>
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
              prop="rgsbts"
              label="人工处理">
@@ -75,13 +74,13 @@
              <a @click="toLink(scope.row,'rgsbts')" href="#"> {{scope.row.rgsbts}} </a>
              </template>
            </el-table-column>
-           <el-table-column
+           <!-- <el-table-column
              prop="sbzts"
              label="上报数据">
              <template slot-scope="scope">
                 <a @click="toLink(scope.row,'sbzts')" href="#"> {{scope.row.sbzts}} </a>
              </template>
-           </el-table-column>
+           </el-table-column> -->
 
          </el-table>
      <!-- <div class="middle-foot">

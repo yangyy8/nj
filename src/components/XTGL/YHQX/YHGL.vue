@@ -18,7 +18,7 @@
                    </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">用户名：</span>
+                  <span class="input-text">姓名：</span>
                   <el-input placeholder="请输入内容" size="small" v-model="pd.mc"   class="input-input"></el-input>
                 </el-col>
           </el-row>
@@ -45,7 +45,7 @@
            </el-table-column>
            <el-table-column
              prop="mc"
-             label="用户名">
+             label="姓名">
            </el-table-column>
            <el-table-column
              prop="dlm"
@@ -115,20 +115,25 @@
            <span class="yy-input-text">登录名/警号：</span>
              <el-input placeholder="请输入内容" size="small" v-model="from.dlm"  class="yy-input-input"></el-input>
            </el-col>
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="dlm" data-type="input"
-            v-validate-easy="[['required']]">
-           <span class="yy-input-text" >用户名：</span>
-             <el-input placeholder="请输入内容" size="small" v-model="from.mc"  class="yy-input-input"></el-input>
-           </el-col>
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="dlm" data-type="input"
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="pwd" data-type="input"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >密码：</span>
              <el-input type="password" placeholder="请输入内容" size="small" v-model="from.pwd"  class="yy-input-input"></el-input>
            </el-col>
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="dlm" data-type="input"
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="mc" data-type="input"
+            v-validate-easy="[['required']]">
+           <span class="yy-input-text" >姓名：</span>
+             <el-input placeholder="请输入内容" size="small" v-model="from.mc"  class="yy-input-input"></el-input>
+           </el-col>
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="sfzh" data-type="input"
+            v-validate-easy="[['required']]">
+           <span class="yy-input-text" >身份证号：</span>
+             <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
+           </el-col>
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="input"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>
-           <el-select v-model="from.ssdwdm" filterable clearable  class="yy-input-input" placeholder="请选择"  size="small" @change="changeValue">
+           <el-select v-model="from.ssdwdm" multiple  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small" @change="changeValue">
              <el-option
               v-for="item in company"
               :key="item.dm"
@@ -163,8 +168,12 @@
              <span class="input-input detailinput">  {{mapForm.dlm}}</span>
             </el-col>
             <el-col :span="24" class="input-item">
-              <span class="input-text">用户名：</span>
+              <span class="input-text">姓名：</span>
               <span class="input-input detailinput">  {{mapForm.mc}}</span>
+            </el-col>
+            <el-col :span="24" class="input-item">
+              <span class="input-text">身份证号：</span>
+              <span class="input-input detailinput">  {{mapForm.sfzh}}</span>
             </el-col>
             <el-col :span="24" class="input-item">
              <span class="input-text">所属单位：</span>
@@ -182,9 +191,19 @@
     </el-dialog>
 <div class="mnus">
     <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="500px">
-      <el-tree
+      <!-- <el-tree
         :data="menudata"
         :check-strictly="true"
+        show-checkbox
+        default-expand-all
+        node-key="dm"
+        :default-checked-keys="defaultChecked"
+        ref="tree"
+        highlight-current
+        :props="defaultProps">
+      </el-tree> -->
+      <el-tree
+        :data="menudata"
         show-checkbox
         default-expand-all
         node-key="dm"
@@ -247,6 +266,7 @@ export default {
   },
   mounted() {
       this.getCompany();
+         this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
     handleSelectionChange(val) {

@@ -190,7 +190,7 @@
     <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="500px">
       <el-tree
         :data="menudata"
-        :check-strictly="true"
+        :check-strictly="false"
         show-checkbox
         default-expand-all
         node-key="dm"
@@ -199,7 +199,6 @@
         highlight-current
         :props="defaultProps">
       </el-tree>
-
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="menuItem" size="small">保 存</el-button>
         <el-button @click="menuDialogVisible = false" size="small">取 消</el-button>
@@ -252,6 +251,7 @@ export default {
   },
   mounted() {
      this.getCompany();
+     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
     handleSelectionChange(val) {
@@ -394,7 +394,7 @@ export default {
         if(type){
           ss="启用成功！";
         }
-          var url=this.Global.aport1+'/role/changeUser';
+          var url=this.Global.aport1+'/role/changeRole';
          this.$api.post(url, p,
            r => {
              if (r.success) {
