@@ -115,10 +115,9 @@ export default {
     },
     logOut() {
       var url=this.Global.aport1+'/user/logout';
-      let p=
-      {
-        "token":this.$store.state.token
-      };
+      var formData = new FormData();
+      formData.append("token",this.$store.state.token);
+      let p=formData;
       this.$api.post(url, p,
         r => {
           if (r.success) {
