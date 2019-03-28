@@ -42,7 +42,7 @@ Vue.config.productionTip = false
 Vue.prototype.Global = global_;
 Vue.prototype.pl = pl;
 router.beforeResolve((to, from, next) => {
-  console.log("token",store.state.token)
+  // console.log("token",store.state.token)
   let state=store.state.token;
   if(!state&&to.matched.some(function (item) {
     return item.meta.logined;
