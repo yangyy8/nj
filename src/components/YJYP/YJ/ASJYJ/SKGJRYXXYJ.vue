@@ -12,10 +12,10 @@
               <span class="input-text">国家地区：</span>
               <el-select v-model="pd.gjdq" filterable clearable placeholder="请选择"  size="small" class="input-input">
                 <el-option
-                  v-for="item in nation"
-                  :key="item.CODE"
-                  :label="item.CODE+' - '+item.CNAME"
-                  :value="item.CODE">
+                  v-for="item in $store.state.gjdq"
+                  :key="item.dm"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
                 </el-option>
               </el-select>
             </el-col>
@@ -146,16 +146,12 @@ export default {
       pageSize: 10,
       TotalResult: 0,
       pd: {},
-      nation: [],
-      fileList: [],
-      actions: "",
-      uploadDialogVisible: false,
       options: this.pl.ps,
       tableData: this.pl.tableData
     }
   },
   mounted() {
-
+    this.$store.dispatch('getGjdq');
   },
   methods: {
     pageSizeChange(val) {

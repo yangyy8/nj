@@ -8,7 +8,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import api from './api/index.js';
 import App from './App'
-import global_ from './Global'
+import global_ from './Global.js'
 import pl from './assets/js/pl.js'
 import router from './router'
 import './assets/icon/iconfont.css'
