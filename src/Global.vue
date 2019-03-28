@@ -3,6 +3,7 @@ const token='';//this.$store.state.token
 const userName='';
 const hasEnter=false;
 const org="320116000000";
+const aport="http://192.168.3.217:9420";
 const aport1="http://192.168.3.217:9424";//api-permission
 const aport2="http://192.168.3.217:9439";
 const aport3="";
@@ -25,6 +26,7 @@ const xzqh="/service/getRedisDataByDm?tablename=DM_XZQHB"//行政区划
     userName,//用户名
     token,//用户token身份
     hasEnter,//用户登录状态
+    aport,//首页
     aport1,//大师
     aport2,//左星海
     aport3,//石飞

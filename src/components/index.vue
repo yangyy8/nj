@@ -34,7 +34,7 @@
     </div>
     <!-- <NAV class="index_nav" v-if="navShow"></NAV> -->
     <div class="index_main" @mouseover="navShow=false">
-      <iframe id="index_iframe" frameborder=0 name="showHere" scrolling=no :src="iURL"></iframe>
+      <iframe id="index_iframe" frameborder=0 name="showHere" scrolling="no" style="min-height:1100px" :src="iURL"></iframe>
     </div>
   </div>
 </template>
@@ -50,6 +50,8 @@ export default {
     oIframe.style.width = deviceWidth + 'px';
     oIframe.style.height = deviceHeight + 'px';
     this.getNavmune();
+    this.iURL=this.Global.aport+'/home/index?token='+this.$store.state.token;
+    console.log('this.iURL',this.iURL);
   },
   data(){
     return{
@@ -57,7 +59,7 @@ export default {
       nav1:this.pl.menu,
       color:['#02ffd0','#e09144','#50c6ea'],
       navShow:false,
-      iURL:this.Global.aport1+'/home/index?token='+this.$store.state.token,
+      iURL:'',
       nav2Id:0,
       nav2:[],
       nav3Id:0,

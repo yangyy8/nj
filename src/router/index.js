@@ -94,6 +94,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/StuWarning'], resolve),
         },
         {
+          path: "LXSYJ-JBXQ",
+          name: "LXSYJ-JBXQ",
+          meta:{title:['预警研判','预警','留学生预警','留学生信息管理预警详情'],father:'StuWarning'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSYJ-JBXQ'], resolve),
+        },
+        {
           path: "StuBaseInfo",
           name: "StuBaseInfo",
           meta:{title:['预警研判','预警','留学生预警','留学生信息管理预警详情']},
