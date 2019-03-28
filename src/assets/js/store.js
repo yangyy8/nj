@@ -73,12 +73,6 @@ var store =new Vuex.Store({
             context.commit('getGjdq',ToArray(r.data))
         })
     },
-    getGjdq(context){
-      api.get(global_.aport1+global_.gjdq, null,
-          r => {
-            context.commit('getGjdq',ToArray(r.data))
-        })
-    },
     getZjzl(context){
       api.get(global_.aport1+global_.zjzl, null,
           r => {

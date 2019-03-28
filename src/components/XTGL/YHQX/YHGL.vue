@@ -130,10 +130,10 @@
            <span class="yy-input-text" >身份证号：</span>
              <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
            </el-col>
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="input"
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="multiple"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>
-           <el-select v-model="from.ssdwdm" multiple  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small" @change="changeValue">
+           <el-select v-model="from.ssdwdm" multiple  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small">
              <el-option
               v-for="item in company"
               :key="item.dm"
@@ -342,7 +342,7 @@ export default {
         formData.append("token", this.$store.state.token);
         formData.append("dlm", this.from.dlm);
         formData.append("pwd", this.from.pwd);
-        formData.append("mc", this.from.mc);
+        // formData.append("mc", this.from.mc);
         formData.append("sfyx", this.from.sfyx);
         formData.append("ssdw.dm", this.from.ssdwdm);
         formData.append("ssdw.mc", this.from.ssdwmc);

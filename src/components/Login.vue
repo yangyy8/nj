@@ -99,8 +99,6 @@ export default {
 
 
                   if(r.code==302){
-
-              
                     this.companys=r.data;
 
                     this.companyDialogVisible=true;
