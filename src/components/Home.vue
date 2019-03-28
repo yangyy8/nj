@@ -6,9 +6,9 @@
       <div class="top-right">
        <div class="top-nav">
           <ul class="top-nav-ul">
-            <li class="top-nav-li hand" >欢迎您！管理员</li>
-            <li class="top-nav-li hand" @click="$router.push({name:'Index'})">首页</li>
-            <li class="top-nav-li hand" >退出</li>
+            <li class="top-nav-li hand" ><img src="../assets/img/nicon.png" /> &nbsp;欢迎您！{{adminname}}</li>
+            <li class="top-nav-li hand" @click="$router.push({name:'Index'})"><img src="../assets/img/home.png" /> &nbsp;首页</li>
+            <li class="top-nav-li hand" @click="logOut"><img src="../assets/img/close.png" /> &nbsp;退出</li>
           </ul>
         </div>
       </div>
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       tabList: [],
+      adminname:'',
       tabliwidth:'10%',
       tabListCheck:null,
       routeList:this.$route.meta.title
@@ -90,6 +91,8 @@ export default {
 
     }
 
+
+this.getname();
   },
   methods: {
     tabClick(i){
@@ -112,8 +115,15 @@ export default {
 
       }
     },
+    getname(){
+      this.adminname=this.$store.state.uname;
+    },
     logOut() {
-      this.$api.post('/manage-platform/landout', {},
+      var url=this.Global.aport1+'/user/logout';
+      var formData = new FormData();
+      formData.append("token",this.$store.state.token);
+      let p=formData;
+      this.$api.post(url, p,
         r => {
           if (r.success) {
             this.$message({
@@ -121,7 +131,7 @@ export default {
               type: 'success'
             });
           }
-          this.$router.push('/')
+          this.$router.push('Login')
         })
     },
   }
@@ -252,7 +262,7 @@ export default {
 .top-nav-li:hover,
 .topCheckLi {
   cursor: pointer;
-  color: #4a90e2;
+  color:#FFCC00;
 
 }
 

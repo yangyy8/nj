@@ -59,6 +59,7 @@
          </el-col>
          <el-col :span="4" class="stu-right">
            <el-button type="primary" size="small" @click="$router.push({name:'StuBaseInfo',query:{id:'11',AlarmType:'11'}})">详情</el-button>
+              <el-button type="primary" size="small" @click="$router.push({name:'LXSYJ-JBXQ',query:{id:'11',AlarmType:'11'}})">详情2</el-button>
          </el-col>
        </el-row>
        <div class="yylbt yt-16">预警原因 <span class="yyf ycolor">出入境过多，签证过期</span></div>

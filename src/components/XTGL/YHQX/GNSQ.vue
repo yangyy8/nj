@@ -57,7 +57,7 @@
           <el-col :span="8">
             <el-tree
               :data="menudata"
-              :check-strictly="true"
+              :check-strictly="false"
               show-checkbox
               default-expand-all
               node-key="dm"
@@ -66,7 +66,6 @@
               highlight-current
               :props="defaultProps">
             </el-tree>
-
           </el-col>
           <el-col :span="4" class="down-btn-area">
               <el-button type="primary" @click="save" size="small">保存功能授权</el-button>

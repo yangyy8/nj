@@ -104,10 +104,10 @@ export default {
                   }else {
 
                     this.$store.commit('getToken',r.data.token)
-
+                    this.$store.commit('getUname',r.data.mc)
                     console.log(this.$store.state.token)
                     this.Global.hasEnter="1";
-                    this.$router.push({name: 'Index',params:{ id:'1'}});
+                    this.$router.push({name: 'Index'});
 
                   }
               }else {
@@ -133,6 +133,7 @@ export default {
               type: 'success'
             });
             this.$store.commit('getToken',r.data.token)
+            this.$store.commit('getUname',r.data.mc)
             console.log(this.$store.state.token)
             // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
