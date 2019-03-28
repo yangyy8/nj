@@ -1,4 +1,3 @@
-<script>
 const token='';//this.$store.state.token
 const userName='';
 const hasEnter=false;
@@ -20,18 +19,17 @@ const jzlx="/service/getRedisDataByDm?tablename=DM_JZLX"//居住类型
 const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质
 const jzzt="/service/getRedisDataByDm?tablename=DM_JZZT"//居住状态
 const xzqh="/service/getRedisDataByDm?tablename=DM_XZQHB"//行政区划
-  export default
-  {
-    org,//用户机构代码
-    userName,//用户名
-    token,//用户token身份
-    hasEnter,//用户登录状态
-    aport,//首页
-    aport1,//大师
-    aport2,//左星海
-    aport3,//石飞
-    aport4,//李文龙
-    aport5,//任智强
-    gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh
-  }
-</script>
+export default
+{
+  org,//用户机构代码
+  userName,//用户名
+  token,//用户token身份
+  hasEnter,//用户登录状态
+  aport,//首页
+  aport1,//大师
+  aport2,//左星海
+  aport3,//石飞
+  aport4,//李文龙
+  aport5,//任智强
+  gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh
+}
