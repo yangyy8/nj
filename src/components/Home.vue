@@ -131,6 +131,7 @@ this.getname();
               type: 'success'
             });
           }
+          localStorage.clear();
           this.$router.push('/')
         })
     },

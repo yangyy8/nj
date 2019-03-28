@@ -106,9 +106,9 @@ export default {
 }
 .index_nav_1{
   position: fixed;
-  height: 568px;
+  height: 584px;
   top:50%;
-  margin-top: -284px;
+  margin-top: -292px;
   left: 0;
   width: 18px;
   background: rgba(3, 19, 40, 0.79);
@@ -116,9 +116,13 @@ export default {
   border-radius: 0 8px 8px 0;
   border: 1px solid #133358;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .nav_1{
   width: 16px;
+  height: 33.3%;
   font-size: 16px;
   color: #787e8c;
   display: flex;
@@ -143,8 +147,8 @@ export default {
   position: fixed;
   left: 60px;
   top:50%;
-  margin-top: -284px;
-  min-height: 568px;
+  margin-top: -292px;
+  min-height: 584px;
   box-sizing: border-box;
   display: flex;
 
@@ -152,7 +156,7 @@ export default {
 .index_nav2{
   background: rgba(6, 44, 83, 0.81);
   width: 125px;
-  height: 568px;
+  height: 584px;
   color: #8aacd1;
   display: flex;
   flex-direction: column;
