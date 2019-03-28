@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       tabList: [],
-      adminname:"管理员",
+      adminname:'',
       tabliwidth:'10%',
       tabListCheck:null,
       routeList:this.$route.meta.title
@@ -91,6 +91,8 @@ export default {
 
     }
 
+
+this.getname();
   },
   methods: {
     tabClick(i){
@@ -112,6 +114,9 @@ export default {
         }
 
       }
+    },
+    getname(){
+      this.adminname=this.$store.state.uname;
     },
     logOut() {
       var url=this.Global.aport1+'/user/logout';
