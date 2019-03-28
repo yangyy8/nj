@@ -68,9 +68,8 @@
            </el-row>
          </el-col>
          <el-col :span="4" class="stu-right2">
-           <el-button type="primary" class="mb-5" size="small">处理</el-button>
-           <el-button type="warning" class="m0" size="small">返回</el-button>
-
+           <el-button type="primary" class="mb-5" size="small" @click="chuli">处理</el-button>
+           <el-button type="warning" class="m0" size="small" @click="$router.go(-1)">返回</el-button>
          </el-col>
         </el-row>
       </div>
@@ -309,9 +308,10 @@ export default {
       rybh:'',
       baseData:{},
       tableData1:this.pl.tableData,
-      tableData2:[],
-      tableData3:[],
-      tableData4:[],
+      tableData2:this.pl.tableData,
+      tableData3:this.pl.tableData,
+      tableData4:this.pl.tableData,
+      tableData5:this.pl.tableData,
       pd:{},
       xtitle:"",
       detailsDialogVisible:false,
@@ -340,7 +340,7 @@ export default {
       this.detailsDialogVisible=true;
       console.log(title,type)
     },
-    getList(url,type) {
+    getList(url,type){
       let p = {
         "rybh": this.rybh
       };
@@ -359,6 +359,19 @@ export default {
           }
         })
     },
+    chuli(){
+      let p = {
+        "yjid": currentPage,
+        "cljg": showCount,
+        "cldw": pd,
+        "clr":clr,
+        "shjg":shjg,
+      };
+      this.$api.post('/educationParController/saveWarningInfo', p,
+        r => {
+
+        })
+    }
   }
 
 }

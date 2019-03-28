@@ -41,7 +41,23 @@ Vue.prototype.$api = api;
 Vue.config.productionTip = false
 Vue.prototype.Global = global_;
 Vue.prototype.pl = pl;
+router.beforeResolve((to, from, next) => {
+  console.log(store.state.token)
+  let state=store.state.token;
+  if(!state&&to.matched.some(function (item) {
+    return item.meta.logined;
+  })){
+    console.log("未登录")
+    next({
+      path: '/',
+      query:{isLogin:false}
+    })
+  }else{
+    // console.log("已登录")
+    next();
+  }
 
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

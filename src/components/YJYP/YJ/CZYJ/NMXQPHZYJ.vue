@@ -83,10 +83,6 @@
          label="证件有效期">
         </el-table-column>
         <el-table-column
-         prop="address"
-         label="签证种类">
-        </el-table-column>
-        <el-table-column
          prop="qzhm"
          label="签证号码">
         </el-table-column>

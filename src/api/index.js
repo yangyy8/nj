@@ -4,7 +4,7 @@ var root = ''
 // 引用axios
 var axios = require('axios');
 import store from '../assets/js/store' //注册store
-console.log(store)
+import { Message } from 'element-ui';
 // 自定义判断元素类型JS
 function toType (obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -41,10 +41,16 @@ function apiAxios (method, url, params, success, failure) {
         withCredentials: false
     })
     .then(function (res) {
-      // console.log(res)
+      console.log(res)
       if (res.status === 200) {
           if (success) {
               success(res.data)
+          }
+          if(!res.data.success){
+            Message.error(res.data.message);
+          }
+          if(res.data.code=='1000001'){
+            window.location.href ="#/";
           }
       } else {
           if (failure) {

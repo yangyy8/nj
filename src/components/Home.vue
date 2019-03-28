@@ -106,7 +106,7 @@ export default {
         if (this.tabList.length != 0) {
           this.tabClick(this.tabList[index])
         } else {
-          this.$router.push('/')
+          this.$router.push({name:'Home'})
           this.routeList=[]
         }
 

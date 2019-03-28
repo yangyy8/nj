@@ -15,6 +15,7 @@ export default new Router({
     {
     path:'/index',
     name:'Index',
+    meta: {logined:true},
     component:resolve => require(['@/components/index'], resolve),
     },
     {
