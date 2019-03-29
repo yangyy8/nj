@@ -118,11 +118,12 @@ export default {
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: flex-start; */
+  /* justify-content: space-between; */
 }
 .nav_1{
   width: 16px;
-  height: 33.3%;
+  /* height: 193px!important; */
   font-size: 16px;
   color: #787e8c;
   /* display: flex; */

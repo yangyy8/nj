@@ -116,7 +116,7 @@ export default {
       rybh:'',
       yjid:'',
       baseData:{},
-      tableData1:this.pl.tableData,
+      tableData1:[],
       pd:{},
       detailsDialogVisible:false,
       xtype:0,
