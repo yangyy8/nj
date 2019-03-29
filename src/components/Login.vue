@@ -7,7 +7,7 @@
          <div class="logintitle">用户登录</div>
          <div class="login-item yzform"  data-scope="demo" data-name="userName" data-type="input"
           v-validate-easy="[['required']]">
-        <el-input  placeholder="用户名" v-model="user.userName" >
+        <el-input  placeholder="用户名" v-model="user.userName" @keyup.enter.native="keyLogin">
           <i slot="prefix" class="el-input__icon"><img src="../assets/img/logo01.png"></i>
         </el-input>
         </div>
@@ -15,7 +15,7 @@
        v-validate-easy="[['required']]">
         <el-input
           placeholder="密码"
-          type="password" v-model="user.password">
+          type="password" v-model="user.password" @keyup.enter.native="keyLogin">
           <i slot="prefix" class="el-input__icon"><img src="../assets/img/logo02.png"></i>
         </el-input>
       </div>
@@ -144,14 +144,19 @@ export default {
           }
         })
       });
-    }
+    },
+    keyLogin(){
+  
+     if(this.user.userName&&this.user.password){
+       this.login();
+     }
+   },
   },
 }
 </script>
 <style scoped>
 .logintop{
   padding: 76px 0px 0px 10%;
-  height: 150px;
 }
 .loginbg{
   width: 100%;
@@ -168,19 +173,17 @@ export default {
   width: 25%;
   height: 45%;
   position: fixed;
-
-  top:50%;
+  top:180px;
   left:50%;
   background: #ffffff;
   border-radius: 10px;
   margin-left: -12.5%;
-  margin-top: -200px;
   z-index: 7;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 300px;
-  min-height: 400px;
+  min-height: 380px;
   /* justify-content:center; */
 }
 .logintitle{

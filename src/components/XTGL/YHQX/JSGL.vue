@@ -190,7 +190,7 @@
     <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="500px">
       <el-tree
         :data="menudata"
-        :check-strictly="false"
+        :check-strictly="true"
         show-checkbox
         default-expand-all
         node-key="dm"

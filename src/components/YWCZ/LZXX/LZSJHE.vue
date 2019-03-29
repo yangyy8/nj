@@ -543,6 +543,7 @@ export default {
       cdt:[],
       hcqlist:[],
       hcwlist:[],
+      imagess:[],
       eidtsDialogVisible:false,
       options: [{
         value: 10,
@@ -722,6 +723,7 @@ export default {
     },
     edits(n){
        this.eidtsDialogVisible=true;
+       this.getImg(n.uuid);
        let p={
         "id":n.uuid
        };
@@ -782,8 +784,17 @@ export default {
         this.$alert(content, '提示', {
           confirmButtonText: '确定',
         });
-      }
-
+      },
+   getImg(id){
+        var url=this.Global.aport2+'/data_resource/selectTpxx';
+        let p={
+          "id":id
+        };
+        this.$api.post(url,p,
+        r=>{
+           this.imagess=r.data;
+        });
+      },
   }
 }
 </script>
