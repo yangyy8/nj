@@ -38,12 +38,12 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.gjdq" filterable clearable placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="item in $store.state.gjdq"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
@@ -66,25 +66,22 @@
 
           </el-row>
          </el-col>
-            <el-col :span="2" class="down-btn-area">
-              <el-button type="success" size="small"  @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
-            </el-col>
-          </el-row>
+        <el-col :span="2" class="down-btn-area">
+          <el-button type="success" size="small"  @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+        </el-col>
+      </el-row>
     </div>
     <div class="yycontent">
        <div class="yylbt mb-15">甄别信息列表</div>
 
       <el-table
-           ref="multipleTable"
            :data="tableData"
            border
-           style="width: 100%"
-           @selection-change="handleSelectionChange">
+           style="width: 100%">
            <!-- <el-table-column
              type="selection"
              width="55">
            </el-table-column> -->
-
            <el-table-column
              prop="name"
              label="姓名">
@@ -136,14 +133,14 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'YJCLXQ',query:{id:'11',AlarmType:'11'}})"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'ZBKYJ_XQ',query:{yjType:5}})"></el-button>
              </template>
            </el-table-column>
          </el-table>
      <div class="middle-foot">
         <div class="page-msg">
           <div class="">
-        共{{TotalResult}}条记录
+            共{{TotalResult}}条记录
           </div>
           <div class="">
             每页显示
@@ -158,7 +155,7 @@
             条
           </div>
           <div class="">
-    共{{Math.ceil(TotalResult/pageSize)}}页
+            共{{Math.ceil(TotalResult/pageSize)}}页
           </div>
         </div>
         <el-pagination
@@ -181,57 +178,22 @@ export default {
       pageSize: 10,
       TotalResult: 0,
       pd: {},
-      nation: [],
-      fileList: [],
-      actions: "",
-      uploadDialogVisible: false,
-      options: [{
-          value: 10,
-          label: "10"
-        },
-        {
-          value: 20,
-          label: "20"
-        },
-        {
-          value: 30,
-          label: "30"
-        }
-      ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-
+      options: this.pl.ps,
+      tableData: this.pl.tableData
     }
   },
   mounted() {
-
+    this.$store.dispatch('getGjdq');
   },
   methods: {
-
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
     pageSizeChange(val) {
-      this.getList(this.CurrentPage, val, this.pd);
+      this.pageSize=val;
+      this.getList(this.CurrentPage, this.pageSize, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.getList(val, this.pageSize, this.pd);
+      this.CurrentPage=val;
+      this.getList(this.CurrentPage, this.pageSize, this.pd);
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
@@ -240,7 +202,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post('/warningInfoController/getInfoListByMxLx', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -250,10 +212,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-
-</style>
-<style>
 
 </style>

@@ -69,9 +69,12 @@ export default {
        r => {
          if(r.success){
            this.memuData=r.data;
+<<<<<<< HEAD
          }else {
           // this.$message.error(r.message);
           
+=======
+>>>>>>> 23e68143a0833a573f33609abcfe631ccb2c927f
          }
        });
     },
@@ -129,6 +132,7 @@ export default {
   font-size: 12px;
   border-radius: 0 7px 7px 0;
   box-shadow: 1px -1px 2px 1px rgba(35, 214, 238, 0.5);
+  z-index: 2019;
 }
 .h3_content{
   /* padding-bottom: 10px; */

@@ -41,17 +41,31 @@ function apiAxios (method, url, params, success, failure) {
         withCredentials: false
     })
     .then(function (res) {
+<<<<<<< HEAD
       // console.log(res)
       if(res.data.code=='1000001'){
         window.location.href ="#/";
       }
+=======
+      console.log(res)
+>>>>>>> 23e68143a0833a573f33609abcfe631ccb2c927f
       if (res.status === 200) {
           if (success) {
               success(res.data)
           }
+<<<<<<< HEAD
           if(!res.data.success){
             Message.error(res.data.message);
           }
+=======
+          if(res.data.code=='1000001'){
+            window.location.href ="#/";
+          }else if(!res.data.success){
+            // console.log(",,,,")
+            Message.error(res.data.message);
+          }
+
+>>>>>>> 23e68143a0833a573f33609abcfe631ccb2c927f
       } else {
           if (failure) {
               failure(res.data)
