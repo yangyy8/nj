@@ -151,6 +151,7 @@ export default {
 <style scoped>
 .logintop{
   padding: 76px 0px 0px 10%;
+  height: 150px;
 }
 .loginbg{
   width: 100%;
@@ -161,11 +162,13 @@ export default {
   background: url('../assets/img/loginbg.png');
   background-size: 100% 100%;
   color: #fff;
+
 }
 .login-box{
   width: 25%;
   height: 45%;
   position: fixed;
+
   top:50%;
   left:50%;
   background: #ffffff;

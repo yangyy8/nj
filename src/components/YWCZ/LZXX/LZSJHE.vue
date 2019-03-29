@@ -480,30 +480,30 @@
           <el-row :gutter="3">
             <el-col :span="8">
               <span class="yy-input-text">录入人：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djr"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djr"  :disabled="true" class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入单位：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djdw"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入日期：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djsj"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djsj" :disabled="true" class="yy-input-input"></el-input>
 
             </el-col>
           </el-row>
           <el-row :gutter="3">
             <el-col :span="8">
               <span class="yy-input-text">修改人：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxr"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxr" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">修改单位：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxdw"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxdw" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">修改日期：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxsj"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxsj"  :disabled="true" class="yy-input-input"></el-input>
             </el-col>
           </el-row>
         </el-form>
