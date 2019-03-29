@@ -441,7 +441,7 @@ export default {
     this.rybh=this.$route.query.rybh;
     // this.yjid=this.$route.query.yjid;
 
-    this.getList('/illegalEmploymentWarningController/getPersonInfoByRybh',0);
+    this.getList('/illegalEmploymentWarningController/getPersonInfoByRybh',0);//人员基本信息
     this.getList('/illegalEmploymentWarningController/getQianZhengInfoByRybh',1);
     this.getList('/illegalEmploymentWarningController/getChuRuJingListByRybh',2);
     // this.getList('/educationParController/getJZJJXXInfo',3);

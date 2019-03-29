@@ -41,17 +41,18 @@ function apiAxios (method, url, params, success, failure) {
         withCredentials: false
     })
     .then(function (res) {
-      // console.log(res)
+      console.log(res)
       if (res.status === 200) {
           if (success) {
               success(res.data)
           }
-          if(!res.data.success){
-            Message.error(res.data.message);
-          }
           if(res.data.code=='1000001'){
             window.location.href ="#/";
+          }else if(!res.data.success){
+            // console.log(",,,,")
+            Message.error(res.data.message);
           }
+
       } else {
           if (failure) {
               failure(res.data)

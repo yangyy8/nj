@@ -88,8 +88,6 @@ export default {
        r => {
          if(r.success){
            this.nav1=r.data;
-         }else {
-           this.$message.error(r.message);
          }
        });
     }
