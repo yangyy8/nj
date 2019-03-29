@@ -346,7 +346,7 @@
           <el-col :span="8">
             <span class="yy-input-text">入住日期：</span>
             <el-date-picker class="yy-input-input"
-               v-model="form.rjrq" format="yyyy-MM-dd"
+               v-model="form.zsrq" format="yyyy-MM-dd"
                type="date" size="small" value-format="yyyy-MM-dd"
                placeholder="选择日期" >
             </el-date-picker>
@@ -364,7 +364,11 @@
 
           <el-col :span="8">
             <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.nlkrq"  class="yy-input-input"></el-input>
+            <el-date-picker class="yy-input-input"
+               v-model="form.nlkrq" format="yyyy-MM-dd"
+               type="date" size="small" value-format="yyyy-MM-dd"
+               placeholder="选择日期" >
+            </el-date-picker>
           </el-col>
           <el-col :span="8">
               <span class="yy-input-text">&nbsp;</span>
@@ -476,32 +480,32 @@
           <el-row :gutter="3">
             <el-col :span="8">
               <span class="yy-input-text">录入人：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djr"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djr"  :disabled="true" class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入单位：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djdw"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入日期：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djsj"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.djsj" :disabled="true" class="yy-input-input"></el-input>
+
             </el-col>
           </el-row>
           <el-row :gutter="3">
             <el-col :span="8">
               <span class="yy-input-text">修改人：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxr"  class="yy-input-input"></el-input>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxr" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
-              <span class="yy-input-text">录入单位：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxdw"  class="yy-input-input"></el-input>
+              <span class="yy-input-text">修改单位：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxdw" :disabled="true"  class="yy-input-input"></el-input>
             </el-col>
             <el-col :span="8">
-              <span class="yy-input-text">录入日期：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.gxsj"  class="yy-input-input"></el-input>
+              <span class="yy-input-text">修改日期：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="form.gxsj"  :disabled="true" class="yy-input-input"></el-input>
             </el-col>
           </el-row>
-
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="addItem('addForm')" size="small" v-show="edit">确 定</el-button>
@@ -732,6 +736,28 @@ export default {
     },
     addItem(afrom)
     {
+
+
+     if(this.form.gjdq=="CHN")
+     {
+
+         if(this.form.zwxm=="" || this.form.sfzh==""){
+
+            this.open('中文姓名和身份证号都不能为空！');
+          return  false;
+         }
+     }else if(this.form.gjdq==""){
+
+            this.open('国家地区不能为空！！');
+            return  false;
+     }else {
+
+       if(this.form.ywx=="" || this.form.ywm=="" || this.form.ywxm=="" || this.form.zjhm==""){
+         this.open('英文姓、英文名、英文姓名和证件号码都不能为空！');
+        return  false;
+       }
+     }
+
       var url = this.Global.aport2+"/data_report/update";
           this.$api.post(url, this.form,
           r => {
@@ -752,6 +778,11 @@ export default {
             this.$message.error('失败了');
           });
     },
+    open(content) {
+        this.$alert(content, '提示', {
+          confirmButtonText: '确定',
+        });
+      }
 
   }
 }

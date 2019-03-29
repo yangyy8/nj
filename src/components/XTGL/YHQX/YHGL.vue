@@ -130,10 +130,10 @@
            <span class="yy-input-text" >身份证号：</span>
              <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
            </el-col>
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="input"
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="multiple"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>
-           <el-select v-model="from.ssdwdm" multiple  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small" @change="changeValue">
+           <el-select v-model="from.ssdwdm" multiple   class="yy-input-input" placeholder="请选择"  size="small">
              <el-option
               v-for="item in company"
               :key="item.dm"
@@ -191,7 +191,7 @@
     </el-dialog>
 <div class="mnus">
     <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="500px">
-      <!-- <el-tree
+      <el-tree
         :data="menudata"
         :check-strictly="true"
         show-checkbox
@@ -201,8 +201,8 @@
         ref="tree"
         highlight-current
         :props="defaultProps">
-      </el-tree> -->
-      <el-tree
+      </el-tree>
+      <!-- <el-tree
         :data="menudata"
         show-checkbox
         default-expand-all
@@ -211,7 +211,7 @@
         ref="tree"
         highlight-current
         :props="defaultProps">
-      </el-tree>
+      </el-tree> -->
 
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="menuItem" size="small">保 存</el-button>
@@ -315,16 +315,16 @@ export default {
           });
     },
     adds(n,i){
-
+        this.from.ssdwdm="";
         this.addsDialogVisible=true;
         if (n != 0) {
         this.from=i;
         this.from.ssdwdm=i.ssdw.dm;
-        this.from.ssdwmc=i.ssdw.mc;
+        // this.from.ssdwmc=i.ssdw.mc;
         this.dialogText="编辑";
         this.tp = 1;
         }else {
-
+        this.$set(this.from,'ssdwdm',[]);
         this.dialogText="新增";
         this.tp = 0;
         }
@@ -344,10 +344,9 @@ export default {
         formData.append("pwd", this.from.pwd);
         formData.append("mc", this.from.mc);
         formData.append("sfyx", this.from.sfyx);
+        formData.append("sfzh", this.from.sfzh);
         formData.append("ssdw.dm", this.from.ssdwdm);
-        formData.append("ssdw.mc", this.from.ssdwmc);
-
-
+        // formData.append("ssdw.mc", this.from.ssdwmc);
          var url=this.Global.aport1+'/user/insertUser';
       if (this.tp == 1) {
         formData.append("id", this.from.id);
