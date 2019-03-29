@@ -7,16 +7,16 @@
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable size="small" class="input-input">
-                    <el-option value="U" label="U - 未知">
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                    <el-option value="0" label="0 - 未知">
                     </el-option>
-                    <el-option value="M" label="M - 男">
+                    <el-option value="1" label="1 - 男">
                     </el-option>
-                    <el-option value="F" label="F - 女">
+                    <el-option value="2" label="2 - 女">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -24,13 +24,13 @@
                   <span class="input-text">出生日期：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.CSRQKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.CSRQJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -38,18 +38,18 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="item in $store.state.gjdq"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">护照号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.HZHM" class="input-input"></el-input>
                 </el-col>
           </el-row>
          </el-col>
@@ -69,28 +69,28 @@
            border
            style="width: 100%"
            @selection-change="handleSelectionChange">
-           <el-table-column
+           <!-- <el-table-column
              type="selection"
              width="55">
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
-             prop="name"
+             prop="YWXM"
              label="英文姓名">
            </el-table-column>
            <el-table-column
-             prop="address" width="100"
+             prop="XBMC"
              label="性别">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="CSRQ"
              label="出生日期">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="HZHM"
              label="护照号码">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="GJDQMC"
              label="国家地区">
            </el-table-column>
            <el-table-column
@@ -139,7 +139,7 @@
           <el-upload
             class="input-input"
             ref="upload"
-            :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+            :action='actions+"/drlxslrwbd/readExcel"'
             :file-list="fileList"
             multiple
             :on-success="upSuccess"
@@ -158,30 +158,34 @@
   <el-dialog title="编辑" :visible.sync="editsDialogVisible">
     <el-form   ref="editform">
       <el-row :gutter="2"  class="mb-6">
-        <el-col :span="12" class="input-item">
-          <span class="input-text">中文姓名：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.name"  class="input-input"></el-input>
-        </el-col>
+
         <el-col :span="12" class="input-item">
           <span class="input-text">英文姓名：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.name"  class="input-input"></el-input>
+          <el-input placeholder="请输入内容" size="small" v-model="editform.YWXM"  class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">性别：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.name"  class="input-input"></el-input>
+          <el-input placeholder="请输入内容" size="small" v-model="editform.XBDM"  class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">护照号：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.name"  class="input-input"></el-input>
+          <el-input placeholder="请输入内容" size="small" v-model="editform.HZHM"  class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">国籍：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.name"  class="input-input"></el-input>
+          <span class="input-text">国家地区：</span>
+          <el-select v-model="editform.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+            <el-option
+              v-for="item in $store.state.gjdq"
+              :key="item.dm"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">出生日期：</span>
           <el-date-picker
-                v-model="editform.BIRTHDATESTART" format="yyyy-MM-dd"
+                v-model="editform.CSRQ" format="yyyy-MM-dd"
                 type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
                 placeholder="选择时间" >
           </el-date-picker>
@@ -199,33 +203,33 @@
       <el-row :gutter="2"  class="mb-6">
           <el-col :span="12" class="input-item">
            <span class="input-text">英文姓名：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
+           <span class="input-input detailinput">  {{mapForm.YWXM}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
             <span class="input-text">性别：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <span class="input-input detailinput">  {{mapForm.XBMC}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
            <span class="input-text">护照号：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
+           <span class="input-input detailinput">  {{mapForm.HZHM}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
-            <span class="input-text">国籍：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <span class="input-text">国家地区：</span>
+            <span class="input-input detailinput">  {{mapForm.GJDQMC}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
             <span class="input-text">出生日期：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <span class="input-input detailinput">  {{mapForm.CSRQ}}</span>
           </el-col>
       </el-row>
       <el-row :gutter="2">
           <el-col :span="12" class="input-item">
             <span class="input-text">操作人：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <span class="input-input detailinput">  {{mapForm.CZR}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
             <span class="input-text">操作日期：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <span class="input-input detailinput">  {{mapForm.CZSJ}}</span>
           </el-col>
       </el-row>
 
@@ -267,28 +271,13 @@ export default {
           label: "30"
         }
       ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
+      tableData: [],
 
     }
   },
   mounted() {
-
+     this.$store.dispatch('getGjdq');
+     this.getList(this.CurrentPage,this.pageSize,this.pd);
   },
   methods: {
 
@@ -309,7 +298,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3+'/drlxslrwbd/getLXSLRWBDPage', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -321,25 +310,43 @@ export default {
       this.mapForm=n;
     },
     edits(n){
+      console.log('n------',n);
       this.editsDialogVisible=true;
-      this.editForm=n;
+      this.editform=n;
     },
     editsItem(formName)
     {
+      this.$api.post(this.Global.aport3+'/drlxslrwbd/updateLXSLRWBD', this.editform,
+      r => {
+        console.log(r);
+        if (r.success) {
+          this.$message({
+            message: '保存成功！',
+            type: 'success'
+          });
+        } else {
+          this.$message.error(r.Message);
+        }
+        this.$refs[afrom].resetFields();
+        this.editsDialogVisible = false;
+        this.getList(this.CurrentPage,this.pageSize,this.pd);
 
+      }, e => {
+        this.$message.error('失败了');
+      });
     },
     deletes(i) {
     let p = {
-      "id": i.SERIAL
+      "RYBH":i.RYBH
     };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$api.post('/manage-platform/riskNameList/updateRiskNameListById', p,
+      this.$api.post(this.Global.aport3+'/drlxslrwbd/deleteLXSLRWBDById', p,
         r => {
-          console.log("===" + r);
+
           if (r.success) {
             this.$message({
               message: '删除成功！',
@@ -377,14 +384,14 @@ export default {
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
       if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsl 格式!');
+        this.$message.error('上传文件只能是 xlsx 格式!');
       }
       return isEXL;
     },
     showUpload() {
       this.uploadDialogVisible = true;
       this.typemd = "";
-      this.actions = this.$api.rootUrl;
+      this.actions =this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
@@ -401,7 +408,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = this.$api.rootUrl + '/manage-platform/templateFile/riskNameListFile.xlsx'
+      window.location.href = this.Global.aport3 + '/templateFile/南京工业大学未报到留学生名单.xls'
     },
   }
 }

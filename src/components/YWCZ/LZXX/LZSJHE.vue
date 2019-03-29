@@ -236,8 +236,9 @@
             <div class="block">
                <!-- <span class="demonstration">默认 Hover 指示器触发</span> -->
                <el-carousel height="210px">
-                 <el-carousel-item v-for="item in 4" :key="item">
+                 <el-carousel-item v-for="item in imagess" :key="item">
                    <!-- <h3>{{ item }}</h3> -->
+                 <img  :src="require('../../../assets/img/t1.png')" >
                  </el-carousel-item>
                </el-carousel>
               </div>
@@ -723,7 +724,7 @@ export default {
     },
     edits(n){
        this.eidtsDialogVisible=true;
-       this.getImg(n.uuid);
+
        let p={
         "id":n.uuid
        };
@@ -735,6 +736,9 @@ export default {
               this.form.hcl_gnw=r.data.hcl_gnw;
               this.form.hcq_gnw=r.data.hcq_gnw;
        });
+
+
+      this.getImg(n.uuid);
     },
     addItem(afrom)
     {
@@ -786,20 +790,27 @@ export default {
         });
       },
    getImg(id){
-        var url=this.Global.aport2+'/data_resource/selectTpxx';
+        var url=this.Global.aport2+'/data_report/selectTpxx';
         let p={
           "id":id
         };
         this.$api.post(url,p,
         r=>{
+        if (r.success) {
+
            this.imagess=r.data;
+         }
         });
       },
+
   }
 }
 </script>
 
 <style scoped>
+
+
+
 .el-button+.el-button {
     margin-left: 0px; margin-top: 10px;
 }
@@ -812,7 +823,7 @@ export default {
     margin: 0;
   }
   .el-carousel__item:nth-child(2n) {
-  background: url(../../../assets/img/t1.png);
+  /* background: url(../../../assets/img/t1.png); */
   background-size: 100% 100%;
   }
 

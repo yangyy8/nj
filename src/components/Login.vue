@@ -96,11 +96,8 @@ export default {
           this.$api.post(url,p,
              r => {
               if(r.success){
-
-
                   if(r.code==302){
                     this.companys=r.data;
-
                     this.companyDialogVisible=true;
                   }else if(r.code==200){
 
@@ -129,10 +126,10 @@ export default {
         var url=this.Global.aport1+'/user/doLogin';
         this.$api.post(url,p,r => {
           if(r.success){
-            this.$message({
-              message: '登录成功',
-              type: 'success'
-            });
+            // this.$message({
+            //   message: '登录成功',
+            //   type: 'success'
+            // });
             this.$store.commit('getToken',r.data.token)
             this.$store.commit('getUname',r.data.mc)
             console.log(this.$store.state.token)
@@ -146,7 +143,7 @@ export default {
       });
     },
     keyLogin(){
-  
+
      if(this.user.userName&&this.user.password){
        this.login();
      }

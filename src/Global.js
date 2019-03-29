@@ -5,7 +5,7 @@ const org="";
 const aport="http://192.168.3.217:9420";
 const aport1="http://192.168.3.217:9424";//api-permission
 const aport2="http://192.168.3.217:9439";
-const aport3="";
+const aport3="http://10.0.30.111:9424";//石飞
 const aport4="";
 const aport5="";
 const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQB";//国家地区

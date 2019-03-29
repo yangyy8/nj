@@ -126,10 +126,10 @@ this.getname();
       this.$api.post(url, p,
         r => {
           if (r.success) {
-            this.$message({
-              message: '退出成功',
-              type: 'success'
-            });
+            // this.$message({
+            //   message: '退出成功',
+            //   type: 'success'
+            // });
           }
           localStorage.clear();
           this.$router.push('/')

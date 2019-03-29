@@ -130,10 +130,11 @@
            <span class="yy-input-text" >身份证号：</span>
              <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
            </el-col>
+           {{from.ssdwdm}}
            <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="multiple"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>
-           <el-select v-model="from.ssdwdm" multiple   class="yy-input-input" placeholder="请选择"  size="small">
+           <el-select v-model="from.ssdwdm" multiple class="yy-input-input" placeholder="请选择"  size="mini">
              <el-option
               v-for="item in company"
               :key="item.dm"
@@ -214,6 +215,7 @@
 
 </template>
 <script>
+import {ToData} from '@/assets/js/ToArray.js'
 export default {
   data() {
     return {
@@ -221,7 +223,7 @@ export default {
       pageSize: 10,
       TotalResult: 0,
       pd: {},
-      from:{ssdwdm:'',ssdwmc:''},
+      from:{ssdwdm:[],ssdwmc:''},
       mapForm:{},
       tp:0,
       company:[],
@@ -305,15 +307,20 @@ export default {
           });
     },
     adds(n,i){
-        this.from.ssdwdm="";
+
         this.addsDialogVisible=true;
         if (n != 0) {
+        this.from.ssdwdm=ToData(i.ssdw.dm);
+            this.from.ssdwmc=i.ssdw.mc;
         this.from=i;
-        this.from.ssdwdm=i.ssdw.dm;
-        this.from.ssdwmc=i.ssdw.mc;
+
+        console.log(this.from)
+        console.log('this.from.ssdwdm',this.from.ssdwdm);
+
         this.dialogText="编辑";
         this.tp = 1;
         }else {
+        // this.from.ssdwdm=[];
         this.$set(this.from,'ssdwdm',[]);
         this.dialogText="新增";
         this.tp = 0;
@@ -370,7 +377,6 @@ export default {
     this.mapForm=i;
     this.mapForm.ssdwmc=i.ssdw.mc;
     this.detailsDialogVisible=true;
-
   },
     //删除
   deletes(i) {

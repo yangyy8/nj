@@ -89,7 +89,7 @@ export default {
          if(r.success){
            this.nav1=r.data;
          }else {
-           this.$message.error(r.message);
+           //this.$message.error(r.message);
          }
        });
     }

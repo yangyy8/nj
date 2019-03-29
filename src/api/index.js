@@ -42,15 +42,15 @@ function apiAxios (method, url, params, success, failure) {
     })
     .then(function (res) {
       // console.log(res)
+      if(res.data.code=='1000001'){
+        window.location.href ="#/";
+      }
       if (res.status === 200) {
           if (success) {
               success(res.data)
           }
           if(!res.data.success){
             Message.error(res.data.message);
-          }
-          if(res.data.code=='1000001'){
-            window.location.href ="#/";
           }
       } else {
           if (failure) {
@@ -59,6 +59,8 @@ function apiAxios (method, url, params, success, failure) {
               console.log('error: ' + JSON.stringify(res.data));
           }
       }
+
+
     })
     .catch(function (err) {
         let res = err.response

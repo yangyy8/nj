@@ -70,7 +70,8 @@ export default {
          if(r.success){
            this.memuData=r.data;
          }else {
-           this.$message.error(r.message);
+          // this.$message.error(r.message);
+          
          }
        });
     },
