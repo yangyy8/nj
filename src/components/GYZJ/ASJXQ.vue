@@ -268,7 +268,7 @@
 export default {
   data() {
     return {
-      yjTYpe:0,
+      yjType:0,
       tableData1:this.pl.tableData,
       tableData2:[],
       tableData3:[],
