@@ -146,6 +146,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/WGRFFJLYJ'], resolve),
         },
         {
+          path: 'WGRFFJLYJ_XQ',
+          name: 'WGRFFJLYJ_XQ',
+          meta:{title:['预警研判','预警','临住预警','外国人非法居留visa预警详情'],father:'WGRFFJLYJ'},
+          component: resolve => require(['@/components/GYZJ/ASJXQ'], resolve),
+        },
+        {
           path: 'CQQZFFJYYJ',
           name: 'CQQZFFJYYJ',
           meta:{title:['预警研判','预警','案事件预警','持长期签证非法就业预警']},
