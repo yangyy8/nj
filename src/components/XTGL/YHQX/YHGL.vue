@@ -202,16 +202,6 @@
         highlight-current
         :props="defaultProps">
       </el-tree>
-      <!-- <el-tree
-        :data="menudata"
-        show-checkbox
-        default-expand-all
-        node-key="dm"
-        :default-checked-keys="defaultChecked"
-        ref="tree"
-        highlight-current
-        :props="defaultProps">
-      </el-tree> -->
 
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="menuItem" size="small">保 存</el-button>
@@ -266,7 +256,7 @@ export default {
   },
   mounted() {
       this.getCompany();
-         this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
     handleSelectionChange(val) {
@@ -320,7 +310,7 @@ export default {
         if (n != 0) {
         this.from=i;
         this.from.ssdwdm=i.ssdw.dm;
-        // this.from.ssdwmc=i.ssdw.mc;
+        this.from.ssdwmc=i.ssdw.mc;
         this.dialogText="编辑";
         this.tp = 1;
         }else {
@@ -361,7 +351,7 @@ export default {
               type: 'success'
             });
              this.addsDialogVisible=false;
-
+             this.getList(this.CurrentPage, this.pageSize, this.pd);
             } else {
             this.$message.error(r.message);
           }

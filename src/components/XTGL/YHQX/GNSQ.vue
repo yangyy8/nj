@@ -57,7 +57,7 @@
           <el-col :span="8">
             <el-tree
               :data="menudata"
-              :check-strictly="false"
+              :check-strictly="true"
               show-checkbox
               default-expand-all
               node-key="dm"
