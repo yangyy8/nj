@@ -125,9 +125,9 @@ export default {
   height: 33.3%;
   font-size: 16px;
   color: #787e8c;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
   padding: 40px 0;
   border-bottom: 1px solid #273542;
 }
