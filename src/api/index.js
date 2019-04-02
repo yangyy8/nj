@@ -46,15 +46,9 @@ function apiAxios (method, url, params, success, failure) {
           if (success) {
               success(res.data)
           }
-
-          if(!res.data.success){
-            Message.error(res.data.message);
-          }
-
           if(res.data.code=='1000001'){
             window.location.href ="#/";
-          }
-          else if(!res.data.success){
+          }else if(!res.data.success){
             // console.log(",,,,")
             Message.error(res.data.message);
           }
