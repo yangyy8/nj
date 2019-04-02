@@ -130,7 +130,7 @@
            <span class="yy-input-text" >身份证号：</span>
              <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
            </el-col>
-        
+
            <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="multiple"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>

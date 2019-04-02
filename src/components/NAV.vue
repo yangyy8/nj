@@ -25,7 +25,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -72,7 +71,7 @@ export default {
 
          }else {
           // this.$message.error(r.message);
-          
+
          }
        });
     },
