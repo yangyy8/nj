@@ -23,7 +23,7 @@
 
         <!-- <div class="right-main-top"> -->
           <ul class="tabList">
-            <li class="tabList-item hand" :title="i.meta.title" :style="{width:tabliwidth}" :class="{'tabList-checked':tabListCheck==i.name}" v-for="(i, index) in tabList">
+            <li class="tabList-item hand" :title="i.meta.title[i.meta.title.length-1]" :style="{width:tabliwidth}" :class="{'tabList-checked':tabListCheck==i.name}" v-for="(i, index) in tabList">
               <span @click="tabClick(i)">{{i.meta.title[i.meta.title.length-1]}}</span>
               <img src="../assets/img/tab-close1.png" alt="guanbi" @click="close1(index,i)" class="hand" style="padding:8px" v-if="tabListCheck==i.name">
               <img src="../assets/img/tab-close2.png" alt="" @click="tabList.splice(index, 1)" style="padding:8px" class="hand" v-else>
@@ -90,9 +90,7 @@ export default {
       }
 
     }
-
-
-this.getname();
+    this.getname();
   },
   methods: {
     tabClick(i){
