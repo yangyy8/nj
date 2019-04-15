@@ -75,6 +75,7 @@
           <el-table
                :data="tableData"
                border
+               :highlight-current-row="true"
                style="width: 100%">
                <!-- <el-table-column
                  type="selection"

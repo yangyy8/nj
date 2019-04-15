@@ -67,8 +67,12 @@ function apiAxios (method, url, params, success, failure) {
             loadingInstance1.close();
           }
           if (success) {
+<<<<<<< HEAD
               success(res.data)
 
+=======
+            success(res.data)
+>>>>>>> 156eed893df7f7f98d1affb5863c040934952404
           }
           if(res.data.code=='1000001'){
             window.location.href ="#/";
