@@ -227,18 +227,17 @@
               <span class="yy-input-text" title="签证(注)号码">签证(注)号码：</span>
               <el-input placeholder="请输入内容" size="small" v-model="form.qzhm"  class="yy-input-input"></el-input>
             </el-col>
-
-
           </el-row>
-
           </el-col>
           <el-col :span="8">
+
             <div class="block">
-               <!-- <span class="demonstration">默认 Hover 指示器触发</span> -->
                <el-carousel height="210px">
-                 <el-carousel-item v-for="item in imagess" :key="item">
-                   <!-- <h3>{{ item }}</h3> -->
-                 <img  :src="require('../../../assets/img/t1.png')" >
+                 <el-carousel-item v-for="item in imagess" :key="item" v-show="imgshow1">
+                 <img  :src="item.tp" @click="opentp(item.tp,1)">
+                 </el-carousel-item>
+                 <el-carousel-item v-show="imgshow2">
+                 <img src="../../../assets/img/t1.png" @click="opentp(null,0)">
                  </el-carousel-item>
                </el-carousel>
               </div>
@@ -389,7 +388,7 @@
           </el-col>
           <el-col :span="16" v-show="shm"  class="crcolor">
             <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzid"  class="input-input" style="width:80%!important"></el-input>
+            <el-input placeholder="请输入内容" size="small" v-model="form.bzhdzmc"  class="input-input" style="width:80%!important"></el-input>
           </el-col>
 
           <!-- <el-col :span="8" v-show="shm"  class="crcolor">
@@ -433,15 +432,15 @@
               </el-option>
             </el-select>
           </el-col>
-
           <el-col :span="8">
-            <span class="yy-input-text" title="留宿单位(户主)">留宿单位(户主)：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.lsdwhz"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text" title="留宿单位(户主)电话">留宿单位(户主)电话：</span>
+            <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.lsdwhzdh"  class="yy-input-input"></el-input>
           </el-col>
+          <el-col :span="16">
+            <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="form.lsdwhz"  class="input-input" style="width:80%!important"></el-input>
+          </el-col>
+
           <el-col :span="8">
             <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.gnyqrdh"  class="yy-input-input"></el-input>
@@ -513,6 +512,10 @@
           <el-button @click="eidtsDialogVisible = false" size="small">取 消</el-button>
         </div>
       </el-dialog>
+      <el-dialog title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center">
+          <img src="../../../assets/img/t1.png" v-show="imgshow2">
+      </el-dialog>
+
   </div>
 
 </template>
@@ -546,6 +549,7 @@ export default {
       hcwlist:[],
       imagess:[],
       eidtsDialogVisible:false,
+      tcDialogVisible:false,
       options: [{
         value: 10,
         label: "10"
@@ -565,6 +569,9 @@ export default {
       lg:false,
       edit:true,
       rgsb:false,
+      imgshow1:false,
+      imgshow2:false,
+      imgs:[],
 
     }
   },
@@ -576,7 +583,8 @@ export default {
   if(this.cdt.sblx=="rgsbts"){
     this.rgsb=true;
   };
-
+  this.getGJDQ();
+  this.getDMXX();
   this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
@@ -731,19 +739,14 @@ export default {
        var url=this.Global.aport2+'/data_report/selectDjxx';
        this.$api.post(url,p,
        r=>{
-
               this.form=r.data;
               this.form.hcl_gnw=r.data.hcl_gnw;
               this.form.hcq_gnw=r.data.hcq_gnw;
        });
-
-
       this.getImg(n.uuid);
     },
     addItem(afrom)
     {
-
-
      if(this.form.gjdq=="CHN")
      {
 
@@ -796,11 +799,28 @@ export default {
         };
         this.$api.post(url,p,
         r=>{
+
         if (r.success) {
 
+          this.imgshow2=false;
+          this.imgshow1=true;
            this.imagess=r.data;
+         }else{
+           this.imgshow1=false;
+           this.imgshow2=true;
          }
+
         });
+      },
+      opentp(value,t){
+        console.log('t',t);
+        if(t==0)
+        {
+          this.imgs="require('../../../assets/img/t1.png')";
+        }else {
+          this.imgs=value;
+        }
+        this.tcDialogVisible=true;
       },
 
   }
@@ -814,7 +834,6 @@ export default {
 .el-button+.el-button {
     margin-left: 0px; margin-top: 10px;
 }
-
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;
@@ -822,11 +841,11 @@ export default {
     line-height: 150px;
     margin: 0;
   }
+  .el-carousel__item img{width: 100%; height: 100%; cursor: pointer;}
   .el-carousel__item:nth-child(2n) {
   /* background: url(../../../assets/img/t1.png); */
   background-size: 100% 100%;
   }
-
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
