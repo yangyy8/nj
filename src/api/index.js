@@ -44,7 +44,7 @@ function apiAxios (method, url, params, success, failure) {
 
       if (res.status === 200) {
           if (success) {
-              success(res.data)
+            success(res.data)
           }
           if(res.data.code=='1000001'){
             window.location.href ="#/";

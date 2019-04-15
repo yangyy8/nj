@@ -432,15 +432,31 @@ export default {
       tableData4:this.pl.tableData,
       tableData5:this.pl.tableData,
       tableData6:this.pl.tableData,
-      pd:{},
+      ryjb1:'/visaWarningController/getPersonInfoByRybh',//visa人员基本信息
+      qzxx1:'/visaWarningController/getQianZhengInfoByRybh',//visa签证详情
+      zsdj1:'/visaWarningController/getLinZhuListByRybh',//visa住宿登记信息
+      czxx1:'/visaWarningController/getChangZhuListByRybh',//visa常驻信息
 
+      ryjb2:'/visaWarningController/getPersonInfoByRybh',//visa人员基本信息
+      qzxx2:'/visaWarningController/getQianZhengInfoByRybh',//visa签证详情
+      zsdj2:'/visaWarningController/getLinZhuListByRybh',//visa住宿登记信息
+      czxx2:'/visaWarningController/getChangZhuListByRybh',//visa常驻信息
+
+      pd:{},
     }
   },
   activated(){
     this.yjType=this.$route.query.yjType;
     this.rybh=this.$route.query.rybh;
     // this.yjid=this.$route.query.yjid;
+    if(this.yjType==1){
+      this.getList(this.ryjb1,0);
+      this.getList(this.qzxx1,1);
+      this.getList(this.zsdj1,3);
+      this.getList(this.czxx1,4);
+    }else if(this.yjType==2){
 
+    }
     this.getList('/illegalEmploymentWarningController/getPersonInfoByRybh',0);//人员基本信息
     this.getList('/illegalEmploymentWarningController/getQianZhengInfoByRybh',1);
     this.getList('/illegalEmploymentWarningController/getChuRuJingListByRybh',2);

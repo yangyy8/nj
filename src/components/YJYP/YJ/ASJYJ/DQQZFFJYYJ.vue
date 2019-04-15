@@ -7,9 +7,9 @@
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ywxm" class="input-input"></el-input>
                 </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                <!-- <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
                   <el-select v-model="pd.sex" placeholder="请选择"  filterable clearable size="small" class="input-input">
                     <el-option value="U" label="U - 未知">
@@ -19,18 +19,18 @@
                     <el-option value="F" label="F - 女">
                     </el-option>
                   </el-select>
-                </el-col>
+                </el-col> -->
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">预警时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.yjrqStart" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.yjrqEnd" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -54,12 +54,10 @@
 
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">当前状态：</span>
-                  <el-select v-model="pd.STATUS2" placeholder="请选择"  filterable clearable size="small" class="input-input">
-                    <el-option value="0" label="0 - 未处理">
+                  <el-select v-model="pd.clzt" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                    <el-option value="0" label="0 - 未审核">
                     </el-option>
-                    <el-option value="1" label="1 - 处理中">
-                    </el-option>
-                    <el-option value="2" label="2 - 已处理">
+                    <el-option value="1" label="1 - 已审核">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -74,66 +72,66 @@
     <div class="yycontent">
        <div class="yylbt mb-15">甄别信息列表</div>
 
-      <el-table
-           :data="tableData"
-           border
-           style="width: 100%">
-           <!-- <el-table-column
-             type="selection"
-             width="55">
-           </el-table-column> -->
-           <el-table-column
-             prop="name"
-             label="姓名">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="性别">
-           </el-table-column>
-           <!-- <el-table-column
-             prop="address"
-             label="出生日期">
-           </el-table-column> -->
-           <el-table-column
-             prop="address"
-             label="国家地区">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="证件种类">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="证件号码">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="证件有效期">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="签证种类">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="签证号码">
-           </el-table-column>
-           <!-- <el-table-column
-             prop="address"
-             label="预警类型">
-           </el-table-column> -->
-           <el-table-column
-             prop="address"
-             label="预警时间">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="当前状态">
-           </el-table-column>
+       <el-table
+            :data="tableData"
+            border
+            style="width: 100%">
+            <!-- <el-table-column
+              type="selection"
+              width="55">
+            </el-table-column> -->
+            <el-table-column
+              prop="ywxm"
+              label="姓名">
+            </el-table-column>
+            <el-table-column
+              prop="xb"
+              label="性别">
+            </el-table-column>
+            <!-- <el-table-column
+              prop="address"
+              label="出生日期">
+            </el-table-column> -->
+            <el-table-column
+              prop="gjdq"
+              label="国家地区">
+            </el-table-column>
+            <el-table-column
+              prop="zjzl"
+              label="证件种类">
+            </el-table-column>
+            <el-table-column
+              prop="zjhm"
+              label="证件号码">
+            </el-table-column>
+            <el-table-column
+              prop="zjyxq"
+              label="证件有效期">
+            </el-table-column>
+            <el-table-column
+              prop="qzzl"
+              label="签证种类">
+            </el-table-column>
+            <el-table-column
+              prop="qzhm"
+              label="签证号码">
+            </el-table-column>
+            <!-- <el-table-column
+              prop="address"
+              label="预警类型">
+            </el-table-column> -->
+            <el-table-column
+              prop="yjsj"
+              label="预警时间">
+            </el-table-column>
+            <el-table-column
+              prop="cljg"
+              label="当前状态">
+            </el-table-column>
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2}})"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2,rybh:scope.row.rybh}})"></el-button>
              </template>
            </el-table-column>
          </el-table>
