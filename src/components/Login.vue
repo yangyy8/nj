@@ -85,13 +85,14 @@ export default {
     },
     login(){
         this.V.$submit('demo', (canSumit,data) => {
-          console.log(data)
+
           if(!canSumit) return;
           var ff=new FormData();
           ff.append("userName",this.user.userName);
           ff.append("password",this.user.password);
           let p=ff;
           var url=this.Global.aport1+'/user/doLogin';
+                console.log(url+'--')
             this.msg="";
           this.$api.post(url,p,
              r => {
@@ -103,7 +104,8 @@ export default {
 
                     this.$store.commit('getToken',r.data.token)
                     this.$store.commit('getUname',r.data.mc)
-                    console.log(this.$store.state.token)
+                    this.$store.commit('getOrgname',r.data.ssdw.mc)
+
                     this.Global.hasEnter="1";
                     this.$router.push({name: 'Index'});
 
@@ -132,6 +134,7 @@ export default {
             // });
             this.$store.commit('getToken',r.data.token)
             this.$store.commit('getUname',r.data.mc)
+            this.$store.commit('getOrgname',r.data.ssdw.mc)
             console.log(this.$store.state.token)
             // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
@@ -179,7 +182,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 300px;
+  min-width: 400px;
   min-height: 380px;
   /* justify-content:center; */
 }

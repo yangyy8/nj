@@ -7,7 +7,7 @@
               <el-row align="center"   :gutter="2">
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                        <span class="input-text">姓名：</span>
-                       <el-input placeholder="请输入内容" size="small" v-model="pd.ywxm" class="input-input"></el-input>
+                       <el-input placeholder="请输入内容" size="small" v-model="pd.zwxm" class="input-input"></el-input>
                     </el-col>
                     <!-- <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                       <span class="input-text">性别：</span>
@@ -81,7 +81,7 @@
                  width="55">
                </el-table-column> -->
                <el-table-column
-                 prop="ywxm"
+                 prop="zwxm"
                  label="姓名">
                </el-table-column>
                <el-table-column
@@ -177,11 +177,12 @@
           TotalResult: 0,
           pd: {},
           options: this.pl.ps,
-          tableData: this.pl.tableData
+          tableData: [],
         }
       },
       mounted() {
         this.$store.dispatch('getGjdq');
+        this.getList(this.CurrentPage, this.pageSize, this.pd);
       },
       methods: {
         pageSizeChange(val) {
@@ -195,18 +196,19 @@
           console.log(`当前页: ${val}`);
         },
         getList(currentPage, showCount, pd) {
+          this.pd.mxLx='ASJ_FFJL';
+          console.log('this.pd',this.pd);
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd
           };
-          this.$api.post('/warningInfoController/getInfoListByMxLx', p,
+          this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx', p,
             r => {
               this.tableData = r.data.resultList;
               this.TotalResult = r.data.totalResult;
             })
         },
-
       }
     }
     </script>

@@ -1,10 +1,26 @@
+
 // 配置API接口地址
 var root = ''
+
+
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "./static/IPConfig.js";
+script.onload = script.onreadystatechange = function() {
+  if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) {
+    root=''
+    script.onload = script.onreadystatechange = null;
+  }
+};
+document.body.appendChild(script);
+
 
 // 引用axios
 var axios = require('axios');
 import store from '../assets/js/store' //注册store
 import { Message } from 'element-ui';
+import { Loading } from 'element-ui';
+
 // 自定义判断元素类型JS
 function toType (obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -26,12 +42,16 @@ function filterNull (o) {
     return o
 }
 function apiAxios (method, url, params, success, failure) {
+  let loadingInstance1=null;
+  loadingInstance1 = Loading.service({ fullscreen: true, spinner: 'el-icon-loading',text:'正在加载中',background:'rgba(0,0,0,0.6)',customClass:'loadingClass'});
+
     if (params) {
         // params = filterNull(params);
         if(store.state.token){
           // params.token=store.state.token
         }
     }
+
     axios({
         method: method,
         url: url,
@@ -43,8 +63,12 @@ function apiAxios (method, url, params, success, failure) {
     .then(function (res) {
 
       if (res.status === 200) {
+          if(loadingInstance1){
+            loadingInstance1.close();
+          }
           if (success) {
               success(res.data)
+
           }
           if(res.data.code=='1000001'){
             window.location.href ="#/";
@@ -54,6 +78,9 @@ function apiAxios (method, url, params, success, failure) {
           }
 
       } else {
+          if(loadingInstance1){
+            loadingInstance1.close();
+          }
           if (failure) {
               failure(res.data)
           } else {
@@ -64,6 +91,9 @@ function apiAxios (method, url, params, success, failure) {
 
     })
     .catch(function (err) {
+      if(loadingInstance1){
+        loadingInstance1.close();
+      }
         let res = err.response
         if (err) {
             // console.log('api error, HTTP CODE: ' + res.status)

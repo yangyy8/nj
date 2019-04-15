@@ -10,7 +10,8 @@
 .yt-16{padding-top: 16px!important;}
 .yyf{font-size:12px;}
 .ycolor{color: #666666;}
-.yyred{color: red;}
+.yyred{color: red!important;}
+.yyinput.el-input__inner{color: red!important;}
 .yyblue{color: blue;}
 .stu-left {
   border: 1px #eee solid;

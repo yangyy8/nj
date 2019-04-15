@@ -347,6 +347,12 @@ export default new Router({
           component: resolve => require(['@/components/YWCZ/LZXX/JSQKKH'], resolve),
         },
         {
+          path: 'ZQQKKH',
+          name: 'ZQQKKH',
+          meta:{title:['业务操作','临住信息','临住登记统计分析']},
+          component: resolve => require(['@/components/YWCZ/LZXX/ZQQKKH'], resolve),
+        },
+        {
           path: 'CWSJXG',
           name: 'CWSJXG',
           meta:{title:['业务操作','临住信息','错误数据修改']},
@@ -453,6 +459,12 @@ export default new Router({
           name: 'YHSQ',
           meta:{title:['系统管理','用户权限','用户授权']},
           component: resolve => require(['@/components/XTGL/YHQX/YHSQ'], resolve),
+        },
+        {
+          path: 'PLSQ',
+          name: 'PLSQ',
+          meta:{title:['系统管理','用户权限','批量授权']},
+          component: resolve => require(['@/components/XTGL/YHQX/PLSQ'], resolve),
         },
         {
           path: 'Login',

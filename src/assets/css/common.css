@@ -241,8 +241,8 @@ table td,thead th{
   height: 38px;
   line-height: 38px;
 }
-.stu-col-row2{  border: 1px solid #eee;}
-
+.stu-col-row2{  border: 1px solid #eee;line-height: 38px; }
+.stu-col-row2 span{padding-left: 20px;color: #6c6c6c;}
 .stu-row2 span {
   display: inline-block;
   padding-left:20px;

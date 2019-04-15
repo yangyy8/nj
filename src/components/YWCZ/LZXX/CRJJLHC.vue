@@ -10,13 +10,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd.beginTime" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyymmddhhmmss"
+                       type="date" size="small" value-format="yyyyMMddHHmmss"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd.endTime" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyymmddhhmmss"
+                        type="date" size="small" value-format="yyyyMMddHHmmss"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -50,35 +50,35 @@
              prop="jsts"
              label="接收数据">
              <template slot-scope="scope">
-             <a @click="toLink(scope.row,'jsts')" href="#"> {{scope.row.jsts}} </a>
+             <a class="sb" @click="toLink (scope.row,'jsts')"> {{scope.row.jsts}} </a>
              </template>
            </el-table-column>
            <el-table-column
              prop="cgts"
-             label="核查成功上报">
+             label="无差错上报">
              <template slot-scope="scope">
-             <a @click="toLink(scope.row,'cgts')" href="#"> {{scope.row.cgts}} </a>
+             <a class="sb" @click="toLink (scope.row,'cgts')" > {{scope.row.cgts}} </a>
              </template>
            </el-table-column>
-           <!-- <el-table-column
+           <el-table-column
              prop="sbts"
-             label="错误数据">
+             label="差错修改上报">
              <template slot-scope="scope">
-             <a @click="toLink(scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
+             <a class="sb" @click="toLink (scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
              </template>
-           </el-table-column> -->
+           </el-table-column>
            <el-table-column
              prop="rgsbts"
-             label="人工处理">
+             label="人工干预">
              <template slot-scope="scope">
-             <a @click="toLink(scope.row,'rgsbts')" href="#"> {{scope.row.rgsbts}} </a>
+             <a class="sb" @click="toLink (scope.row,'rgsbts')" > {{scope.row.rgsbts}} </a>
              </template>
            </el-table-column>
            <!-- <el-table-column
              prop="sbzts"
              label="上报数据">
              <template slot-scope="scope">
-                <a @click="toLink(scope.row,'sbzts')" href="#"> {{scope.row.sbzts}} </a>
+                <a class="sb" @click="toLink (scope.row,'sbzts')" href="#"> {{scope.row.sbzts}} </a>
              </template>
            </el-table-column> -->
 
@@ -126,7 +126,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {type:'1',hcq_gnw:'0',hcq_gnl:'0'},
+      pd: {beginTime:'',endTime:''},
       form:{},
       nation:[],
       tableData:[],
@@ -151,7 +151,6 @@ export default {
     }
   },
   mounted() {
-  
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
@@ -194,7 +193,8 @@ export default {
 
 <style scoped>
 a{color: blue}
-
+.sb{display:block;width:100%;height:100%;cursor:pointer;}
+.sb:hover{color: red}
 .el-carousel__item h3 {
     color: #475669;
     font-size: 14px;

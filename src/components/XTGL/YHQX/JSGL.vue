@@ -4,7 +4,7 @@
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
-          <el-row align="center"   :gutter="2">
+          <el-row align="center" :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">所属单位：</span>
                    <el-select v-model="pd.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
@@ -51,7 +51,7 @@
            </el-table-column>
            <el-table-column
              prop="sfyx"
-             label="状态">
+             label="状态" width="100">
              <template slot-scope="scope">
               <span :class="{'yyred':scope.row.sfyx == '0','yyblue':scope.row.sfyx == '1'}">  {{scope.row.sfyx | fifterstatus}}</span>
              </template>
@@ -70,14 +70,15 @@
            </el-table-column>
 
            <el-table-column
-             label="操作" width="220">
+             label="操作" width="180">
              <template slot-scope="scope">
                <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row);"></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
-             <el-button type="text"  class="a-btn"  title="停用"  v-if='scope.row.sfyx=="1"'  icon="iconfont el-icon-yy-tingyong2" @click="stop(scope.row,false)"></el-button>
-             <el-button type="text"  class="a-btn"  title="启用"  v-if='scope.row.sfyx=="0"' icon="iconfont el-icon-yy-tingyong2" @click="stop(scope.row,true)"></el-button>
-             <el-button type="text"  class="a-btn"  title="菜单权限"  icon="el-icon-setting" @click="menus(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="停用"  v-if='scope.row.sfyx=="1"'  icon="iconfont el-icon-yy-tingyong3" @click="stop(scope.row,false)"></el-button>
+             <el-button type="text"  class="a-btn"  title="启用"  v-if='scope.row.sfyx=="0"' icon="iconfont el-icon-yy-kaiqi" @click="stop(scope.row,true)"></el-button>
+             <!-- <el-button type="text"  class="a-btn"  title="菜单权限"  icon="el-icon-setting" @click="menus(scope.row)"></el-button> -->
+              <el-button type="text"  class="a-btn"  title="关联到用户"  icon="iconfont el-icon-yy-jiaoseyonghu" @click="relationyh(scope.row)"></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -205,6 +206,94 @@
       </div>
     </el-dialog>
 </div>
+
+<el-dialog title="关联到用户" :visible.sync="yhDialogVisible">
+  <el-row type="flex">
+    <el-col :span="24">
+          <el-row type="flex">
+            <el-col :span="21" class="pr-20">
+              <el-row align="center"   :gutter="2">
+                <!-- <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
+                  <span class="input-text">所属单位：</span>
+                  <el-select v-model="pd1.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
+                    <el-option
+                     v-for="item in company"
+                     :key="item.dm"
+                     :label="item.mc"
+                     :value="item.dm">
+                   </el-option>
+                  </el-select>
+                </el-col> -->
+               <el-col  :sm="24" :md="12" :lg="12"   class="input-item">
+                  <span class="input-text">姓名：</span>
+                  <el-input placeholder="请输入内容" size="small" v-model="pd1.mc"   class="input-input"></el-input>
+              </el-col>
+            </el-row>
+           </el-col>
+           <el-col :span="3">
+              <el-button type="success" size="small" @click="CurrentPage1=1;getList1(CurrentPage1,pageSize1,pd1)">查询</el-button>
+           </el-col>
+          </el-row>
+
+            <el-table
+             ref="listPowerSupplyTab"
+             :data="tableData1"
+             border
+             class="stu-table"
+             style="width: 100%"
+             @selection-change="handleSelectionChange1">
+             <el-table-column
+               type="selection"
+               width="55">
+             </el-table-column>
+             <el-table-column
+               prop="mc"
+               label="姓名">
+             </el-table-column>
+             <el-table-column
+               prop="ssdw.mc"
+               label="所属单位">
+             </el-table-column>
+           </el-table>
+           <div class="middle-foot mt-10">
+              <div class="page-msg">
+                <div class="">
+              共{{TotalResult1}}条记录
+                </div>
+                <div class="">
+                  每页显示
+                  <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                  条
+                </div>
+                <div class="">
+                共{{Math.ceil(TotalResult1/pageSize1)}}页
+                </div>
+              </div>
+              <el-pagination
+                background
+                @current-change="handleCurrentChange1"
+                :current-page.sync ="CurrentPage1"
+                :page-size="pageSize1"
+                layout="prev, pager, next"
+                :total="TotalResult1">
+              </el-pagination>
+            </div>
+
+
+    </el-col>
+  </el-row>
+  <div slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="yhItem" size="small">保 存</el-button>
+    <el-button @click="yhDialogVisible = false" size="small">取 消</el-button>
+  </div>
+</el-dialog>
   </div>
 
 </template>
@@ -215,7 +304,11 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
+      CurrentPage1: 1,
+      pageSize1: 10,
+      TotalResult1: 0,
       pd: {},
+      pd1:{},
       from:{ssdwdm:'',ssdwmc:''},
       mapf:{},
       company:{},
@@ -225,6 +318,7 @@ export default {
       addsDialogVisible:false,
       detailsDialogVisible:false,
       menuDialogVisible:false,
+      yhDialogVisible:false,
       options: [{
         value: 10,
         label: "10"
@@ -239,6 +333,9 @@ export default {
       }
     ],
       tableData: [],
+      tableData1:[],
+      multipleSelection:[],
+      multipleSelection1:[],
     roleid:'',
     menudata:[],
     defaultProps: {
@@ -249,6 +346,7 @@ export default {
 
     }
   },
+
   mounted() {
      this.getCompany();
      this.getList(this.CurrentPage, this.pageSize, this.pd);
@@ -257,12 +355,23 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    handleSelectionChange1(val) {
+      this.multipleSelection1 = val;
+    },
     pageSizeChange(val) {
       this.getList(this.CurrentPage, val, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.getList(val, this.pageSize, this.pd);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange1(val) {
+      this.getList(this.CurrentPage1, val, this.pd1);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange1(val) {
+      this.getList(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
     getCompany(){
@@ -289,6 +398,21 @@ export default {
          r => {
            this.tableData = r.data.resultList;
            this.TotalResult = r.data.totalCount;
+         });
+    },
+    getList1(currentPage, showCount, pd) {
+      var formData = new FormData();
+        formData.append("currentPage", currentPage);
+        formData.append("showCount", showCount);
+        formData.append("roleid", this.roleid);
+        formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
+        formData.append("token", this.$store.state.token);
+        let p=formData;
+        var url=this.Global.aport1+'/user/getAllByRelationalRole';
+        this.$api.post(url, p,
+         r => {
+           this.tableData1 = r.data.resultList;
+           this.TotalResult1 = r.data.totalCount;
          });
     },
     adds(n,i){
@@ -348,7 +472,6 @@ export default {
         this.mapf.cjdwmc=i.cjdw.mc;
         this.mapf.cjrmc=i.cjr.mc;
         this.detailsDialogVisible=true;
-
       },
         //删除
       deletes(i) {
@@ -471,6 +594,52 @@ export default {
                this.menuDialogVisible = false;
 
        },
+       relationyh(i){
+
+         this.roleid=i.id;
+         this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
+
+                     this.$nextTick( ()=> {
+                         this.$refs.listPowerSupplyTab.toggleRowSelection(this.$refs.listPowerSupplyTab.data[0],true);
+                     })
+          this.yhDialogVisible=true;
+       },
+
+       yhItem()
+       {
+         var formData = new FormData();
+         if (this.multipleSelection1.length == 0) {
+               this.$message.error('请选择用户列表内容！');
+              return;
+         }
+         var checkeds=[];var userids=[];
+         for (var i = 0; i < this.multipleSelection1.length; i++)
+         {  var s = this.multipleSelection1[i].id;
+             userids.push(s);
+             var gg=true;
+             checkeds.push(gg);
+         }
+
+           formData.append("roleid", this.roleid);
+           formData.append("userids", userids);
+           formData.append("checkeds", checkeds);
+           formData.append("token", this.$store.state.token);
+           let p=formData;
+           var url=this.Global.aport1+'/role/updateAllByRelationalRole';
+           this.$api.post(url, p,
+            r => {
+              if (r.success) {
+                this.$message({
+                  type: 'success',
+                  message: '保存成功'
+                });
+                 this.yhDialogVisible=false;
+              }else{
+
+                this.$message.error('保存失败');
+              }
+            });
+       },
   },
   filters: {
 
@@ -490,4 +659,8 @@ export default {
 <style scoped>
 .yy-input-text{ width: 20%!important;}
 .yy-input-input{ width: 75%!important;}
+</style>
+<style>
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td, .el-table__body tr.hover-row.current-row>td, .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .el-table__body tr.hover-row.el-table__row--striped>td, .el-table__body tr.hover-row>td
+{background-color:#ECB96C !important;}
 </style>

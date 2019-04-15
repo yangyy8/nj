@@ -12,11 +12,11 @@
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
                   <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
-                    <el-option value="0" label="0 - 未知">
-                    </el-option>
-                    <el-option value="1" label="1 - 男">
-                    </el-option>
-                    <el-option value="2" label="2 - 女">
+                    <el-option
+                      v-for="(item,ind0) in $store.state.xb"
+                      :key="ind0"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -165,7 +165,14 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">性别：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editform.XBDM"  class="input-input"></el-input>
+          <el-select v-model="editform.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+            <el-option
+              v-for="(item,ind1) in $store.state.xb"
+              :key="ind1"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">护照号：</span>
@@ -277,6 +284,7 @@ export default {
   },
   mounted() {
      this.$store.dispatch('getGjdq');
+     this.$store.dispatch('getXB');
      this.getList(this.CurrentPage,this.pageSize,this.pd);
   },
   methods: {
@@ -408,7 +416,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = this.Global.aport3 + '/templateFile/南京工业大学未报到留学生名单.xls'
+      window.location.href = this.Global.aport3 + '/templateFile/未报到留学生导入模板.xls'
     },
   }
 }

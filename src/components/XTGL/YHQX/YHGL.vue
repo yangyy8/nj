@@ -31,7 +31,7 @@
 
     <div class="yycontent">
       <el-row class="mb-15">
-        <el-button type="primary"  size="small" @click="adds(0,'');from={};">新增</el-button>
+        <el-button type="primary"  size="small" @click="from={};adds(0,'');">新增</el-button>
         </el-row>
       <el-table
            ref="multipleTable"
@@ -52,8 +52,11 @@
              label="登录号/警号">
            </el-table-column>
            <el-table-column
-             prop="ssdw.mc"
+             prop="ssdw"
              label="所属单位">
+             <template slot-scope="scope">
+              <span>  {{getDM(scope.row.ssdw)}}</span>
+             </template>
            </el-table-column>
            <el-table-column
              label="状态">
@@ -62,16 +65,16 @@
              </template>
            </el-table-column>
            <el-table-column
-             label="操作" width="220">
+             label="操作" width="260">
              <template slot-scope="scope">
                <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row);"></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
-             <el-button type="text"  class="a-btn"  title="停用"  v-if='scope.row.sfyx=="1"'  icon="iconfont el-icon-yy-tingyong2" @click="stop(scope.row,false)"></el-button>
-             <el-button type="text"  class="a-btn"  title="启用"  v-if='scope.row.sfyx=="0"' icon="iconfont el-icon-yy-tingyong2" @click="stop(scope.row,true)"></el-button>
-             <el-button type="text"  class="a-btn"  title="重置密码"  icon="iconfont el-icon-yy-zhongzhimima" @click="resetpwd(scope.row)"></el-button>
-             <el-button type="text"  class="a-btn"  title="临时赋权"  icon="el-icon-setting" @click="menus(scope.row)"></el-button>
-
+             <el-button type="text"  class="a-btn"  title="停用"  v-if='scope.row.sfyx=="1"'  icon="iconfont el-icon-yy-tingyong3" @click="stop(scope.row,false)"></el-button>
+             <el-button type="text"  class="a-btn"  title="启用"  v-if='scope.row.sfyx=="0"' icon="iconfont el-icon-yy-kaiqi" @click="stop(scope.row,true)"></el-button>
+             <el-button type="text"  class="a-btn"  title="重置密码"  icon="iconfont el-icon-yy-zhongzhimima1" @click="resetpwd(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="临时赋权"  icon="iconfont el-icon-yy-jiaoseguanli" @click="menus(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="关联到角色"  icon="iconfont el-icon-yy-jiaoseliebiao" @click="relationjs(scope.row)"></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -131,10 +134,10 @@
              <el-input placeholder="请输入内容" size="small" v-model="from.sfzh"  class="yy-input-input"></el-input>
            </el-col>
 
-           <el-col :span="24" class="yzform" data-scope="demo" data-name="ssdwdm" data-type="multiple"
+           <el-col :span="24" class="yzform" data-scope="demo" data-name="dwdm" data-type="multiple"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >所属单位：</span>
-           <el-select v-model="from.ssdwdm" multiple class="yy-input-input" placeholder="请选择"  size="mini">
+           <el-select v-model="from.dwdm" multiple class="yy-input-input" placeholder="请选择"  size="small">
              <el-option
               v-for="item in company"
               :key="item.dm"
@@ -191,7 +194,22 @@
     </div>
     </el-dialog>
 <div class="mnus">
-    <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="500px">
+    <el-dialog title="临时赋权" :visible.sync="menuDialogVisible" width="600px">
+      <el-row  :gutter="1">
+        <el-col :span="24">
+          <span class="yy-input-text">所属单位：</span>
+           <el-select v-model="pd2.org"  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small">
+             <el-option
+              v-for="item in this.ssdw"
+              :key="item.dm"
+              :label="item.mc"
+              :value="item.dm">
+            </el-option>
+           </el-select>
+        </el-col>
+
+      <el-col :span="24">
+          <span class="yy-input-text">进行下面赋权：</span>
       <el-tree
         :data="menudata"
         :check-strictly="true"
@@ -201,15 +219,105 @@
         :default-checked-keys="defaultChecked"
         ref="tree"
         highlight-current
+        class="yy-input-input"
+        style="padding-left:20%;"
         :props="defaultProps">
       </el-tree>
-
+    </el-col>
+   </el-row>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="menuItem" size="small">保 存</el-button>
         <el-button @click="menuDialogVisible = false" size="small">取 消</el-button>
       </div>
     </el-dialog>
 </div>
+
+  <el-dialog title="关联到角色" :visible.sync="jsDialogVisible">
+    <el-row type="flex">
+      <el-col :span="24">
+            <el-row type="flex">
+              <el-col :span="21" class="pr-20">
+                <el-row align="center"   :gutter="2">
+                  <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
+                    <span class="input-text">所属单位：</span>
+                    <el-select v-model="pd1.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
+                      <el-option
+                       v-for="item in this.ssdw"
+                       :key="item.dm"
+                       :label="item.mc"
+                       :value="item.dm">
+                     </el-option>
+                    </el-select>
+                  </el-col>
+                 <el-col  :sm="24" :md="12" :lg="12"   class="input-item">
+                    <span class="input-text">角色名称：</span>
+                    <el-input placeholder="请输入内容" size="small" v-model="pd1.mc"   class="input-input"></el-input>
+                </el-col>
+              </el-row>
+             </el-col>
+             <el-col :span="3">
+                <el-button type="success" size="small" @click="CurrentPage1=1;getList1(CurrentPage1,pageSize1,pd1)">查询</el-button>
+             </el-col>
+            </el-row>
+              <el-table
+               ref="multipleTable"
+               :data="tableData1"
+               border
+               class="stu-table"
+               style="width: 100%"
+               @selection-change="handleSelectionChange1">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
+               <el-table-column
+                 prop="mc"
+                 label="角色名称">
+               </el-table-column>
+               <el-table-column
+                 prop="ssdw.mc"
+                 label="所属单位">
+               </el-table-column>
+             </el-table>
+             <div class="middle-foot mt-10">
+                <div class="page-msg">
+                  <div class="">
+                共{{TotalResult1}}条记录
+                  </div>
+                  <div class="">
+                    每页显示
+                    <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    条
+                  </div>
+                  <div class="">
+                  共{{Math.ceil(TotalResult1/pageSize1)}}页
+                  </div>
+                </div>
+                <el-pagination
+                  background
+                  @current-change="handleCurrentChange1"
+                  :current-page.sync ="CurrentPage1"
+                  :page-size="pageSize1"
+                  layout="prev, pager, next"
+                  :total="TotalResult1">
+                </el-pagination>
+              </div>
+
+
+      </el-col>
+    </el-row>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="jsItem" size="small">保 存</el-button>
+      <el-button @click="jsDialogVisible = false" size="small">取 消</el-button>
+    </div>
+  </el-dialog>
 
   </div>
 
@@ -222,8 +330,14 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
+      CurrentPage1: 1,
+      pageSize1: 10,
+      TotalResult1: 0,
+      rddw:false,
       pd: {},
-      from:{ssdwdm:[],ssdwmc:''},
+      pd1:{},
+      pd2:{},
+      from:{ssdwdm:'',ssdwmc:''},
       mapForm:{},
       tp:0,
       company:[],
@@ -232,6 +346,7 @@ export default {
       addsDialogVisible:false,
       detailsDialogVisible:false,
       menuDialogVisible: false,
+      jsDialogVisible:false,
       options: [{
         value: 10,
         label: "10"
@@ -246,6 +361,9 @@ export default {
       }
     ],
       tableData: [],
+      tableData1:[],
+      multipleSelection:[],
+      multipleSelection1:[],
       menudata:[],
       defaultProps: {
         children: 'children',
@@ -253,16 +371,22 @@ export default {
       },
       defaultChecked:[],
       userid:'',
+      org:'',
+      ssdw:[],
 
     }
   },
   mounted() {
       this.getCompany();
       this.getList(this.CurrentPage, this.pageSize, this.pd);
+      console.log(this.from)
   },
   methods: {
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection=val;
+    },
+    handleSelectionChange1(val) {
+      this.multipleSelection1=val;
     },
     pageSizeChange(val) {
       this.getList(this.CurrentPage, val, this.pd);
@@ -270,6 +394,14 @@ export default {
     },
     handleCurrentChange(val) {
       this.getList(val, this.pageSize, this.pd);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange1(val) {
+      this.getLis1t(this.CurrentPage1, val, this.pd1);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange1(val) {
+      this.getList1(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
     changeValue(value){
@@ -306,26 +438,67 @@ export default {
             this.TotalResult = r.data.totalCount;
           });
     },
+    getList1(currentPage, showCount, pd) {
+      if(this.pd1.org=='' || this.pd1.org==undefined)
+      {
+        this.$message.error('所属单位不能为空！');return;
+      }
+       var formData = new FormData();
+         formData.append("currentPage", currentPage);
+         formData.append("showCount", showCount);
+         formData.append("org", this.pd1.org==undefined?this.Global.org:this.pd1.org);
+         formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
+         formData.append("token", this.$store.state.token);
+         formData.append("userid",this.userid);
+         let p=formData;
+         var url=this.Global.aport1+'/role/getAllByRelationalUser';
+         this.$api.post(url, p,
+          r => {
+            this.tableData1 = r.data.resultList;
+            this.TotalResult1 = r.data.totalCount;
+            console.log('-----',this.tableData1[0]);
+          });
+
+    },
+
+    getDM(n){
+
+      var sum='';
+      for (var i = 0; i < n.length; i++) {
+      sum=sum+','+n[i].mc ;
+      }
+      return sum.substring(1, sum.length);;
+    },
     adds(n,i){
 
-        this.addsDialogVisible=true;
+        this.V.$reset("demo");
+
         if (n != 0) {
-        this.from.ssdwdm=ToData(i.ssdw.dm);
-            this.from.ssdwmc=i.ssdw.mc;
-        this.from=i;
+        //this.from.ssdwdm=ToData(i.ssdw.dm);
+        var formData = new FormData();
+          formData.append("id", i.id);
+          formData.append("token", this.$store.state.token);
+          let p=formData;
+        this.$api.post(this.Global.aport1+'/user/getById', p,
+         r => {
+           this.from = r.data;
+           var arr=r.data.dwdm.split(',');
+           this.from.dwdm=arr;
 
-        console.log(this.from)
-        console.log('this.from.ssdwdm',this.from.ssdwdm);
-
+         });
         this.dialogText="编辑";
         this.tp = 1;
         }else {
-        // this.from.ssdwdm=[];
-        this.$set(this.from,'ssdwdm',[]);
+          debugger;
+          this.from.dwdm=[{
+          dm: 'as',
+          mc: '123'
+          }];
         this.dialogText="新增";
         this.tp = 0;
         }
-        this.V.$reset("demo");
+      this.addsDialogVisible=true;
+
     },
     //添加和编辑
   addItem(addForm)
@@ -342,7 +515,7 @@ export default {
         formData.append("mc", this.from.mc);
         formData.append("sfyx", this.from.sfyx);
         formData.append("sfzh", this.from.sfzh);
-        formData.append("ssdw.dm", this.from.ssdwdm);
+        formData.append("dwdm", this.from.dwdm);
         // formData.append("ssdw.mc", this.from.ssdwmc);
          var url=this.Global.aport1+'/user/insertUser';
       if (this.tp == 1) {
@@ -473,22 +646,30 @@ export default {
 
     },
 //临时赋权
-menus(i) {
+   menus(i) {
+    this.pd2={};
     this.menuDialogVisible = true;
     this.userid=i.id;
     var ff=new FormData();
     ff.append("token",this.$store.state.token);
+    ff.append("org",this.pd2.org);
     ff.append("userid",this.userid);
     let p =ff;
-    var lists=new Array();
-         var url1=this.Global.aport1+'/fun/getByUserID';
-    this.$api.post(url1, p,
+
+    this.$api.post(this.Global.aport1+'/user/getSsdwByUserId', p,
     rr=>{
-      var arrs=rr.data;
-      for (var i = 0; i < arrs.length; i++) {
-         lists.push(arrs[i].id);
-      }
+       this.ssdw=rr.data;
     });
+
+    // var lists=new Array();
+    //      var url1=this.Global.aport1+'/fun/getByUserID';
+    // this.$api.post(url1, p,
+    // rr=>{
+    //   var arrs=rr.data;
+    //   for (var i = 0; i < arrs.length; i++) {
+    //      lists.push(arrs[i].id);
+    //   }
+    // });
     var url=this.Global.aport1+'/fun/getFunTreeByUserID';
     this.$api.post(url, p,
       r => {
@@ -501,10 +682,26 @@ menus(i) {
       })
 
 
+     },
+  open(content) {
+    this.$alert(content, '提示', {
+      confirmButtonText: '确定',
+    });
   },
   menuItem(){
 
+    if(this.pd2.org==undefined || this.pd2.org=='')
+    {
+      this.open("请选择所属单位！");
+      return;
+    }
+
     let checkList=this.$refs.tree.getCheckedNodes();
+  //  console.log('checkList',checkList);
+    if(checkList.length==0){
+      this.open("请选择权限！");
+      return;
+    }
     var array=checkList;
     var childrenlist=new Array();
     //console.log('checkList',checkList);
@@ -516,6 +713,8 @@ menus(i) {
     var ff=new FormData();
     ff.append("token",this.$store.state.token);
     ff.append("userid",this.userid);
+    if(this.pd2.org!=undefined)
+    {  ff.append("org",this.pd2.org);}
     ff.append("funids",childrenlist);
       let p=ff;
         var url=this.Global.aport1+'/fun/updateFunsToUser';
@@ -534,6 +733,71 @@ menus(i) {
           this.menuDialogVisible = false;
 
   },
+      //关联到角色
+      relationjs(i)
+      {
+        this.userid=i.id;
+
+        var ffs=new FormData();
+        ffs.append("token",this.$store.state.token);
+        ffs.append("userid",i.id);
+        let pp =ffs;
+        this.$api.post(this.Global.aport1+'/user/getSsdwByUserId', pp,
+        rr=>{
+          console.log('----',rr.data);
+           this.ssdw=rr.data;
+        });
+         this.jsDialogVisible=true;
+         // var formData = new FormData();
+         //   formData.append("currentPage", this.CurrentPage1);
+         //   formData.append("showCount", this.pageSize1);
+         //   formData.append("org", this.pd1.org);
+         //   formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
+         //   formData.append("token", this.$store.state.token);
+         //   let p=formData;
+         //   var url=this.Global.aport1+'/role/getAll';
+         //   this.$api.post(url, p,
+         //    r => {
+         //      this.tableData1 = r.data.resultList;
+         //      this.TotalResult1 = r.data.totalCount;
+         //    });
+      },
+      //保存关联到角色
+      jsItem(){
+
+        var formData = new FormData();
+        if (this.multipleSelection1.length == 0) {
+              this.$message.error('请选择角色列表内容！');
+             return;
+        }
+        var checkeds=[];var roleids=[];
+        for (var i = 0; i < this.multipleSelection1.length; i++)
+        {  var s = this.multipleSelection1[i].id;
+            roleids.push(s);
+            var gg=true;
+            checkeds.push(gg);
+        }
+
+          formData.append("userid", this.userid);
+          formData.append("roleids", roleids);
+          formData.append("checkeds", checkeds);
+          formData.append("token", this.$store.state.token);
+          let p=formData;
+          var url=this.Global.aport1+'/role/updateAllByRelationalUser';
+          this.$api.post(url, p,
+           r => {
+             if (r.success) {
+               this.$message({
+                 type: 'success',
+                 message: '保存成功'
+               });
+                this.jsDialogVisible=false;
+             }else{
+
+               this.$message.error('保存失败');
+             }
+           });
+      },
   },
   filters: {
 

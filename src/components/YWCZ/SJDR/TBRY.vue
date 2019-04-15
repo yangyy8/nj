@@ -591,8 +591,6 @@ export default {
 <style scoped>
 .el-dialog{
   width: 60%!important;
-  /* max-height: 400px!important;
-  overflow-y: scroll; */
 }
 </style>
 <style>

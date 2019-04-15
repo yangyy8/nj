@@ -6,48 +6,48 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="yy-input-input"></el-input>
+                   <span class="input-text">姓名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.XM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="yy-input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable size="small" class="yy-input-input">
-                    <el-option value="U" label="U - 未知">
-                    </el-option>
-                    <el-option value="M" label="M - 男">
-                    </el-option>
-                    <el-option value="F" label="F - 女">
+                  <span class="input-text">性别：</span>
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind0) in $store.state.xb"
+                      :key="ind0"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="yy-input-text">出生日期：</span>
-                  <div class="yy-input-input t-flex t-date">
+                  <span class="input-text">出生日期：</span>
+                  <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.CSRQKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.CSRQJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">签证号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="yy-input-input"></el-input>
+                   <span class="input-text">签证号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.QZHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="yy-input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+                    <span class="input-text">国家地区：</span>
+                    <el-select v-model="pd.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
@@ -79,7 +79,7 @@
           <div v-show="page==0">
      <el-row class="mb-15">
         <el-button type="primary"  size="small" @click="showUpload(0)">批量导入</el-button>
-        <el-button type="success" size="small" @click="download">模板下载</el-button>
+        <el-button type="success" size="small" @click="download(0)">模板下载</el-button>
       </el-row>
       <el-table
            ref="multipleTable"
@@ -92,23 +92,23 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-             prop="address"
+             prop="XM"
              label="姓名">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="XBMC"
              label="性别">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="CSRQ"
              label="出生日期">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="QZHM"
              label="签证号码">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="GJDQMC"
              label="国家地区">
            </el-table-column>
 
@@ -157,9 +157,9 @@
         <el-row type="flex" class="mb-6">
          <el-col :span="24" class="input-item">
               <el-upload
-                class="yy-input-input"
+                class="input-input"
                 ref="upload"
-                :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+                :action='actions+"/drffjlyndjlxk/readExcel"'
                 :file-list="fileList"
                 multiple
                 :on-success="upSuccess"
@@ -177,184 +177,249 @@
       </el-dialog>
       <el-dialog title="编辑" :visible.sync="editsDialogVisible">
         <el-form   ref="editForm">
-          <el-row :gutter="3"  class="mb-6">
-            <el-col :span="8" class="input-item">
-             <span class="yy-input-text">省：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TITLE" class="yy-input-input"></el-input>
+          <el-row :gutter="2"  class="mb-6">
+            <el-col :span="12" class="input-item">
+             <span class="input-text">省：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="editForm.SHENG" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">行政区划：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">行政区划：</span>
+              <el-select v-model="editForm.XZQHDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                <el-option
+                  v-for="(item,ind2) in $store.state.xzqh"
+                  :key="ind2"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">签发机关：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">签发机关：</span>
+              <el-select v-model="editForm.XZQHDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                <el-option
+                  v-for="(item,ind3) in $store.state.qfjg"
+                  :key="ind3"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
 
-            <el-col :span="8" class="input-item">
-             <span class="yy-input-text">姓名：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+             <span class="input-text">姓名：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="editForm.XM" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">性别：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">性别：</span>
+              <el-select v-model="editForm.XBDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                <el-option
+                  v-for="(item,ind4) in $store.state.xb"
+                  :key="ind4"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">出生日期：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">出生日期：</span>
+              <el-date-picker
+                    v-model="editForm.CSRQ" format="yyyy-MM-dd"
+                    type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                    placeholder="选择时间" >
+              </el-date-picker>
             </el-col>
-            <el-col :span="8" class="input-item">
-             <span class="yy-input-text">国家地区：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+             <span class="input-text">国家地区：</span>
+             <el-select v-model="editForm.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+               <el-option
+                 v-for="(item,ind5) in $store.state.gjdq"
+                 :key="ind5"
+                 :label="item.dm+' - '+item.mc"
+                 :value="item.dm">
+               </el-option>
+             </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-             <span class="yy-input-text">证件种类：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+             <span class="input-text">证件种类：</span>
+             <el-select v-model="editForm.ZJZLDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+               <el-option
+                 v-for="(item,ind6) in $store.state.zjzl"
+                 :key="ind6"
+                 :label="item.dm+' - '+item.mc"
+                 :value="item.dm">
+               </el-option>
+             </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                <el-input placeholder="请输入内容" size="small" v-model="editForm.RJZJHM" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">签证种类：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">签证种类：</span>
+              <el-select v-model="editForm.RJQZLXDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                <el-option
+                  v-for="(item,ind7) in $store.state.rjqzzl"
+                  :key="ind7"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-             <span class="yy-input-text">签证号码：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+             <span class="input-text">签证号码：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="editForm.QZHM" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text" title="签证签发日期">签证签发日期：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text" title="签证签发日期">签证签发日期：</span>
+              <el-date-picker
+                    v-model="editForm.QZQFRQ" format="yyyy-MM-dd"
+                    type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                    placeholder="选择时间" >
+              </el-date-picker>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text" title="签证有效日期">签证有效日期：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text" title="签证有效日期">签证有效日期：</span>
+              <el-date-picker
+                    v-model="editForm.QZYXRQ" format="yyyy-MM-dd"
+                    type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                    placeholder="选择时间" >
+              </el-date-picker>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">入境日期：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">入境日期：</span>
+              <el-date-picker
+                    v-model="editForm.RJRQ" format="yyyy-MM-dd"
+                    type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                    placeholder="选择时间" >
+              </el-date-picker>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">入境口岸：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">入境口岸：</span>
+              <el-select v-model="editForm.RJKADM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                <el-option
+                  v-for="(item,ind8) in $store.state.rjkn"
+                  :key="ind8"
+                  :label="item.dm+' - '+item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">邀请单位：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">邀请单位：</span>
+                <el-input placeholder="请输入内容" size="small" v-model="editForm.YQDW" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">住址：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">住址：</span>
+                <el-input placeholder="请输入内容" size="small" v-model="editForm.DZ" class="input-input"></el-input>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">联系电话：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="yy-input-input"></el-input>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">联系电话：</span>
+                <el-input placeholder="请输入内容" size="small" v-model="editForm.LXDH" class="input-input"></el-input>
             </el-col>
           </el-row>
 
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
+          <el-button type="primary" @click="editsItem('editForm',0)" size="small">确 定</el-button>
           <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
         </div>
       </el-dialog>
       <el-dialog title="详情" :visible.sync="detailsDialogVisible">
         <el-form   ref="mapForm">
           <el-row :gutter="3"  class="mb-6">
-              <el-col :span="8" class="input-item">
-               <span class="yy-input-text">省：</span>
-               <span class="yy-input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
+              <el-col :span="12" class="input-item">
+               <span class="input-text">省：</span>
+               <span class="input-input detailinput">  {{mapForm.SHENG}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">行政区划：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">行政区划：</span>
+                <span class="input-input detailinput">  {{mapForm.XZQHMC}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签发机关：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-              </el-col>
-
-              <el-col :span="8" class="input-item">
-               <span class="yy-input-text">姓名：</span>
-               <span class="yy-input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
-              </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">性别：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-              </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">出生日期：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">签发机关：</span>
+                <span class="input-input detailinput">  {{mapForm.QFJGMC}}</span>
               </el-col>
 
-              <el-col :span="8" class="input-item">
-               <span class="yy-input-text">国家地区：</span>
-               <span class="yy-input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
+              <el-col :span="12" class="input-item">
+               <span class="input-text">姓名：</span>
+               <span class="input-input detailinput">  {{mapForm.XM}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">证件种类：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">性别：</span>
+                <span class="input-input detailinput">  {{mapForm.XBMC}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">出生日期：</span>
+                <span class="input-input detailinput">  {{mapForm.CSRQ}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-               <span class="yy-input-text">签证种类：</span>
-               <span class="yy-input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
+
+              <el-col :span="12" class="input-item">
+               <span class="input-text">国家地区：</span>
+               <span class="input-input detailinput">  {{mapForm.GJDQMC}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证号码：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">证件种类：</span>
+                <span class="input-input detailinput">  {{mapForm.ZJZLMC}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证签发日期：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                <span class="input-input detailinput">  {{mapForm.RJZJHM}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证有效日期：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+               <span class="input-text">签证种类：</span>
+               <span class="input-input detailinput">  {{mapForm.RJQZLXMC}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">入境日期：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">签证号码：</span>
+                <span class="input-input detailinput">  {{mapForm.QZHM}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">入境口岸：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">签证签发日期：</span>
+                <span class="input-input detailinput">  {{mapForm.QZQFRQ}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">邀请单位：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">签证有效日期：</span>
+                <span class="input-input detailinput">  {{mapForm.QZYXRQ}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">住址：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">入境日期：</span>
+                <span class="input-input detailinput">  {{mapForm.RJRQ}}</span>
               </el-col>
-              <el-col :span="8" class="input-item">
-                <span class="yy-input-text">联系电话：</span>
-                <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">入境口岸：</span>
+                <span class="input-input detailinput">  {{mapForm.RJKAMC}}</span>
+              </el-col>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">邀请单位：</span>
+                <span class="input-input detailinput">  {{mapForm.YQDW}}</span>
+              </el-col>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">住址：</span>
+                <span class="input-input detailinput">  {{mapForm.DZ}}</span>
+              </el-col>
+              <el-col :span="12" class="input-item">
+                <span class="input-text">联系电话：</span>
+                <span class="input-input detailinput">  {{mapForm.LXDH}}</span>
               </el-col>
           </el-row>
           <el-row :gutter="2" style="border-top:1px solid #eee; padding-top:10px;">
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">操作人：</span>
-              <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">操作人：</span>
+              <span class="input-input detailinput">  {{mapForm.CZR}}</span>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">操作日期：</span>
-              <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">操作日期：</span>
+              <span class="input-input detailinput">  {{mapForm.CZSJ}}</span>
             </el-col>
           </el-row>
           <el-row :gutter="2">
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">修改人：</span>
-              <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">修改人：</span>
+              <span class="input-input detailinput">  {{mapForm.XGR}}</span>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="yy-input-text">修改日期：</span>
-              <span class="yy-input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
+            <el-col :span="12" class="input-item">
+              <span class="input-text">修改日期：</span>
+              <span class="input-input detailinput">  {{mapForm.XGSJ}}</span>
             </el-col>
           </el-row>
 
@@ -368,7 +433,7 @@
       <div v-show="page==1">
         <el-row class="mb-15">
            <el-button type="primary"  size="small" @click="showUpload(1)">批量导入</el-button>
-           <el-button type="success" size="small" @click="download">模板下载</el-button>
+           <el-button type="success" size="small" @click="download(1)">模板下载</el-button>
          </el-row>
          <el-table
               ref="multipleTable"
@@ -381,26 +446,25 @@
                 width="55">
               </el-table-column> -->
               <el-table-column
-                prop="address"
+                prop="XM"
                 label="姓名">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="XBMC"
                 label="性别">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="CSRQ"
                 label="出生日期">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="QZHM"
                 label="签证号码">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="GJDQMC"
                 label="国家地区">
               </el-table-column>
-
               <el-table-column
                 label="操作" width="120">
                 <template slot-scope="scope">
@@ -446,9 +510,9 @@
            <el-row type="flex" class="mb-6">
             <el-col :span="24" class="input-item">
                  <el-upload
-                   class="yy-input-input"
+                   class="input-input"
                    ref="upload"
-                   :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+                   :action='actions+"/drffjlyrjkawzswjlxk/readExcel"'
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
@@ -467,62 +531,121 @@
          <el-dialog title="编辑" :visible.sync="editsDialogVisible1">
            <el-form   ref="editForm1">
              <el-row :gutter="3"  class="mb-6">
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">省：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TITLE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">省：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="editForm1.SHENG" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境口岸：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境口岸：</span>
+
+                   <el-select v-model="editForm1.RJKADM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                     <el-option
+                       v-for="(item,ind10) in $store.state.rjkn"
+                       :key="ind10"
+                       :label="item.dm+' - '+item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
                </el-col>
 
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">姓名：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">姓名：</span>
+                  <el-input placeholder="请输入内容" size="small" v-model="editForm1.XM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">性别：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">性别：</span>
+                   <el-select v-model="editForm1.XBDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                     <el-option
+                       v-for="(item,ind11) in $store.state.xb"
+                       :key="ind11"
+                       :label="item.dm+' - '+item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">出生日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">出生日期：</span>
+                   <el-date-picker
+                         v-model="editForm1.CSRQ" format="yyyy-MM-dd"
+                         type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                         placeholder="选择时间" >
+                   </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">国家地区：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">国家地区：</span>
+                  <el-select v-model="editForm1.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind12) in $store.state.gjdq"
+                      :key="ind12"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
+                    </el-option>
+                  </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">证件种类：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">证件种类：</span>
+                  <el-select v-model="editForm1.ZJZLDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind13) in $store.state.zjzl"
+                      :key="ind13"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
+                    </el-option>
+                  </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.RJZJHM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证种类：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签证种类：</span>
+                 <el-select v-model="editForm1.RJQZLXDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind14) in $store.state.rjqzzl"
+                     :key="ind14"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证号码：</span>
-                 <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">签证号码：</span>
+                 <el-input placeholder="请输入内容" size="small" v-model="editForm1.QZHM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证签发日期">签证签发日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证签发日期">签证签发日期：</span>
+                   <el-date-picker
+                         v-model="editForm1.QZQFRQ" format="yyyy-MM-dd"
+                         type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                         placeholder="选择时间" >
+                   </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证机关：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签发机关：</span>
+                 <el-select v-model="editForm1.QFJGDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind15) in $store.state.qfjg"
+                     :key="ind15"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证有效日期">签证有效日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证有效日期">签证有效日期：</span>
+                 <el-date-picker
+                       v-model="editForm1.QZYXRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm1.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境日期：</span>
+                 <el-date-picker
+                       v-model="editForm1.RJRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
 
              </el-row>
@@ -536,86 +659,86 @@
          <el-dialog title="详情" :visible.sync="detailsDialogVisible1">
            <el-form   ref="mapForm1">
              <el-row :gutter="3"  class="mb-6">
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">省：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">省：</span>
+                  <span class="input-input detailinput">  {{mapForm1.SHENG}}</span>
                  </el-col>
 
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签发机关：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签发机关：</span>
+                   <span class="input-input detailinput">  {{mapForm1.QFJGMC}}</span>
                  </el-col>
 
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">姓名：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">姓名：</span>
+                  <span class="input-input detailinput">  {{mapForm1.XM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">性别：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">性别：</span>
+                   <span class="input-input detailinput">  {{mapForm1.XBMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">出生日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">出生日期：</span>
+                   <span class="input-input detailinput">  {{mapForm1.CSRQ}}</span>
                  </el-col>
 
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">国家地区：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">国家地区：</span>
+                  <span class="input-input detailinput">  {{mapForm1.GJDQMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">证件种类：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">证件种类：</span>
+                   <span class="input-input detailinput">  {{mapForm1.ZJZLMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                   <span class="input-input detailinput">  {{mapForm1.RJZJHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">签证种类：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">签证种类：</span>
+                  <span class="input-input detailinput">  {{mapForm1.RJQZLXMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证号码：</span>
+                   <span class="input-input detailinput">  {{mapForm1.QZHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证签发日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证签发日期：</span>
+                   <span class="input-input detailinput">  {{mapForm1.QZQFRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证有效日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证有效日期：</span>
+                   <span class="input-input detailinput">  {{mapForm1.QZYXRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境日期：</span>
+                   <span class="input-input detailinput">  {{mapForm1.RJRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境口岸：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境口岸：</span>
+                   <span class="input-input detailinput">  {{mapForm1.RJKAMC}}</span>
                  </el-col>
 
 
              </el-row>
              <el-row :gutter="2" style="border-top:1px solid #eee; padding-top:10px;">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作人：</span>
+                 <span class="input-input detailinput">  {{mapForm1.CZR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作日期：</span>
+                 <span class="input-input detailinput">  {{mapForm1.CZSJ}}</span>
                </el-col>
              </el-row>
              <el-row :gutter="2">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改人：</span>
+                 <span class="input-input detailinput">  {{mapForm1.XGR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改日期：</span>
+                 <span class="input-input detailinput">  {{mapForm1.XGSJ}}</span>
                </el-col>
              </el-row>
 
@@ -628,7 +751,7 @@
       <div v-show="page==2">
         <el-row class="mb-15">
            <el-button type="primary"  size="small" @click="showUpload(2)">批量导入</el-button>
-           <el-button type="success" size="small" @click="download">模板下载</el-button>
+           <el-button type="success" size="small" @click="download(2)">模板下载</el-button>
          </el-row>
          <el-table
               ref="multipleTable"
@@ -641,23 +764,23 @@
                 width="55">
               </el-table-column> -->
               <el-table-column
-                prop="address"
+                prop="XM"
                 label="姓名">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="XBMC"
                 label="性别">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="CSRQ"
                 label="出生日期">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="QZHM"
                 label="签证号码">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="GJDQMC"
                 label="国家地区">
               </el-table-column>
 
@@ -706,9 +829,9 @@
            <el-row type="flex" class="mb-6">
             <el-col :span="24" class="input-item">
                  <el-upload
-                   class="yy-input-input"
+                   class="input-input"
                    ref="upload"
-                   :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+                   :action='actions+"/drffjlyzswjlxk/readExcel"'
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
@@ -727,79 +850,157 @@
          <el-dialog title="编辑" :visible.sync="editsDialogVisible2">
            <el-form   ref="editForm2">
              <el-row :gutter="3"  class="mb-6">
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">省：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TITLE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">省：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="editForm2.SHENG" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">行政区划：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">行政区划：</span>
+                 <el-select v-model="editForm2.XZQHDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind20) in $store.state.xzqh"
+                     :key="ind20"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">住宿登记地：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">姓名：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">性别：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">出生日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">国家地区：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">证件种类：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证种类：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证号码：</span>
-                 <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证签发日期">签证签发日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证机关：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证有效日期">签证有效日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境口岸：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境签证号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">住宿登记地：</span>
+                 <el-select v-model="editForm2.ZSDJDDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind27) in $store.state.xzqh"
+                     :key="ind27"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
 
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">最后住宿登记日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">姓名：</span>
+                  <el-input placeholder="请输入内容" size="small" v-model="editForm2.XM" class="input-input"></el-input>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">出生日期：</span>
+                 <el-date-picker
+                       v-model="editForm2.CSRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">性别：</span>
+                 <el-select v-model="editForm2.XBDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind21) in $store.state.xb"
+                     :key="ind21"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+               </el-col>
+
+               <el-col :span="12" class="input-item">
+                <span class="input-text">国家地区：</span>
+                <el-select v-model="editForm2.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                  <el-option
+                    v-for="(item,ind22) in $store.state.gjdq"
+                    :key="ind22"
+                    :label="item.dm+' - '+item.mc"
+                    :value="item.dm">
+                  </el-option>
+                </el-select>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">证件种类：</span>
+                <el-select v-model="editForm2.ZJZLDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                  <el-option
+                    v-for="(item,ind23) in $store.state.zjzl"
+                    :key="ind23"
+                    :label="item.dm+' - '+item.mc"
+                    :value="item.dm">
+                  </el-option>
+                </el-select>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.RJZJHM" class="input-input"></el-input>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签证种类：</span>
+                 <el-select v-model="editForm2.RJQZLXDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind24) in $store.state.rjqzzl"
+                     :key="ind24"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">签证号码：</span>
+                 <el-input placeholder="请输入内容" size="small" v-model="editForm2.QZHM" class="input-input"></el-input>
+               </el-col>
+
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签发机关：</span>
+                 <el-select v-model="editForm2.QFJGDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind25) in $store.state.qfjg"
+                     :key="ind25"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证签发日期">签证签发日期：</span>
+                 <el-date-picker
+                       v-model="editForm2.QZQFRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证有效日期">签证有效日期：</span>
+                 <el-date-picker
+                       v-model="editForm2.QZYXRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境日期：</span>
+                 <el-date-picker
+                       v-model="editForm2.RJRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
+               </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境口岸：</span>
+                 <el-select v-model="editForm2.RJKADM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind26) in $store.state.rjkn"
+                     :key="ind26"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+                </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境签证号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="editForm2.RJZJHM" class="input-input"></el-input>
+               </el-col>
+
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">最后住宿登记日期：</span>
+                 <el-date-picker
+                       v-model="editForm2.ZHZSDJRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
              </el-row>
 
@@ -810,105 +1011,105 @@
            </div>
          </el-dialog>
          <el-dialog title="详情" :visible.sync="detailsDialogVisible2">
-           <el-form   ref="mapForm1">
+           <el-form   ref="mapForm2">
              <el-row :gutter="3"  class="mb-6">
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">省：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">省：</span>
+                  <span class="input-input detailinput">  {{mapForm2.SHENG}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">行政区划：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">行政区划：</span>
+                   <span class="input-input detailinput">  {{mapForm2.XZQHMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">住宿登记地：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
-                 </el-col>
-
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">姓名：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
-                 </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">性别：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
-                 </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">出生日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">住宿登记地：</span>
+                   <span class="input-input detailinput">  {{mapForm2.ZSDJD}}</span>
                  </el-col>
 
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">国家地区：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">姓名：</span>
+                  <span class="input-input detailinput">  {{mapForm2.XM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">证件种类：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">性别：</span>
+                   <span class="input-input detailinput">  {{mapForm2.XBMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text" title="入境证件号码">入境证件号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">出生日期：</span>
+                   <span class="input-input detailinput">  {{mapForm2.CSRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">签证种类：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TITLE}}</span>
+
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">国家地区：</span>
+                  <span class="input-input detailinput">  {{mapForm2.GJDQMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">证件种类：</span>
+                   <span class="input-input detailinput">  {{mapForm2.ZJZLMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证签发日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text" title="入境证件号码">入境证件号码：</span>
+                   <span class="input-input detailinput">  {{mapForm2.RJZJHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证机关：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">签证种类：</span>
+                  <span class="input-input detailinput">  {{mapForm2.RJQZLXMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证有效日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证号码：</span>
+                   <span class="input-input detailinput">  {{mapForm2.QZHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证签发日期：</span>
+                   <span class="input-input detailinput">  {{mapForm2.QZQFRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境口岸：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签发机关：</span>
+                   <span class="input-input detailinput">  {{mapForm2.QFJGMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境签证号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证有效日期：</span>
+                   <span class="input-input detailinput">  {{mapForm2.QZYXRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">住宿城市：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境日期：</span>
+                   <span class="input-input detailinput">  {{mapForm2.RJRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">最后住宿登记日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境口岸：</span>
+                   <span class="input-input detailinput">  {{mapForm2.RJKAMC}}</span>
+                 </el-col>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境签证号码：</span>
+                   <span class="input-input detailinput">  {{mapForm2.RJZJHM}}</span>
+                 </el-col>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">住宿城市：</span>
+                   <span class="input-input detailinput">  {{mapForm2.XZQHMC}}</span>
+                 </el-col>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">最后住宿登记日期：</span>
+                   <span class="input-input detailinput">  {{mapForm2.ZHZSDJRQ}}</span>
                  </el-col>
              </el-row>
              <el-row :gutter="2" style="border-top:1px solid #eee; padding-top:10px;">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作人：</span>
+                 <span class="input-input detailinput">  {{mapForm2.CZR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作日期：</span>
+                 <span class="input-input detailinput">  {{mapForm2.CZSJ}}</span>
                </el-col>
              </el-row>
              <el-row :gutter="2">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改人：</span>
+                 <span class="input-input detailinput">  {{mapForm2.XGR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm1.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改日期：</span>
+                 <span class="input-input detailinput">  {{mapForm2.XGSJ}}</span>
                </el-col>
              </el-row>
 
@@ -921,7 +1122,7 @@
       <div v-show="page==3">
         <el-row class="mb-15">
            <el-button type="primary"  size="small" @click="showUpload(3)">批量导入</el-button>
-           <el-button type="success" size="small" @click="download">模板下载</el-button>
+           <el-button type="success" size="small" @click="download(3)">模板下载</el-button>
          </el-row>
          <el-table
               ref="multipleTable"
@@ -934,23 +1135,23 @@
                 width="55">
               </el-table-column> -->
               <el-table-column
-                prop="address"
+                prop="XM"
                 label="姓名">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="XBMC"
                 label="性别">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="CSRQ"
                 label="出生日期">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="QZHM"
                 label="签证号码">
               </el-table-column>
               <el-table-column
-                prop="address"
+                prop="GJDQMC"
                 label="国家地区">
               </el-table-column>
 
@@ -999,9 +1200,9 @@
            <el-row type="flex" class="mb-6">
             <el-col :span="24" class="input-item">
                  <el-upload
-                   class="yy-input-input"
+                   class="input-input"
                    ref="upload"
-                   :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+                   :action='actions+"/drffjlyqynrcjtxz/readExcel"'
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
@@ -1020,164 +1221,226 @@
          <el-dialog title="编辑" :visible.sync="editsDialogVisible3">
            <el-form   ref="editForm3">
              <el-row :gutter="3"  class="mb-6">
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">省：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TITLE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">省：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TITLE" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">口岸：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-
-
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">姓名：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">性别：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
-               </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">出生日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">口岸：</span>
+                 <el-select v-model="editForm3.KADM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind31) in $store.state.rjkn"
+                     :key="ind31"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
 
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">入境证件种类：</span>
-                  <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+
+               <el-col :span="12" class="input-item">
+                <span class="input-text">姓名：</span>
+                  <el-input placeholder="请输入内容" size="small" v-model="editForm3.XM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="入境证件号码">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">性别：</span>
+                 <el-select v-model="editForm3.XBDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind32) in $store.state.xb"
+                     :key="ind32"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证种类：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">出生日期：</span>
+                 <el-date-picker
+                       v-model="editForm3.CSRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                <span class="yy-input-text">签证号码：</span>
-                 <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+
+               <el-col :span="12" class="input-item">
+                <span class="input-text">入境证件种类：</span>
+                  <el-select v-model="editForm3.RJZJZLDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind33) in $store.state.zjzl"
+                      :key="ind33"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
+                    </el-option>
+                  </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证签发日期">签发日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="入境证件号码">证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.ZJHM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text" title="签证有效日期">签证地：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签证种类：</span>
+                 <el-select v-model="editForm3.QZLXDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind34) in $store.state.rjqzzl"
+                     :key="ind34"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+                 </el-col>
+               <el-col :span="12" class="input-item">
+                <span class="input-text">签证号码：</span>
+                 <el-input placeholder="请输入内容" size="small" v-model="editForm3.QZHM" class="input-input"></el-input>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">签证有效日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证签发日期">签发日期：</span>
+                 <el-date-picker
+                       v-model="editForm3.QFRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
+                  </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text" title="签证有效日期">签证地：</span>
+                 <el-select v-model="editForm3.QFDDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind35) in $store.state.qfjg"
+                     :key="ind35"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
+                  </el-col>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">签证有效日期：</span>
+                 <el-date-picker
+                       v-model="editForm3.QZYXRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">入境日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">入境日期：</span>
+                 <el-date-picker
+                       v-model="editForm3.RJRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">最后住宿登记地：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">最后住宿登记地：</span>
+                 <el-select v-model="editForm3.ZHZSDJDDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                   <el-option
+                     v-for="(item,ind36) in $store.state.xzqh"
+                     :key="ind36"
+                     :label="item.dm+' - '+item.mc"
+                     :value="item.dm">
+                   </el-option>
+                 </el-select>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">住宿登记日期：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="editForm3.APPLY_TYPE" class="yy-input-input"></el-input>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">住宿登记日期：</span>
+                 <el-date-picker
+                       v-model="editForm3.ZSDJRQ" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy-MM-dd" class="input-input"
+                       placeholder="选择时间" >
+                 </el-date-picker>
                </el-col>
              </el-row>
            </el-form>
            <div slot="footer" class="dialog-footer">
-             <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
+             <el-button type="primary" @click="editsItem('editForm',3)" size="small">确 定</el-button>
              <el-button @click="editsDialogVisible3 = false" size="small">取 消</el-button>
            </div>
          </el-dialog>
          <el-dialog title="详情" :visible.sync="detailsDialogVisible3">
            <el-form   ref="mapForm3">
              <el-row :gutter="3"  class="mb-6">
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">省：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">省：</span>
+                  <span class="input-input detailinput">  {{mapForm3.SHENG}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">口岸：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">口岸：</span>
+                   <span class="input-input detailinput">  {{mapForm3.KAMC}}</span>
                  </el-col>
-                <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">姓名：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TITLE}}</span>
+                <el-col :span="12" class="input-item">
+                  <span class="input-text">姓名：</span>
+                  <span class="input-input detailinput">  {{mapForm3.XM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">性别：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">性别：</span>
+                   <span class="input-input detailinput">  {{mapForm3.XBMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">出生日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">出生日期：</span>
+                   <span class="input-input detailinput">  {{mapForm3.CSRQ}}</span>
                  </el-col>
 
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">国家地区：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">国家地区：</span>
+                  <span class="input-input detailinput">  {{mapForm3.GJDQMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境证件种类：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境证件种类：</span>
+                   <span class="input-input detailinput">  {{mapForm3.RJZJZLMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text" >证件号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text" >证件号码：</span>
+                   <span class="input-input detailinput">  {{mapForm3.ZJHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                  <span class="yy-input-text">签证种类：</span>
-                  <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TITLE}}</span>
+                 <el-col :span="12" class="input-item">
+                  <span class="input-text">签证种类：</span>
+                  <span class="input-input detailinput">  {{mapForm3.QZLXMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证号码：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证号码：</span>
+                   <span class="input-input detailinput">  {{mapForm3.QZHM}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签发日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签发日期：</span>
+                   <span class="input-input detailinput">  {{mapForm3.QFRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证地：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证地：</span>
+                   <span class="input-input detailinput">  {{mapForm3.QFDMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">签证有效期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">签证有效期：</span>
+                   <span class="input-input detailinput">  {{mapForm3.QZYXRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">入境日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">入境日期：</span>
+                   <span class="input-input detailinput">  {{mapForm3.RJRQ}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">最后住宿登记地：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">最后住宿登记地：</span>
+                   <span class="input-input detailinput">  {{mapForm3.ZHZSDJDMC}}</span>
                  </el-col>
-                 <el-col :span="8" class="input-item">
-                   <span class="yy-input-text">住宿登记日期：</span>
-                   <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+                 <el-col :span="12" class="input-item">
+                   <span class="input-text">住宿登记日期：</span>
+                   <span class="input-input detailinput">  {{mapForm3.ZSDJRQ}}</span>
                  </el-col>
 
              </el-row>
              <el-row :gutter="2" style="border-top:1px solid #eee; padding-top:10px;">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作人：</span>
+                 <span class="input-input detailinput">  {{mapForm3.CZR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">操作日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">操作日期：</span>
+                 <span class="input-input detailinput">  {{mapForm3.CZSJ}}</span>
                </el-col>
              </el-row>
              <el-row :gutter="2">
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改人：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改人：</span>
+                 <span class="input-input detailinput">  {{mapForm3.XGR}}</span>
                </el-col>
-               <el-col :span="8" class="input-item">
-                 <span class="yy-input-text">修改日期：</span>
-                 <span class="yy-input-input detailinput">  {{mapForm3.APPLY_TYPE}}</span>
+               <el-col :span="12" class="input-item">
+                 <span class="input-text">修改日期：</span>
+                 <span class="input-input detailinput">  {{mapForm3.XGSJ}}</span>
                </el-col>
              </el-row>
 
@@ -1209,33 +1472,30 @@ export default {
       pageSize3: 10,
       TotalResult3: 0,
       pd: {},
-      pd1: {},
-      pd2: {},
-      pd3: {},
       nation: [],
       fileList: [],
       actions: "",
-      page:0,
+      page: 0,
       uploadDialogVisible: false,
-      detailsDialogVisible:false,
-      editsDialogVisible:false,
+      detailsDialogVisible: false,
+      editsDialogVisible: false,
       uploadDialogVisible1: false,
-      detailsDialogVisible1:false,
-      editsDialogVisible1:false,
+      detailsDialogVisible1: false,
+      editsDialogVisible1: false,
       uploadDialogVisible2: false,
-      detailsDialogVisible2:false,
-      editsDialogVisible2:false,
+      detailsDialogVisible2: false,
+      editsDialogVisible2: false,
       uploadDialogVisible3: false,
-      detailsDialogVisible3:false,
-      editsDialogVisible3:false,
-      editForm:{},
-      mapForm:{},
-      editForm1:{},
-      mapForm1:{},
-      editForm2:{},
-      mapForm2:{},
-      editForm3:{},
-      mapForm3:{},
+      detailsDialogVisible3: false,
+      editsDialogVisible3: false,
+      editForm: {},
+      mapForm: {},
+      editForm1: {},
+      mapForm1: {},
+      editForm2: {},
+      mapForm2: {},
+      editForm3: {},
+      mapForm3: {},
       options: [{
           value: 10,
           label: "10"
@@ -1249,30 +1509,23 @@ export default {
           label: "30"
         }
       ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      tableData1: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      tableData2: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      tableData3: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
+      tableData: [],
+      tableData1: [],
+      tableData2: [],
+      tableData3: [],
 
     }
   },
   mounted() {
+    this.$store.dispatch('getXB');
+    this.$store.dispatch('getGjdq');
+    this.$store.dispatch('getXzqh');
+    this.$store.dispatch('getQfjg');
+    this.$store.dispatch('getZjzl');
+    this.$store.dispatch('getRjqzzl');
+    this.$store.dispatch('getRjkn');
+
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
 
   },
   methods: {
@@ -1300,27 +1553,27 @@ export default {
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
-      this.getList1(this.CurrentPage1, val, this.pd1);
+      this.getList1(this.CurrentPage1, val, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
-      this.getList1(val, this.pageSize1, this.pd1);
+      this.getList1(val, this.pageSize1, this.pd);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange2(val) {
-      this.getList2(this.CurrentPage2, val, this.pd2);
+      this.getList2(this.CurrentPage2, val, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange2(val) {
-      this.getList(val, this.pageSize2, this.pd2);
+      this.getList(val, this.pageSize2, this.pd);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange3(val) {
-      this.getList3(this.CurrentPage3, val, this.pd3);
+      this.getList3(this.CurrentPage3, val, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange3(val) {
-      this.getList(val, this.pageSize3, this.pd3);
+      this.getList(val, this.pageSize3, this.pd);
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
@@ -1329,11 +1582,15 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3 + '/drffjlyndjlxk/getFFJL_YNDJLXKPage', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
+
+      this.getList1(this.CurrentPage1, this.pageSize1, this.pd);
+      this.getList2(this.CurrentPage2, this.pageSize2, this.pd);
+      this.getList3(this.CurrentPage3, this.pageSize3, this.pd);
     },
     getList1(currentPage, showCount, pd) {
       let p = {
@@ -1341,7 +1598,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3 + '/drffjlyrjkawzswjlxk/getFFJL_YRJKAWZSWJLXKPage', p,
         r => {
           this.tableData1 = r.data.resultList;
           this.TotalResult1 = r.data.totalResult;
@@ -1353,7 +1610,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3 + '/drffjlyzswjlxk/getFFJL_YZSWJLXKPage', p,
         r => {
           this.tableData2 = r.data.resultList;
           this.TotalResult2 = r.data.totalResult;
@@ -1365,86 +1622,151 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3 + '/drffjlyqynrcjtxz/getFFJL_YQYNRCJTXZPage', p,
         r => {
           this.tableData3 = r.data.resultList;
           this.TotalResult3 = r.data.totalResult;
         })
     },
-    details(n,t)
-    {
-    if(t==0){
-      this.detailsDialogVisible=true;
-      this.mapForm=n;
-    }else if(t==1){
-      this.detailsDialogVisible1=true;
-      this.mapForm1=n;
-    }else if(t==2){
-        this.detailsDialogVisible2=true;
-        this.mapForm2=n;
-      }else if(t==3){
-          this.detailsDialogVisible3=true;
-          this.mapForm1=3;
-          }
+    details(n, t) {
+      if (t == 0) {
+        this.detailsDialogVisible = true;
+        this.mapForm = n;
+      } else if (t == 1) {
+        this.detailsDialogVisible1 = true;
+        this.mapForm1 = n;
+      } else if (t == 2) {
+        this.detailsDialogVisible2 = true;
+        this.mapForm2 = n;
+      } else if (t == 3) {
+        this.detailsDialogVisible3 = true;
+        this.mapForm3 =n;
+      }
     },
-    edits(n,t){
-    if(t==0){
-      this.editsDialogVisible=true;
-      this.editForm=n;
-      }else if(t==1){
-        this.editsDialogVisible1=true;
-        this.editForm1=n;
-      }else if(t==2){
-        this.editsDialogVisible2=true;
-        this.editForm2=n;
-      }else if(t==3){
-        this.editsDialogVisible3=true;
-        this.editForm3=n;
-        }
+    edits(n, t) {
+      if (t == 0) {
+        this.editsDialogVisible = true;
+        this.editForm = n;
+      } else if (t == 1) {
+        this.editsDialogVisible1 = true;
+        this.editForm1 = n;
+      } else if (t == 2) {
+        this.editsDialogVisible2 = true;
+        this.editForm2 = n;
+      } else if (t == 3) {
+        this.editsDialogVisible3 = true;
+        this.editForm3 = n;
+      }
     },
-    editsItem(formName)
-    {
+    editsItem(formName, t) {
+      var ff = {};
+      var url = "";
+      if (t == 0) {
+        url = this.Global.aport3 + "/drffjlyndjlxk/updateFFJL_YNDJLXK";
+      } else if (t == 1) {
+        url = this.Global.aport3 + "/drffjlyrjkawzswjlxk/updateFFJL_YRJKAWZSWJLXK";
+      } else if (t == 2) {
+        url = this.Global.aport3 + "/drffjlyzswjlxk/updateFFJL_YZSWJLXK";
+      } else if (t == 3) {
+        url = this.Global.aport3 + "/drffjlyqynrcjtxz/updateFFJL_YQYNRCJTXZ";
+      }
 
-    },
-    deletes(i,t) {
-    let p = {
-      "id": i.SERIAL
-    };
-    var url='/manage-platform/riskNameList/updateRiskNameListById';
-    if(t==1){
-      url='';
-    }else if(t==2){
-      url='';
-    }else if(t==3){
-      url='';
-    }
-    this.$confirm('您是否确认删除？', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }).then(() => {
-      this.$api.post(url, p,
+      this.$api.post(url, ff,
         r => {
-          console.log("===" + r);
+          console.log(r);
           if (r.success) {
             this.$message({
-              message: '删除成功！',
+              message: '保存成功！',
               type: 'success'
             });
-            this.getList(this.CurrentPage, this.pageSize, this.pd);
+            this.$refs[afrom].resetFields();
+            switch (t) {
+              case 0:
+                this.eidtsDialogVisible = false;
+                this.getList(this.CurrentPage, this.pageSize, this.pd);
+                break;
+              case 1:
+                this.eidtsDialogVisible1 = false;
+                this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
+                break;
+              case 2:
+                this.eidtsDialogVisible2 = false;
+                this.getList2(this.CurrentPage2, this.pageSize2, this.pd2);
+                break;
+              case 3:
+                this.eidtsDialogVisible3 = false;
+                this.getList3(this.CurrentPage3, this.pageSize3, this.pd3);
+                break;
+              default:
+
+            }
+
           } else {
-            this.$message.error(r.Message);
+            this.$message.error(r.message);
           }
+          // this.$refs[afrom].resetFields();
+          // this.eidtsDialogVisible = false;
+          // this.getList(this.CurrentPage,this.pageSize,this.pd);
         }, e => {
           this.$message.error('失败了');
         });
-    }).catch(() => {
-      this.$message({
-        type: 'info',
-        message: '已取消删除'
+    },
+    deletes(i, t) {
+      let p = {
+        "RYBH": i.RYBH
+      };
+      var url = this.Global.aport3 + '/drffjlyndjlxk/deleteFFJL_YNDJLXKById';
+      if (t == 1) {
+        url = this.Global.aport3 + '/drffjlyrjkawzswjlxk/deleteFFJL_YRJKAWZSWJLXKById';
+      } else if (t == 2) {
+        url = this.Global.aport3 + '/drffjlyzswjlxk/deleteFFJL_YZSWJLXKById';
+      } else if (t == 3) {
+        url = this.Global.aport3 + '/drffjlyqynrcjtxz/deleteFFJL_YQYNRCJTXZById';
+      }
+      this.$confirm('您是否确认删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$api.post(url, p,
+          r => {
+
+            if (r.success) {
+              this.$message({
+                message: '删除成功！',
+                type: 'success'
+              });
+
+              switch (t) {
+                case 0:
+                  this.getList(this.CurrentPage, this.pageSize, this.pd);
+                  break;
+                case 1:
+                  this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
+                  break;
+                case 2:
+                  this.getList2(this.CurrentPage2, this.pageSize2, this.pd2);
+                  break;
+                case 3:
+                  this.getList3(this.CurrentPage3, this.pageSize3, this.pd3);
+                  break;
+                default:
+
+              }
+
+            } else {
+              this.$message.error(r.Message);
+            }
+          }, e => {
+            this.$message.error('失败了');
+          });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
       });
-    });
-  },
+    },
     upSuccess(r) {
       if (r.success) {
         this.$message({
@@ -1469,12 +1791,16 @@ export default {
     },
     showUpload(t) {
       this.uploadDialogVisible = true;
-      if(t==1){
+      if (t == 1) {
         this.uploadDialogVisible1 = true;
-      }else if(t==2){this.uploadDialogVisible2 = true;}else if(t==3){this.uploadDialogVisible3 = true;}
+      } else if (t == 2) {
+        this.uploadDialogVisible2 = true;
+      } else if (t == 3) {
+        this.uploadDialogVisible3 = true;
+      }
 
       this.typemd = "";
-      this.actions = this.$api.rootUrl;
+      this.actions = this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
@@ -1490,8 +1816,25 @@ export default {
       }
       this.$refs.upload.submit();
     },
-    download() {
-      window.location.href = this.$api.rootUrl + '/manage-platform/templateFile/riskNameListFile.xlsx'
+    download(t) {
+      switch (t) {
+        case 0:
+          window.location.href = this.Global.aport3 + '/templateFile/持护照入境并有内地签发签证或停居留许可非法居留人员名单导入模板.xls'
+          break;
+        case 1:
+          window.location.href = this.Global.aport3 + '/templateFile/持护照入境仅有入境口岸记录非法居留人员名单导入模板.xls'
+          break;
+        case 2:
+          window.location.href = this.Global.aport3 + '/templateFile/持护照入境并有住宿登记信息但无公安机关签发签证或停居留许可人员名单导入模板.xls'
+          break;
+        case 3:
+          window.location.href = this.Global.aport3 + '/templateFile/持越南入出境通行证入境非法居留人员名单导入模板.xlsx'
+          break;
+        default:
+          break;
+
+      }
+
     },
   }
 }
@@ -1501,8 +1844,8 @@ export default {
 
 </style>
 <style>
-.ffjs .el-dialog{
-  width: 60%!important;
+.ffjs .el-dialog {
+  width: 60% !important;
   /* max-height: 400px!important;
   overflow-y: scroll; */
 }

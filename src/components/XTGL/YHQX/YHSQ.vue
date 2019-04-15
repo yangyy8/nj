@@ -3,7 +3,7 @@
   <div class="yymain">
     <div class="yycontent">
         <el-row type="flex">
-          <el-col :span="10">
+          <el-col :span="11">
                 <el-row type="flex">
                   <el-col :span="21" class=" pr-20">
                     <el-row align="center"   :gutter="2">
@@ -36,7 +36,7 @@
                    class="stu-table"
                    style="width: 100%"
                    @row-click="rowClick"
-                    highlight-current-row
+                   :highlight-current-row="true"
                    >
                    <el-table-column
                      prop="mc"
@@ -50,7 +50,7 @@
                 </el-row>
 
           </el-col>
-          <el-col :span="10">
+          <el-col :span="11">
 
             <el-row type="flex">
               <el-col :span="16" class=" pr-20">
@@ -99,7 +99,7 @@
              </el-table>
             </el-row>
           </el-col>
-          <el-col :span="4" class="down-btn-area">
+          <el-col :span="2" class="down-btn-area">
               <el-button type="primary" @click="saveReuslt()" size="small">保存用户授权</el-button>
           </el-col>
         </el-row>
@@ -268,15 +268,27 @@ export default {
            this.TotalResult = r.data.totalCount;
          });
     },
+    // tableRowClassName({row, rowIndex}) {
+    //   console.log({row, rowIndex})
+    //     if (rowIndex === 1) {
+    //       return 'warning-row';
+    //     } else if (rowIndex === 3) {
+    //       return 'success-row';
+    //     }
+    //     return '';
+    //   },
     rowClick(row,event,column){
+      console.log(row,event,column);
+      // let a= event.target
       this.roleid=row.id;
       this.getroleUser();
+        // return 'current-row';
     },
     getroleUser(){
       var ff=new FormData();
       ff.append("token",this.$store.state.token);
       ff.append("roleid",this.roleid);
-      ff.append("mc",this.pd1.mc);
+      ff.append("mc",this.pd1.mc==undefined?"":this.pd1.mc);
       let p=ff;
       this.temp=null;
       var url=this.Global.aport1+'/user/getAssignByRoleId';
@@ -390,8 +402,9 @@ export default {
 }
 </script>
 <style scoped>
+
 .yycontent{min-height: 600px!important;}
-.el-col-10{border-right: 1px solid #eeeeee;padding:0px 20px; min-width: 350px!important; max-height: 600px!important;}
+.el-col-11{border-right: 1px solid #eeeeee;padding:0px 20px; min-width: 350px!important; max-height: 600px!important;}
 .el-col-2{padding:0px 30px;}
 .input-item{
   display: flex;
@@ -400,4 +413,8 @@ export default {
 }
 .input-text{width: 30%!important;}
 
+</style>
+<style>
+.el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td, .el-table__body tr.hover-row.current-row>td, .el-table__body tr.hover-row.el-table__row--striped.current-row>td, .el-table__body tr.hover-row.el-table__row--striped>td, .el-table__body tr.hover-row>td
+{background-color:#ECB96C !important;}
 </style>

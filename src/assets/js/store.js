@@ -11,6 +11,7 @@ var store =new Vuex.Store({
   state:{
     token:localStorage.getItem('TOKEN')||'',
     uname:localStorage.getItem('UNAME')||'',
+    orgname:localStorage.getItem('ORGNAME')||'',
     gjdq:[],
     zjzl:[],
     qzzl:[],
@@ -21,7 +22,11 @@ var store =new Vuex.Store({
     jzlx:[],
     zsxz:[],
     jzzt:[],
-    xzqh:[]
+    xzqh:[],
+    jtgx:[],
+    sflx:[],
+    xb:[],
+    rjqzzl:[],
   },
   mutations:{
     getToken(state,data){
@@ -32,6 +37,11 @@ var store =new Vuex.Store({
       localStorage.setItem('UNAME',data)
       state.uname=data;
     },
+    getOrgname(state,data){
+      localStorage.setItem('ORGNAME',data)
+      state.orgname=data;
+    },
+
     getGjdq(state,data){
       state.gjdq=data;
     },
@@ -65,8 +75,21 @@ var store =new Vuex.Store({
     getXzqh(state,data){
       state.xzqh=data;
     },
+    getJtgx(state,data){
+      state.jtgx=data;
+    },
+    getSflx(state,data){
+      state.sflx=data;
+    },
+    getXB(state,data){
+      state.xb=data;
+    },
+    getRjqzzl(state,data){
+      state.rjqzzl=data;
+    },
   },
   actions:{
+
     getGjdq(context){
       api.get(global_.aport1+global_.gjdq, null,
           r => {
@@ -131,6 +154,30 @@ var store =new Vuex.Store({
       api.get(global_.aport1+global_.xzqh, null,
           r => {
             context.commit('getXzqh',ToArray(r.data))
+        })
+    },
+    getJtgx(context){
+      api.get(global_.aport1+global_.jtgx, null,
+          r => {
+            context.commit('getJtgx',ToArray(r.data))
+        })
+    },
+    getSflx(context){
+      api.get(global_.aport1+global_.sflx, null,
+          r => {
+            context.commit('getSflx',ToArray(r.data))
+        })
+    },
+    getXB(context){
+      api.get(global_.aport1+global_.xb, null,
+          r => {
+            context.commit('getXB',ToArray(r.data))
+        })
+    },
+    getRjqzzl(context){
+      api.get(global_.aport1+global_.rjqzzl, null,
+          r => {
+            context.commit('getRjqzzl',ToArray(r.data))
         })
     },
   }
