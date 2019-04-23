@@ -6,7 +6,7 @@
       <div class="top-right">
        <div class="top-nav">
           <ul class="top-nav-ul">
-            <li class="top-nav-li hand" ><img src="../assets/img/nicon.png" /> &nbsp;欢迎您！{{adminname}}  {{dwname}}</li>
+            <li class="top-nav-li hand" ><img src="../assets/img/nicon.png" /> &nbsp;欢迎您！{{adminname}}  {{dwname}}  <span class="modpwd" v-if="an" @click="$router.push({name:'XGMM'})">修改密码</span></li>
             <li class="top-nav-li hand" @click="$router.push({name:'Index'})"><img src="../assets/img/home.png" /> &nbsp;首页</li>
             <li class="top-nav-li hand" @click="logOut"><img src="../assets/img/close.png" /> &nbsp;退出</li>
           </ul>
@@ -54,7 +54,8 @@ export default {
       dwname:'',
       tabliwidth:'10%',
       tabListCheck:null,
-      routeList:this.$route.meta.title
+      routeList:this.$route.meta.title,
+      an:false,
     };
   },
   watch: {
@@ -118,6 +119,10 @@ export default {
     getname(){
       this.adminname=this.$store.state.uname;
       this.dwname="，"+this.$store.state.orgname;
+      if(this.adminname!='管理员'){
+
+        this.an=true;
+      }
     },
     logOut() {
       var url=this.Global.aport1+'/user/logout';

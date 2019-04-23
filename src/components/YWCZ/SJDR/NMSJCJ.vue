@@ -194,6 +194,7 @@
       </el-row>
     </el-form>
   </el-dialog>
+  <div class="nmsj">
   <el-dialog title="编辑" :visible.sync="editsDialogVisible">
     <el-form   ref="editForm">
       <el-row :gutter="2"  class="mb-6">
@@ -274,7 +275,7 @@
             <el-input placeholder="请输入内容" size="small" v-model="editForm.YXDZ" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">临住登记编号：</span>
+          <span class="input-text" title="临住登记编号">临住登记编号：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.LSZSDJXXBH" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
@@ -298,6 +299,7 @@
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
+
   <el-dialog title="详情" :visible.sync="detailsDialogVisible">
     <el-form   ref="mapForm">
       <el-row :gutter="2"  class="mb-6">
@@ -348,7 +350,7 @@
             <span class="input-input detailinput">  {{mapForm.YXDZ}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
-            <span class="input-text">临住登记编号：</span>
+            <span class="input-text" title="临住登记编号">临住登记编号：</span>
             <span class="input-input detailinput">  {{mapForm.LSZSDJXXBH}}</span>
           </el-col>
           <el-col :span="12" class="input-item">
@@ -384,28 +386,214 @@
         style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="商品名称">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-              <el-form-item label="所属店铺">
-                <span>{{ props.row.shop }}</span>
-              </el-form-item>
-              <el-form-item label="商品 ID">
-                <span>{{ props.row.id }}</span>
-              </el-form-item>
-              <el-form-item label="店铺 ID">
-                <span>{{ props.row.shopId }}</span>
-              </el-form-item>
-              <el-form-item label="商品分类">
-                <span>{{ props.row.category }}</span>
-              </el-form-item>
-              <el-form-item label="店铺地址">
-                <span>{{ props.row.address }}</span>
-              </el-form-item>
-              <el-form-item label="商品描述">
-                <span>{{ props.row.desc }}</span>
-              </el-form-item>
+            <el-form label-position="left" inline class="demo-table-expand dfrom">
+              <el-row type="flex">
+                <el-col :span="16">
+                    <el-row :gutter="2">
+                      <el-col :span="12">
+                        <el-form-item label="英文姓：">
+                          <span>{{ props.row.YWX }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="英文名：">
+                          <span>{{ props.row.YWM }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="英文姓名：">
+                          <span>{{ props.row.YWXM }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="中文姓名：">
+                          <span>{{ props.row.ZWXM }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="证件种类：">
+                          <span>{{ props.row.ZJZL }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="证件号码：">
+                          <span>{{ props.row.ZJHM }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="国家地区：">
+                          <span>{{ props.row.GJDQ }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="出生日期：">
+                          <span>{{ props.row.CSRQ }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="性别：">
+                          <span>{{ props.row.XB }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="身份证号：">
+                          <span>{{ props.row.FZSFZH }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="签证种类：">
+                          <span>{{ props.row.QZZL }}</span>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-form-item label="签证(注)号码：">
+                          <span>{{ props.row.QZHM }}</span>
+                        </el-form-item>
+                      </el-col>
+
+                    </el-row>
+                </el-col>
+                <el-col :span="8" class="imgt">
+                     <img src="../../../assets/img/t1.png"  class="img">
+                </el-col>
+              </el-row>
+
+
+              <el-row :gutter="3">
+                <el-col :span="8">
+                  <el-form-item label="签发机关：">
+                    <span>{{ props.row.QFD }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="签证(注)有效期：">
+                    <span>{{ props.row.TLYXQZ }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入境日期：">
+                    <span>{{ props.row.RJRQ }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入境口岸：">
+                    <span>{{ props.row.RJKA }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="何处来：">
+                    <span>{{ props.row.LYD }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="何处去：">
+                    <span>{{ props.row.GJDQ }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="行政区划：">
+                    <span>{{ props.row.DJDWXZQH }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入境事由：">
+                    <span>{{ props.row.JLSY }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="入住日期：">
+                    <span>{{ props.row.ZSRQ }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="接待单位：">
+                    <span>{{ props.row.JDDW }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="拟离开日期：">
+                    <span>{{ props.row.NLKRQ }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="投宿于：">
+                    <span>{{ props.row.LB_DJDW }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="标准化地址：">
+                    <span>{{ props.row.BZHDZMC }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="本人联系电话：">
+                    <span>{{ props.row.LSDWDH }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="紧急联系人：">
+                    <span>{{ props.row.JJLXR }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="派出所名称：">
+                    <span>{{ props.row.LB_DJDW }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="留宿单位(户主)：">
+                    <span>{{ props.row.LSDW }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="留宿单位(户主)电话：">
+                    <span>{{ props.row.LSDWDH }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="紧急情况联系电话：">
+                    <span>{{ props.row.JJLXDH }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="与境外人员关系：">
+                    <span>{{ props.row.QSGX }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="房屋性质：">
+                    <span>{{ props.row.ZFZL }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="房主身份证号：">
+                    <span>{{ props.row.FZSFZH }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="备注：">
+                    <span>{{ props.row.FZSFZH }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row :gutter="3">
+                <el-col :span="8">
+                  <el-form-item label="录入人：">
+                    <span>{{ props.row.LRR }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="录入单位：">
+                    <span>{{ props.row.LRDW }}</span>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                  <el-form-item label="录入日期：">
+                    <span>{{ props.row.LRRQ }}</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </el-form>
           </template>
         </el-table-column>
@@ -473,7 +661,7 @@
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-
+</div>
   </div>
 
 </template>
@@ -550,7 +738,7 @@ export default {
       };
       this.$api.post(this.Global.aport3+'/ywescxlszsdjxx/getLSZSDJXXList', p,
         r => {
-          this.tableData1 = r.data.resultList;
+          this.tableData1 = r.data;
           this.TotalResult1 = r.data.totalResult;
         })
 
@@ -659,15 +847,30 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = this.Global.aport3 + '/templateFile/难民和寻求庇护者导入模板.xlsx'
+      var url= window.IPConfig.IP +"/"+ this.Global.aport3 + '/webapp/templateFile/难民和寻求庇护者导入模板.xlsx';
+      console.log('dddd,',url);
+      window.location.href =url;
     },
   }
 }
 </script>
 
 <style scoped>
-
+.imgt{ height: 250px;}
+.dfrom{padding:0px 10px;}
+.img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 </style>
 <style>
-
+.nmsj .el-dialog {
+  width: 70% !important;
+  /* max-height: 400px!important;
+  overflow-y: scroll; */
+}
+.nmsj .el-col-12 {text-align: left;}
+.nmsj .el-col-8 {text-align: left;}
+.nmsj .el-form-item{margin-bottom: 0px!important;  width: 90%!important;}
 </style>

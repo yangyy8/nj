@@ -25,13 +25,9 @@
          </el-col>
            <el-col :span="8" class="down-btn-area">
                <el-row  style="text-align:right;">
-
                    <el-button type="success" size="small" @click="getList(pd)">查询</el-button>
-
-                   <el-button type="info" size="small" @click="getList(pd)">返回</el-button>
-
-                   <el-button type="primary" size="small" @click="">导出</el-button>
-
+                   <el-button type="info" size="small" @click="getFH(pd)">返回</el-button>
+                   <el-button type="primary" size="small" @click="download(0)">导出</el-button>
                </el-row>
            </el-col>
 
@@ -42,7 +38,7 @@
            ref="multipleTable"
            :data="tableData"
            border
-            show-summary
+           show-summary
            style="width: 100%"
            @selection-change="handleSelectionChange">
            <!-- <el-table-column
@@ -51,25 +47,28 @@
            </el-table-column> -->
            <el-table-column
              prop="dw"
-             label="单位">
+             label="单位" v-if="fj" :key="Math.random()">
              <template slot-scope="scope">
              <a class="sb" @click="getPCS(scope.row.dw)"> {{scope.row.dw}} </a>
              </template>
            </el-table-column>
-           
+           <el-table-column
+             prop="dw"
+             label="宾馆" v-if="bgs" :key="Math.random()">
+           </el-table-column>
            <el-table-column
              prop="zs"
-             label="总数">
+             label="总数" :key="Math.random()">
            </el-table-column>
            <el-table-column
              prop="shm"
-             label="社会面">
+             label="社会面" v-if="fj" :key="Math.random()">
            </el-table-column>
            <el-table-column
              prop="bg"
-             label="旅馆">
+             label="旅馆" v-if="fj" :key="Math.random()">
              <template slot-scope="scope">
-             <a class="sb" @click="toLink(scope.row)"> {{scope.row.bg}} </a>
+             <a class="sb" @click="getLG(scope.row.dw,'3')"> {{scope.row.bg}} </a>
              </template>
            </el-table-column>
            <el-table-column
@@ -77,6 +76,9 @@
                    <el-table-column
                       prop="cwsj"
                       label="错误数">
+                      <template slot-scope="scope">
+                      <a class="sb" @click="toLink(0,scope.row.dw)"> {{scope.row.cwsj}} </a>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="zql"
@@ -88,6 +90,9 @@
                    <el-table-column
                       prop="cbsj"
                       label="迟报数">
+                      <template slot-scope="scope">
+                      <a class="sb" @click="toLink(1,scope.row.dw)"> {{scope.row.cbsj}} </a>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="jsl"
@@ -99,19 +104,126 @@
 
     </div>
 
+<div class="lztjfx">
+  <el-dialog :title="diaglogtitle" :visible.sync="detailsDialogVisible">
+
+        <el-row  style="text-align:right;">
+            <el-button type="primary" size="small" @click="download(1)">导出</el-button>
+        </el-row>
+
+    <el-table
+         ref="multipleTable"
+         :data="tableData1"
+         border
+         style="width: 100%"
+         @selection-change="handleSelectionChange">
+         <el-table-column
+           prop="zwxm"
+           label="中文姓名">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.zwxm_t==true}">   {{scope.row.zwxm}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="ywxm"
+           label="英文姓名">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.ywxm_t==true}">   {{scope.row.ywxm}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="xb"
+           label="性别">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.xb_t==true}">   {{scope.row.xb}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="zjzl"
+           label="证件种类">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.zjzl_t==true}">   {{scope.row.zjzl}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="zjhm"
+           label="证件号码">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.zjhm_t==true}">   {{scope.row.zjhm}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="gjdq"
+           label="国家地区">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.gjdq_t==true}">   {{scope.row.gjdq}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="csrq"
+           label="出生日期">
+           <template slot-scope="scope">
+           <span :class="{'yycolor':scope.row.csrq_t==true}">   {{scope.row.csrq}}</span>
+           </template>
+         </el-table-column>
+         <el-table-column
+           prop="zsrq"
+           label="住宿日期">
+         </el-table-column>
+         <el-table-column
+           prop="djdw"
+           label="登记单位">
+         </el-table-column>
+         <el-table-column
+           prop="ssfj"
+           label="所属分局">
+         </el-table-column>
+         <el-table-column
+           prop="cwlx"
+           label="错误类型" v-if='cw' :key="Math.random()" width="200">
+         </el-table-column>
+         <el-table-column
+           prop="djrq"
+           label="登记日期" v-if='cd' :key="Math.random()">
+         </el-table-column>
+         <el-table-column
+           prop="bz"
+           label="备注">
+         </el-table-column>
+       </el-table>
+       <div slot="footer" class="dialog-footer">
+         <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
+       </div>
+  </el-dialog>
+</div>
   </div>
 
 </template>
 <script>
-
+import axios from 'axios'
 export default {
   data() {
     return {
-      pd: {beginTime:'',endTime:''},
-      form:{},
-      tableData:[],
-
-
+      pd: {
+        beginTime: '',
+        endTime: ''
+      },
+      form: {},
+      tableData: [],
+      tableData1: [],
+      detailsDialogVisible: false,
+      fj: true,
+      bgs: false,
+      level: '1',
+      diaglogtitle: '',
+      dw: '',
+      dwlg: '',
+      cw: false,
+      cd: false,
+      dc: 0,
+      dcdw:'',
+      bglevel:'',
+      dclevel:'',
     }
   },
   mounted() {
@@ -123,65 +235,226 @@ export default {
     },
 
     getList(pd) {
+      this.bgs = false;
+      this.fj = true;
+      this.level = "1";
+      this.dclevel="1";
+      this.bglevel='';
       let p = {
-        "level":"1",
-        "dw":"",
+        "level": "1",
+        "dw": "",
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
       };
-      var url=this.Global.aport2+'/data_report/selectTjxx';
+      var url = this.Global.aport2 + '/data_report/selectTjxx';
       this.$api.post(url, p,
         r => {
           this.tableData = r.data;
         })
     },
-    getPCS(dw){
+    getPCS(dw) {
+      this.dw=dw;
+      this.bglevel='';
+      if (this.level == "1" || this.level == "3") {
+        this.dw = dw;
+        this.level = "2";
+        this.dclevel="2";
+        this.bgs = false;
+        this.fj = true;
+        let p = {
+          "level": "2",
+          "dw": dw,
+          "beginTime": this.pd.beginTime,
+          "endTime": this.pd.endTime,
+        };
+        var url = this.Global.aport2 + '/data_report/selectTjxx';
+        this.$api.post(url, p,
+          r => {
+            this.tableData = r.data;
+          })
+
+      } else {
+        return;
+      }
+    },
+    getLG(dw,ll) {
+      this.dwlg = dw;
+      this.bglevel=ll;
+      this.dclevel="";
+      this.bgs = true;
+      this.fj = false;
       let p = {
-        "level":"2",
-        "dw":dw,
+        "level": this.level,
+        "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
       };
-      var url=this.Global.aport2+'/data_report/selectBgxx';
+      var url = this.Global.aport2 + '/data_report/selectBgxx';
       this.$api.post(url, p,
         r => {
           this.tableData = r.data;
         })
+
     },
-    toLink(i){
-        let p={
-           "beginTime":this.pd.beginTime,
-           "endTime":this.pd.endTime,
-           "ssfjmc":i.fj,
-           "sblx":type,
+    toLink(i,dw) {
+       this.dcdw=dw;
+      this.dc = i;
+      var ll=this.level;
+      if(this.bglevel!=''){
+        ll=this.bglevel;
+      }
+      let p = {
+        "level":ll ,
+        "dw": dw,
+        "beginTime": this.pd.beginTime,
+        "endTime": this.pd.endTime,
+      };
+      var url = '';
+      if (i == 0) {
+        this.diaglogtitle = "错误数据详情";
+        url = this.Global.aport2 + '/data_report/selectCwsj';
+        this.cw = true;
+        this.cd = false;
+      } else {
+        this.diaglogtitle = "迟报数据详情";
+        url = this.Global.aport2 + '/data_report/selectCbsj';
+        this.cw = false;
+        this.cd = true;
+      }
+      this.$api.post(url, p,
+        r => {
+          this.tableData1 = r.data;
+        })
+      this.detailsDialogVisible = true;
+    },
+    getFH(pd) {
+      if (this.level == "1" || this.level == "2") {
+
+        this.getList(pd);
+      } else {
+        if (this.dw == "") {
+          this.getList(pd);
+        } else {
+          this.getPCS(this.dw);
         }
-        this.$router.push({name: 'LZSJHE',query:{ cdt:p}});
-    }
+      }
+    },
+    download(t) {
+      var url = '';
+      var dw  = this.dw;
+      var ll=this.level;
+      if (t == 0) {
+        if (this.dclevel == "1") {
+          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportTjxx";
+        } else if (this.dclevel == "2") {
+          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportTjxx";
+        } else if (this.bglevel == "3") {
+          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
+          dw=this.dwlg;
+        }
+      } else if (t == 1) {
+        dw=this.dcdw;
+        if (this.dc == 0) {
+          url = window.IPConfig.IP+'/'+this.Global.aport2 + "/data_report/exportCwxx";
+        } else {
+          url = window.IPConfig.IP+'/'+this.Global.aport2 + "/data_report/exportCbxx";
+        }
+        if(this.bglevel!=''){
+          ll=this.bglevel;
+        }
+      }
+      console.log('this.bglevel',ll);
+      console.log('this.dw1111',dw);
+      console.log('this.url',url);
+      let p = {
+        "level": ll,
+        "dw": dw,
+        "beginTime": this.pd.beginTime,
+        "endTime": this.pd.endTime,
+      };
+    console.log('this.p',p);
+      axios({
+        method: 'post',
+        url: url,
+        data: p,
+        responseType: 'blob'
+      }).then(response => {
+        this.downloadM(response)
+      });
+    },
+    downloadM(data) {
+      if (!data) {
+        return
+      }
+
+      let url = window.URL.createObjectURL(new Blob([data.data], {
+        type: "application/octet-stream"
+      }))
+      let link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.setAttribute('download', '临住统计列表' + '.xlsx')
+      document.body.appendChild(link)
+      link.click()
+    },
 
   }
 }
 </script>
 
 <style scoped>
-a{color: blue}
-.sb{display:block;width:100%;height:100%;cursor:pointer;}
-.sb:hover{color: red}
+a {
+  color: blue
+}
+
+.sb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.sb:hover {
+  color: red
+}
+
 .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-  }
-  .el-carousel__item:nth-child(2n) {
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
   background: url(../../../assets/img/t1.png);
   background-size: 100% 100%;
-  }
+}
 
-  .el-carousel__item:nth-child(2n+1) {
-     background-color: #d3dce6;
-  }
-  .block{padding-top: 5px;}
-  .crcolor{background: #EFF3F6;}
-  .yy-input-text{text-align:left!important;}
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
+}
+
+.block {
+  padding-top: 5px;
+}
+
+.crcolor {
+  background: #EFF3F6;
+}
+
+.yycolor {
+  color: red;
+}
+
+.yy-input-text {
+  text-align: left !important;
+}
+</style>
+<style>
+.lztjfx .el-dialog {
+  width: 80% !important;
+  /* max-height: 400px!important;
+  overflow-y: scroll; */
+}
 </style>

@@ -10,13 +10,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd.beginTime" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyyMMddHHmmss"
+                       type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd.endTime" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyyMMddHHmmss"
+                        type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -60,13 +60,13 @@
              <a class="sb" @click="toLink (scope.row,'cgts')" > {{scope.row.cgts}} </a>
              </template>
            </el-table-column>
-           <el-table-column
+           <!-- <el-table-column
              prop="sbts"
              label="差错修改上报">
              <template slot-scope="scope">
              <a class="sb" @click="toLink (scope.row,'sbts')" href="#"> {{scope.row.sbts}} </a>
              </template>
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
              prop="rgsbts"
              label="人工干预">
@@ -167,20 +167,44 @@ export default {
     },
 
     getList(currentPage, showCount, pd) {
+      var btime=this.pd.beginTime;
+      var etime=this.pd.endTime;
+
+      if(this.pd.beginTime!='' && this.pd.beginTime!=undefined)
+      {
+        btime=this.pd.beginTime+"000000";
+      }
+      if(this.pd.endTime!='' && this.pd.endTime!=undefined)
+      {
+        etime=this.pd.endTime+"235959";
+      }
+
       let p = {
-        "beginTime": this.pd.beginTime,
-        "endTime": this.pd.endTime,
+        "beginTime": btime,
+        "endTime":etime,
       };
+
       var url=this.Global.aport2+'/data_report/selectSbList';
       this.$api.post(url, p,
         r => {
-          this.tableData = r.data;
+          if(r.success){
+          this.tableData = r.data;}
         })
     },
     toLink(i,type){
+      var btime=this.pd.beginTime;
+      var etime=this.pd.endTime;
+      if(this.pd.beginTime!='' && this.pd.beginTime!=undefined)
+        {
+          btime=this.pd.beginTime+"000000";
+        }
+      if(this.pd.endTime!='' && this.pd.endTime!=undefined)
+        {
+          etime=this.pd.endTime+"235959";
+        }
         let p={
-           "beginTime":this.pd.beginTime,
-           "endTime":this.pd.endTime,
+           "beginTime":btime,
+           "endTime":etime,
            "ssfjmc":i.fj,
            "sblx":type,
         }

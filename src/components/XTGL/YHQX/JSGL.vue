@@ -236,7 +236,7 @@
           </el-row>
 
             <el-table
-             ref="listPowerSupplyTab"
+             ref="multipleTable1"
              :data="tableData1"
              border
              class="stu-table"
@@ -401,6 +401,7 @@ export default {
          });
     },
     getList1(currentPage, showCount, pd) {
+      let _this=this;
       var formData = new FormData();
         formData.append("currentPage", currentPage);
         formData.append("showCount", showCount);
@@ -413,6 +414,12 @@ export default {
          r => {
            this.tableData1 = r.data.resultList;
            this.TotalResult1 = r.data.totalCount;
+
+           _this.$refs.multipleTable1.$nextTick(() => {
+               _this.tableData1.forEach(obj => {
+                 _this.$refs.multipleTable1.toggleRowSelection(obj, obj.checked)
+               })
+           })
          });
     },
     adds(n,i){
@@ -599,9 +606,6 @@ export default {
          this.roleid=i.id;
          this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
 
-                     this.$nextTick( ()=> {
-                         this.$refs.listPowerSupplyTab.toggleRowSelection(this.$refs.listPowerSupplyTab.data[0],true);
-                     })
           this.yhDialogVisible=true;
        },
 

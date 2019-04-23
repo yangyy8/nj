@@ -421,7 +421,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-       window.location.href = this.Global.aport3 + '/templateFile/临住布控导入模板.xlsx'
+       window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/临住布控导入模板.xlsx'
     },
   }
 }

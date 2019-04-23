@@ -1819,22 +1819,21 @@ export default {
     download(t) {
       switch (t) {
         case 0:
-          window.location.href = this.Global.aport3 + '/templateFile/持护照入境并有内地签发签证或停居留许可非法居留人员名单导入模板.xls'
+          window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/持护照入境并有内地签发签证或停居留许可非法居留人员名单导入模板.xls'
           break;
         case 1:
-          window.location.href = this.Global.aport3 + '/templateFile/持护照入境仅有入境口岸记录非法居留人员名单导入模板.xls'
+          window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/持护照入境仅有入境口岸记录非法居留人员名单导入模板.xls'
           break;
         case 2:
-          window.location.href = this.Global.aport3 + '/templateFile/持护照入境并有住宿登记信息但无公安机关签发签证或停居留许可人员名单导入模板.xls'
+          window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/持护照入境并有住宿登记信息但无公安机关签发签证或停居留许可人员名单导入模板.xls'
           break;
         case 3:
-          window.location.href = this.Global.aport3 + '/templateFile/持越南入出境通行证入境非法居留人员名单导入模板.xlsx'
+          window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/持越南入出境通行证入境非法居留人员名单导入模板.xlsx'
           break;
         default:
           break;
 
       }
-
     },
   }
 }

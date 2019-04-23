@@ -8,18 +8,7 @@
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">姓名：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.zwxm" class="input-input"></el-input>
-
-                <!-- <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">性别：</span>
-                  <el-select v-model="pd.sex" placeholder="请选择"  filterable clearable size="small" class="input-input">
-                    <el-option value="U" label="U - 未知">
-                    </el-option>
-                    <el-option value="M" label="M - 男">
-                    </el-option>
-                    <el-option value="F" label="F - 女">
-                    </el-option>
-                  </el-select>
-                </el-col> -->
+                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">预警时间：</span>
                   <div class="input-input t-flex t-date">
@@ -71,8 +60,6 @@
     </div>
     <div class="yycontent">
        <div class="yylbt mb-15">甄别信息列表</div>
-
-<<<<<<< HEAD
       <el-table
            :data="tableData"
            border
@@ -133,68 +120,6 @@
              label="操作" width="120">
              <template slot-scope="scope">
              <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WGRFFJLYJ_XQ',query:{yjType:2,rybh:scope.row.rybh}})"></el-button>
-=======
-       <el-table
-            :data="tableData"
-            border
-            style="width: 100%">
-            <!-- <el-table-column
-              type="selection"
-              width="55">
-            </el-table-column> -->
-            <el-table-column
-              prop="ywxm"
-              label="姓名">
-            </el-table-column>
-            <el-table-column
-              prop="xb"
-              label="性别">
-            </el-table-column>
-            <!-- <el-table-column
-              prop="address"
-              label="出生日期">
-            </el-table-column> -->
-            <el-table-column
-              prop="gjdq"
-              label="国家地区">
-            </el-table-column>
-            <el-table-column
-              prop="zjzl"
-              label="证件种类">
-            </el-table-column>
-            <el-table-column
-              prop="zjhm"
-              label="证件号码">
-            </el-table-column>
-            <el-table-column
-              prop="zjyxq"
-              label="证件有效期">
-            </el-table-column>
-            <el-table-column
-              prop="qzzl"
-              label="签证种类">
-            </el-table-column>
-            <el-table-column
-              prop="qzhm"
-              label="签证号码">
-            </el-table-column>
-            <!-- <el-table-column
-              prop="address"
-              label="预警类型">
-            </el-table-column> -->
-            <el-table-column
-              prop="yjsj"
-              label="预警时间">
-            </el-table-column>
-            <el-table-column
-              prop="cljg"
-              label="当前状态">
-            </el-table-column>
-           <el-table-column
-             label="操作" width="120">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2,rybh:scope.row.rybh}})"></el-button>
->>>>>>> 156eed893df7f7f98d1affb5863c040934952404
              </template>
            </el-table-column>
          </el-table>

@@ -1,5 +1,5 @@
 
-var IPConfig = window.IPConfig = {
-  'IP': '192.168.3.217',
-  'HOST': '1101'
+window.IPConfig = {
+  IP: 'http://192.168.3.217:1101',
+  INDEX:'http://192.168.3.217:1101'
 }

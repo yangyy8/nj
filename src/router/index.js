@@ -271,6 +271,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LZYP/LZXXZHFX'], resolve),
         },
         {
+          path: 'JWRYXX',
+          name: 'JWRYXX',
+          meta:{title:['预警研判','研判','临住研判','临住信息综合分析'],father:'LZXXZHFX'},
+          component: resolve => require(['@/components/YJYP/YP/LZYP/JWRYXX'], resolve),
+        },
+        {
           path: 'JWRYCZWYHFX',
           name: 'JWRYCZWYHFX',
           meta:{title:['预警研判','研判','临住研判','境外人员出租房屋隐患分析']},
@@ -349,7 +355,7 @@ export default new Router({
         {
           path: 'ZQQKKH',
           name: 'ZQQKKH',
-          meta:{title:['业务操作','临住信息','临住登记统计分析']},
+          meta:{title:['业务操作','临住信息','临住登记统计情况考核']},
           component: resolve => require(['@/components/YWCZ/LZXX/ZQQKKH'], resolve),
         },
         {
@@ -441,6 +447,12 @@ export default new Router({
           name: 'YHGL',
           meta:{title:['系统管理','用户权限','用户管理']},
           component: resolve => require(['@/components/XTGL/YHQX/YHGL'], resolve),
+        },
+        {
+          path: 'XGMM',
+          name: 'XGMM',
+          meta:{title:['系统管理','用户权限','修改密码']},
+          component: resolve => require(['@/components/XTGL/YHQX/XGMM'], resolve),
         },
         {
           path: 'JSGL',

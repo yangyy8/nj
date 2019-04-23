@@ -43,13 +43,14 @@
              type="selection"
              width="55">
            </el-table-column>
-           <el-table-column
-             prop="mc"
-             label="姓名">
-           </el-table-column>
+
            <el-table-column
              prop="dlm"
              label="登录号/警号">
+           </el-table-column>
+           <el-table-column
+             prop="mc"
+             label="姓名">
            </el-table-column>
            <el-table-column
              prop="ssdw"
@@ -163,7 +164,7 @@
       <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
       <el-button @click="addsDialogVisible = false" size="small">取 消</el-button>
     </div>
-  </el-dialog>
+    </el-dialog>
     <el-dialog title="详情" :visible.sync="detailsDialogVisible" width="600px">
       <el-form   ref="mapForm">
         <el-row :gutter="1"  class="mb-6">
@@ -198,7 +199,7 @@
       <el-row  :gutter="1">
         <el-col :span="24">
           <span class="yy-input-text">所属单位：</span>
-           <el-select v-model="pd2.org"  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small">
+           <el-select v-model="pd2.org"  filterable clearable  class="yy-input-input" @change="getMnus(pd2.org)" placeholder="请选择"  size="small">
              <el-option
               v-for="item in this.ssdw"
               :key="item.dm"
@@ -209,7 +210,7 @@
         </el-col>
 
       <el-col :span="24">
-          <span class="yy-input-text">进行下面赋权：</span>
+          <span class="yy-input-text">单位赋权：</span>
       <el-tree
         :data="menudata"
         :check-strictly="true"
@@ -260,7 +261,7 @@
              </el-col>
             </el-row>
               <el-table
-               ref="multipleTable"
+               ref="multipleTable1"
                :data="tableData1"
                border
                class="stu-table"
@@ -309,8 +310,6 @@
                   :total="TotalResult1">
                 </el-pagination>
               </div>
-
-
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">
@@ -318,12 +317,12 @@
       <el-button @click="jsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-
   </div>
-
 </template>
 <script>
-import {ToData} from '@/assets/js/ToArray.js'
+import {
+  ToData
+} from '@/assets/js/ToArray.js'
 export default {
   data() {
     return {
@@ -333,60 +332,63 @@ export default {
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,
-      rddw:false,
+      rddw: false,
       pd: {},
-      pd1:{},
-      pd2:{},
-      from:{ssdwdm:'',ssdwmc:''},
-      mapForm:{},
-      tp:0,
-      company:[],
-      dialogText:'新增',
-      ssdwmc:false,
-      addsDialogVisible:false,
-      detailsDialogVisible:false,
+      pd1: {},
+      pd2: {},
+      from: {
+        ssdwdm: '',
+        ssdwmc: ''
+      },
+      mapForm: {},
+      tp: 0,
+      company: [],
+      dialogText: '新增',
+      ssdwmc: false,
+      addsDialogVisible: false,
+      detailsDialogVisible: false,
       menuDialogVisible: false,
-      jsDialogVisible:false,
+      jsDialogVisible: false,
       options: [{
-        value: 10,
-        label: "10"
-      },
-      {
-        value: 20,
-        label: "20"
-      },
-      {
-        value: 30,
-        label: "30"
-      }
-    ],
+          value: 10,
+          label: "10"
+        },
+        {
+          value: 20,
+          label: "20"
+        },
+        {
+          value: 30,
+          label: "30"
+        }
+      ],
       tableData: [],
-      tableData1:[],
-      multipleSelection:[],
-      multipleSelection1:[],
-      menudata:[],
+      tableData1: [],
+      multipleSelection: [],
+      multipleSelection1: [],
+      menudata: [],
       defaultProps: {
         children: 'children',
         label: 'mc'
       },
-      defaultChecked:[],
-      userid:'',
-      org:'',
-      ssdw:[],
+      defaultChecked: [],
+      userid: '',
+      org: '',
+      ssdw: [],
 
     }
   },
   mounted() {
-      this.getCompany();
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(this.from)
+    this.getCompany();
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
+    console.log(this.from)
   },
   methods: {
     handleSelectionChange(val) {
-      this.multipleSelection=val;
+      this.multipleSelection = val;
     },
     handleSelectionChange1(val) {
-      this.multipleSelection1=val;
+      this.multipleSelection1 = val;
     },
     pageSizeChange(val) {
       this.getList(this.CurrentPage, val, this.pd);
@@ -404,111 +406,113 @@ export default {
       this.getList1(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
-    changeValue(value){
+    changeValue(value) {
       this.$forceUpdate();
       let obj = {};
-      obj = this.company.find((item)=>{
-         return item.dm === value;
+      obj = this.company.find((item) => {
+        return item.dm === value;
       });
-      this.from.ssdwmc=obj.mc;
+      this.from.ssdwmc = obj.mc;
     },
-    getCompany(){
-         var formData = new FormData();
-         formData.append("org",this.Global.org);
-         formData.append("token",this.$store.state.token);
-         let p=formData;
-         var url=this.Global.aport1+'/org/getSelfAndChilds';
-         this.$api.post(url, p,
-         r => {
-           this.company=r.data;
-         });
+    getCompany() {
+      var formData = new FormData();
+      formData.append("org", this.Global.org);
+      formData.append("token", this.$store.state.token);
+      let p = formData;
+      var url = this.Global.aport1 + '/org/getSelfAndChilds';
+      this.$api.post(url, p,
+        r => {
+          this.company = r.data;
+        });
     },
     getList(currentPage, showCount, pd) {
-       var formData = new FormData();
-         formData.append("currentPage", currentPage);
-         formData.append("showCount", showCount);
-         formData.append("org", this.pd.org==undefined?this.Global.org:this.pd.org);
-         formData.append("mc", this.pd.mc==undefined?"":this.pd.mc);
-         formData.append("token", this.$store.state.token);
-         let p=formData;
-         var url=this.Global.aport1+'/user/getAll';
-         this.$api.post(url, p,
-          r => {
-            this.tableData = r.data.resultList;
-            this.TotalResult = r.data.totalCount;
-          });
+      var formData = new FormData();
+      formData.append("currentPage", currentPage);
+      formData.append("showCount", showCount);
+      formData.append("org", this.pd.org == undefined ? this.Global.org : this.pd.org);
+      formData.append("mc", this.pd.mc == undefined ? "" : this.pd.mc);
+      formData.append("token", this.$store.state.token);
+      let p = formData;
+      var url = this.Global.aport1 + '/user/getAll';
+      this.$api.post(url, p,
+        r => {
+          this.tableData = r.data.resultList;
+          this.TotalResult = r.data.totalCount;
+        });
     },
     getList1(currentPage, showCount, pd) {
-      if(this.pd1.org=='' || this.pd1.org==undefined)
-      {
-        this.$message.error('所属单位不能为空！');return;
-      }
-       var formData = new FormData();
-         formData.append("currentPage", currentPage);
-         formData.append("showCount", showCount);
-         formData.append("org", this.pd1.org==undefined?this.Global.org:this.pd1.org);
-         formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
-         formData.append("token", this.$store.state.token);
-         formData.append("userid",this.userid);
-         let p=formData;
-         var url=this.Global.aport1+'/role/getAllByRelationalUser';
-         this.$api.post(url, p,
-          r => {
-            this.tableData1 = r.data.resultList;
-            this.TotalResult1 = r.data.totalCount;
-            console.log('-----',this.tableData1[0]);
-          });
 
+      let _this = this;
+      if (this.pd1.org == '' || this.pd1.org == undefined) {
+        this.$message.error('所属单位不能为空！');
+        return;
+      }
+      var formData = new FormData();
+      formData.append("currentPage", currentPage);
+      formData.append("showCount", showCount);
+      formData.append("org", this.pd1.org == undefined ? this.Global.org : this.pd1.org);
+      formData.append("mc", this.pd1.mc == undefined ? "" : this.pd1.mc);
+      formData.append("token", this.$store.state.token);
+      formData.append("userid", this.userid);
+      let p = formData;
+      var url = this.Global.aport1 + '/role/getAllByRelationalUser';
+      this.$api.post(url, p,
+        r => {
+          this.tableData1 = r.data.resultList;
+          this.TotalResult1 = r.data.totalCount;
+          _this.$refs.multipleTable1.$nextTick(() => {
+            _this.tableData1.forEach(obj => {
+              _this.$refs.multipleTable1.toggleRowSelection(obj, obj.checked)
+            })
+          })
+
+        });
     },
 
-    getDM(n){
+    getDM(n) {
 
-      var sum='';
+      var sum = '';
       for (var i = 0; i < n.length; i++) {
-      sum=sum+','+n[i].mc ;
+        sum = sum + ',' + n[i].mc;
       }
       return sum.substring(1, sum.length);;
     },
-    adds(n,i){
+    adds(n, i) {
 
-        this.V.$reset("demo");
+      this.V.$reset("demo");
 
-        if (n != 0) {
+      if (n != 0) {
         //this.from.ssdwdm=ToData(i.ssdw.dm);
         var formData = new FormData();
-          formData.append("id", i.id);
-          formData.append("token", this.$store.state.token);
-          let p=formData;
-        this.$api.post(this.Global.aport1+'/user/getById', p,
-         r => {
-           this.from = r.data;
-           var arr=r.data.dwdm.split(',');
-           this.from.dwdm=arr;
+        formData.append("id", i.id);
+        formData.append("token", this.$store.state.token);
+        let p = formData;
+        this.$api.post(this.Global.aport1 + '/user/getById', p,
+          r => {
+            this.from = r.data;
+            var arr = r.data.dwdm.split(',');
+            this.from.dwdm = arr;
 
-         });
-        this.dialogText="编辑";
+          });
+        this.dialogText = "编辑";
         this.tp = 1;
-        }else {
-          debugger;
-          this.from.dwdm=[{
-          dm: 'as',
-          mc: '123'
-          }];
-        this.dialogText="新增";
+      } else {
+        this.from = {};
+        this.$set(this.from, 'dwdm', []);
+        this.dialogText = "新增";
         this.tp = 0;
-        }
-      this.addsDialogVisible=true;
+      }
+      this.addsDialogVisible = true;
 
     },
     //添加和编辑
-  addItem(addForm)
-    {
+    addItem(addForm) {
 
-      this.V.$submit('demo', (canSumit,data) => {
-             // canSumit为true时，则所有该scope的所有表单验证通过
-              if(!canSumit) return;
-              // 只有验证全部通过才会执行
-      var formData = new FormData();
+      this.V.$submit('demo', (canSumit, data) => {
+        // canSumit为true时，则所有该scope的所有表单验证通过
+        if (!canSumit) return;
+        // 只有验证全部通过才会执行
+        var formData = new FormData();
         formData.append("token", this.$store.state.token);
         formData.append("dlm", this.from.dlm);
         formData.append("pwd", this.from.pwd);
@@ -517,52 +521,51 @@ export default {
         formData.append("sfzh", this.from.sfzh);
         formData.append("dwdm", this.from.dwdm);
         // formData.append("ssdw.mc", this.from.ssdwmc);
-         var url=this.Global.aport1+'/user/insertUser';
-      if (this.tp == 1) {
-        formData.append("id", this.from.id);
-          url=this.Global.aport1+'/user/updateUser';
-       }
-       let p=formData;
-      this.$api.post(url, p,
-      r => {
-            if(r.success){
-              this.$message({
-              message: '保存成功！',
-              type: 'success'
-            });
-             this.addsDialogVisible=false;
-             this.getList(this.CurrentPage, this.pageSize, this.pd);
-            } else {
-            this.$message.error(r.message);
-          }
-      }, e => {
-          this.$message.error('失败了');
+        var url = this.Global.aport1 + '/user/insertUser';
+        if (this.tp == 1) {
+          formData.append("id", this.from.id);
+          url = this.Global.aport1 + '/user/updateUser';
         }
+        let p = formData;
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              this.$message({
+                message: '保存成功！',
+                type: 'success'
+              });
+              this.addsDialogVisible = false;
+              this.getList(this.CurrentPage, this.pageSize, this.pd);
+            } else {
+              this.$message.error(r.message);
+            }
+          }, e => {
+            this.$message.error('失败了');
+          }
 
-      );
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
-    });
+        );
+        this.getList(this.CurrentPage, this.pageSize, this.pd);
+      });
     },
 
-//详情
-  details(i)
-  {
-    this.mapForm=i;
-    this.mapForm.ssdwmc=i.ssdw.mc;
-    this.detailsDialogVisible=true;
-  },
+    //详情
+    details(i) {
+      this.mapForm = i;
+      this.mapForm.ssdwmc = i.ssdw.mc;
+      this.detailsDialogVisible = true;
+    },
     //删除
-  deletes(i) {
-    var ff=new FormData();
-      ff.append("token",this.$store.state.token);
-      ff.append("id",i.id);
+    deletes(i) {
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("id", i.id);
       let p = ff;
-      var url=this.Global.aport1+'/user/deleteUser';
+      var url = this.Global.aport1 + '/user/deleteUser';
       this.$confirm('您是否确认删除？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-       }).then(() => {
+      }).then(() => {
         this.$api.post(url, p,
           r => {
             if (r.success) {
@@ -585,17 +588,17 @@ export default {
       });
     },
     //重置密码
-  resetpwd(i) {
-    var ff=new FormData();
-      ff.append("token",this.$store.state.token);
-      ff.append("id",i.id);
+    resetpwd(i) {
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("id", i.id);
       let p = ff;
-        var url=this.Global.aport1+'/user/resetPassword';
-      this.$confirm('您是否确认要重置密码？', '提示', {
+      var url = this.Global.aport1 + '/user/resetPassword';
+      this.$confirm('您是否要重置密码为0000？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-       }).then(() => {
+      }).then(() => {
         this.$api.post(url, p,
           r => {
             if (r.success) {
@@ -605,7 +608,7 @@ export default {
               });
               this.getList(this.CurrentPage, this.pageSize, this.pd);
             } else {
-              this.$message.error(r.Message);
+              this.$message.error(r.message);
             }
           }, e => {
             this.$message.error('失败了');
@@ -617,187 +620,198 @@ export default {
         });
       });
     },
-   //停用
-  stop(i,type) {
-    var ff=new FormData();
-      ff.append("token",this.$store.state.token);
-      ff.append("id",i.id);
-      ff.append("use",type);
+    //停用
+    stop(i, type) {
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("id", i.id);
+      ff.append("use", type);
       let p = ff;
-       var ss="停用成功！"
-       if(type){
-         ss="启用成功！";
-       }
-       var url=this.Global.aport1+'/user/changeUser';
-        this.$api.post(url, p,
-          r => {
-            if (r.success) {
-              this.$message({
-                message: ss,
-                type: 'success'
-              });
-              this.getList(this.CurrentPage, this.pageSize, this.pd);
-            } else {
-              this.$message.error(r.Message);
-            }
-          }, e => {
-            this.$message.error('失败了');
-          });
+      var ss = "停用成功！"
+      if (type) {
+        ss = "启用成功！";
+      }
+      var url = this.Global.aport1 + '/user/changeUser';
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            this.$message({
+              message: ss,
+              type: 'success'
+            });
+            this.getList(this.CurrentPage, this.pageSize, this.pd);
+          } else {
+            this.$message.error(r.Message);
+          }
+        }, e => {
+          this.$message.error('失败了');
+        });
 
     },
-//临时赋权
-   menus(i) {
-    this.pd2={};
-    this.menuDialogVisible = true;
-    this.userid=i.id;
-    var ff=new FormData();
-    ff.append("token",this.$store.state.token);
-    ff.append("org",this.pd2.org);
-    ff.append("userid",this.userid);
-    let p =ff;
+    //临时赋权
+    menus(i) {
+      this.pd2 = {};
+      this.menudata = [];
+      this.menuDialogVisible = true;
+      this.userid = i.id;
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("org", this.pd2.org);
+      ff.append("userid", this.userid);
+      let p = ff;
 
-    this.$api.post(this.Global.aport1+'/user/getSsdwByUserId', p,
-    rr=>{
-       this.ssdw=rr.data;
-    });
-
-    // var lists=new Array();
-    //      var url1=this.Global.aport1+'/fun/getByUserID';
-    // this.$api.post(url1, p,
-    // rr=>{
-    //   var arrs=rr.data;
-    //   for (var i = 0; i < arrs.length; i++) {
-    //      lists.push(arrs[i].id);
-    //   }
-    // });
-    var url=this.Global.aport1+'/fun/getFunTreeByUserID';
-    this.$api.post(url, p,
-      r => {
-        if (r.success) {
-          this.menudata = r.data;
-        //  let arr=r.data,that=this;
-        //  console.log('lists------',lists);
-          this.defaultChecked=lists;
-        }
-      })
-
-
-     },
-  open(content) {
-    this.$alert(content, '提示', {
-      confirmButtonText: '确定',
-    });
-  },
-  menuItem(){
-
-    if(this.pd2.org==undefined || this.pd2.org=='')
-    {
-      this.open("请选择所属单位！");
-      return;
-    }
-
-    let checkList=this.$refs.tree.getCheckedNodes();
-  //  console.log('checkList',checkList);
-    if(checkList.length==0){
-      this.open("请选择权限！");
-      return;
-    }
-    var array=checkList;
-    var childrenlist=new Array();
-    //console.log('checkList',checkList);
-   for (var i = 0; i < array.length; i++) {
-
-      childrenlist.push(array[i].dm);
-   }
-    // console.log('-----',childrenlist);
-    var ff=new FormData();
-    ff.append("token",this.$store.state.token);
-    ff.append("userid",this.userid);
-    if(this.pd2.org!=undefined)
-    {  ff.append("org",this.pd2.org);}
-    ff.append("funids",childrenlist);
-      let p=ff;
-        var url=this.Global.aport1+'/fun/updateFunsToUser';
-    this.$api.post(url, p,
-      r => {
-        if (r.success) {
-          this.$message({
-            type: 'success',
-            message: '保存成功'
-          });
-        }else{
-
-          this.$message.error('保存失败');
-        }
-      })
-          this.menuDialogVisible = false;
-
-  },
-      //关联到角色
-      relationjs(i)
-      {
-        this.userid=i.id;
-
-        var ffs=new FormData();
-        ffs.append("token",this.$store.state.token);
-        ffs.append("userid",i.id);
-        let pp =ffs;
-        this.$api.post(this.Global.aport1+'/user/getSsdwByUserId', pp,
-        rr=>{
-          console.log('----',rr.data);
-           this.ssdw=rr.data;
+      this.$api.post(this.Global.aport1 + '/user/getSsdwByUserId', p,
+        rr => {
+          this.ssdw = rr.data;
         });
-         this.jsDialogVisible=true;
-         // var formData = new FormData();
-         //   formData.append("currentPage", this.CurrentPage1);
-         //   formData.append("showCount", this.pageSize1);
-         //   formData.append("org", this.pd1.org);
-         //   formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
-         //   formData.append("token", this.$store.state.token);
-         //   let p=formData;
-         //   var url=this.Global.aport1+'/role/getAll';
-         //   this.$api.post(url, p,
-         //    r => {
-         //      this.tableData1 = r.data.resultList;
-         //      this.TotalResult1 = r.data.totalCount;
-         //    });
-      },
-      //保存关联到角色
-      jsItem(){
 
-        var formData = new FormData();
-        if (this.multipleSelection1.length == 0) {
-              this.$message.error('请选择角色列表内容！');
-             return;
-        }
-        var checkeds=[];var roleids=[];
-        for (var i = 0; i < this.multipleSelection1.length; i++)
-        {  var s = this.multipleSelection1[i].id;
-            roleids.push(s);
-            var gg=true;
-            checkeds.push(gg);
-        }
+    },
 
-          formData.append("userid", this.userid);
-          formData.append("roleids", roleids);
-          formData.append("checkeds", checkeds);
-          formData.append("token", this.$store.state.token);
-          let p=formData;
-          var url=this.Global.aport1+'/role/updateAllByRelationalUser';
-          this.$api.post(url, p,
-           r => {
-             if (r.success) {
-               this.$message({
-                 type: 'success',
-                 message: '保存成功'
-               });
-                this.jsDialogVisible=false;
-             }else{
+    getMnus(v) {
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("org", v);
+      ff.append("userid", this.userid);
+      let p = ff;
 
-               this.$message.error('保存失败');
-             }
-           });
-      },
+      var lists = new Array();
+      var url1 = this.Global.aport1 + '/fun/getByUserID';
+      this.$api.post(url1, p,
+        rr => {
+          var arrs = rr.data;
+          for (var i = 0; i < arrs.length; i++) {
+            lists.push(arrs[i].id);
+          }
+        });
+      var url = this.Global.aport1 + '/fun/getFunTreeByUserID';
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            this.menudata = r.data;
+            //  let arr=r.data,that=this;
+            //  console.log('lists------',lists);
+            this.defaultChecked = lists;
+          }
+        })
+    },
+
+    open(content) {
+      this.$alert(content, '提示', {
+        confirmButtonText: '确定',
+      });
+    },
+    menuItem() {
+
+      if (this.pd2.org == undefined || this.pd2.org == '') {
+        this.open("请选择所属单位！");
+        return;
+      }
+
+      let checkList = this.$refs.tree.getCheckedNodes();
+      //  console.log('checkList',checkList);
+      if (checkList.length == 0) {
+        this.open("请选择权限！");
+        return;
+      }
+      var array = checkList;
+      var childrenlist = new Array();
+      //console.log('checkList',checkList);
+      for (var i = 0; i < array.length; i++) {
+
+        childrenlist.push(array[i].dm);
+      }
+      // console.log('-----',childrenlist);
+      var ff = new FormData();
+      ff.append("token", this.$store.state.token);
+      ff.append("userid", this.userid);
+      if (this.pd2.org != undefined) {
+        ff.append("org", this.pd2.org);
+      }
+      ff.append("funids", childrenlist);
+      let p = ff;
+      var url = this.Global.aport1 + '/fun/updateFunsToUser';
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            this.$message({
+              type: 'success',
+              message: '保存成功'
+            });
+          } else {
+
+            this.$message.error('保存失败');
+          }
+        })
+      this.menuDialogVisible = false;
+
+    },
+    //关联到角色
+    relationjs(i) {
+      this.userid = i.id;
+
+      var ffs = new FormData();
+      ffs.append("token", this.$store.state.token);
+      ffs.append("userid", i.id);
+      let pp = ffs;
+      this.$api.post(this.Global.aport1 + '/user/getSsdwByUserId', pp,
+        rr => {
+
+          this.ssdw = rr.data;
+        });
+      this.pd1 = {};
+      this.tableData1 = [];
+      this.jsDialogVisible = true;
+      // var formData = new FormData();
+      //   formData.append("currentPage", this.CurrentPage1);
+      //   formData.append("showCount", this.pageSize1);
+      //   formData.append("org", this.pd1.org);
+      //   formData.append("mc", this.pd1.mc==undefined?"":this.pd1.mc);
+      //   formData.append("token", this.$store.state.token);
+      //   let p=formData;
+      //   var url=this.Global.aport1+'/role/getAll';
+      //   this.$api.post(url, p,
+      //    r => {
+      //      this.tableData1 = r.data.resultList;
+      //      this.TotalResult1 = r.data.totalCount;
+      //    });
+    },
+    //保存关联到角色
+    jsItem() {
+
+      var formData = new FormData();
+      if (this.multipleSelection1.length == 0) {
+        this.$message.error('请选择角色列表内容！');
+        return;
+      }
+      var checkeds = [];
+      var roleids = [];
+      for (var i = 0; i < this.multipleSelection1.length; i++) {
+        var s = this.multipleSelection1[i].id;
+        roleids.push(s);
+        var gg = true;
+        checkeds.push(gg);
+      }
+
+      formData.append("userid", this.userid);
+      formData.append("roleids", roleids);
+      formData.append("checkeds", checkeds);
+      formData.append("token", this.$store.state.token);
+      let p = formData;
+      var url = this.Global.aport1 + '/role/updateAllByRelationalUser';
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            this.$message({
+              type: 'success',
+              message: '保存成功'
+            });
+            this.jsDialogVisible = false;
+          } else {
+
+            this.$message.error('保存失败');
+          }
+        });
+    },
   },
   filters: {
 
@@ -806,7 +820,7 @@ export default {
 
         return "无效"
 
-      } else if (val == '1'){
+      } else if (val == '1') {
         return "有效"
       }
     },
@@ -815,13 +829,17 @@ export default {
 </script>
 
 <style scoped>
+.yy-input-text {
+  width: 20% !important;
+}
 
-.yy-input-text{ width: 20%!important;}
-.yy-input-input{ width: 75%!important;}
+.yy-input-input {
+  width: 75% !important;
+}
 </style>
 <style>
-
 .mnus .el-dialog__body {
-  max-height: 400px!important;overflow-y: scroll;
+  max-height: 400px !important;
+  overflow-y: scroll;
 }
 </style>

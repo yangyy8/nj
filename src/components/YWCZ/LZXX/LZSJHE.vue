@@ -167,8 +167,13 @@
               <span  class="input-text" style="width:18%"> </span>
                 <el-checkbox v-model="checkList5" label="5" @change="getCK(5)">国家地区错误</el-checkbox>
                 <el-checkbox v-model="checkList6" label="6" @change="getCK(6)">证件种类错误</el-checkbox>
-                <el-checkbox v-model="checkList7" label="7" @change="getCK(7)">性别错误&emsp;&nbsp;</el-checkbox>
+                <el-checkbox v-model="checkList9" label="5" @change="getCK(9)">证件号码错误</el-checkbox>
                 <el-checkbox v-model="checkList8" label="8" @change="getCK(8)">出生日期错误</el-checkbox>
+
+              </el-col>
+              <el-col :span="24" v-show="checkshow">
+              <span  class="input-text" style="width:18%"> </span>
+              <el-checkbox v-model="checkList7" label="7" @change="getCK(7)">性别错误</el-checkbox>
               </el-col>
             <el-col :span="12">
             <span  class="yy-input-text">英文姓：</span>
@@ -458,7 +463,7 @@
             <span class="yy-input-text" style="width:17.4%">旅馆名称：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.lzdwmc"  class="input-input" style="width:80%!important"></el-input>
           </el-col>
-          <el-col :span="8" v-show="lg"  class="crcolor">
+          <el-col :span="8"  class="crcolor">
             <span class="yy-input-text">房号：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.fh"  class="yy-input-input"></el-input>
           </el-col>
@@ -471,13 +476,17 @@
             <span class="yy-input-text" title="紧急情况联系人">紧急情况联系人：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.jjlxr"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="8" v-show="shm"  class="crcolor">
+          <el-col :span="8">
+            <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="form.jjlxrdh"  class="yy-input-input"></el-input>
+          </el-col>
+          <el-col :span="8"   class="crcolor">
             <span class="yy-input-text">派出所名称：</span>
             <el-select v-model="form.pcsbh" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
-                v-for="(item,ind1) in pcs"
-                :key="ind1"
-                :label="item.dm+' - '+item.mc"
+                v-for="item in pcs"
+                :key="item.dm"
+                :label="item.mc"
                 :value="item.dm">
               </el-option>
             </el-select>
@@ -490,12 +499,6 @@
             <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.lsdwhz"  class="input-input" style="width:80%!important"></el-input>
           </el-col>
-
-          <el-col :span="8">
-            <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.jjlxrdh"  class="yy-input-input"></el-input>
-          </el-col>
-
           <el-col :span="8">
             <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
             <!-- <el-input placeholder="请输入内容" size="small" v-model="form.jwrygx"  class="yy-input-input"></el-input> -->
@@ -527,9 +530,9 @@
             <span class="yy-input-text">住房种类：</span>
             <el-input placeholder="请输入内容" size="small" v-model="form.name"  class="yy-input-input"></el-input>
           </el-col> -->
-          <el-col :span="16">
-            <span class="yy-input-text" style="width:17.4%;">备注：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="form.bz"   class="input-input" style="width:80%!important;"></el-input>
+          <el-col :span="24">
+            <span class="yy-input-text" style="width:11.5%;">备注：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="form.bz"   class="input-input" style="width:87%!important;"></el-input>
           </el-col>
           <el-col :span="8" v-if="rgsb">
             <span class="yy-input-text">上报类型：</span>
@@ -556,7 +559,15 @@
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入单位：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input>
+              <!-- <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input> -->
+              <el-select v-model="form.djdw" filterable clearable placeholder="请选择" :disabled="true"   size="small" class="yy-input-input">
+                <el-option
+                  v-for="(item,inde2) in pcs"
+                  :key="inde2"
+                  :label="item.mc"
+                  :value="item.dm">
+                </el-option>
+              </el-select>
             </el-col>
             <el-col :span="8">
               <span class="yy-input-text">录入日期：</span>
@@ -597,7 +608,9 @@
 import {
   ToArray
 } from '@/assets/js/ToArray.js'
-import {formatDate} from '@/assets/js/date.js'
+import {
+  formatDate
+} from '@/assets/js/date.js'
 export default {
   data() {
     return {
@@ -675,11 +688,12 @@ export default {
       checkList6: false,
       checkList7: false,
       checkList8: false,
+      checkList9: false,
     }
   },
   activated() {
     this.cdt = this.$route.query.cdt;
-    if (this.cdt.sblx == "cgts") {
+    if (this.cdt.sblx == "cgts" || this.cdt.sblx=="jsts") {
       this.edit = false;
     } else {
       this.edit = true;
@@ -793,7 +807,6 @@ export default {
           this.xzqh = ToArray(r.data);
         })
     },
-
     getList(currentPage, showCount, pd) {
       let p = {
         "currentPage": currentPage,
@@ -841,6 +854,8 @@ export default {
       }
     },
     edits(n) {
+      this.checkList1=false;  this.checkList2=false;  this.checkList3=false;  this.checkList4=false;  this.checkList5=false;  this.checkList6=false;  this.checkList7=false;  this.checkList8=false;  this.checkList9=false;
+      // this.form={};
       const loading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -906,7 +921,8 @@ export default {
       this.form.tsy = this.typet;
 
       if (this.wccshow == true) {
-        if (this.checkList1 == false && this.checkList2 == false && this.checkList3 == false && this.checkList4 == false && this.checkList5 == false && this.checkList6 == false && this.checkList7 == false && this.checkList8 == false) {
+        if (this.checkList1 == false && this.checkList2 == false && this.checkList3 == false && this.checkList4 == false && this.checkList5 == false && this.checkList6 == false && this.checkList7 == false && this.checkList8 == false && this.checkList9 ==
+          false) {
           this.$message.error('至少选择一项错误！');
           return;
         }
@@ -919,8 +935,9 @@ export default {
           this.form.zjzl_t = false;
           this.form.xb_t = false;
           this.form.csrq_t = false;
+          this.form.zjhm_t = false;
         }
-        this.form.rgsblx=this.sbtype;
+        this.form.rgsblx = this.sbtype;
       }
       var url = this.Global.aport2 + "/data_report/update";
       this.$api.post(url, this.form,
@@ -985,13 +1002,13 @@ export default {
             this.hcqshow1 = false;
             this.hcqshow2 = true;
           }
-          if(this.wccshow==true){
-          this.sbtype = '2';
-          this.getSB(2);
-            }
-          this.form.gxr=this.$store.state.uname;
-          this.form.gxdw=this.$store.state.orgname;
-          this.form.gxsj=formatDate(new date(), 'yyyymmddhhmmss');
+          if (this.wccshow == true) {
+            this.sbtype = '2';
+            this.getSB(2);
+          }
+          this.form.gxr = this.$store.state.uname;
+          this.form.gxdw = this.$store.state.orgname;
+          this.form.gxsj = formatDate(new date(), 'yyyymmddhhmmss');
         });
     },
     opentp(row, t) {
@@ -1038,13 +1055,17 @@ export default {
         if (this.form.csrq_t == true) {
           this.checkList8 = true;
         }
+        if (this.form.zjhm_t == true) {
+          this.checkList9 = true;
+        }
       }
 
     },
     getCK(n) {
       console.log('this.sbtype', this.sbtype);
       if (this.sbtype == "2") {
-        if (this.checkList1 == false && this.checkList2 == false && this.checkList3 == false && this.checkList4 == false && this.checkList5 == false && this.checkList6 == false && this.checkList7 == false && this.checkList8 == false) {
+        if (this.checkList1 == false && this.checkList2 == false && this.checkList3 == false && this.checkList4 == false && this.checkList5 == false && this.checkList6 == false && this.checkList7 == false && this.checkList8 == false && this.checkList9 ==
+          false) {
           this.$message.error('至少选择一项错误！');
 
           return;
@@ -1109,6 +1130,13 @@ export default {
                 this.form.csrq_t = true;
               }
               break;
+            case 9:
+              if (this.checkList9 == false) {
+                this.form.zjhm_t = false
+              } else {
+                this.form.zjhm_t = true;
+              }
+              break;
             default:
               break;
 
@@ -1160,11 +1188,21 @@ export default {
 .yy-input-text {
   text-align: left !important;
 }
-.titlelen{ white-space:nowrap; word-break:keep-all; overflow:hidden; text-overflow:ellipsis; }
+
+.titlelen {
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
 <style>
 .yyinput input.el-input__inner {
   color: red;
 }
-.bj .el-dialog__wrapper{background:#000;background:rgba(0,0,0,0.3);}
+
+.bj .el-dialog__wrapper {
+  background: #000;
+  background: rgba(0, 0, 0, 0.3);
+}
 </style>

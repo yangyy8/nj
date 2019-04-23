@@ -416,7 +416,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = this.Global.aport3 + '/templateFile/未报到留学生导入模板.xls'
+      window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/未报到留学生导入模板.xls'
     },
   }
 }

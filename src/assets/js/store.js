@@ -2,182 +2,196 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import global_ from '../../Global.js'
 import api from '../../api/index.js';
-import {ToArray} from './ToArray.js'
+import {
+  ToArray
+} from './ToArray.js'
 
 Vue.use(Vuex);
 
 
-var store =new Vuex.Store({
-  state:{
-    token:localStorage.getItem('TOKEN')||'',
-    uname:localStorage.getItem('UNAME')||'',
-    orgname:localStorage.getItem('ORGNAME')||'',
-    gjdq:[],
-    zjzl:[],
-    qzzl:[],
-    rjkn:[],
-    rjsy:[],
-    qfjg:[],
-    pcs:[],
-    jzlx:[],
-    zsxz:[],
-    jzzt:[],
-    xzqh:[],
-    jtgx:[],
-    sflx:[],
-    xb:[],
-    rjqzzl:[],
+var store = new Vuex.Store({
+  state: {
+    token: localStorage.getItem('TOKEN') || '',
+    uname: localStorage.getItem('UNAME') || '',
+    orgname: localStorage.getItem('ORGNAME') || '',
+    ssdw: [],
+    gjdq: [],
+    zjzl: [],
+    qzzl: [],
+    rjkn: [],
+    rjsy: [],
+    qfjg: [],
+    pcs: [],
+    jzlx: [],
+    zsxz: [],
+    jzzt: [],
+    xzqh: [],
+    jtgx: [],
+    sflx: [],
+    xb: [],
+    rjqzzl: [],
   },
-  mutations:{
-    getToken(state,data){
-      localStorage.setItem('TOKEN',data)
-      state.token=data;
+  mutations: {
+    getToken(state, data) {
+      localStorage.setItem('TOKEN', data)
+      state.token = data;
     },
-    getUname(state,data){
-      localStorage.setItem('UNAME',data)
-      state.uname=data;
+    getUname(state, data) {
+      localStorage.setItem('UNAME', data)
+      state.uname = data;
     },
-    getOrgname(state,data){
-      localStorage.setItem('ORGNAME',data)
-      state.orgname=data;
+    getOrgname(state, data) {
+      localStorage.setItem('ORGNAME', data)
+      state.orgname = data;
     },
-
-    getGjdq(state,data){
-      state.gjdq=data;
+    getSsdw(state, data) {
+      state.ssdw = data;
     },
-    getZjzl(state,data){
-      state.zjzl=data;
+    getGjdq(state, data) {
+      state.gjdq = data;
     },
-    getQzzl(state,data){
-      state.qzzl=data;
+    getZjzl(state, data) {
+      state.zjzl = data;
     },
-    getRjkn(state,data){
-      state.rjkn=data;
+    getQzzl(state, data) {
+      state.qzzl = data;
     },
-    getRjsy(state,data){
-      state.rjsy=data;
+    getRjkn(state, data) {
+      state.rjkn = data;
     },
-    getQfjg(state,data){
-      state.qfjg=data;
+    getRjsy(state, data) {
+      state.rjsy = data;
     },
-    getPcs(state,data){
-      state.pcs=data;
+    getQfjg(state, data) {
+      state.qfjg = data;
     },
-    getJzlx(state,data){
-      state.jzlx=data;
+    getPcs(state, data) {
+      state.pcs = data;
     },
-    getZsxz(state,data){
-      state.zsxz=data;
+    getJzlx(state, data) {
+      state.jzlx = data;
     },
-    getJzzt(state,data){
-      state.jzzt=data;
+    getZsxz(state, data) {
+      state.zsxz = data;
     },
-    getXzqh(state,data){
-      state.xzqh=data;
+    getJzzt(state, data) {
+      state.jzzt = data;
     },
-    getJtgx(state,data){
-      state.jtgx=data;
+    getXzqh(state, data) {
+      state.xzqh = data;
     },
-    getSflx(state,data){
-      state.sflx=data;
+    getJtgx(state, data) {
+      state.jtgx = data;
     },
-    getXB(state,data){
-      state.xb=data;
+    getSflx(state, data) {
+      state.sflx = data;
     },
-    getRjqzzl(state,data){
-      state.rjqzzl=data;
+    getXB(state, data) {
+      state.xb = data;
+    },
+    getRjqzzl(state, data) {
+      state.rjqzzl = data;
     },
   },
-  actions:{
-
-    getGjdq(context){
-      api.get(global_.aport1+global_.gjdq, null,
-          r => {
-            context.commit('getGjdq',ToArray(r.data))
+  actions: {
+    getSsdw(context) {
+      var formData = new FormData();
+      formData.append("org", global_.org);
+      formData.append("token",store.state.token);
+      let p = formData;
+      api.post(global_.aport1 + global_.ssdw, p,
+        r => {
+          context.commit('getSsdw', r.data)
         })
     },
-    getZjzl(context){
-      api.get(global_.aport1+global_.zjzl, null,
-          r => {
-            context.commit('getZjzl',ToArray(r.data))
+    getGjdq(context) {
+      api.get(global_.aport1 + global_.gjdq, null,
+        r => {
+          context.commit('getGjdq', ToArray(r.data))
         })
     },
-    getQzzl(context){
-      api.get(global_.aport1+global_.qzzl, null,
-          r => {
-            context.commit('getQzzl',ToArray(r.data))
+    getZjzl(context) {
+      api.get(global_.aport1 + global_.zjzl, null,
+        r => {
+          context.commit('getZjzl', ToArray(r.data))
         })
     },
-    getRjkn(context){
-      api.get(global_.aport1+global_.rjkn, null,
-          r => {
-            context.commit('getRjkn',ToArray(r.data))
+    getQzzl(context) {
+      api.get(global_.aport1 + global_.qzzl, null,
+        r => {
+          context.commit('getQzzl', ToArray(r.data))
         })
     },
-    getRjsy(context){
-      api.get(global_.aport1+global_.rjsy, null,
-          r => {
-            context.commit('getRjsy',ToArray(r.data))
+    getRjkn(context) {
+      api.get(global_.aport1 + global_.rjkn, null,
+        r => {
+          context.commit('getRjkn', ToArray(r.data))
         })
     },
-    getQfjg(context){
-      api.get(global_.aport1+global_.qfjg, null,
-          r => {
-            context.commit('getQfjg',ToArray(r.data))
+    getRjsy(context) {
+      api.get(global_.aport1 + global_.rjsy, null,
+        r => {
+          context.commit('getRjsy', ToArray(r.data))
         })
     },
-    getPcs(context){
-      api.get(global_.aport1+global_.pcs, null,
-          r => {
-            context.commit('getPcs',ToArray(r.data))
+    getQfjg(context) {
+      api.get(global_.aport1 + global_.qfjg, null,
+        r => {
+          context.commit('getQfjg', ToArray(r.data))
         })
     },
-    getJzlx(context){
-      api.get(global_.aport1+global_.jzlx, null,
-          r => {
-            context.commit('getJzlx',ToArray(r.data))
+    getPcs(context) {
+      api.get(global_.aport1 + global_.pcs, null,
+        r => {
+          context.commit('getPcs', ToArray(r.data))
         })
     },
-    getZsxz(context){
-      api.get(global_.aport1+global_.zsxz, null,
-          r => {
-            context.commit('getZsxz',ToArray(r.data))
+    getJzlx(context) {
+      api.get(global_.aport1 + global_.jzlx, null,
+        r => {
+          context.commit('getJzlx', ToArray(r.data))
         })
     },
-    getJzzt(context){
-      api.get(global_.aport1+global_.jzzt, null,
-          r => {
-            context.commit('getJzzt',ToArray(r.data))
+    getZsxz(context) {
+      api.get(global_.aport1 + global_.zsxz, null,
+        r => {
+          context.commit('getZsxz', ToArray(r.data))
         })
     },
-    getXzqh(context){
-      api.get(global_.aport1+global_.xzqh, null,
-          r => {
-            context.commit('getXzqh',ToArray(r.data))
+    getJzzt(context) {
+      api.get(global_.aport1 + global_.jzzt, null,
+        r => {
+          context.commit('getJzzt', ToArray(r.data))
         })
     },
-    getJtgx(context){
-      api.get(global_.aport1+global_.jtgx, null,
-          r => {
-            context.commit('getJtgx',ToArray(r.data))
+    getXzqh(context) {
+      api.get(global_.aport1 + global_.xzqh, null,
+        r => {
+          context.commit('getXzqh', ToArray(r.data))
         })
     },
-    getSflx(context){
-      api.get(global_.aport1+global_.sflx, null,
-          r => {
-            context.commit('getSflx',ToArray(r.data))
+    getJtgx(context) {
+      api.get(global_.aport1 + global_.jtgx, null,
+        r => {
+          context.commit('getJtgx', ToArray(r.data))
         })
     },
-    getXB(context){
-      api.get(global_.aport1+global_.xb, null,
-          r => {
-            context.commit('getXB',ToArray(r.data))
+    getSflx(context) {
+      api.get(global_.aport1 + global_.sflx, null,
+        r => {
+          context.commit('getSflx', ToArray(r.data))
         })
     },
-    getRjqzzl(context){
-      api.get(global_.aport1+global_.rjqzzl, null,
-          r => {
-            context.commit('getRjqzzl',ToArray(r.data))
+    getXB(context) {
+      api.get(global_.aport1 + global_.xb, null,
+        r => {
+          context.commit('getXB', ToArray(r.data))
+        })
+    },
+    getRjqzzl(context) {
+      api.get(global_.aport1 + global_.rjqzzl, null,
+        r => {
+          context.commit('getRjqzzl', ToArray(r.data))
         })
     },
   }

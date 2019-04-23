@@ -423,6 +423,8 @@ export default {
             this.$message.error('保存失败');
           }
         })
+          //this.getList(this.CurrentPage, this.pageSize, this.pd);
+          //this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
     },
     getDM(n) {
 

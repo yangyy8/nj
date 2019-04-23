@@ -1,18 +1,18 @@
 
 // 配置API接口地址
-var root = ''
+var root = window.IPConfig.IP
 
 
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.src = "./static/IPConfig.js";
-script.onload = script.onreadystatechange = function() {
-  if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) {
-    root=''
-    script.onload = script.onreadystatechange = null;
-  }
-};
-document.body.appendChild(script);
+// var script = document.createElement("script");
+// script.type = "text/javascript";
+// script.src = "./static/IPConfig.js";
+// script.onload = script.onreadystatechange = function() {
+//   if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) {
+//     root=''
+//     script.onload = script.onreadystatechange = null;
+//   }
+// };
+// document.body.appendChild(script);
 
 
 // 引用axios
@@ -67,12 +67,9 @@ function apiAxios (method, url, params, success, failure) {
             loadingInstance1.close();
           }
           if (success) {
-<<<<<<< HEAD
-              success(res.data)
 
-=======
             success(res.data)
->>>>>>> 156eed893df7f7f98d1affb5863c040934952404
+
           }
           if(res.data.code=='1000001'){
             window.location.href ="#/";

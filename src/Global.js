@@ -3,21 +3,25 @@ const userName='';
 const hasEnter=false;
 const org="";
 // const aport="http://10.33.72.144:9420";//正式环境
-const aport="http://192.168.3.217:9420";//大师
-// const aport="http://10.33.72.145:1101/api-permission/";//大师网关
+const aport="/api-reporter";//大师网关
+// const aport="http://192.168.3.217:9420";//大师
 // const aport1="http://10.33.72.144:9435";//正式环境
-const aport1="http://192.168.3.217:9435";//大师
-// const aport1="http://10.33.72.145:1101/api-permission/";//大师网关
+const aport1="api-permission";//大师网关
+// const aport1="http://192.168.3.217:9435";//大师
 // const aport2="http://10.33.72.144:9439";//正式环境
-const aport2="http://192.168.3.217:9439";//左星海
+const aport2="api-yewu";//左星海网关
+// const aport2="http://192.168.3.217:9439";//左星海
 // const aport3="http://10.33.72.144:9439";//正式环境
-const aport3="http://192.168.3.217:9439";//石飞
+const aport3="api-yewu";//石飞网关
+// const aport3="http://192.168.3.217:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
-const aport4="http://192.168.3.217:9440";//李文龙，任智强
+const aport4="api-yujing";//李文龙网关
+// const aport4="http://192.168.3.217:9440";//李文龙，任智强
 
 
 const aport5="";
 const dmall="/data_report/selectDmList" //加载全部代码
+const ssdw="/org/getSelfAndChilds"//所属单位
 const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQB";//国家地区
 const zjzl="/service/getRedisDataByDm?tablename=DM_ZJZLB";//证件种类
 const qzzl="/service/getRedisDataByDm?tablename=DM_QZZL";//签证种类
@@ -45,5 +49,5 @@ export default
   aport3,//石飞
   aport4,//李文龙
   aport5,//任智强
-  gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall
+  gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw
 }
