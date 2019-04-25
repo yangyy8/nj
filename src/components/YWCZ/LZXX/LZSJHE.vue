@@ -548,19 +548,19 @@ export default {
       this.$api.get(this.Global.aport2 + this.Global.dmall, null,
         r => {
           // console.log("---",r.data.DM_XB);
-          this.gjdq = r.data.DM_GJDQB;
-          this.zjzl = r.data.DM_ZJZLB;
-          this.qzzl = r.data.DM_QZZL;
+          this.gjdq = r.data.DM_GJDQ;
+          this.zjzl = r.data.DM_ZJZL;
+          this.qzzl = r.data.DM_WGR_QZZL;
           this.rjkn = r.data.DM_RJKA;
-          this.rjsy = r.data.DM_RJSYB;
+          this.rjsy = r.data.DM_RJSY;
           this.qfjg = r.data.DM_QFJG;
           this.pcs = r.data.DM_PCS;
           // this.jzlx=r.data.DM_JZLX;
           this.zsxz = r.data.DM_ZSXZ;
           // this.jzzt=r.data.DM_JZZT;
-          this.xzqh = r.data.DM_XZQHB;
+          this.xzqh = r.data.DM_XZQH;
           this.xb = r.data.DM_XB;
-          this.jtgx = r.data.DM_JTGXB;
+          this.jtgx = r.data.DM_JTGX;
         })
     },
     getDMXX() {

@@ -255,9 +255,10 @@ export default {
 
       if (this.level == "1" || this.level == "3") {
         this.dw = dw;
+
         this.level = "2";
         this.dclevel="2";
-          console.log("===="+this.dw);
+
         this.bgs = false;
         this.fj = true;
         let p = {
@@ -313,9 +314,10 @@ export default {
         ll=this.bglevel;
       }
       if(this.dcdw=="合计"){
+        dw=this.dwlg;
         if(this.level=="2"){
           ll=1;
-          dw=this.dw;
+
         }
         if(this.bglevel!="" && this.level!=""){
           ll=parseInt(this.bglevel)+parseInt(this.level);
@@ -398,6 +400,7 @@ export default {
         }
 
         if(this.dcdw=="合计"){
+        dw=this.dwlg;
           if(this.level=="2"){
             ll=1;
 
