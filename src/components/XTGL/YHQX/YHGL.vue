@@ -8,7 +8,7 @@
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">所属单位：</span>
-                   <el-select v-model="pd.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
+                   <el-select v-model="pd.org"  filterable clearable default-first-option  class="input-input" placeholder="请选择"  size="small">
                      <el-option
                       v-for="item in company"
                       :key="item.dm"
@@ -151,7 +151,7 @@
            <el-col :span="24" class="yzform" data-scope="demo" data-name="dlm" data-type="input"
             v-validate-easy="[['required']]">
            <span class="yy-input-text" >状态：</span>
-           <el-select v-model="from.sfyx"  filterable clearable  class="yy-input-input" placeholder="请选择"  size="small">
+           <el-select v-model="from.sfyx"  filterable clearable  default-first-option class="yy-input-input" placeholder="请选择"  size="small">
                <el-option value="1" label="有效">
                </el-option>
                <el-option value="0" label="无效">
@@ -199,7 +199,7 @@
       <el-row  :gutter="1">
         <el-col :span="24">
           <span class="yy-input-text">所属单位：</span>
-           <el-select v-model="pd2.org"  filterable clearable  class="yy-input-input" @change="getMnus(pd2.org)" placeholder="请选择"  size="small">
+           <el-select v-model="pd2.org"  filterable clearable  default-first-option class="yy-input-input" @change="getMnus(pd2.org)" placeholder="请选择"  size="small">
              <el-option
               v-for="item in this.ssdw"
               :key="item.dm"
@@ -241,7 +241,7 @@
                 <el-row align="center"   :gutter="2">
                   <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">所属单位：</span>
-                    <el-select v-model="pd1.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
+                    <el-select v-model="pd1.org"  filterable clearable default-first-option  class="input-input" placeholder="请选择"  size="small">
                       <el-option
                        v-for="item in this.ssdw"
                        :key="item.dm"

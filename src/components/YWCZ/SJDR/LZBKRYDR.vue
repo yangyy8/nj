@@ -11,7 +11,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option
                       v-for="(item,ind1) in $store.state.xb"
                       :key="ind1"
@@ -46,7 +46,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="(item,ind1) in $store.state.gjdq"
                         :key="ind1"
@@ -177,7 +177,7 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">性别：</span>
-          <el-select v-model="editform.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+          <el-select v-model="editform.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
             <el-option
               v-for="(item,ind2) in $store.state.xb"
               :key="ind2"
@@ -204,7 +204,7 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">国家地区：</span>
-          <el-select v-model="editform.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+          <el-select v-model="editform.GJDQDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
             <el-option
               v-for="(item,ind3) in $store.state.gjdq"
               :key="ind3"

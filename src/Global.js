@@ -22,18 +22,18 @@ const aport4="api-yujing";//李文龙网关
 const aport5="";
 const dmall="/data_report/selectDmList" //加载全部代码
 const ssdw="/org/getSelfAndChilds"//所属单位
-const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQB";//国家地区
-const zjzl="/service/getRedisDataByDm?tablename=DM_ZJZLB";//证件种类
+const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQ";//国家地区
+const zjzl="/service/getRedisDataByDm?tablename=DM_ZJZL";//证件种类
 const qzzl="/service/getRedisDataByDm?tablename=DM_QZZL";//签证种类
 const rjkn="/service/getRedisDataByDm?tablename=DM_RJKA"//入境口岸
-const rjsy="/service/getRedisDataByDm?tablename=DM_RJSYB"//入境事由
+const rjsy="/service/getRedisDataByDm?tablename=DM_RJSY"//入境事由
 const qfjg="/service/getRedisDataByDm?tablename=DM_QFJG"//签发机关
 const pcs="/service/getRedisDataByDm?tablename=DM_PCS"//派出所
 const jzlx="/service/getRedisDataByDm?tablename=DM_JZLX"//居住类型
 const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质
 const jzzt="/service/getRedisDataByDm?tablename=DM_JZZT"//居住状态
-const xzqh="/service/getRedisDataByDm?tablename=DM_XZQHB"//行政区划
-const jtgx="/service/getRedisDataByDm?tablename=DM_JTGXB"//家庭关系
+const xzqh="/service/getRedisDataByDm?tablename=DM_XZQH"//行政区划
+const jtgx="/service/getRedisDataByDm?tablename=DM_JTGX"//家庭关系
 const sflx="/service/getRedisDataByDm?tablename=DM_NMSF"//身份类型
 const xb="/service/getRedisDataByDm?tablename=DM_XB"//性别
 const rjqzzl="/service/getRedisDataByDm?tablename=DM_WGR_QZZL"//入境签证类型

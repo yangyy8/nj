@@ -19,7 +19,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">国家地区：</span>
-                  <el-select v-model="pd.gjdq" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="(item,ind3) in gjdq"
                       :key="ind3"
@@ -202,7 +202,7 @@
             <el-col :span="12">
               <span class="yy-input-text">证件种类：</span>
                 <el-tooltip class="item" effect="dark" :disabled="!form.zjzl_t" :content="form.zjzl_xgq" placement="top-start">
-              <el-select v-model="form.zjzl" filterable clearable placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.zjzl_t == true,'yy-input-input':form.zjzl_t== false}">
+              <el-select v-model="form.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.zjzl_t == true,'yy-input-input':form.zjzl_t== false}">
                 <el-option
                   v-for="(item,ind4) in zjzl"
                   :key="ind4"
@@ -221,7 +221,7 @@
             <el-col :span="12">
               <span class="yy-input-text">国家地区：</span>
                 <el-tooltip class="item" effect="dark" :disabled="!form.gjdq_t" :content="form.gjdq_xgq" placement="top-start">
-              <el-select v-model="form.gjdq" filterable clearable placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.gjdq_t == true,'yy-input-input':form.gjdq_t== false}">
+              <el-select v-model="form.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.gjdq_t == true,'yy-input-input':form.gjdq_t== false}">
                 <el-option
                   v-for="(item,ind5) in gjdq"
                   :key="ind5"
@@ -244,7 +244,7 @@
             <el-col :span="12">
               <span class="yy-input-text">性别：</span>
                 <el-tooltip class="item" effect="dark" :disabled="!form.xb_t" :content="form.xb_xgq" placement="top-start">
-              <el-select v-model="form.xb" placeholder="请选择"  filterable clearable size="small" :class="{'yy-input-input yyinput':form.xb_t == true,'yy-input-input':form.xb_t== false}">
+              <el-select v-model="form.xb" placeholder="请选择"  filterable clearable default-first-option size="small" :class="{'yy-input-input yyinput':form.xb_t == true,'yy-input-input':form.xb_t== false}">
                 <el-option
                   v-for="(item,ind5) in xb"
                   :key="ind5"
@@ -260,7 +260,7 @@
             </el-col>
             <el-col :span="12" v-show="allshow">
               <span class="yy-input-text">签证种类：</span>
-              <el-select v-model="form.qzzl" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+              <el-select v-model="form.qzzl" filterable clearable  default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                 <el-option
                   v-for="(item,ind6) in qzzl"
                   :key="ind6"
@@ -275,7 +275,7 @@
             </el-col>
             <el-col :span="12" v-show="allshow">
               <span class="yy-input-text">签发机关：</span>
-              <el-select v-model="form.qfjg" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+              <el-select v-model="form.qfjg" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                 <el-option
                   v-for="(item,ind8) in qfjg"
                   :key="ind8"
@@ -311,7 +311,7 @@
         <el-row :gutter="3" v-show="allshow">
           <el-col :span="8">
             <span class="yy-input-text">行政区划：</span>
-            <el-select v-model="form.lzdwxzqh" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.lzdwxzqh" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="(item,ind9) in xzqh"
                 :key="ind9"
@@ -345,7 +345,7 @@
           </el-col>
           <el-col :span="8">
             <span class="yy-input-text">入境口岸：</span>
-            <el-select v-model="form.rjka" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.rjka" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="(item,ind10) in rjkn"
                 :key="ind10"
@@ -356,7 +356,7 @@
           </el-col>
           <el-col :span="8">
             <span class="yy-input-text">&nbsp;</span>
-            <el-select v-model="hcl1" v-show="hclshow1"  filterable clearable class="yy-input-input"  placeholder="请选择何处来"  size="small">
+            <el-select v-model="hcl1" v-show="hclshow1"  filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
               <el-option
                 v-for="(item,inde) in  xzqh"
                 :key="inde"
@@ -364,7 +364,7 @@
                 :value="item.dm">
               </el-option>
             </el-select>
-            <el-select v-model="hcl2"  v-show="hclshow2"  filterable clearable class="yy-input-input"  placeholder="请选择何处来"  size="small">
+            <el-select v-model="hcl2"  v-show="hclshow2"  filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
               <el-option
                 v-for="(item,indee) in  gjdq"
                 :key="indee"
@@ -377,7 +377,7 @@
         <el-row :gutter="3" v-show="allshow">
           <el-col :span="8">
             <span class="yy-input-text">入境事由：</span>
-            <el-select v-model="form.rjsy" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.rjsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="(item,ind11) in rjsy"
                 :key="ind11"
@@ -418,7 +418,7 @@
           </el-col>
           <el-col :span="8">
               <span class="yy-input-text">&nbsp;</span>
-             <el-select v-model="hcq1"  v-show="hcqshow1" filterable clearable  class="yy-input-input" placeholder="请选择何处去"  size="small">
+             <el-select v-model="hcq1"  v-show="hcqshow1" filterable clearable default-first-option  class="yy-input-input" placeholder="请选择何处去"  size="small">
               <el-option
                 v-for="(item,indw) in xzqh"
                 :key="indw"
@@ -426,7 +426,7 @@
                 :value="item.dm">
                </el-option>
              </el-select>
-             <el-select v-model="hcq2" v-show="hcqshow2"  filterable clearable  class="yy-input-input" placeholder="请选择何处去"  size="small">
+             <el-select v-model="hcq2" v-show="hcqshow2"  filterable clearable default-first-option class="yy-input-input" placeholder="请选择何处去"  size="small">
               <el-option
                 v-for="(item,indq) in gjdq"
                 :key="indq"
@@ -482,7 +482,7 @@
           </el-col>
           <el-col :span="8"   class="crcolor">
             <span class="yy-input-text">派出所名称：</span>
-            <el-select v-model="form.pcsbh" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.pcsbh" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="item in pcs"
                 :key="item.dm"
@@ -502,7 +502,7 @@
           <el-col :span="8">
             <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
             <!-- <el-input placeholder="请输入内容" size="small" v-model="form.jwrygx"  class="yy-input-input"></el-input> -->
-            <el-select v-model="form.yjwrygx" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.yjwrygx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="(item,indx) in jtgx"
                 :key="indx"
@@ -513,7 +513,7 @@
           </el-col>
           <el-col :span="8">
             <span class="yy-input-text">房屋性质：</span>
-            <el-select v-model="form.fwxz" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.fwxz" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option
                 v-for="(item,ind2) in zsxz"
                 :key="ind2"
@@ -536,7 +536,7 @@
           </el-col>
           <el-col :span="8" v-if="rgsb">
             <span class="yy-input-text">上报类型：</span>
-            <el-select v-model="form.rgsblx" filterable clearable placeholder="请选择"  size="small" class="yy-input-input">
+            <el-select v-model="form.rgsblx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
               <el-option value="1" label="1 - 正确"></el-option>
               <el-option value="2" label="2 - 错误"></el-option>
               <el-option value="3" label="3 - 缺项"></el-option>
@@ -560,7 +560,7 @@
             <el-col :span="8">
               <span class="yy-input-text">录入单位：</span>
               <!-- <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input> -->
-              <el-select v-model="form.djdw" filterable clearable placeholder="请选择" :disabled="true"   size="small" class="yy-input-input">
+              <el-select v-model="form.djdw" filterable clearable default-first-option placeholder="请选择" :disabled="true"   size="small" class="yy-input-input">
                 <el-option
                   v-for="(item,inde2) in pcs"
                   :key="inde2"
@@ -596,9 +596,10 @@
         </div>
       </el-dialog>
 
-      <el-dialog width="80%" title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" >
-          <img style="width:100%" src="../../../assets/img/t1.png" v-show="imgshow2">
-          <img style="width:100%" :src="imgs" v-show="imgshow1">
+      <el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
+        <div style="text-align:right;">  <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button></div>
+          <img style="" src="../../../assets/img/t1.png" v-show="imgshow2" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+          <img style="" :src="imgs" v-show="imgshow1" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
       </el-dialog>
 </div>
   </div>
@@ -679,6 +680,7 @@ export default {
       wccshow: false,
       allshow: true,
       sbtype: '',
+      deg:0,
       checkshow: false,
       checkList1: false,
       checkList2: false,
@@ -723,6 +725,13 @@ export default {
 
   },
   methods: {
+    // 旋转
+           rotate(){
+               this.deg += 90;
+               if(this.deg >= 360){
+                   this.deg = 0
+               }
+           },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },

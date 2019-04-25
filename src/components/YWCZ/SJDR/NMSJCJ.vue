@@ -11,7 +11,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option
                       v-for="(item,ind0) in $store.state.xb"
                       :key="ind0"
@@ -38,7 +38,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.GJDQDM" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="(item,ind1) in $store.state.gjdq"
                         :key="ind1"
@@ -69,7 +69,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">身份类型：</span>
-                  <el-select v-model="pd.SFDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.SFDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option
                       v-for="(item,ind2) in $store.state.sflx"
                       :key="ind2"
@@ -229,7 +229,7 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">性别：</span>
-          <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+          <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
             <el-option
               v-for="(item,ind3) in $store.state.xb"
               :key="ind3"
@@ -246,7 +246,7 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text" title="入境签证类型">入境签证类型：</span>
-          <el-select v-model="pd.RJQZLXDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+          <el-select v-model="pd.RJQZLXDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
             <el-option
               v-for="(item,ind4) in $store.state.rjqzzl"
               :key="ind4"
@@ -257,7 +257,7 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">身份类型：</span>
-          <el-select v-model="pd.SFDM" placeholder="请选择"  filterable clearable size="small" class="input-input">
+          <el-select v-model="pd.SFDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
             <el-option
               v-for="(item,ind5) in $store.state.sflx"
               :key="ind5"

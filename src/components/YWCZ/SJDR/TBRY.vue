@@ -15,7 +15,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">通报类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option value="U" label="红色通道">
                     </el-option>
                     <el-option value="M" label="黄色通道">
@@ -28,7 +28,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option value="U" label="U - 未知">
                     </el-option>
                     <el-option value="M" label="M - 男">
@@ -55,7 +55,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in nation"
                         :key="item.CODE"
@@ -66,7 +66,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">请求国：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.NATIONALITY" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in nation"
                         :key="item.CODE"
@@ -94,7 +94,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">证件类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable size="small" class="input-input">
+                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option value="0" label="0 - 身份证">
                     </el-option>
                     <el-option value="1" label="1 - 回乡证白卡">

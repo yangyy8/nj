@@ -10,7 +10,7 @@
             </el-col>
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
               <span class="input-text">国家地区：</span>
-              <el-select v-model="pd.gjdq" filterable clearable placeholder="请选择"  size="small" class="input-input">
+              <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                 <el-option
                   v-for="item in $store.state.gjdq"
                   :key="item.dm"
@@ -41,7 +41,7 @@
             </el-col>
             <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
               <span class="input-text">审核结果：</span>
-              <el-select v-model="pd.cljg" placeholder="请选择"  filterable clearable size="small" class="input-input">
+              <el-select v-model="pd.cljg" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                 <el-option value="0" label="0 - 通过"></el-option>
                 <el-option value="1" label="1 - 未通过"></el-option>
               </el-select>

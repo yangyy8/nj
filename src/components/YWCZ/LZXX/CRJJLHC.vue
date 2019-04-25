@@ -34,7 +34,7 @@
            ref="multipleTable"
            :data="tableData"
            border
-            show-summary
+           show-summary
            style="width: 100%"
            @selection-change="handleSelectionChange">
            <!-- <el-table-column
@@ -150,7 +150,11 @@ export default {
 
     }
   },
+  activated(){
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
+  },
   mounted() {
+
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {

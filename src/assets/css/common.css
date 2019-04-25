@@ -187,6 +187,9 @@ table td,thead th{
     color: #666666;
     font-weight: bold;
 }
+/* .el-dialog {
+ width: 70% !important;
+} */
 .el-dialog__body{
   line-height: 40px;
   /* max-height: 400px!important;

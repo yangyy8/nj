@@ -9,7 +9,7 @@
                     <el-row align="center"   :gutter="2">
                       <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                         <span class="input-text">所属单位：</span>
-                        <el-select v-model="pd.org"  filterable clearable  class="input-input" placeholder="请选择"  size="small">
+                        <el-select v-model="pd.org"  filterable clearable default-first-option class="input-input" placeholder="请选择"  size="small">
                           <el-option
                            v-for="item in company"
                            :key="item.dm"

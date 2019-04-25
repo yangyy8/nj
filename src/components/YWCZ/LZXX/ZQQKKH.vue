@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 临住信息统计 -->
-  <div class="yymain tshu">
+  <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="16" class="br pr-20">
@@ -38,7 +38,6 @@
            ref="multipleTable"
            :data="tableData"
            border
-           show-summary
            style="width: 100%"
            @selection-change="handleSelectionChange">
            <!-- <el-table-column
@@ -104,13 +103,11 @@
 
     </div>
 
-<div class="lztjfx">
-  <el-dialog :title="diaglogtitle" :visible.sync="detailsDialogVisible">
 
+  <el-dialog :title="diaglogtitle" customClass="customWidth" :visible.sync="detailsDialogVisible" :append-to-body="true">
         <el-row  style="text-align:right;">
             <el-button type="primary" size="small" @click="download(1)">导出</el-button>
         </el-row>
-
     <el-table
          ref="multipleTable"
          :data="tableData1"
@@ -195,8 +192,8 @@
          <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
        </div>
   </el-dialog>
-</div>
   </div>
+
 
 </template>
 <script>
@@ -255,10 +252,12 @@ export default {
     getPCS(dw) {
       this.dw=dw;
       this.bglevel='';
+
       if (this.level == "1" || this.level == "3") {
         this.dw = dw;
         this.level = "2";
         this.dclevel="2";
+          console.log("===="+this.dw);
         this.bgs = false;
         this.fj = true;
         let p = {
@@ -280,11 +279,21 @@ export default {
     getLG(dw,ll) {
       this.dwlg = dw;
       this.bglevel=ll;
-      this.dclevel="";
+
       this.bgs = true;
       this.fj = false;
+      var ll=this.level;
+      if(this.dwlg=="合计"){
+        if(this.level=="2"){
+          ll=1;
+          dw=this.dw;
+        }
+      }else {
+          this.dclevel="";
+      }
+
       let p = {
-        "level": this.level,
+        "level": ll,
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
@@ -297,12 +306,27 @@ export default {
 
     },
     toLink(i,dw) {
-       this.dcdw=dw;
+      this.dcdw=dw;
       this.dc = i;
       var ll=this.level;
       if(this.bglevel!=''){
         ll=this.bglevel;
       }
+      if(this.dcdw=="合计"){
+        if(this.level=="2"){
+          ll=1;
+          dw=this.dw;
+        }
+        if(this.bglevel!="" && this.level!=""){
+          ll=parseInt(this.bglevel)+parseInt(this.level);
+
+         }
+        if(this.dclevel=="2"){
+         ll=parseInt(this.dclevel)+parseInt(this.level);
+        }
+
+      }
+
       let p = {
         "level":ll ,
         "dw": dw,
@@ -352,6 +376,16 @@ export default {
           url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
           dw=this.dwlg;
         }
+        if(this.dwlg=="合计"){
+          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
+          if(this.level=="2"){
+            ll=1;
+            dw=this.dw;
+          }
+        }else {
+            this.dclevel="";
+        }
+
       } else if (t == 1) {
         dw=this.dcdw;
         if (this.dc == 0) {
@@ -362,10 +396,30 @@ export default {
         if(this.bglevel!=''){
           ll=this.bglevel;
         }
+
+        if(this.dcdw=="合计"){
+          if(this.level=="2"){
+            ll=1;
+
+          }
+          if(this.bglevel!="" && this.level!=""){
+            ll=parseInt(this.bglevel)+parseInt(this.level);
+
+           }
+          if(this.dclevel=="2"){
+           ll=parseInt(this.dclevel)+parseInt(this.level);
+          }
+        console.log('this.bglevel',this.bglevel);
+        console.log('this.level',this.level);
+        console.log('this.dclevel',this.dclevel);
+        }
+
       }
-      console.log('this.bglevel',ll);
-      console.log('this.dw1111',dw);
-      console.log('this.url',url);
+
+
+      // console.log('this.bglevel',ll);
+      // console.log('this.dw1111',dw);
+      // console.log('this.url',url);
       let p = {
         "level": ll,
         "dw": dw,
@@ -450,11 +504,10 @@ a {
 .yy-input-text {
   text-align: left !important;
 }
+
 </style>
 <style>
-.lztjfx .el-dialog {
-  width: 80% !important;
-  /* max-height: 400px!important;
-  overflow-y: scroll; */
-}
+.customWidth{
+     width:80%;
+ }
 </style>
