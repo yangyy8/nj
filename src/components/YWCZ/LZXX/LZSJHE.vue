@@ -717,12 +717,11 @@ export default {
     }
 
     this.pd = {};
+    this.getAll();
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
-
     this.getAll();
-
   },
   methods: {
     // 旋转

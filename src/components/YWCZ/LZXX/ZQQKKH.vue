@@ -223,6 +223,9 @@ export default {
       dclevel:'',
     }
   },
+  activated() {
+        this.getList(this.pd);
+  },
   mounted() {
     this.getList(this.pd);
   },
@@ -255,10 +258,8 @@ export default {
 
       if (this.level == "1" || this.level == "3") {
         this.dw = dw;
-
         this.level = "2";
         this.dclevel="2";
-
         this.bgs = false;
         this.fj = true;
         let p = {
@@ -314,19 +315,22 @@ export default {
         ll=this.bglevel;
       }
       if(this.dcdw=="合计"){
-        dw=this.dwlg;
+        //dw=this.dwlg;
         if(this.level=="2"){
           ll=1;
-
+          dw=this.dw;
         }
         if(this.bglevel!="" && this.level!=""){
           ll=parseInt(this.bglevel)+parseInt(this.level);
 
          }
+
         if(this.dclevel=="2"){
          ll=parseInt(this.dclevel)+parseInt(this.level);
         }
-
+         if(ll==5){
+           dw=this.dwlg;
+         }
       }
 
       let p = {
@@ -379,6 +383,7 @@ export default {
           dw=this.dwlg;
         }
         if(this.dwlg=="合计"){
+          dw=this.dwlg;
           url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
           if(this.level=="2"){
             ll=1;
@@ -387,9 +392,8 @@ export default {
         }else {
             this.dclevel="";
         }
-
       } else if (t == 1) {
-        dw=this.dcdw;
+           dw=this.dcdw;
         if (this.dc == 0) {
           url = window.IPConfig.IP+'/'+this.Global.aport2 + "/data_report/exportCwxx";
         } else {
@@ -400,10 +404,10 @@ export default {
         }
 
         if(this.dcdw=="合计"){
-        dw=this.dwlg;
+            dw=this.dcdw;
           if(this.level=="2"){
             ll=1;
-
+            dw=this.dw;
           }
           if(this.bglevel!="" && this.level!=""){
             ll=parseInt(this.bglevel)+parseInt(this.level);
@@ -412,9 +416,10 @@ export default {
           if(this.dclevel=="2"){
            ll=parseInt(this.dclevel)+parseInt(this.level);
           }
-        console.log('this.bglevel',this.bglevel);
-        console.log('this.level',this.level);
-        console.log('this.dclevel',this.dclevel);
+          if(ll==5){
+            dw=this.dwlg;
+          }
+
         }
 
       }
