@@ -62,6 +62,12 @@ export default new Router({
           meta:{title:['预警研判','预警','临住预警','出租房屋隐患预警']},
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/CZFWYHYJ'], resolve),
         },
+        {
+          path: 'CZFWYHYJ_XQ',
+          name: 'CZFWYHYJ_XQ',
+          meta:{title:['预警研判','预警','临住预警','出租房屋隐患预警'],father:'CZFWYHYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LZYJ/CZFWYHYJ_XQ'], resolve),
+        },
 
 
         {

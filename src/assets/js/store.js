@@ -13,6 +13,7 @@ var store = new Vuex.Store({
   state: {
     token: localStorage.getItem('TOKEN') || '',
     uname: localStorage.getItem('UNAME') || '',
+    uid: localStorage.getItem('UID') || '',
     orgname: localStorage.getItem('ORGNAME') || '',
     ssdw: [],
     gjdq: [],
@@ -39,6 +40,10 @@ var store = new Vuex.Store({
     getUname(state, data) {
       localStorage.setItem('UNAME', data)
       state.uname = data;
+    },
+    getUid(state, data) {
+      localStorage.setItem('UID', data)
+      state.uid = data;
     },
     getOrgname(state, data) {
       localStorage.setItem('ORGNAME', data)

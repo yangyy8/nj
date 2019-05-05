@@ -423,7 +423,7 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 3}"
           placeholder="甄别说明必须填写原因(不超过100个字符)"
-          v-model="pd.CHANGE_RESON">
+          v-model="pd.CLJG">
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
@@ -965,40 +965,14 @@ export default {
       lzinfo: {},
       CZDialogVisible: false,
       czinfo: {},
-
-      // yjType:0,
-      // baseData:{},
-      // tableData1:this.pl.tableData,
-      // tableData2:this.pl.tableData,
-      // tableData3:this.pl.tableData,
-      // tableData4:this.pl.tableData,
-      // tableData5:this.pl.tableData,
-      // tableData6:this.pl.tableData,
-      // ryjb1:'/visaWarningController/getPersonInfoByRybh',//visa人员基本信息
-      // qzxx1:'/visaWarningController/getQianZhengInfoByRybh',//visa签证详情
-      // zsdj1:'/visaWarningController/getLinZhuListByRybh',//visa住宿登记信息
-      // czxx1:'/visaWarningController/getChangZhuListByRybh',//visa常驻信息
-      //
-      // ryjb2:'/visaWarningController/getPersonInfoByRybh',//visa人员基本信息
-      // qzxx2:'/visaWarningController/getQianZhengInfoByRybh',//visa签证详情
-      // zsdj2:'/visaWarningController/getLinZhuListByRybh',//visa住宿登记信息
-      // czxx2:'/visaWarningController/getChangZhuListByRybh',//visa常驻信息
-      //
-
+      yjid:'',
       pd:{},
     }
   },
   activated() {
     this.yjType = this.$route.query.yjType;
-    this.rybh = this.$route.query.rybh;
-    // this.yjid=this.$route.query.yjid;
-    if(this.yjType==1){
-      this.getList(this.ryjb1,0);
-      this.getList(this.qzxx1,1);
-      this.getList(this.zsdj1,3);
-      this.getList(this.czxx1,4);
-    }else if(this.yjType==2){
-
+    this.yjid = this.$route.query.rybh;
+    console.log('this.yjid',this.yjid);
 
     this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getPersonInfoByRybh', 0); //人员基本信息
     this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getYuJingXinXiByRybh', 10); //预警信息
@@ -1008,16 +982,6 @@ export default {
     this.getList(this.Global.aport4 + '/visaWarningController/getChangZhuListByRybh', 4); //常住信息
     this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getInfoByRybh', 5); //非法就业
     this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getJiaoTongListByRybh', 6); //交通信息
-
-    }
-    // this.getList('/illegalEmploymentWarningController/getPersonInfoByRybh',0);//人员基本信息
-    // this.getList('/illegalEmploymentWarningController/getQianZhengInfoByRybh',1);
-    // this.getList('/illegalEmploymentWarningController/getChuRuJingListByRybh',2);
-    // // this.getList('/educationParController/getJZJJXXInfo',3);
-    // // this.getList('/educationParController/getJZCJXXInfo',4);
-    // this.getList('/illegalEmploymentWarningController/getJiaoTongListByRybh',6);
-
-
   },
   mounted() {
 
@@ -1031,7 +995,7 @@ export default {
       console.log(title, type)
     },
     getList(url, type) {
-      this.cdt.rybh = this.rybh;
+      this.cdt.rybh = this.yjid;
       let p = {
         "pd": this.cdt
       };
@@ -1085,15 +1049,22 @@ export default {
     },
     chuli() {
       let p = {
-        "yjid": this.yjid,
-        "cljg": this.form.cljg,
-        "cldw": '',
-        "clr": '',
-        "shjg": '',
+        "YJID": this.yjid,
+        "CLJG": this.pd.CLJG,
+        "CLDW": this.$store.state.org,
+        "CLR": this.$store.state.uname,
+        "CLRID":this.$store.state.uid
       };
-      this.$api.post('/educationParController/saveWarningInfo', p,
+      this.$api.post('/warningInfoController/saveCLJG', p,
         r => {
-
+          if(r.success){
+          this.$message({
+            message: '处理成功！',
+            type: 'success'
+          });
+        }else {
+              this.$message.error('处理失败了');
+        }
         })
     }
   }

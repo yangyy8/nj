@@ -100,10 +100,7 @@
            </el-table-column>
 
          </el-table>
-
     </div>
-
-
   <el-dialog :title="diaglogtitle" customClass="customWidth" :visible.sync="detailsDialogVisible" :append-to-body="true">
         <el-row  style="text-align:right;">
             <el-button type="primary" size="small" @click="download(1)">导出</el-button>
@@ -245,6 +242,8 @@ export default {
         "dw": "",
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
       var url = this.Global.aport2 + '/data_report/selectTjxx';
       this.$api.post(url, p,
@@ -258,7 +257,9 @@ export default {
 
       if (this.level == "1" || this.level == "3") {
         this.dw = dw;
+
         this.level = "2";
+
         this.dclevel="2";
         this.bgs = false;
         this.fj = true;
@@ -267,6 +268,8 @@ export default {
           "dw": dw,
           "beginTime": this.pd.beginTime,
           "endTime": this.pd.endTime,
+          "operatorId":this.$store.state.uid,
+          "operatorNm":this.$store.state.uname,
         };
         var url = this.Global.aport2 + '/data_report/selectTjxx';
         this.$api.post(url, p,
@@ -281,7 +284,6 @@ export default {
     getLG(dw,ll) {
       this.dwlg = dw;
       this.bglevel=ll;
-
       this.bgs = true;
       this.fj = false;
       var ll=this.level;
@@ -293,19 +295,19 @@ export default {
       }else {
           this.dclevel="";
       }
-
       let p = {
         "level": ll,
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
       var url = this.Global.aport2 + '/data_report/selectBgxx';
       this.$api.post(url, p,
         r => {
           this.tableData = r.data;
         })
-
     },
     toLink(i,dw) {
       this.dcdw=dw;
@@ -322,9 +324,7 @@ export default {
         }
         if(this.bglevel!="" && this.level!=""){
           ll=parseInt(this.bglevel)+parseInt(this.level);
-
          }
-
         if(this.dclevel=="2"){
          ll=parseInt(this.dclevel)+parseInt(this.level);
         }
@@ -332,12 +332,13 @@ export default {
            dw=this.dwlg;
          }
       }
-
       let p = {
         "level":ll ,
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
       var url = '';
       if (i == 0) {
@@ -359,7 +360,6 @@ export default {
     },
     getFH(pd) {
       if (this.level == "1" || this.level == "2") {
-
         this.getList(pd);
       } else {
         if (this.dw == "") {
@@ -433,6 +433,8 @@ export default {
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
     console.log('this.p',p);
       axios({

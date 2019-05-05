@@ -129,7 +129,7 @@ export default {
   font-size: 12px;
   border-radius: 0 7px 7px 0;
   box-shadow: 1px -1px 2px 1px rgba(35, 214, 238, 0.5);
-  z-index: 2019;
+  z-index: 9999;
 }
 .h3_content{
   /* padding-bottom: 10px; */

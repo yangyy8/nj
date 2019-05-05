@@ -8,6 +8,7 @@ window.IPConfig = {
   LZRYFBFX:'http://192.168.3.217:9420/map/map/gx.html',//临住人员分布分析
   CZJWRYFBFX:'http://192.168.3.217:9420/map/map/gx.html',//常住境外人员分布分析
   SWDWFBFX:'http://192.168.3.217:9420/map/map/gx.html',//涉外单位分布分析
+  CQQZFFJYYJ:'http://192.168.3.217:9420/map/map/gx.html',//持长期签证非法就业预警
 
 
 }

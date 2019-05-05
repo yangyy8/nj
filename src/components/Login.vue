@@ -24,7 +24,17 @@
         <!-- <a class="login-a">忘记密码</a> -->
         </div>
       <button class="login-btn" @click="login">登录</button>
-       <div class="loginmessage">{{msg}}</div>
+       <div class="loginmessage">
+         供下载内容:
+         <el-select v-model="downtype" placeholder="请选择需要下载的内容" @visible-change="getDown()" @change="getUP(downtype)">
+           <el-option
+             v-for="(item,ind) in downs"
+             :key="ind"
+             :label="item.dm"
+             :value="item.mc">
+           </el-option>
+         </el-select>
+       </div>
     </div>
 
 <el-dialog title="选择单位" :visible.sync="companyDialogVisible" width="20%">
@@ -57,9 +67,10 @@ export default {
       user:{},
       jzmm:false,
       org:'',
+      downtype:'',
+      downs:[],
       companyDialogVisible:false,
       companys:[],
-      msg:'',
     }
   },
   mounted(){
@@ -92,8 +103,6 @@ export default {
           ff.append("password",this.user.password);
           let p=ff;
           var url=this.Global.aport1+'/user/doLogin';
-                console.log(url+'--')
-            this.msg="";
           this.$api.post(url,p,
              r => {
               if(r.success){
@@ -103,6 +112,7 @@ export default {
                   }else if(r.code==200){
 
                     this.$store.commit('getToken',r.data.token)
+                    this.$store.commit('getUid',this.user.userName)
                     this.$store.commit('getUname',r.data.mc)
                     this.$store.commit('getOrgname',r.data.ssdw.mc)
 
@@ -110,11 +120,22 @@ export default {
                     this.$router.push({name: 'Index'});
 
                   }
-              }else {
-                this.msg=r.message;
               }
           })
       });
+    },
+    getDown(){
+
+      var url=this.Global.aport1+'/service/getfiles';
+      this.$api.get(url,null,r => {
+        if(r.success){
+         this.downs=r.data;
+        }
+      });
+    },
+    getUP(n){
+      console.log('n',n);
+         window.location.href =n;
     },
     getLogin(){
 
@@ -133,6 +154,7 @@ export default {
             //   type: 'success'
             // });
             this.$store.commit('getToken',r.data.token)
+            this.$store.commit('getUid',this.user.userName)
             this.$store.commit('getUname',r.data.mc)
             this.$store.commit('getOrgname',r.data.ssdw.mc)
             console.log(this.$store.state.token)
@@ -171,7 +193,7 @@ export default {
 }
 .login-box{
   width: 25%;
-  height: 45%;
+  height: 43%;
   position: fixed;
   top:180px;
   left:50%;
@@ -190,7 +212,7 @@ export default {
   font-size: 20px; text-align: center; color: #3E79EA;
   margin: 45px 0 15px 0;
 }
-.loginmessage{font-size: 18px; text-align:center;color: red; padding-top: 10px;}
+.loginmessage{font-size: 16px; text-align:center;color: #999999; padding: 20px 0px;}
 .login-item{
   margin-top: 20px;
   width: 80%;
@@ -230,6 +252,13 @@ export default {
 .login-box .el-input__inner{
   height: 45px!important;
   line-height: 45px!important;
+}
+.loginmessage .el-input__inner{
+  height: 30px!important;
+
+}
+.loginmessage .el-input__icon{
+    line-height: 30px!important;
 }
   .loginbg .el-dialog__wrapper{
    padding-top: 10%;

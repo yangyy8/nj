@@ -19,7 +19,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">国家地区：</span>
-                  <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.gjdq" @visible-change="gjdq=gjdq0" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="(item,ind3) in gjdq"
                       :key="ind3"
@@ -51,6 +51,17 @@
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">身份证号：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.sfzh" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">宾馆名称：</span>
+                   <el-select v-model="pd.bgmc" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                     <el-option
+                       v-for="(item,indb) in bgmc"
+                       :key="indb"
+                       :label="item.dm+' - '+item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
                 </el-col>
               </el-row>
          </el-col>
@@ -151,7 +162,7 @@
           <el-row>
             <el-col :span="16">
               <el-row :gutter="2">
-                <el-col :span="24" v-if="wccshow" style="border-bottom:1px solid #cccccc">
+                <!-- <el-col :span="24" v-if="wccshow" style="border-bottom:1px solid #cccccc">
                   <span  class="yy-input-text" style="width:18%">上报类型：</span>
                   <el-radio v-model="sbtype" label="1" @change="getSB(1)">正确</el-radio>
                   <el-radio v-model="sbtype" label="2" @change="getSB(2)">错误</el-radio>
@@ -174,7 +185,7 @@
                 <el-col :span="24" v-if="checkshow">
                   <span  class="input-text" style="width:18%"> </span>
                   <el-checkbox v-model="checkList7" label="7" @change="getCK(7)">性别错误</el-checkbox>
-                </el-col>
+                </el-col> -->
                 <el-col :span="12">
                   <span  class="yy-input-text">英文姓：</span>
                   <el-tooltip class="item" effect="dark" :disabled="!form.ywx_t" :content="form.ywx_xgq" placement="top-start">
@@ -221,7 +232,7 @@
                 <el-col :span="12">
                   <span class="yy-input-text">国家地区：</span>
                   <el-tooltip class="item" effect="dark" :disabled="!form.gjdq_t" :content="form.gjdq_xgq" placement="top-start">
-                    <el-select v-model="form.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.gjdq_t == true,'yy-input-input':form.gjdq_t== false}">
+                    <el-select v-model="form.gjdq" @visible-change="gjdq=gjdq0" filterable clearable default-first-option placeholder="请选择"  size="small" :class="{'yy-input-input yyinput':form.gjdq_t == true,'yy-input-input':form.gjdq_t== false}">
                       <el-option
                         v-for="(item,ind5) in gjdq"
                         :key="ind5"
@@ -275,7 +286,7 @@
                 </el-col>
                 <el-col :span="12" >
                   <span class="yy-input-text">签发机关：</span>
-                  <el-select v-model="form.qfjg" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                  <el-select v-model="form.qfjg" @visible-change="qfjg=qfjg0" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                     <el-option
                       v-for="(item,ind8) in qfjg"
                       :key="ind8"
@@ -293,10 +304,29 @@
                   </el-date-picker>
                 </el-col>
               </el-row>
+              <el-col :span="12">
+                <span class="yy-input-text" title="签证签发日期：">签证签发日期：</span>
+                <el-date-picker class="yy-input-input"
+                   v-model="form.qfrq" format="yyyy-MM-dd"
+                   type="date" size="small" value-format="yyyyMMdd"
+                   placeholder="选择日期" >
+                </el-date-picker>
+              </el-col>
+              <el-col :span="12">
+                <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
+                <el-select v-model="form.yjwrygx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                  <el-option
+                    v-for="(item,indx) in jtgx"
+                    :key="indx"
+                    :label="item.dm+' - '+item.mc"
+                    :value="item.dm">
+                  </el-option>
+                </el-select>
+              </el-col>
             </el-col>
             <el-col :span="8">
               <div class="block">
-                <el-carousel height="270px">
+                <el-carousel height="300px">
                   <el-carousel-item v-for="(item,ind7) in imagess" :key="ind7" v-if="imgshow1">
                     <img  :src="item.tp" @click="opentp(item,1)">
                   </el-carousel-item>
@@ -308,10 +338,10 @@
             </el-col>
           </el-row>
           <div v-if="allshow">
-            <el-row :gutter="3" >
-              <el-col :span="8">
+            <!-- <el-row :gutter="3" > -->
+              <!-- <el-col :span="8">
                 <span class="yy-input-text">行政区划：</span>
-                <el-select v-model="form.lzdwxzqh" @visible-change="xzqh=xzqh0" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                <el-select v-model="form.lzdwxzqh" @visible-change="xzqh=xzqh0"  filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                   <el-option
                     v-for="(item,ind9) in xzqh"
                     :key="ind9"
@@ -319,21 +349,21 @@
                     :value="item.dm">
                   </el-option>
                 </el-select>
-              </el-col>
-              <el-col :span="8">
+              </el-col> -->
+              <!-- <el-col :span="8">
                 <span class="yy-input-text" title="签证签发日期：">签证签发日期：</span>
                 <el-date-picker class="yy-input-input"
                    v-model="form.qfrq" format="yyyy-MM-dd"
                    type="date" size="small" value-format="yyyyMMdd"
                    placeholder="选择日期" >
                 </el-date-picker>
-              </el-col>
-              <el-col :span="8">
+              </el-col> -->
+              <!-- <el-col :span="8">
                 <span class="yy-input-text">何处来：</span>
                 <el-radio v-model="hcl_gnw" label="0" @change="getXGL">国内</el-radio>
                 <el-radio v-model="hcl_gnw" label="1" @change="getXGL">国外</el-radio>
-              </el-col>
-            </el-row>
+              </el-col> -->
+            <!-- </el-row> -->
             <el-row :gutter="3" >
               <el-col :span="8">
                 <span class="yy-input-text">入境日期：</span>
@@ -354,10 +384,10 @@
                   </el-option>
                 </el-select>
               </el-col>
-              <el-col :span="8">
+              <!-- <el-col :span="8">
                 <span class="yy-input-text">&nbsp;</span>
-                <el-select v-model="hcl1" v-if="hclshow1" @visible-change="xzqh=xzqh0" filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
-                  <!-- <el-option label="1" value="1"></el-option> -->
+                <template v-if="hclshow1">
+                <el-select v-model="hcl1" @visible-change="xzqh=xzqh0" :key="Math.random()" filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
                   <el-option
                     v-for="(item,inde) in  xzqh"
                     :key="inde"
@@ -365,9 +395,9 @@
                     :value="item.dm">
                   </el-option>
                 </el-select>
-                <el-select v-model="hcl2"  v-if="hclshow2"  filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
-                  <!-- <el-option label="2" value="1"></el-option> -->
-
+              </template>
+                <template v-if="hclshow2">
+                <el-select v-model="hcl2"  @visible-change="gjdq=gjdq0" :key="Math.random()"  filterable clearable default-first-option class="yy-input-input"  placeholder="请选择何处来"  size="small">
                   <el-option
                     v-for="(item,indee) in  gjdq"
                     :key="indee"
@@ -375,10 +405,8 @@
                     :value="item.dm">
                   </el-option>
                 </el-select>
-              </el-col>
-            </el-row>
-
-            <el-row :gutter="3" >
+                </template>
+              </el-col> -->
               <el-col :span="8">
                 <span class="yy-input-text">入境事由：</span>
                 <el-select v-model="form.rjsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -390,6 +418,24 @@
                   </el-option>
                 </el-select>
               </el-col>
+            </el-row>
+
+            <el-row :gutter="3" >
+
+
+              <!-- <el-col :span="8">
+                <span class="yy-input-text">何处去：</span>
+                <el-radio-group v-model="hcq_gnw" @change="getXGQ()">
+                  <el-radio  label="0">国内</el-radio>
+                  <el-radio  label="1" >国外</el-radio>
+                </el-radio-group>
+              </el-col> -->
+            </el-row>
+            <el-row :gutter="3" >
+              <el-col :span="8">
+                <span class="yy-input-text">接待单位：</span>
+                <el-input placeholder="请输入内容" size="small" v-model="form.jddw"  class="yy-input-input"></el-input>
+              </el-col>
               <el-col :span="8">
                 <span class="yy-input-text">入住日期：</span>
                 <el-date-picker class="yy-input-input"
@@ -399,20 +445,6 @@
                 </el-date-picker>
               </el-col>
               <el-col :span="8">
-                <span class="yy-input-text">何处去：</span>
-                <el-radio-group v-model="hcq_gnw" @change="getXGQ()">
-                  <el-radio  label="0">国内</el-radio>
-                  <el-radio  label="1" >国外</el-radio>
-                </el-radio-group>
-              </el-col>
-            </el-row>
-            <el-row :gutter="3" >
-              <el-col :span="8">
-                <span class="yy-input-text">接待单位：</span>
-                <el-input placeholder="请输入内容" size="small" v-model="form.jddw"  class="yy-input-input"></el-input>
-              </el-col>
-
-              <el-col :span="8">
                 <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
                 <el-date-picker class="yy-input-input"
                    v-model="form.nlkrq" format="yyyy-MM-dd"
@@ -420,9 +452,10 @@
                    placeholder="选择日期" >
                 </el-date-picker>
               </el-col>
-              <el-col :span="8">
+              <!-- <el-col :span="8">
                 <span class="yy-input-text">&nbsp;</span>
-                <el-select v-model="hcq1"  v-show="hcqshow1" @visible-change="xzqh=xzqh0" filterable clearable default-first-option  class="yy-input-input" placeholder="请选择何处去"  size="small">
+                    <template v-if="hcqshow1">
+                <el-select v-model="hcq1"   @visible-change="xzqh=xzqh0"  filterable clearable default-first-option  class="yy-input-input" placeholder="请选择何处去"  size="small">
                   <el-option
                     v-for="(item,indw) in xzqh"
                     :key="indw"
@@ -430,7 +463,9 @@
                     :value="item.dm">
                   </el-option>
                 </el-select>
-                <el-select v-model="hcq2" v-show="hcqshow2"  filterable clearable default-first-option class="yy-input-input" placeholder="请选择何处去"  size="small">
+              </template>
+                <template v-if="hcqshow2">
+                <el-select v-model="hcq2"  @visible-change="gjdq=gjdq0"  filterable clearable default-first-option class="yy-input-input" placeholder="请选择何处去"  size="small">
                   <el-option
                     v-for="(item,indq) in gjdq"
                     :key="indq"
@@ -438,7 +473,8 @@
                     :value="item.dm">
                   </el-option>
                 </el-select>
-              </el-col>
+                </template>
+              </el-col> -->
             </el-row>
             <el-row :gutter="3" >
               <el-col :span="8" class="crcolor">
@@ -486,7 +522,7 @@
               </el-col>
               <el-col :span="8"   class="crcolor">
                 <span class="yy-input-text">派出所名称：</span>
-                <el-select v-model="form.pcsbh" @visible-change="pcs=pcs0" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                <el-select v-model="form.pcsbh" @visible-change="pcs=pcs0"  filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                   <el-option
                     v-for="item in pcs"
                     :key="item.dm"
@@ -503,18 +539,7 @@
                 <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
                 <el-input placeholder="请输入内容" size="small" v-model="form.lsdwhz"  class="input-input" style="width:80%!important"></el-input>
               </el-col>
-              <el-col :span="8">
-                <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
-                <!-- <el-input placeholder="请输入内容" size="small" v-model="form.jwrygx"  class="yy-input-input"></el-input> -->
-                <el-select v-model="form.yjwrygx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                  <el-option
-                    v-for="(item,indx) in jtgx"
-                    :key="indx"
-                    :label="item.dm+' - '+item.mc"
-                    :value="item.dm">
-                  </el-option>
-                </el-select>
-              </el-col>
+
               <el-col :span="8">
                 <span class="yy-input-text">房屋性质：</span>
                 <el-select v-model="form.fwxz" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -564,7 +589,7 @@
               <el-col :span="8">
                 <span class="yy-input-text">录入单位：</span>
                 <!-- <el-input placeholder="请输入内容" size="small" v-model="form.djdw" :disabled="true"  class="yy-input-input"></el-input> -->
-                <el-select v-model="form.djdw" @visible-change="pcs=pcs0" filterable clearable default-first-option placeholder="请选择" :disabled="true"   size="small" class="yy-input-input">
+                <el-select v-model="form.djdw"  filterable clearable default-first-option placeholder="请选择" :disabled="true"   size="small" class="yy-input-input">
                   <el-option
                     v-for="(item,inde2) in pcs"
                     :key="inde2"
@@ -578,16 +603,16 @@
                 <el-input placeholder="请输入内容" size="small" v-model="form.djsj" :disabled="true" class="yy-input-input"></el-input>
               </el-col>
             </el-row>
-            <el-row :gutter="3" >
-              <el-col :span="8">
+            <el-row :gutter="3">
+              <el-col :span="8" v-if="xg1">
                 <span class="yy-input-text">修改人：</span>
                 <el-input placeholder="请输入内容" size="small" v-model="form.gxr" :disabled="true"  class="yy-input-input"></el-input>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" v-if="xg2">
                 <span class="yy-input-text">修改单位：</span>
                 <el-input placeholder="请输入内容" size="small" v-model="form.gxdw" :disabled="true"  class="yy-input-input"></el-input>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" v-if="xg3">
                 <span class="yy-input-text">修改日期：</span>
                 <el-input placeholder="请输入内容" size="small" v-model="form.gxsj"  :disabled="true" class="yy-input-input"></el-input>
               </el-col>
@@ -619,6 +644,7 @@ import {
   formatDate
 } from '@/assets/js/date.js'
 export default {
+
   data() {
     return {
       CurrentPage: 1,
@@ -639,6 +665,7 @@ export default {
       rjkn: [],
       rjsy: [],
       qfjg: [],
+      qfjg0: [],
       pcs0:[],
       pcs: [],
       jzlx: [],
@@ -648,6 +675,7 @@ export default {
       xzqh: [],
       xb: [],
       jtgx: [],
+      bgmc:[],
       tableData: [],
       cdt: [],
       hcqlist: [],
@@ -655,20 +683,20 @@ export default {
       imagess: [],
       eidtsDialogVisible: false,
       tcDialogVisible: false,
-      options: [{
-          value: 10,
-          label: "10"
-        },
-        {
-          value: 20,
-          label: "20"
-        },
-        {
-          value: 30,
-          label: "30"
+      options:[{
+        value: 10,
+        label: "10"
+      },
+      {
+        value: 20,
+        label: "20"
+      },
+      {
+        value: 30,
+        label: "30"
 
-        }
-      ],
+      }
+    ],
       tableData: [],
       shm: true,
       lg: false,
@@ -700,6 +728,10 @@ export default {
       checkList7: false,
       checkList8: false,
       checkList9: false,
+      xg1:false,
+      xg2:false,
+      xg3:false,
+      yx:false,
     }
   },
   activated() {
@@ -711,11 +743,11 @@ export default {
     }
     if (this.cdt.sblx == "rgsbts") {
       this.rgsb = true;
+      this.yx = true;
     } else {
       this.rgsb = false;
     }
     if (this.cdt.sblx == "sbts") {
-
       this.wccshow = true;
       this.allshow = false;
       this.checkshow = true;
@@ -724,13 +756,13 @@ export default {
       this.allshow = true;
       this.checkshow = false;
     }
-
     this.pd = {};
-    this.getAll();
     this.getList(this.CurrentPage, this.pageSize, this.pd);
+
   },
   mounted() {
     this.getAll();
+
   },
   methods: {
     // 旋转
@@ -752,78 +784,73 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getAll() {
-
       this.$api.get(this.Global.aport2 + this.Global.dmall, null,
         r => {
           // console.log("---",r.data.DM_XB);
-          this.gjdq = r.data.DM_GJDQ;
-          this.zjzl = r.data.DM_ZJZL;
-          this.qzzl = r.data.DM_WGR_QZZL;
-          this.rjkn = r.data.DM_RJKA;
-          this.rjsy = r.data.DM_RJSY;
-          this.qfjg = r.data.DM_QFJG;
-          this.pcs0 = r.data.DM_PCS;
-          // // this.jzlx=r.data.DM_JZLX;
-          this.zsxz = r.data.DM_ZSXZ;
+          this.gjdq0 = r.data.DM_GJDQ;//国家地区
+          this.zjzl = r.data.DM_ZJZL;//证件种类
+          this.qzzl = r.data.DM_WGR_QZZL;//签证种类
+          this.rjkn = r.data.DM_RJKA;//入境口岸
+          this.rjsy = r.data.DM_RJSY;//入境事由
+          this.qfjg0 = r.data.DM_QFJG;//签发机关
+           this.pcs0 = r.data.DM_PCS;
+           // this.jzlx=r.data.DM_JZLX;
+          this.zsxz = r.data.DM_ZSXZ;//房屋性质
           // // this.jzzt=r.data.DM_JZZT;
-          this.xzqh0 = r.data.DM_XZQH;
-          this.xb = r.data.DM_XB;
-          this.jtgx = r.data.DM_JTGX;
+          //this.xzqh0 = r.data.DM_XZQH;
+          this.xb = r.data.DM_XB;//性别
+          this.jtgx = r.data.DM_JTGX;//与境外联系人员
+          this.bgmc=r.data.JZ_LGBM;
         })
     },
-    getDMXX() {
-      //证件种类
-      this.$api.get(this.Global.aport1 + this.Global.zjzl, null,
+
+    getSelect(t) {
+      var tablename="";
+       switch (t) {
+        case 1://国家地区
+          tablename="DM_GJDQ"
+           break;
+        case 2://签发机关
+           tablename="DM_QFJG"
+           break;
+        case 3://派出所
+           tablename="DM_PCS"
+           break;
+        case 4://行政区划
+           tablename="DM_XZQH"
+           break;
+         default:
+            break;
+       }
+          let p={
+          	"tablename":tablename,
+          }
+        this.$api.post(this.Global.aport2 + '/data_report/selectDm', p,
         r => {
-          this.zjzl = ToArray(r.data);
+          switch (t) {
+           case 1://国家地区
+             tablename="DM_GJDQ"
+             this.gjdq = r.data.DM_GJDQ;
+              break;
+           case 2://签发机关
+              this.qfjg = r.data.DM_QFJG;
+              break;
+           case 3://派出所
+              this.pcs = r.data.DM_PCS;
+              break;
+           case 4://行政区划
+              this.xzqh = r.data.DM_XZQH;
+              break;
+            default:
+               break;
+          }
+
 
         })
-      //签证种类
-      this.$api.get(this.Global.aport1 + this.Global.qzzl, null,
-        r => {
-          this.qzzl = ToArray(r.data);
-        })
-      //入境口岸
-      this.$api.get(this.Global.aport1 + this.Global.rjkn, null,
-        r => {
-          this.rjkn = ToArray(r.data);
-        })
-      //入境事由
-      this.$api.get(this.Global.aport1 + this.Global.rjsy, null,
-        r => {
-          this.rjsy = ToArray(r.data);
-        })
-      //签发机关
-      this.$api.get(this.Global.aport1 + this.Global.qfjg, null,
-        r => {
-          this.qfjg = ToArray(r.data);
-        })
-      //派出所
-      this.$api.get(this.Global.aport1 + this.Global.pcs, null,
-        r => {
-          this.pcs = ToArray(r.data);
-        })
-      //居住类型
-      this.$api.get(this.Global.aport1 + this.Global.jzlx, null,
-        r => {
-          this.jzlx = ToArray(r.data);
-        })
-      //住所性质
-      this.$api.get(this.Global.aport1 + this.Global.zsxz, null,
-        r => {
-          this.zsxz = ToArray(r.data);
-        })
-      //居住状态
-      this.$api.get(this.Global.aport1 + this.Global.jzzt, null,
-        r => {
-          this.jzzt = ToArray(r.data);
-        })
-      //行政区划
-      this.$api.get(this.Global.aport1 + this.Global.xzqh, null,
-        r => {
-          this.xzqh = ToArray(r.data);
-        })
-    },
+
+
+     },
+
     getList(currentPage, showCount, pd) {
       let p = {
         "currentPage": currentPage,
@@ -832,14 +859,18 @@ export default {
         "endTime": this.cdt.endTime,
         "ssfjmc": this.cdt.ssfjmc,
         "sblx": this.cdt.sblx,
-        "pd": pd
+        "pd": pd,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
+
       var url = this.Global.aport2 + '/data_report/findAll';
       this.$api.post(url, p,
         r => {
           this.tableData = r.data.pdList;
           this.TotalResult = r.data.totalResult;
         })
+
     },
     getTS(n) {
       if (n == "1") {
@@ -851,26 +882,30 @@ export default {
       }
     },
     getXGL() {
-      this.form.hcl = null;
       if (this.hcl_gnw == '0') {
+        this.$set(this,'hcl2','');
         this.hclshow1 = true;
         this.hclshow2 = false;
       } else if (this.hcl_gnw == '1') {
+        this.$set(this,'hcl1','');
         this.hclshow1 = false;
         this.hclshow2 = true;
       }
     },
     getXGQ() {
-      this.form.hcq = null;
       if (this.hcq_gnw == '0') {
+        this.$set(this,'hcq2','');
         this.hcqshow1 = true;
         this.hcqshow2 = false;
       } else if (this.hcq_gnw == '1') {
+        this.$set(this,'hcq1','');
         this.hcqshow1 = false;
         this.hcqshow2 = true;
       }
     },
     edits(n) {
+      this.form={};
+
       this.checkList1=false;  this.checkList2=false;  this.checkList3=false;  this.checkList4=false;  this.checkList5=false;  this.checkList6=false;  this.checkList7=false;  this.checkList8=false;  this.checkList9=false;
       // this.form={};
       const loading = this.$loading({
@@ -881,10 +916,11 @@ export default {
       });
       setTimeout(() => {
         loading.close();
-
         this.eidtsDialogVisible = true;
         let p = {
-          "id": n.uuid
+          "id": n.uuid,
+          "operatorId":this.$store.state.uid,
+          "operatorNm":this.$store.state.uname,
         };
         var url = this.Global.aport2 + '/data_report/selectDjxx';
         this.$api.post(url, p,
@@ -900,7 +936,6 @@ export default {
               this.shm = false;
               this.lg = true;
             }
-
             this.getImg(n.uuid, r.data.hcl, r.data.hcq);
           });
       }, 200);
@@ -987,7 +1022,9 @@ export default {
       var url = this.Global.aport2 + '/data_report/selectTpxx';
 
       let p = {
-        "id": id
+        "id": id,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
       this.$api.post(url, p,
         r => {
@@ -1023,9 +1060,26 @@ export default {
             this.sbtype = '2';
             this.getSB(2);
           }
-          this.form.gxr = this.$store.state.uname;
-          this.form.gxdw = this.$store.state.orgname;
-          this.form.gxsj = formatDate(new date(), 'yyyymmddhhmmss');
+
+         if(this.yx==true){
+             this.form.gxr = this.$store.state.uname;
+             this.form.gxdw = this.$store.state.orgname;
+             this.form.gxsj = formatDate(new date(), 'yyyymmddhhmmss');
+           }else{
+             if(this.form.gxr=="" || this.form.gxr==undefined)
+             {
+               this.xg1=false;
+             }
+             if(this.form.gxdw=="" || this.form.gxdw==undefined)
+             {
+               this.xg2=false;
+             }
+             if(this.form.gxsj=="" || this.form.gxsj==undefined)
+             {
+               this.xg3=false;
+             }
+           }
+
         });
     },
     opentp(row, t) {

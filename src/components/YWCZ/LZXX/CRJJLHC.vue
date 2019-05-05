@@ -155,7 +155,7 @@ export default {
   },
   mounted() {
 
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
+  //  this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
     handleSelectionChange(val) {
@@ -186,6 +186,8 @@ export default {
       let p = {
         "beginTime": btime,
         "endTime":etime,
+        "operatorId":this.$store.state.uid,
+        "operatorNm":this.$store.state.uname,
       };
 
       var url=this.Global.aport2+'/data_report/selectSbList';
@@ -211,6 +213,8 @@ export default {
            "endTime":etime,
            "ssfjmc":i.fj,
            "sblx":type,
+           "operatorId":this.$store.state.uid,
+           "operatorNm":this.$store.state.uname,
         }
         this.$router.push({name: 'LZSJHE',query:{ cdt:p}});
     }

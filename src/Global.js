@@ -15,11 +15,11 @@ const aport2="api-yewu";//左星海网关
 const aport3="api-yewu";//石飞网关
 // const aport3="http://192.168.3.217:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
-const aport4="api-yujing";//李文龙网关
+const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙，任智强
 
 
-const aport5="";
+const aport5="api-yanpan";//李文龙研判
 const dmall="/data_report/selectDmList" //加载全部代码
 const ssdw="/org/getSelfAndChilds"//所属单位
 const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQ";//国家地区
@@ -30,7 +30,7 @@ const rjsy="/service/getRedisDataByDm?tablename=DM_RJSY"//入境事由
 const qfjg="/service/getRedisDataByDm?tablename=DM_QFJG"//签发机关
 const pcs="/service/getRedisDataByDm?tablename=DM_PCS"//派出所
 const jzlx="/service/getRedisDataByDm?tablename=DM_JZLX"//居住类型
-const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质
+const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质,住房类型
 const jzzt="/service/getRedisDataByDm?tablename=DM_JZZT"//居住状态
 const xzqh="/service/getRedisDataByDm?tablename=DM_XZQH"//行政区划
 const jtgx="/service/getRedisDataByDm?tablename=DM_JTGX"//家庭关系
