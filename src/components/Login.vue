@@ -213,7 +213,7 @@ export default {
   font-size: 20px; text-align: center; color: #3E79EA;
   margin: 45px 0 15px 0;
 }
-.loginmessage{font-size: 12px; text-align:center;color: #999999; padding: 20px 0px;}
+.loginmessage{font-size: 12px; text-align:center;color: #999999; padding: 15px 0px;}
 .login-item{
   margin-top: 20px;
   width: 80%;
