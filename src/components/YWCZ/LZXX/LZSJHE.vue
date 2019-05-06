@@ -301,7 +301,7 @@
                      v-model="form.tlyxqz" format="yyyy-MM-dd"
                      type="date" size="small" value-format="yyyyMMdd"
                      placeholder="选择日期" >
-                  </el-date-picker>
+                  </el-date-picker> 
                 </el-col>
               </el-row>
               <el-col :span="12">
