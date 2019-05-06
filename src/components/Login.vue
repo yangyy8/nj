@@ -26,7 +26,7 @@
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">
          供下载内容:
-         <el-select v-model="downtype" placeholder="请选择需要下载的内容" @visible-change="getDown()" @change="getUP(downtype)">
+         <el-select v-model="downtype" placeholder="请选择需要下载的内容"  @change="getUP(downtype)">
            <el-option
              v-for="(item,ind) in downs"
              :key="ind"
@@ -75,6 +75,7 @@ export default {
   },
   mounted(){
     this.initJzmm();
+    this.getDown();
   },
   methods:{
     initJzmm(){
@@ -214,7 +215,7 @@ export default {
 }
 .loginmessage{font-size: 12px; text-align:center;color: #999999; padding: 20px 0px;}
 .login-item{
-  margin-top: 10px;
+  margin-top: 20px;
   width: 80%;
   color: #fff;
 
@@ -234,6 +235,7 @@ export default {
   background: #4186F4;
   width: 80%;
   min-height: 35px;
+  height: 48px;
   cursor:pointer;
   font-size: 16px;
   color: #FFFFFF;
