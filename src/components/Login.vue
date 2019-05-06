@@ -199,7 +199,7 @@ export default {
   left:50%;
   background: #ffffff;
   border-radius: 10px;
-  margin-left: -12.5%;
+  margin-left: -12.0%;
   z-index: 7;
   display: flex;
   flex-direction: column;
@@ -212,9 +212,9 @@ export default {
   font-size: 20px; text-align: center; color: #3E79EA;
   margin: 45px 0 15px 0;
 }
-.loginmessage{font-size: 16px; text-align:center;color: #999999; padding: 20px 0px;}
+.loginmessage{font-size: 12px; text-align:center;color: #999999; padding: 20px 0px;}
 .login-item{
-  margin-top: 20px;
+  margin-top: 10px;
   width: 80%;
   color: #fff;
 
@@ -233,7 +233,7 @@ export default {
   border-radius: 5px;
   background: #4186F4;
   width: 80%;
-  height: 48px;
+  min-height: 35px;
   cursor:pointer;
   font-size: 16px;
   color: #FFFFFF;
