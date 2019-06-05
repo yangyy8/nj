@@ -171,7 +171,7 @@
                    </el-col>
                    <el-col :span="12" >
                      <span class="yy-input-text">签发机关：</span>
-                     <el-input placeholder="" size="small" v-model="form.QFD"  class="yy-input-input"></el-input>
+                     <el-input placeholder="" size="small" v-model="form.QFD_DESC"  class="yy-input-input"></el-input>
                    </el-col>
                    <el-col :span="12" >
                      <span class="yy-input-text" title="签证(注)有效期至">停留有效期至：</span>
@@ -193,7 +193,6 @@
                </el-col>
 
              </el-row>
-
                <el-row :gutter="3" >
                  <el-col :span="8">
                    <span class="yy-input-text">行政区划：</span>
@@ -204,9 +203,8 @@
                        <el-input placeholder="" size="small" v-model="form.QFRQ"  class="yy-input-input"></el-input>
                  </el-col>
                  <el-col :span="8">
-                   <span class="yy-input-text">何处来：</span>
-                   <el-radio v-model="radio1" label="0">国内</el-radio>
-                   <el-radio v-model="radio1" label="1">国外</el-radio>
+                   <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
+                   <el-input placeholder="" size="small" v-model="form.QSGX_DESC"  class="yy-input-input"></el-input>
                  </el-col>
                </el-row>
                <el-row :gutter="3" >
@@ -216,32 +214,19 @@
                  </el-col>
                  <el-col :span="8">
                    <span class="yy-input-text">入境口岸：</span>
-                   <el-input placeholder="" size="small" v-model="form.RJKA"  class="yy-input-input"></el-input>
+                   <el-input placeholder="" size="small" v-model="form.RJKA_DESC"  class="yy-input-input"></el-input>
                  </el-col>
-                 <el-col :span="8">
-                   <span class="yy-input-text">&nbsp;</span>
-                   <el-input placeholder="" size="small" v-model="form.XZQH_DESC"  class="yy-input-input"></el-input>
-                 </el-col>
-               </el-row>
 
-               <el-row :gutter="3" >
                  <el-col :span="8">
                    <span class="yy-input-text">入境事由：</span>
                    <el-input placeholder="" size="small" v-model="form.JLSY"  class="yy-input-input"></el-input>
                  </el-col>
+               </el-row>
+               <el-row :gutter="3" >
                  <el-col :span="8">
                    <span class="yy-input-text">入住日期：</span>
                    <el-input placeholder="" size="small" v-model="form.ZSRQ"  class="yy-input-input"></el-input>
                  </el-col>
-                 <el-col :span="8">
-                   <span class="yy-input-text">何处去：</span>
-                   <el-radio-group v-model="radio2">
-                     <el-radio  label="0">国内</el-radio>
-                     <el-radio  label="1">国外</el-radio>
-                   </el-radio-group>
-                 </el-col>
-               </el-row>
-               <el-row :gutter="3" >
                  <el-col :span="8">
                    <span class="yy-input-text">接待单位：</span>
                      <el-input placeholder="" size="small" v-model="form.JDDW"  class="yy-input-input"></el-input>
@@ -251,10 +236,7 @@
                    <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
                      <el-input placeholder="" size="small" v-model="form.NLKRQ"  class="yy-input-input"></el-input>
                  </el-col>
-                 <el-col :span="8">
-                   <span class="yy-input-text">&nbsp;</span>
-                   <el-input placeholder="" size="small" v-model="form.XZQH_DESC"  class="yy-input-input"></el-input>
-                 </el-col>
+
                </el-row>
                <el-row :gutter="3" >
                  <el-col :span="8" class="crcolor">
@@ -274,7 +256,6 @@
                    <span class="yy-input-text">房号：</span>
                    <el-input placeholder="" size="small" v-model="form.FH"  class="yy-input-input"></el-input>
                  </el-col>
-
                  <el-col :span="8">
                    <span class="yy-input-text" title="本人联系电话">本人联系电话：</span>
                    <el-input placeholder="" size="small" v-model="form.BRLXDH"  class="yy-input-input"></el-input>
@@ -299,13 +280,10 @@
                    <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
                    <el-input placeholder="" size="small" v-model="form.LSDW"  class="input-input" style="width:80%!important"></el-input>
                  </el-col>
-                 <el-col :span="8">
-                   <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
-                   <el-input placeholder="" size="small" v-model="form.QSGX"  class="yy-input-input"></el-input>
-                 </el-col>
+
                  <el-col :span="8">
                    <span class="yy-input-text">房屋性质：</span>
-                   <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
+                   <el-input placeholder="" size="small" v-model="form.ZFZL_DESC"  class="yy-input-input"></el-input>
                  </el-col>
                  <el-col :span="8">
                    <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
@@ -347,10 +325,7 @@
            </div>
          </el-dialog>
      </div>
-
     </div>
-
-
 </template>
 <script>
 export default {
@@ -420,7 +395,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post(this.Global.aport4+'/linZhuInfoComprehensiveAnalysisController/getComprehensivePersonList', p,
+      this.$api.post(this.Global.aport5+'/linZhuInfoComprehensiveAnalysisController/getComprehensivePersonList', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;

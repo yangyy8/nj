@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 247数据导入(通报人员) -->
-  <div class="yymain">
+  <div class="yymain tshu">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
@@ -192,8 +192,8 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click=""></el-button>
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edits(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
              </template>
            </el-table-column>
@@ -216,7 +216,7 @@
             条
           </div>
           <div class="">
-    共{{Math.ceil(TotalResult/pageSize)}}页
+              共{{Math.ceil(TotalResult/pageSize)}}页
           </div>
         </div>
         <el-pagination
@@ -248,6 +248,7 @@
             :file-list="fileList"
             multiple
             :on-success="upSuccess"
+            :data="uploadIconData"
             :before-upload="beforeAvatarUpload"
             :limit="1"
             :auto-upload="false">
@@ -263,61 +264,61 @@
   <el-dialog title="编辑" :visible.sync="editsDialogVisible">
     <el-form   ref="editForm">
       <el-row :gutter="3"  class="mb-6">
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
          <span class="input-text">案卷编号：</span>
         <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TITLE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">登记日期：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">人数：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
 
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
          <span class="input-text">姓名：</span>
            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">性别：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">出生日期：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
 
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
          <span class="input-text">护照号：</span>
            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">入签证件类型：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">身份：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
          <span class="input-text">电话号码：</span>
           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">邮箱地址：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">临住登记：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">省：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <el-col :span="12" class="input-item">
           <span class="input-text">城市：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
         </el-col>
@@ -334,82 +335,8 @@
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-  <el-dialog title="详情" :visible.sync="detailsDialogVisible">
-    <el-form   ref="mapForm">
-      <el-row :gutter="3"  class="mb-6">
-          <el-col :span="8" class="input-item">
-           <span class="input-text">案卷编号：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">登记日期：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">人数：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-
-          <el-col :span="8" class="input-item">
-           <span class="input-text">姓名：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">性别：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">出生日期：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-
-          <el-col :span="8" class="input-item">
-           <span class="input-text">护照号：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">入签证件类型：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">身份：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-           <span class="input-text">电话号码：</span>
-           <span class="input-input detailinput">  {{mapForm.APPLY_TITLE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">邮箱地址：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">临住登记：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">省：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">城市：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="24" class="input-item">
-            <span class="input-text" style="width:10%!important;">详细地址：</span>
-            <span class=" detailinput" style="width:87%!important;">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">操作人：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">操作日期：</span>
-            <span class="input-input detailinput">  {{mapForm.APPLY_TYPE}}</span>
-          </el-col>
-      </el-row>
-
-    </el-form>
+  <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+     <LZXX :xid="xid"></LZXX>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
@@ -419,7 +346,9 @@
 
 </template>
 <script>
+import LZXX from '../../common/lzxx_xq'
 export default {
+  components:{LZXX},
   data() {
     return {
       CurrentPage: 1,
@@ -434,6 +363,8 @@ export default {
       editsDialogVisible:false,
       editForm:{},
       mapForm:{},
+      form:{},
+      uploadIconData:{token:this.$store.state.token},
       options: [{
           value: 10,
           label: "10"
@@ -451,25 +382,18 @@ export default {
         date: '2016-05-02',
         name: '王小虎',
         address: 'XXXXX'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: 'XXXXX'
       }],
       type:'',
+      xid:'',
 
     }
   },
+  activated(){
+    this.detailsDialogVisible=false;
+  },
   mounted() {
 
+     this.xid="111";
   },
   methods: {
 
@@ -502,8 +426,9 @@ export default {
       this.mapForm=n;
     },
     edits(n){
+      this.xid=n.id;
       this.editsDialogVisible=true;
-      this.editForm=n;
+
     },
     editsItem(formName)
     {
@@ -556,16 +481,17 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type)
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=file.type==='application/vnd.ms-excel';
 
-      if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsl 格式!');
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
       }
-      return isEXL;
+      return isEXL?isEXL:isExls;
     },
     showUpload() {
       this.uploadDialogVisible = true;
       this.typemd = "";
-      this.actions = this.$api.rootUrl;
+      this.actions = window.IPConfig.IP+this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();

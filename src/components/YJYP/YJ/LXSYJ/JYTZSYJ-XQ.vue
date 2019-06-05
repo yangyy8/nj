@@ -250,7 +250,6 @@
       </div>
       <div class="ak-tab-pane" >
           <div v-show="page==0">
-
                     <el-form   ref="aForm1">
                       <el-row :gutter="3"  class="mb-6">
                           <el-col :span="8" class="input-item">
@@ -2735,11 +2734,11 @@
 export default {
   data() {
     return {
-      tableData:[{"yy":"----"}],
-      tableData1:[{"yy":"----"}],
-      tableData2:[{"yy":"----"}],
-      tableData3:[{"yy":"----"}],
-      tableData4:[{"yy":"----"}],
+      tableData:[],
+      tableData1:[],
+      tableData2:[],
+      tableData3:[],
+      tableData4:[],
       detailsDialogVisible1:false,
       detailsDialogVisible2:false,
       detailsDialogVisible3:false,
@@ -2761,7 +2760,11 @@ export default {
       pd:{},
       form:{},
       page:0,
+      row:{},
     }
+  },
+  activated(){
+    this.row=this.$route.query.row;
   },
   mounted() {
 
@@ -2806,8 +2809,6 @@ export default {
             this.aForm4 = r.data.eS_AJ_RY_ZJXXList;
             this.aForm5 = r.data.eS_AJ_SADWList;
             this.aForm6 = r.data.eS_AJ_CLJGEntity;
-
-
           })
     },
     get2(){

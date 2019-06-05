@@ -7,14 +7,15 @@ import {
 } from './ToArray.js'
 
 Vue.use(Vuex);
-
-
 var store = new Vuex.Store({
   state: {
     token: localStorage.getItem('TOKEN') || '',
+    wtoken: localStorage.getItem('WTOKEN') || '',
+    serverip: localStorage.getItem('SERVERIP') || '',
     uname: localStorage.getItem('UNAME') || '',
     uid: localStorage.getItem('UID') || '',
     orgname: localStorage.getItem('ORGNAME') || '',
+    orgid: localStorage.getItem('ORGID') || '',
     ssdw: [],
     gjdq: [],
     zjzl: [],
@@ -31,11 +32,24 @@ var store = new Vuex.Store({
     sflx: [],
     xb: [],
     rjqzzl: [],
+    dwlb:[],
+    dwxz:[],
+    zsbg:[],
+    tlyxq:[],
+    sf:[],
   },
   mutations: {
     getToken(state, data) {
       localStorage.setItem('TOKEN', data)
       state.token = data;
+    },
+    getWtoken(state, data) {
+      localStorage.setItem('WTOKEN', data)
+      state.wtoken = data;
+    },
+    getServerip(state, data) {
+      localStorage.setItem('SERVERIP', data)
+      state.serverip = data;
     },
     getUname(state, data) {
       localStorage.setItem('UNAME', data)
@@ -48,6 +62,10 @@ var store = new Vuex.Store({
     getOrgname(state, data) {
       localStorage.setItem('ORGNAME', data)
       state.orgname = data;
+    },
+    getOrgid(state, data) {
+      localStorage.setItem('ORGID', data)
+      state.orgid = data;
     },
     getSsdw(state, data) {
       state.ssdw = data;
@@ -96,6 +114,21 @@ var store = new Vuex.Store({
     },
     getRjqzzl(state, data) {
       state.rjqzzl = data;
+    },
+    getDwlb(state, data) {
+      state.dwlb = data;
+    },
+    getDwxz(state, data) {
+      state.dwxz = data;
+    },
+    getZsbg(state, data) {
+      state.zsbg = data;
+    },
+    getTlyxq(state, data) {
+      state.tlyxq = data;
+    },
+    getSf(state, data) {
+      state.sf = data;
     },
   },
   actions: {
@@ -197,6 +230,36 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.rjqzzl, null,
         r => {
           context.commit('getRjqzzl', ToArray(r.data))
+        })
+    },
+    getDwlb(context) {
+      api.get(global_.aport1 + global_.dwlb, null,
+        r => {
+          context.commit('getDwlb', ToArray(r.data))
+        })
+    },
+    getDwxz(context) {
+      api.get(global_.aport1 + global_.dwxz, null,
+        r => {
+          context.commit('getDwxz', ToArray(r.data))
+        })
+    },
+    getZsbg(context) {
+      api.get(global_.aport1 + global_.zsbg, null,
+        r => {
+          context.commit('getZsbg', ToArray(r.data))
+        })
+    },
+    getTlyxq(context) {
+      api.get(global_.aport1 + global_.tlyxq, null,
+        r => {
+          context.commit('getTlyxq', ToArray(r.data))
+        })
+    },
+    getSf(context) {
+      api.get(global_.aport1 + global_.sf, null,
+        r => {
+          context.commit('getSf', ToArray(r.data))
         })
     },
   }

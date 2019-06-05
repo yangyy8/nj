@@ -2,9 +2,53 @@
   <div class="yymain">
     <div class="yycontent" style="margin-top: 0px!important;">
       <div class="mb-15">
+      <div class="yylbt mb-15">基本信息</div>
+      <el-row type="flex" class="yyf">
+        <el-col :span="24" class="stu-left">
+          <el-row type="flex" class="stu-row">
+            <el-col :span="6">
+              <span>姓名：</span>
+               {{baseinfo.ZWXM}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>性别：</span>
+                 {{baseinfo.XBMC}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>国家地区：</span>
+               {{baseinfo.GJDQMC}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>证件种类：</span>
+                 {{baseinfo.RJZJZLMC}}
+            </el-col>
+          </el-row>
+          <el-row type="flex" class="stu-row">
+            <el-col :span="6" class="stu-col-row">
+              <span>证件号码：</span>
+                 {{baseinfo.ZJHM}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>签证种类：</span>
+                   {{baseinfo.RJQZLXMC}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>签证号码：</span>
+                   {{baseinfo.QZHM}}
+            </el-col>
+            <el-col :span="6" class="stu-col-row">
+              <span>预警时间：</span>
+                  {{baseinfo.BJSJ}}
+            </el-col>
+          </el-row>
+        </el-col>
+
+      </el-row>
+    </div>
+      <div class="mb-15">
         <div class="yylbt mb-15">人员基本信息</div>
         <el-row type="flex" class="yyf">
-         <el-col :span="20" class="stu-left">
+         <el-col :span="24" class="stu-left">
            <el-row  class="stu-row2">
              <el-col :span="8" class="stu-col-row2">
                <span>案卷编号：</span>
@@ -24,7 +68,7 @@
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span >性别：</span>
-                  {{baseData.XB}}
+                  {{baseData.XBMC}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>出生日期：</span>
@@ -35,12 +79,8 @@
                   {{baseData.HZHM}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
-               <span>入签证件类型：</span>
-                  {{baseData.RJQZLX}}
-             </el-col>
-             <el-col :span="8" class="stu-col-row2">
-               <span>身份：</span>
-                 {{baseData.SF}}
+               <span>入境签证类型：</span>
+                  {{baseData.RJQZLXMC}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>邮箱地址：</span>
@@ -58,19 +98,14 @@
                <span>电话号码：</span>
                  {{baseData.DHHM}}
              </el-col>
-             <el-col :span="8" class="stu-col-row2">
+             <el-col :span="24" class="stu-col-row2">
                <span>详细地址：</span>
                {{baseData.XXDZ}}
              </el-col>
-             <el-col :span="8" class="stu-col-row2">
-               <span></span>
-             </el-col>
+
            </el-row>
          </el-col>
-         <el-col :span="4" class="stu-right2">
-           <el-button type="primary" class="mb-5" size="small" @click="clDialogVisible=true">处理</el-button>
-           <el-button type="warning" class="m0" size="small" @click="$router.go(-1)">返回</el-button>
-         </el-col>
+
         </el-row>
       </div>
       <div class="mb-15">
@@ -92,13 +127,9 @@
           label="入住方式">
           </el-table-column>
           <el-table-column
-          prop="LRRQ"
+          prop="DJRQ"
           label="录入日期">
           </el-table-column>
-          <!-- <el-table-column
-          prop="address"
-          label="详细地址">
-          </el-table-column> -->
           <el-table-column
           prop="ZT_JZZT"
           label="居住状态类型">
@@ -110,6 +141,36 @@
           </template>
           </el-table-column>
         </el-table>
+        <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult/pageSize)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page:sync="CurrentPage"
+            :page-size="pageSize"
+            layout="prev, pager, next"
+            :total="TotalResult">
+          </el-pagination>
+        </div>
       </div>
       <div class="mb-15">
         <div class="yylbt mb-15">出入境记录表</div>
@@ -148,8 +209,38 @@
           </template>
           </el-table-column>
         </el-table>
+        <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult1}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult1/pageSize1)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange1"
+            :current-page:sync="CurrentPage1"
+            :page-size="pageSize1"
+            layout="prev, pager, next"
+            :total="TotalResult1">
+          </el-pagination>
+        </div>
       </div>
-      <div class="mb-15">
+      <div class="mb-15" v-if="bshow">
         <div class="yylbt mb-15">警综接警信息</div>
         <el-table
           :data="tableData3"
@@ -187,7 +278,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <div class="mb-15">
+      <div class="mb-15"  v-if="bshow">
         <div class="yylbt mb-15">警综处警信息</div>
         <el-table
           :data="tableData4"
@@ -232,23 +323,19 @@
           border
           style="width: 100%" class="stu-table">
           <el-table-column
-          prop="djdw"
-          label="涉警人员登记单位">
-          </el-table-column>
-          <el-table-column
-          prop="djdwmc"
+          prop="SJRYDJDWMC"
           label="涉警人员登记单位名称">
           </el-table-column>
           <el-table-column
-          prop="djrxm"
+          prop="SJRYDJRXM"
           label="涉警人员登记人姓名">
           </el-table-column>
           <el-table-column
-          prop="djsj"
+          prop="SJRYDJSJ"
           label="涉警人员登记时间">
           </el-table-column>
           <el-table-column
-          prop="xgdw"
+          prop="SJRYXGDW"
           label="涉警人员修改单位">
           </el-table-column>
           <el-table-column
@@ -258,8 +345,38 @@
           </template>
           </el-table-column>
         </el-table>
+        <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult2}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult2/pageSize2)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange2"
+            :current-page:sync="CurrentPage2"
+            :page-size="pageSize2"
+            layout="prev, pager, next"
+            :total="TotalResult2">
+          </el-pagination>
+        </div>
       </div>
-      <div class="mb-15">
+      <div class="mb-15" v-if='bshow'>
         <div class="yylbt mb-15">车辆信息</div>
         <el-table
           :data="tableData1"
@@ -294,23 +411,27 @@
         </el-table>
       </div>
     </div>
-    <el-dialog :title="xtitle" :visible.sync="detailsDialogVisible" width="1100px">
-      <XQTC :type="xtype" :xid="xid"></XQTC>
-    </el-dialog>
-    <el-dialog title="处理" :visible.sync="clDialogVisible" width="600px">
-      <el-form :model="form">
-        <el-row :gutter="1">
-          <el-col :span="24" class="input-item">
-            <span class="input-text">处理结果：</span>
-            <el-input type="textarea" placeholder="请输入内容" :autosize="{ minRows: 3, maxRows: 6}" v-model="form.cljg" class="yy-input-input"></el-input>
-          </el-col>
-        </el-row>
-      </el-form>
-       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="chuli" size="small">提 交</el-button>
-        <el-button @click="clDialogVisible = false" size="small">取 消</el-button>
-       </div>
-    </el-dialog>
+    <div class="stu-footer">
+      <div class="stu-title">预警处理</div>
+      <el-row type="flex" class="mb-15">
+       <el-col :span="20">
+         <el-input
+           type="textarea"
+           :autosize="{ minRows: 3, maxRows: 3}"
+           placeholder="预警处理必须填写原因(不超过100个字符)"
+           v-model="pd.CHANGE_RESON">
+         </el-input>
+
+       </el-col>
+       <el-col :span="4"  class="down-btn-area">
+         <el-button type="primary"  size="small" class="mb-5" @click="" >确定</el-button>
+         <el-button type="warning" size="small" class="m0" @click="$router.go(-1)">返回</el-button>
+       </el-col>
+     </el-row>
+     <el-row type="flex">
+       <el-col :span="24" class="czfont">处理人：{{withname}}</el-col>
+     </el-row>
+    </div>
   </div>
 </template>
 <script>
@@ -319,6 +440,15 @@ export default {
   components:{XQTC},
   data() {
     return {
+      CurrentPage: 1,
+      pageSize: 3,
+      TotalResult: 0,
+      CurrentPage1: 1,
+      pageSize1: 3,
+      TotalResult1: 0,
+      CurrentPage2: 1,
+      pageSize2: 3,
+      TotalResult2: 0,
       rybh:'',
       yjid:'',
       baseData:{},
@@ -328,30 +458,87 @@ export default {
       tableData4:[],
       tableData5:[],
       pd:{},
+      px:{},
+      bshow:false,
       xtitle:"",
       detailsDialogVisible:false,
       xtype:0,
       xid:'',
       form:{},
-      clDialogVisible:false
+      baseinfo:{},
+      options: [{
+          value: 3,
+          label: "3"
+        },
+        {
+          value: 5,
+          label: "5"
+        },
+        {
+          value: 7,
+          label: "7"
+        }
+      ],
+      clDialogVisible:false,
+      withname:this.$store.state.uname,
+      row:{},
     }
   },
   activated(){
-    this.rybh=this.$route.query.rybh;
-    this.yjid=this.$route.query.yjid;
+    // this.rybh=this.$route.query.rybh;
+    // this.yjid=this.$route.query.yjid;
+    this.row=this.$route.query.row;
+    console.log('this.row',this.row);
+    this.pd.YJID=this.row.YJID;
+    this.px.RYBH=this.row.RYBH;
+    this.getBase();
 
-    this.getList('/refugeesWarningController/getRefugeesPersBasicInfo',0);
-    this.getList('/refugeesWarningController/getPermanentResidenceInfo',1);
-    this.getList('/refugeesWarningController/getMovementRecord',2);
-    this.getList('/educationParController/getJZJJXXInfo',3);
-    this.getList('/educationParController/getJZCJXXInfo',4);
-    this.getList('/educationParController/getSJXXInfo',5);
+    this.getCZXX(this.CurrentPage, this.pageSize);
+    this.getCRJ(this.CurrentPage, this.pageSize);
+    this.getSJ(this.CurrentPage, this.pageSize);
+
+    // this.getList('/refugeesWarningController/getRefugeesPersBasicInfo',0);
+    // this.getList('/refugeesWarningController/getPermanentResidenceInfo',1);
+    // this.getList('/refugeesWarningController/getMovementRecord',2);
+    // this.getList('/educationParController/getJZJJXXInfo',3);
+    // this.getList('/educationParController/getJZCJXXInfo',4);
+    // this.getList('/educationParController/getSJXXInfo',5);
 
   },
   mounted() {
 
   },
   methods: {
+    pageSizeChange(val) {
+      this.pageSize=val;
+      this.getCZXX(this.CurrentPage, this.pageSize);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.CurrentPage=val;
+      this.getCRJ(this.CurrentPage, this.pageSize);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange1(val) {
+      this.pageSize1=val;
+      this.getCRJ(this.CurrentPage1, this.pageSize1);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange1(val) {
+      this.CurrentPage1=val;
+      this.getSJ(this.CurrentPage1, this.pageSize1);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange2(val) {
+      this.pageSize2=val;
+      this.getSJ(this.CurrentPage2, this.pageSize2);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange2(val) {
+      this.CurrentPage2=val;
+      this.getSJ(this.CurrentPage2, this.pageSize2);
+      console.log(`当前页: ${val}`);
+    },
     openTc(title,type,id){
       this.xtitle=title;
       this.xtype=type;
@@ -376,6 +563,67 @@ export default {
           }else if(type==4){
             this.tableData4=r.data
           }
+        })
+    },
+    getBase() {//人员基本信息
+      let p = {
+        "pd": this.pd
+      };
+      this.$api.post(this.Global.aport4+'/warningInfoController/getEntityByYJID', p,
+        r => {
+          this.baseinfo = r.data;
+        })
+
+        let pp = {
+          "pd": this.px
+        };
+        this.$api.post(this.Global.aport4+'/eS_NM_JBXXController/getEntityByRYBH', pp,
+          r => {
+            this.baseData = r.data;
+          })
+    },
+    getCZXX(currentPage, showCount){//常住信息
+      let pp = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+        "orderBy":"RQ_RZRQ",
+        "orderType":"DESC"
+      };
+      this.$api.post(this.Global.aport4+'/eS_CZ_JZDXXController/getResultListByParams', pp,
+        r => {
+          this.tableData1 = r.data.resultList;
+          this.TotalResult=r.data.totalResult;
+        })
+    },
+    getCRJ(currentPage, showCount)//出入境
+    {
+      let pp = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+        "orderBy":"CRJSJ",
+        "orderType":"DESC"
+      };
+      this.$api.post(this.Global.aport4+'/eS_CRJJLBController/getResultListByParams', pp,
+        r => {
+          this.tableData2 = r.data.resultList;
+          this.TotalResult1=r.data.totalResult;
+        })
+    },
+    getSJ(currentPage, showCount)//涉警信息
+    {
+      let pp = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+        "orderBy":"CJSJ",
+        "orderType":"DESC"
+      };
+      this.$api.post(this.Global.aport4+'/eS_JCJ_SJXXController/getResultListByParams', pp,
+        r => {
+          this.tableData5 = r.data.resultList;
+          this.TotalResult2=r.data.totalResult;
         })
     },
     chuli(){

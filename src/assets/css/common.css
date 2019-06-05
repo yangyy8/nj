@@ -154,6 +154,10 @@ a{color: #333;text-decoration: none;}
 /* .el-table--border, .el-table--group {
     border: 1px solid #E5ECF1;
 } */
+.el-dialog__wrapper {
+  background: #000;
+  background: rgba(0, 0, 0, 0.3);
+}
 .el-table th {
   background: #5D717F!important;
   font-size: 14px!important;
@@ -177,7 +181,7 @@ table td,thead th{
   font-size: 16px!important;
 }
 /*end*/
-
+.bjdialog .el-dialog{width: 70%!important;}
 .el-dialog__header {
     border-bottom: 1px solid #cccccc;
 }

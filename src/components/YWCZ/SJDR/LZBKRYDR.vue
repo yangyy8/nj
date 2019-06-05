@@ -59,7 +59,7 @@
           </el-row>
          </el-col>
             <el-col :span="2" class="down-btn-area">
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+              <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
             </el-col>
           </el-row>
     </div>
@@ -137,6 +137,7 @@
         <el-pagination
           background
           @current-change="handleCurrentChange"
+          :current-page.sync ="CurrentPage"
           :page-size="pageSize"
           layout="prev, pager, next"
           :total="TotalResult">
@@ -154,6 +155,7 @@
             :file-list="fileList"
             multiple
             :on-success="upSuccess"
+            :data="uploadIconData"
             :before-upload="beforeAvatarUpload"
             :limit="1"
             :auto-upload="false">
@@ -283,6 +285,7 @@ export default {
       detailsDialogVisible:false,
       editsDialogVisible:false,
       editform:{},
+      uploadIconData:{token:this.$store.state.token},
       mapForm:{},
       options:this.pl.options,
       tableData: [],
@@ -307,10 +310,12 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
+      console.log('-----');
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
       this.$api.post(this.Global.aport3+'/drlzbk/getLZBKPage', p,
         r => {
@@ -350,7 +355,8 @@ export default {
     },
     deletes(i) {
     let p = {
-      "RYBH": i.RYBH
+      "RYBH": i.RYBH,
+      "token":this.$store.state.token
     };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
@@ -395,16 +401,17 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type)
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=file.type==='application/vnd.ms-excel';
 
-      if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsl 格式!');
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
       }
-      return isEXL;
+      return isEXL?isEXL:isExls;
     },
     showUpload() {
       this.uploadDialogVisible = true;
       this.typemd = "";
-      this.actions = this.Global.aport3;
+      this.actions = window.IPConfig.IP+this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();

@@ -301,7 +301,7 @@
                      v-model="form.tlyxqz" format="yyyy-MM-dd"
                      type="date" size="small" value-format="yyyyMMdd"
                      placeholder="选择日期" >
-                  </el-date-picker> 
+                  </el-date-picker>
                 </el-col>
               </el-row>
               <el-col :span="12">
@@ -735,6 +735,9 @@ export default {
     }
   },
   activated() {
+    this.eidtsDialogVisible=false;
+    this.CurrentPage=1;
+    console.log('------');
     this.cdt = this.$route.query.cdt;
     if (this.cdt.sblx == "cgts" || this.cdt.sblx=="jsts") {
       this.edit = false;
@@ -757,12 +760,12 @@ export default {
       this.checkshow = false;
     }
     this.pd = {};
+
     this.getList(this.CurrentPage, this.pageSize, this.pd);
 
   },
   mounted() {
     this.getAll();
-
   },
   methods: {
     // 旋转
@@ -1270,10 +1273,5 @@ export default {
 <style>
 .yyinput input.el-input__inner {
   color: red;
-}
-
-.bj .el-dialog__wrapper {
-  background: #000;
-  background: rgba(0, 0, 0, 0.3);
 }
 </style>

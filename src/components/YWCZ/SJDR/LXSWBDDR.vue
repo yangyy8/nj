@@ -54,7 +54,7 @@
           </el-row>
          </el-col>
             <el-col :span="2" class="down-btn-area">
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+              <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
             </el-col>
           </el-row>
     </div>
@@ -109,7 +109,7 @@
           </div>
           <div class="">
             每页显示
-            <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+            <el-select v-model="pageSize" @change="CurrentPage=1;pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -120,12 +120,13 @@
             条
           </div>
           <div class="">
-    共{{Math.ceil(TotalResult/pageSize)}}页
+         共{{Math.ceil(TotalResult/pageSize)}}页
           </div>
         </div>
         <el-pagination
           background
           @current-change="handleCurrentChange"
+          :current-page.sync ="CurrentPage"
           :page-size="pageSize"
           layout="prev, pager, next"
           :total="TotalResult">
@@ -141,7 +142,8 @@
             ref="upload"
             :action='actions+"/drlxslrwbd/readExcel"'
             :file-list="fileList"
-            multiple
+            :data="uploadIconData"
+             multiple
             :on-success="upSuccess"
             :before-upload="beforeAvatarUpload"
             :limit="1"
@@ -265,6 +267,7 @@ export default {
       detailsDialogVisible:false,
       editsDialogVisible:false,
       editform:{},
+      uploadIconData:{token:this.$store.state.token},
       options: [{
           value: 10,
           label: "10"
@@ -279,13 +282,15 @@ export default {
         }
       ],
       tableData: [],
-
     }
+  },
+  activated(){
+    this.getList(this.CurrentPage,this.pageSize,this.pd);
   },
   mounted() {
      this.$store.dispatch('getGjdq');
      this.$store.dispatch('getXB');
-     this.getList(this.CurrentPage,this.pageSize,this.pd);
+     //this.getList(this.CurrentPage,this.pageSize,this.pd);
   },
   methods: {
 
@@ -304,7 +309,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
       this.$api.post(this.Global.aport3+'/drlxslrwbd/getLXSLRWBDPage', p,
         r => {
@@ -338,14 +344,14 @@ export default {
         this.$refs[afrom].resetFields();
         this.editsDialogVisible = false;
         this.getList(this.CurrentPage,this.pageSize,this.pd);
-
       }, e => {
         this.$message.error('失败了');
       });
     },
     deletes(i) {
     let p = {
-      "RYBH":i.RYBH
+      "RYBH":i.RYBH,
+      "token":this.$store.state.token
     };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
@@ -354,7 +360,6 @@ export default {
     }).then(() => {
       this.$api.post(this.Global.aport3+'/drlxslrwbd/deleteLXSLRWBDById', p,
         r => {
-
           if (r.success) {
             this.$message({
               message: '删除成功！',
@@ -390,17 +395,18 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type)
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=file.type==='application/vnd.ms-excel';
 
-      if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsx 格式!');
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
       }
-      return isEXL;
+      return isEXL?isEXL:isExls;
     },
     showUpload() {
       this.uploadDialogVisible = true;
       this.typemd = "";
-      this.actions =this.Global.aport3;
-      console.log(this.$refs.upload)
+      this.actions = window.IPConfig.IP+this.Global.aport3;
+
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
       }
@@ -413,12 +419,22 @@ export default {
         });
         return
       }
+
+
       this.$refs.upload.submit();
     },
     download() {
       window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/未报到留学生导入模板.xls'
     },
-  }
+  },
+  computed: {
+     //！！！在computed里面可以设置头部信息，如增加tooken
+     headers () {
+       return {
+         'token': this.$store.state.token
+       }
+     }
+   }
 }
 </script>
 

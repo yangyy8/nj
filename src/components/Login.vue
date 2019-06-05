@@ -71,11 +71,39 @@ export default {
       downs:[],
       companyDialogVisible:false,
       companys:[],
+      token:'',
+      serverip:'',
     }
   },
   mounted(){
+    this.token=this.$route.query.token;
+    this.serverip=this.$route.query.serverip;
+    console.log('this.token',this.token);
+    console.log('this.serviceip',this.serverip);
+    if(this.token!=undefined && this.serverip!=undefined)
+    {
+        var url=this.Global.aport1+'/sso/api/checkUserLogin';
+        var ff=new FormData();
+        ff.append("token",this.token);
+        ff.append("serverIp",this.serverip);
+        let p=ff;
+        this.$api.post(url,p,r => {
+          if(r.success){
+           this.user.userName=r.data.userName;
+           this.user.password=r.data.passWord;
+           this.$store.commit('getWtoken',this.token)
+           this.$store.commit('getServerip',this.serverip)
+           this.login();
+         }else {
+           window.location.href="http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin";
+         }
+        });
+
+     }else{
+         this.getDown();
+     }
     this.initJzmm();
-    this.getDown();
+
   },
   methods:{
     initJzmm(){
@@ -96,9 +124,16 @@ export default {
       }
     },
     login(){
-        this.V.$submit('demo', (canSumit,data) => {
+        // this.V.$submit('demo', (canSumit,data) => {
+        //
+        //   if(!canSumit) return;
 
-          if(!canSumit) return;
+            if(this.user.userName=="" || this.user.userName==undefined){
+              this.$message.error("请输入用户名！");return;
+            }
+            if(this.user.password=="" || this.user.password==undefined){
+              this.$message.error("请输入密码！");return;
+            }
           var ff=new FormData();
           ff.append("userName",this.user.userName);
           ff.append("password",this.user.password);
@@ -116,14 +151,14 @@ export default {
                     this.$store.commit('getUid',this.user.userName)
                     this.$store.commit('getUname',r.data.mc)
                     this.$store.commit('getOrgname',r.data.ssdw.mc)
-
+                    this.$store.commit('getOrgid',r.data.ssdw.dm)
                     this.Global.hasEnter="1";
                     this.$router.push({name: 'Index'});
 
                   }
               }
           })
-      });
+      // });
     },
     getDown(){
 
@@ -158,18 +193,18 @@ export default {
             this.$store.commit('getUid',this.user.userName)
             this.$store.commit('getUname',r.data.mc)
             this.$store.commit('getOrgname',r.data.ssdw.mc)
+            this.$store.commit('getOrgid',r.data.ssdw.dm)
             console.log(this.$store.state.token)
             // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
             this.$router.push({name: 'Index',params:{ id:'1'}});
           }else {
-            this.$error("登录失败！");
+              this.$message.error("登录失败！");
           }
         })
       });
     },
     keyLogin(){
-
      if(this.user.userName&&this.user.password){
        this.login();
      }

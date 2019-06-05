@@ -1,11 +1,14 @@
 <template lang="html">
   <div class="side_nav">
     <div class="side_nav_item" v-for="(a,ind) in memuData" :key="ind">
-      <div class="h1">
+      <span style="display:none">
+            {{suibain}}
+      </span>
+      <div class="h1" @click="getHS(ind)">
         <i :class="a.icon" :style="{'color':color[ind]}"></i>
         <span>{{a.mc}}</span>
       </div>
-      <div class="h2" :class="{'h2checked':h2Id==b.dm}" v-for="(b,ind2) in a.children" :key="ind2" @mouseover="checkH2(b.dm)" @mouseout="h2Id=null">
+      <div class="h2" v-if="showArray[ind]" :class="{'h2checked':h2Id==b.dm}" v-for="(b,ind2) in a.children" :key="ind2" @mouseover="checkH2(b.dm)" @mouseout="h2Id=null">
         <i :style="{'background':color[ind]}"></i>
         <span  class="hand">● {{b.mc}}</span>
         <div class="h3" v-if="h2Id==b.dm&&b.children.length">
@@ -37,6 +40,8 @@ export default {
       memuData: this.pl.menu,
       h2Id:null,
       menuPath:null,
+      showArray:[true,true,true,true],
+      suibain:true,
       color:['#02ffd0','#e09144','#50c6ea']
     }
   },
@@ -75,6 +80,11 @@ export default {
          }
        });
     },
+    getHS(n){
+      this.showArray[n] = !this.showArray[n];
+      this.suibain = !this.suibain
+      console.log(this.showArray[n]);
+    },
 
   }
 }
@@ -91,12 +101,13 @@ export default {
 }
 .h1{
   color: #fff;
+  cursor: pointer;
   background: rgba(1, 28, 46, 0.83);
   line-height: 32px;
   padding-left: 20px;
 }
 .h2{
-  color: #5c6b72;
+  color: #999999;
   padding-left: 20px;
   height: 32px;
   position: relative;

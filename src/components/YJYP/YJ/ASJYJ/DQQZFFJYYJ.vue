@@ -63,8 +63,7 @@
       </el-row>
     </div>
     <div class="yycontent">
-       <div class="yylbt mb-15">甄别信息列表</div>
-
+       <div class="yylbt mb-15">预警信息列表</div>
       <el-table
            :data="tableData"
            border
@@ -73,17 +72,20 @@
            <el-table-column
              prop="ZWXM"
              label="姓名">
+              <template slot-scope="scope">
+                 <span>{{getXM(scope.row.ZWXM,scope.row.YWXM)}}</span>
+              </template>
            </el-table-column>
            <el-table-column
-             prop="XB"
-             label="性别">
+             prop="XB_DESC"
+             label="性别" width="60">
            </el-table-column>
            <el-table-column
-             prop="GJ"
+             prop="GJDQ_DESC"
              label="国家地区">
            </el-table-column>
            <el-table-column
-             prop="ZJZL"
+             prop="ZJZL_DESC"
              label="证件种类">
            </el-table-column>
            <el-table-column
@@ -91,7 +93,7 @@
              label="证件号码">
            </el-table-column>
            <el-table-column
-             prop="QZZL"
+             prop="QZZL_DESC"
              label="签证种类">
            </el-table-column>
            <el-table-column
@@ -103,13 +105,13 @@
              label="预警时间">
            </el-table-column>
            <el-table-column
-             prop="SHZT"
-             label="当前状态">
+             prop="CLZT_DESC"
+             label="处理状态">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WGRFFJLYJ_XQ',query:{yjType:2,rybh:scope.row.YJID}})"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WGRFFJLYJ_XQ',query:{yjType:2,row:scope.row}})"></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -159,9 +161,12 @@ export default {
       tableData: [],
     }
   },
+    activated(){
+        this.getList(this.CurrentPage, this.pageSize, this.pd);
+    },
   mounted() {
     this.$store.dispatch('getGjdq');
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
+
   },
   methods: {
     pageSizeChange(val) {
@@ -190,6 +195,18 @@ export default {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
+    },
+    getXM(zw,yw){
+      if(zw!=undefined && yw!=undefined){
+        return yw+"("+zw+")";
+      }else {
+        if(zw!=undefined){
+          return zw;
+        }
+        if(yw!=undefined){
+          return yw;
+        }
+      }
     },
   }
 }

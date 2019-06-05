@@ -182,6 +182,7 @@
             :file-list="fileList"
             multiple
             :on-success="upSuccess"
+            :data="uploadIconData"
             :before-upload="beforeAvatarUpload"
             :limit="1"
             :auto-upload="false">
@@ -676,6 +677,7 @@ export default {
       pageSize1: 10,
       TotalResult1: 0,
       pd: {},
+      uploadIconData:{token:this.$store.state.token},
       nation: [],
       fileList: [],
       actions: "",
@@ -721,7 +723,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
       this.$api.post(this.Global.aport3+'/drnmhxqbhz/getNMHXQBHZPage', p,
         r => {
@@ -731,10 +734,12 @@ export default {
     },
     getList1(currentPage, showCount, pd) {
       let p = {
-          "XM":this.mapForm.XM,
-          "XBDM":this.mapForm.XBDM,
-          "CSRQ":this.mapForm.CSRQ,
-          "GJDQDM":this.mapForm.GJDQDM
+        	"currentPage":currentPage,
+        	"showCount":showCount,
+        	"pd":this.mapForm,
+        	"orderBy":"",
+        	"orderType":"DESC"
+
       };
       this.$api.post(this.Global.aport3+'/ywescxlszsdjxx/getLSZSDJXXList', p,
         r => {
@@ -776,7 +781,8 @@ export default {
     },
     deletes(i) {
     let p = {
-      "RYBH": i.RYBH
+      "RYBH": i.RYBH,
+      "token":this.$store.state.token
     };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
@@ -821,16 +827,17 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type)
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=file.type==='application/vnd.ms-excel';
 
-      if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsl 格式!');
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
       }
-      return isEXL;
+      return isEXL?isEXL:isExls;
     },
     showUpload() {
       this.uploadDialogVisible = true;
       this.typemd = "";
-      this.actions = this.Global.aport3;
+      this.actions = window.IPConfig.IP+this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();

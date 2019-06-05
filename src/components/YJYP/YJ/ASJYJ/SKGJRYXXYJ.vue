@@ -1,4 +1,30 @@
 <template lang="html">
+    <!-- 临住核查预警 -->
+</template>
+
+<script>
+export default {
+  data(){
+    return {}
+
+},
+activated(){
+     this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
+},
+  mounted(){
+
+
+  },
+
+}
+</script>
+
+<style scoped>
+</style>
+
+
+
+<!-- <template lang="html">
   <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
@@ -182,4 +208,4 @@ export default {
 </script>
 
 <style scoped>
-</style>
+</style> -->

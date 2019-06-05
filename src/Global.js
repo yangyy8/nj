@@ -16,10 +16,12 @@ const aport3="api-yewu";//石飞网关
 // const aport3="http://192.168.3.217:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
 const aport4="api-yujing";//李文龙 预警
-// const aport4="http://192.168.3.217:9440";//李文龙，任智强
-
+// const aport4="http://192.168.3.217:9440";//李文龙
 
 const aport5="api-yanpan";//李文龙研判
+// const aport5="http://192.168.3.217:9440";//李文龙
+
+
 const dmall="/data_report/selectDmList" //加载全部代码
 const ssdw="/org/getSelfAndChilds"//所属单位
 const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQ";//国家地区
@@ -37,6 +39,12 @@ const jtgx="/service/getRedisDataByDm?tablename=DM_JTGX"//家庭关系
 const sflx="/service/getRedisDataByDm?tablename=DM_NMSF"//身份类型
 const xb="/service/getRedisDataByDm?tablename=DM_XB"//性别
 const rjqzzl="/service/getRedisDataByDm?tablename=DM_WGR_QZZL"//入境签证类型
+const dwlb="/service/getRedisDataByDm?tablename=JZ_DWLB"//单位类别
+const dwxz="/service/getRedisDataByDm?tablename=JZ_DWSX"//单位性质
+const zsbg="/service/getRedisDataByDm?tablename=JZ_LGBM"//住宿宾馆
+const tlyxq="/service/getRedisDataByDm?tablename=DM_TLYXQ";//停留有效期
+const sf="/service/getRedisDataByDm?tablename=DM_JWRYSF";//身份
+const tablists=[];
 export default
 {
   org,//用户机构代码
@@ -48,6 +56,7 @@ export default
   aport2,//左星海
   aport3,//石飞
   aport4,//李文龙
-  aport5,//任智强
-  gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw
+  aport5,//李文龙
+  gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists
 }

@@ -19,6 +19,12 @@ export default new Router({
     component:resolve => require(['@/components/index'], resolve),
     },
     {
+    path:'/homemap',
+    name:'Homemap',
+    meta: {logined:true},
+    component:resolve => require(['@/components/homemap'], resolve),
+    },
+    {
       path: '/Home',
       name: 'Home',
       meta: {logined:true},
@@ -29,8 +35,14 @@ export default new Router({
         {
           path: 'ZBKYJ',
           name: 'ZBKYJ',
-          meta:{title:['预警研判','预警','临住预警','临住布控预警']},
+          meta:{title:['预警研判','预警','临住预警','布控预警']},
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/LZBKYJ'], resolve),
+        },
+        {
+          path: 'ZBKYJ_X',
+          name: 'ZBKYJ_X',
+          meta:{title:['预警研判','预警','临住预警','布控预警'],father:'ZBKYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
         },
         {
           path: 'ZBKYJ_XQ',
@@ -57,6 +69,18 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/GJYWWYLZYJ'], resolve),
         },
         {
+          path: 'GJYWWYLZYJ_XQ',
+          name: 'GJYWWYLZYJ_XQ',
+          meta:{title:['预警研判','预警','临住预警','重点国家境外人员临住预警'],father:'GJYWWYLZYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LZYJ/GJYWWYLZYJ_XQ'], resolve),
+        },
+        {
+          path: 'GJYWWYLZYJ_LB',
+          name: 'GJYWWYLZYJ_LB',
+          meta:{title:['预警研判','预警','临住预警','重点国家境外人员临住预警'],father:'GJYWWYLZYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LZYJ/GJYWWYLZYJ_LB'], resolve),
+        },
+        {
           path: 'CZFWYHYJ',
           name: 'CZFWYHYJ',
           meta:{title:['预警研判','预警','临住预警','出租房屋隐患预警']},
@@ -68,8 +92,6 @@ export default new Router({
           meta:{title:['预警研判','预警','临住预警','出租房屋隐患预警'],father:'CZFWYHYJ'},
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/CZFWYHYJ_XQ'], resolve),
         },
-
-
         {
           path: '202TFZLYJ',
           name: '202TFZLYJ',
@@ -95,9 +117,69 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSWBDYJ'], resolve),
         },
         {
+          path: 'LXSWBDYJ_X',
+          name: 'LXSWBDYJ_X',
+          meta:{title:['预警研判','预警','留学生预警','留学生录取未报到预警'],father:'LXSWBDYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
           path: 'LXSXXGLYJ',
           name: 'LXSXXGLYJ',
-          meta:{title:['预警研判','预警','留学生预警','留学生信息管理预警']},
+          meta:{title:['预警研判','预警','留学生预警','留学生市外临住预警']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
+          path: 'LXSSWLZ_X',
+          name: 'LXSSWLZ_X',
+          meta:{title:['预警研判','预警','留学生预警','留学生市外临住预警'],father:'LXSSWLZ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
+          path: 'LXSSWLZ',
+          name: 'LXSSWLZ',
+          meta:{title:['预警研判','预警','留学生预警','留学生市外临住预警']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSSWLZ'], resolve),
+        },
+        {
+          path: 'LXSXXGLYJ_XQ',
+          name: 'LXSXXGLYJ_XQ',
+          meta:{title:['预警研判','预警','留学生预警','留学生市外临住预警'],father:'LXSXXGLYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ_XQ'], resolve),
+        },
+        {
+          path: 'LXSCRJYJ',
+          name: 'LXSCRJYJ',
+          meta:{title:['预警研判','预警','留学生预警','留学生出入境提醒']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSCRJYJ'], resolve),
+        },
+        {
+          path: 'LXSCRJYJ_X',
+          name: 'LXSCRJYJ_X',
+          meta:{title:['预警研判','预警','留学生预警','留学生出入境提醒'],father:'LXSCRJYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
+          path: 'LXSSKYJ',
+          name: 'LXSSKYJ',
+          meta:{title:['预警研判','预警','留学生预警','留学生涉恐预警']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSSKYJ'], resolve),
+        },
+        {
+          path: 'LXSSKYJ_X',
+          name: 'LXSSKYJ_X',
+          meta:{title:['预警研判','预警','留学生预警','留学生涉恐预警'],father:'LXSSKYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
+          path: 'LZHCYJ',
+          name: 'LZHCYJ',
+          meta:{title:['预警研判','预警','留学生预警','临住核查预警']},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LZHCYJ'], resolve),
+        },
+        {
+          path: 'LZHCYJ_X',
+          name: 'LZHCYJ_X',
+          meta:{title:['预警研判','预警','留学生预警','临住核查预警'],father:'LZHCYJ'},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
         },
         {
@@ -124,7 +206,6 @@ export default new Router({
           meta:{title:['预警研判','预警','留学生预警','在校学生突发增量预警']},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/ZXSTFZLYJ'], resolve),
         },
-
         {
           path: 'NMXQPHZYJ',
           name: 'NMXQPHZYJ',
@@ -132,19 +213,23 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ'], resolve),
         },
         {
+          path: 'NMXQPHZYJ_X',
+          name: 'NMXQPHZYJ_X',
+          meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警'],father:'NMXQPHZYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
           path: 'NMXQPHZYJ_XQ',
           name: 'NMXQPHZYJ_XQ',
           meta:{title:['预警研判','预警','常住预警','难民和需求庇护者预警详情'],father:'NMXQPHZYJ'},
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ_XQ'], resolve),
         },
-
         {
           path: 'SWDWFXYJ',
           name: 'SWDWFXYJ',
           meta:{title:['预警研判','预警','涉外单位预警','涉外单位风险预警']},
           component: resolve => require(['@/components/YJYP/YJ/SWDWYJ/SWDWFXYJ'], resolve),
         },
-
         {
           path: 'DQQZFFJYYJ',
           name: 'DQQZFFJYYJ',
@@ -160,13 +245,13 @@ export default new Router({
         {
           path: 'WGRFFJLYJ',
           name: 'WGRFFJLYJ',
-          meta:{title:['预警研判','预警','案事件预警','外国人非法居留visa预警']},
+          meta:{title:['预警研判','预警','案事件预警','外国人非法居留预警']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/WGRFFJLYJ'], resolve),
         },
         {
           path: 'WGRFFJLYJ_XQ',
           name: 'WGRFFJLYJ_XQ',
-          meta:{title:['预警研判','预警','临住预警','外国人非法居留visa预警详情'],father:'WGRFFJLYJ'},
+          meta:{title:['预警研判','预警','临住预警','外国人非法居留预警详情'],father:'WGRFFJLYJ'},
           component: resolve => require(['@/components/GYZJ/ASJXQ'], resolve),
         },
         {
@@ -188,6 +273,12 @@ export default new Router({
           component: resolve => require(['@/components/GYZJ/ASJXQ'], resolve),
         },
         {
+          path: 'SKGJRYXXYJ_X',
+          name: 'SKGJRYXXYJ_X',
+          meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警'],father:'SKGJRYXXYJ'},
+          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        },
+        {
           path: 'SKGJRYXXYJ',
           name: 'SKGJRYXXYJ',
           meta:{title:['预警研判','预警','案事件预警','涉恐国家人员信息预警']},
@@ -205,7 +296,6 @@ export default new Router({
           meta:{title:['预警研判','预警','案事件预警','重点区域监控分析']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/ZDQYJKFX'], resolve),
         },
-
         {
           path: 'SLQFXXYJ',
           name: 'SLQFXXYJ',
@@ -249,14 +339,12 @@ export default new Router({
           meta:{title:['预警研判','研判','常住研判','常住境外人员管理情况']},
           component: resolve => require(['@/components/YJYP/YP/CZYP/CZJWRYGLQK'], resolve),
         },
-
         {
           path: 'SWDWFBFX',
           name: 'SWDWFBFX',
           meta:{title:['预警研判','研判','涉外单位分析','涉外单位分布分析']},
           component: resolve => require(['@/components/YJYP/YP/SWDWFX/SWDWFBFX'], resolve),
         },
-
         {
           path: 'LXSSJFX',
           name: 'LXSSJFX',
@@ -264,12 +352,41 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LXSYP/LXSSJFX'], resolve),
         },
         {
+          path: 'RYHX',
+          name: 'RYHX',
+          meta:{title:['预警研判','研判','人员画像','人员画像']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX'], resolve),
+        },
+        {
+          path: 'RYHX_XQ',
+          name: 'RYHX_XQ',
+          meta:{title:['预警研判','研判','人员画像','人员画像'],father:'RYHX'},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX_XQ'], resolve),
+        },
+        {
+          path: 'RYHXGJCX',
+          name: 'RYHXGJCX',
+          meta:{title:['预警研判','研判','人员画像','人员高级查询'],father:'RYHX'},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHXGJCX'], resolve),
+        },
+        {
+          path: 'RYHXGJCX_D',
+          name: 'RYHXGJCX_D',
+          meta:{title:['预警研判','研判','人员画像','人员高级查询'],father:'RYPLCX'},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHXGJCX'], resolve),
+        },
+        {
+          path: 'RYPLCX',
+          name: 'RYPLCX',
+          meta:{title:['预警研判','研判','人员画像','人员批量查询']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYPLCX'], resolve),
+        },
+        {
           path: 'JYTZSTJ',
           name: 'JYTZSTJ',
           meta:{title:['预警研判','研判','留学生研判','教育厅招生统计']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/JYTZSTJ'], resolve),
         },
-
         {
           path: 'LZXXZHFX',
           name: 'LZXXZHFX',
@@ -312,7 +429,6 @@ export default new Router({
           meta:{title:['预警研判','研判','临住研判','图侦人像比对预警分析']},
           component: resolve => require(['@/components/YJYP/YP/LZYP/TZRXBDYJFX'], resolve),
         },
-
         {
           path: 'CRJZJFX',
           name: 'CRJZJFX',
@@ -325,7 +441,6 @@ export default new Router({
           meta:{title:['预警研判','研判','移民研判','代办签证信息统计']},
           component: resolve => require(['@/components/YJYP/YP/YMYP/DBQZXXTJ'], resolve),
         },
-
         {
           path: 'QZXXTJ',
           name: 'QZXXTJ',
@@ -370,7 +485,6 @@ export default new Router({
           meta:{title:['业务操作','临住信息','错误数据修改']},
           component: resolve => require(['@/components/YWCZ/LZXX/CWSJXG'], resolve),
         },
-
         {
           path: 'SJDJZLKH',
           name: 'SJDJZLKH',
@@ -382,9 +496,7 @@ export default new Router({
           name: 'NMDXFS',
           meta:{title:['业务操作','常住信息','常住、难民短信发送']},
           component: resolve => require(['@/components/YWCZ/CZXX/NMDXFS'], resolve),
-
         },
-
         {
           path: 'LXSWBDDR',
           name: 'LXSWBDDR',
@@ -397,6 +509,7 @@ export default new Router({
           meta:{title:['业务操作','数据导入','临住布控人员导入']},
           component: resolve => require(['@/components/YWCZ/SJDR/LZBKRYDR'], resolve),
         },
+
         {
           path: 'NMSJCJ',
           name: 'NMSJCJ',
@@ -490,13 +603,31 @@ export default new Router({
           meta:{title:['用户登录']},
           component: resolve => require(['@/components/Login'], resolve),
         },
-
         {
           path: 'YHSZRZ',
           name: 'YHSZRZ',
           meta:{title:['系统管理','日志查看','用户操作日志']},
           component: resolve => require(['@/components/XTGL/RZCK/YHSZRZ'], resolve),
         },
+        {
+          path: 'TZSF',
+          name: 'TZSF',
+          meta:{title:['数据分析','图帧人像','图帧身份','图帧身份'],father:'RLSB'},
+          component: resolve => require(['@/components/XTGL/RZCK/TZSF'], resolve),
+        },
+        {
+          path: 'RLSB',
+          name: 'RLSB',
+          meta:{title:['数据分析','图帧人像','图帧身份','图帧身份']},
+          component: resolve => require(['@/components/XTGL/RZCK/RLSB'], resolve),
+        },
+        {
+          path: 'JWRYGJ',
+          name: 'JWRYGJ',
+          meta:{title:['数据分析','图帧人像','图帧身份','境外人员轨迹']},
+          component: resolve => require(['@/components/XTGL/RZCK/JWRYGJ'], resolve),
+        },
+
       ]
     },
 

@@ -29,7 +29,6 @@
            </el-row>
           </div>
         </div>
-
       </div>
     </div>
     <!-- <NAV class="index_nav" v-if="navShow"></NAV> -->
@@ -51,7 +50,6 @@ export default {
     oIframe.style.height = deviceHeight + 'px';
     this.getNavmune();
     this.iURL=window.IPConfig.INDEX+'/api-reporter/home/index?token='+this.$store.state.token;
-
     console.log('this.iURL',this.iURL);
   },
   data(){
@@ -68,7 +66,6 @@ export default {
       menuPath:null,
     }
   },
-
   methods:{
     getNav(item,index){
       this.navShow=true;
@@ -128,7 +125,7 @@ export default {
   /* display: flex; */
   /* flex-direction: column; */
   /* align-items: center; */
-  padding: 40px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #273542;
 }
 .nav_1_check,.nav_1:hover{
@@ -151,11 +148,10 @@ export default {
   min-height: 584px;
   box-sizing: border-box;
   display: flex;
-
 }
 .index_nav2{
   background: rgba(6, 44, 83, 0.81);
-  width: 125px;
+  width: 120px;
   height: 584px;
   color: #8aacd1;
   display: flex;

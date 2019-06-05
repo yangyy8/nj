@@ -76,7 +76,7 @@
                       prop="cwsj"
                       label="错误数">
                       <template slot-scope="scope">
-                      <a class="sb" @click="toLink(0,scope.row.dw)"> {{scope.row.cwsj}} </a>
+                      <a class="sb" @click="formData.pageIndex=1;toLink(0,scope.row.dw)"> {{scope.row.cwsj}} </a>
                       </template>
                     </el-table-column>
                     <el-table-column
@@ -90,7 +90,7 @@
                       prop="cbsj"
                       label="迟报数">
                       <template slot-scope="scope">
-                      <a class="sb" @click="toLink(1,scope.row.dw)"> {{scope.row.cbsj}} </a>
+                      <a class="sb" @click="formData.pageIndex=1;toLink(1,scope.row.dw)"> {{scope.row.cbsj}} </a>
                       </template>
                     </el-table-column>
                     <el-table-column
@@ -98,7 +98,20 @@
                       label="及时率">
                     </el-table-column>
            </el-table-column>
-
+           <el-table-column
+             label="上报省厅">
+                   <el-table-column
+                      prop="xtcbs"
+                      label="迟报数">
+                      <template slot-scope="scope">
+                      <a class="sb" @click="formData.pageIndex=1;toLink(2,scope.row.dw)"> {{scope.row.xtcbs}} </a>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="xtjsl"
+                      label="及时率">
+                    </el-table-column>
+           </el-table-column>
          </el-table>
     </div>
   <el-dialog :title="diaglogtitle" customClass="customWidth" :visible.sync="detailsDialogVisible" :append-to-body="true">
@@ -181,16 +194,20 @@
            label="登记日期" v-if='cd' :key="Math.random()">
          </el-table-column>
          <el-table-column
+           prop="cjsj"
+           label="上报日期" v-if='sb' :key="Math.random()">
+         </el-table-column>
+         <el-table-column
            prop="bz"
            label="备注">
          </el-table-column>
+         <p slot="append" style="text-align:center; line-height:50px;" v-if='datashow'><a href="javascript:;"  @click="getMData()" class="blue01">点击加载更多</a></p>
        </el-table>
        <div slot="footer" class="dialog-footer">
          <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
        </div>
   </el-dialog>
   </div>
-
 
 </template>
 <script>
@@ -214,14 +231,21 @@ export default {
       dwlg: '',
       cw: false,
       cd: false,
+      sb: false,
       dc: 0,
-      dcdw:'',
-      bglevel:'',
-      dclevel:'',
+      dcdw: '',
+      bglevel: '',
+      dclevel: '',
+      loading: true,
+      datashow:true,
+      formData: {
+                pageIndex: 1,
+                pageSize: 10,
+      }
     }
   },
   activated() {
-        this.getList(this.pd);
+    this.getList(this.pd);
   },
   mounted() {
     this.getList(this.pd);
@@ -230,20 +254,19 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-
     getList(pd) {
       this.bgs = false;
       this.fj = true;
       this.level = "1";
-      this.dclevel="1";
-      this.bglevel='';
+      this.dclevel = "1";
+      this.bglevel = '';
       let p = {
         "level": "1",
         "dw": "",
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
-        "operatorId":this.$store.state.uid,
-        "operatorNm":this.$store.state.uname,
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname,
       };
       var url = this.Global.aport2 + '/data_report/selectTjxx';
       this.$api.post(url, p,
@@ -252,15 +275,12 @@ export default {
         })
     },
     getPCS(dw) {
-      this.dw=dw;
-      this.bglevel='';
-
+      this.dw = dw;
+      this.bglevel = '';
       if (this.level == "1" || this.level == "3") {
         this.dw = dw;
-
         this.level = "2";
-
-        this.dclevel="2";
+        this.dclevel = "2";
         this.bgs = false;
         this.fj = true;
         let p = {
@@ -268,40 +288,39 @@ export default {
           "dw": dw,
           "beginTime": this.pd.beginTime,
           "endTime": this.pd.endTime,
-          "operatorId":this.$store.state.uid,
-          "operatorNm":this.$store.state.uname,
+          "operatorId": this.$store.state.uid,
+          "operatorNm": this.$store.state.uname,
         };
         var url = this.Global.aport2 + '/data_report/selectTjxx';
         this.$api.post(url, p,
           r => {
             this.tableData = r.data;
           })
-
       } else {
         return;
       }
     },
-    getLG(dw,ll) {
+    getLG(dw, ll) {
       this.dwlg = dw;
-      this.bglevel=ll;
+      this.bglevel = ll;
       this.bgs = true;
       this.fj = false;
-      var ll=this.level;
-      if(this.dwlg=="合计"){
-        if(this.level=="2"){
-          ll=1;
-          dw=this.dw;
+      var ll = this.level;
+      if (this.dwlg == "合计") {
+        if (this.level == "2") {
+          ll = 1;
+          dw = this.dw;
         }
-      }else {
-          this.dclevel="";
+      } else {
+        this.dclevel = "";
       }
       let p = {
         "level": ll,
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
-        "operatorId":this.$store.state.uid,
-        "operatorNm":this.$store.state.uname,
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname,
       };
       var url = this.Global.aport2 + '/data_report/selectBgxx';
       this.$api.post(url, p,
@@ -309,36 +328,55 @@ export default {
           this.tableData = r.data;
         })
     },
-    toLink(i,dw) {
-      this.dcdw=dw;
+    getMData(){
+      this.formData.pageIndex++;
+      this.toLink(this.dc,this.dcdw);
+    },
+    toLink(i, dw) {
+      //this.formData.pageSize=parseInt(this.formData.pageIndex)*parseInt(this.formData.pageSize);
+      this.dcdw = dw;
+      // console.log('dw1',dw);
       this.dc = i;
-      var ll=this.level;
-      if(this.bglevel!=''){
-        ll=this.bglevel;
+      this.tableData1=[];
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+      var ll = this.level;
+      if (this.bglevel != '') {
+        ll = this.bglevel;
       }
-      if(this.dcdw=="合计"){
-        //dw=this.dwlg;
-        if(this.level=="2"){
-          ll=1;
-          dw=this.dw;
+      if (this.dcdw == "合计") {
+        if(this.level!='1')
+         {  dw = this.dwlg; }
+        if (this.level == "2") {
+          ll = 1;
+          dw = this.dw;
         }
-        if(this.bglevel!="" && this.level!=""){
-          ll=parseInt(this.bglevel)+parseInt(this.level);
-         }
-        if(this.dclevel=="2"){
-         ll=parseInt(this.dclevel)+parseInt(this.level);
+        if (this.bglevel != "" && this.level != "") {
+          ll = parseInt(this.bglevel) + parseInt(this.level);
         }
-         if(ll==5){
-           dw=this.dwlg;
-         }
-      }
+        if (this.dclevel == "2") {
+          ll = parseInt(this.dclevel) + parseInt(this.level);
+        }
+        if (ll == 5) {
+          dw = this.dwlg;
+        }
+        }
+        console.log('dw2',dw);
       let p = {
-        "level":ll ,
+        "level": ll,
         "dw": dw,
+        "page":this.formData.pageIndex,
+        "limit":this.formData.pageSize,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
-        "operatorId":this.$store.state.uid,
-        "operatorNm":this.$store.state.uname,
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname,
       };
       var url = '';
       if (i == 0) {
@@ -346,17 +384,30 @@ export default {
         url = this.Global.aport2 + '/data_report/selectCwsj';
         this.cw = true;
         this.cd = false;
-      } else {
+        this.sb = false;
+      } else if (i == 1) {
         this.diaglogtitle = "迟报数据详情";
         url = this.Global.aport2 + '/data_report/selectCbsj';
         this.cw = false;
         this.cd = true;
+        this.sb = false;
+      } else if (i == 2) {
+        this.diaglogtitle = "上报省厅迟报数据详情";
+        url = this.Global.aport2 + '/data_report/selectXtcbsj';
+        this.cw = false;
+        this.cd = true;
+        this.sb = true;
       }
       this.$api.post(url, p,
         r => {
+          if(r.success){
+
           this.tableData1 = r.data;
+          this.detailsDialogVisible = true;
+          this.datashow=r.flag;
+        }
         })
-      this.detailsDialogVisible = true;
+      }, 2000);
     },
     getFH(pd) {
       if (this.level == "1" || this.level == "2") {
@@ -371,53 +422,58 @@ export default {
     },
     download(t) {
       var url = '';
-      var dw  = this.dw;
-      var ll=this.level;
+      var dw = this.dw;
+      var ll = this.level;
       if (t == 0) {
         if (this.dclevel == "1") {
-          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportTjxx";
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportTjxx";
         } else if (this.dclevel == "2") {
-          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportTjxx";
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportTjxx";
         } else if (this.bglevel == "3") {
-          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
-          dw=this.dwlg;
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportBgxx";
+          dw = this.dwlg;
         }
-        if(this.dwlg=="合计"){
-          dw=this.dwlg;
-          url =window.IPConfig.IP+'/'+ this.Global.aport2 + "/data_report/exportBgxx";
-          if(this.level=="2"){
-            ll=1;
-            dw=this.dw;
+        if (this.dwlg == "合计") {
+          dw = this.dwlg;
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportBgxx";
+          if (this.level == "2") {
+            ll = 1;
+            dw = this.dw;
           }
-        }else {
-            this.dclevel="";
+        } else {
+
+          this.dclevel = "";
         }
       } else if (t == 1) {
-           dw=this.dcdw;
+        console.log('this.dc',this.dc);
+        dw = this.dcdw;
         if (this.dc == 0) {
-          url = window.IPConfig.IP+'/'+this.Global.aport2 + "/data_report/exportCwxx";
-        } else {
-          url = window.IPConfig.IP+'/'+this.Global.aport2 + "/data_report/exportCbxx";
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportCwxx";
+        } else if (this.dc == 1){
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportCbxx";
+        }else if (this.dc == 2){
+          url = window.IPConfig.IP + '/' + this.Global.aport2 + "/data_report/exportXtcbxx";
         }
-        if(this.bglevel!=''){
-          ll=this.bglevel;
+        if (this.bglevel != '') {
+          ll = this.bglevel;
         }
 
-        if(this.dcdw=="合计"){
-            dw=this.dcdw;
-          if(this.level=="2"){
-            ll=1;
-            dw=this.dw;
+        if (this.dcdw == "合计" ) {
+            if(this.level!='1')
+             {dw = this.dwlg;}
+          if (this.level == "2") {
+            ll = 1;
+            dw = this.dw;
           }
-          if(this.bglevel!="" && this.level!=""){
-            ll=parseInt(this.bglevel)+parseInt(this.level);
+          if (this.bglevel != "" && this.level != "") {
+            ll = parseInt(this.bglevel) + parseInt(this.level);
 
-           }
-          if(this.dclevel=="2"){
-           ll=parseInt(this.dclevel)+parseInt(this.level);
           }
-          if(ll==5){
-            dw=this.dwlg;
+          if (this.dclevel == "2") {
+            ll = parseInt(this.dclevel) + parseInt(this.level);
+          }
+          if (ll == 5) {
+            dw = this.dwlg;
           }
 
         }
@@ -433,10 +489,10 @@ export default {
         "dw": dw,
         "beginTime": this.pd.beginTime,
         "endTime": this.pd.endTime,
-        "operatorId":this.$store.state.uid,
-        "operatorNm":this.$store.state.uname,
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname,
       };
-    console.log('this.p',p);
+      console.log('this.p', p);
       axios({
         method: 'post',
         url: url,
@@ -461,7 +517,6 @@ export default {
       document.body.appendChild(link)
       link.click()
     },
-
   }
 }
 </script>
@@ -514,10 +569,9 @@ a {
 .yy-input-text {
   text-align: left !important;
 }
-
 </style>
 <style>
-.customWidth{
-     width:80%;
- }
+.customWidth {
+  width: 80%;
+}
 </style>

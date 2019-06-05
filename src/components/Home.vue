@@ -76,7 +76,8 @@ export default {
             }
           }
         }
-        this.tabList.push(val)
+        this.tabList.push(val);
+        this.Global.tabLists=this.tabList;
         console.log("tabList",this.tabList)
       }
     }
@@ -102,6 +103,7 @@ export default {
     },
     // 关闭tab页面==========================
     close1(index, item) {
+console.log(index);
       this.tabList.splice(index, 1);
       if (index > 0) {
         this.tabClick(this.tabList[index - 1])
@@ -175,8 +177,8 @@ export default {
   /* overflow: inherit !important; */
 }
 .tab-content{
-  padding: 15px;
-  min-height: 675px;
+  /* padding: 15px; */
+  min-height: 690px;
   overflow: inherit !important;
   background: #dee8f2 url('../assets/img/bbg.png') no-repeat center;
 }

@@ -24,7 +24,7 @@
                           v-for="item in $store.state.gjdq"
                           :key="item.dm"
                           :label="item.dm+' - '+item.mc"
-                          :value="item.mc">
+                          :value="item.dm">
                         </el-option>
                       </el-select>
                     </el-col>
@@ -162,7 +162,7 @@
               </el-row>
              </el-col>
                 <el-col :span="2" class="down-btn-area">
-                  <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
+                  <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
                 </el-col>
               </el-row>
@@ -193,40 +193,7 @@
                ref="multipleTable"
                :data="tableData"
                border
-               style="width: 100%"
-               @selection-change="handleSelectionChange">
-               <!-- <el-table-column
-                 type="selection"
-                 width="55">
-               </el-table-column> -->
-               <!-- <el-table-column
-                 prop="date"
-                 label="国家地区">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="外国人和四种人分布">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="签证(注)种类">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="停留事由">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="十国人员">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="住房类型">
-               </el-table-column>
-               <el-table-column
-                 prop="address"
-                 label="统计数量">
-               </el-table-column> -->
+               style="width: 100%">
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -264,6 +231,7 @@
             <el-pagination
               background
               @current-change="handleCurrentChange"
+              :current-page:sync="CurrentPage"
               :page-size="pageSize"
               layout="prev, pager, next"
               :total="TotalResult">
@@ -276,8 +244,7 @@
                ref="multipleTable"
                :data="tableData"
                border
-               style="width: 100%"
-               @selection-change="handleSelectionChange">
+               style="width: 100%">
                <el-table-column
                  prop="ZWXM"
                  label="中文姓名">
@@ -345,6 +312,7 @@
             <el-pagination
               background
               @current-change="handleCurrentChange"
+              :current-page:sync="CurrentPage"
               :page-size="pageSize"
               layout="prev, pager, next"
               :total="TotalResult">
@@ -628,7 +596,7 @@
           pd0:{},
           form:{},
           falg:false,
-          disa:true,
+          disa:false,
         }
       },
       mounted() {
@@ -749,8 +717,8 @@
               if(r.data.isFenLei=="true"){
 
                 this.falg=true;
-    console.log('this.tableData[0]',this.tableData[0]);
-    let arr=this.tableData[0];
+                console.log('this.tableData[0]',this.tableData[0]);
+                let arr=this.tableData[0];
 
                 let itemKey = Object.keys(arr);
                 let res = itemKey.filter(function(item,index,array){

@@ -1,89 +1,81 @@
 <template lang="html">
   <!-- 留學生信息管理預警详情 -->
-  <div class="yymain">
+  <div class="yymain tshu">
     <div class="yycontent">
       <div class="mb-15">
         <div class="yylbt mb-15">基本信息</div>
         <el-row type="flex" class="yyf">
           <el-col :span="24" class="stu-left">
-            <el-row :gutter="4">
-              <el-col :span="6" class="stu-col-row2">
+            <el-row type="flex" class="stu-row">
+              <el-col :span="6">
                 <span>姓名：</span>
-                   {{baseData.ZWXM}}
+                <label v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
+                <label v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
+                <label v-else>{{baseData.YWXM}}</label>
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>性别：</span>
-                   {{baseData.XB}}
+                   {{baseData.XB_DESC}}
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>国家/地区：</span>
-                   {{baseData.GJDQ}}
+                   {{baseData.GJDQ_DESC}}
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>证件种类：</span>
-                   {{baseDatazj.ZJZL}}
+                   {{baseDatazj.ZJZL_DESC}}
               </el-col>
                 </el-row>
             <el-row  :gutter="4">
               <el-col :span="6" class="stu-col-row2">
                 <span >证件有效期：</span>
-                   {{baseDatazj.ZJYXQ}}
+                   {{baseData.ZJYXQ}}
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>证件号码：</span>
-                   {{baseDatazj.ZJHM}}
+                   {{baseData.ZJHM}}
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>签证种类：</span>
-                   {{baseDataqz.QZZL}}
+                   {{baseData.QZZL_DESC}}
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>签证号码：</span>
-                   {{baseDataqz.QZHM}}
+                   {{baseData.QZHM}}
               </el-col>
 
             </el-row>
             <el-row  :gutter="4">
               <el-col :span="6" class="stu-col-row2">
                 <span>预警时间：</span>
-                  {{baseDatayj.BJSJ}}
+                  {{baseData.BJSJ}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
-                <span></span>
-              </el-col>
-              <el-col :span="6" class="stu-col-row2">
-                <span></span>
-              </el-col>
-              <el-col :span="6" class="stu-col-row2">
-                <span></span>
-              </el-col>
+
             </el-row>
           </el-col>
           <!-- <el-col :span="4" class="stu-right">
             <el-button type="primary" size="small" @click="$router.push({name:'StuBaseInfo',query:{id:'11',AlarmType:'11'}})">详情</el-button>
           </el-col> -->
         </el-row>
+
       </div>
+       <div class="yylbt yt-16 mb-15">预警原因 <span class="yyf ycolor">{{baseData.ZBXDATADESC}}</span></div>
       <!--yjType 1.外国人visa  2.持短期签证  4.违临预判  5.临住布控-->
       <!-- <div class="yylbt yt-16">预警原因 <span class="yyf ycolor">出入境过多，签证过期</span></div> -->
       <!-- 1  签证信息详情  2 出入境信息   3 境外人员住宿登记信息  4 境外人员常住信息-->
       <div class="mb-15" v-if="yjType==1||yjType==2||yjType==5">
-        <div class="yylbt mb-15">签证信息</div>
+        <div class="stru-lal">签证信息</div>
         <el-table
            :data="tableData1"
            border
            style="width: 100%" class="stu-table"
            >
-           <!-- <el-table-column
-             prop="ZJZL"
-             label="证件种类">
-           </el-table-column> -->
            <el-table-column
              prop="ZJHM"
              label="证件号码">
            </el-table-column>
            <el-table-column
-             prop="QZZL"
+             prop="QZZL_DESC"
              label="签证种类">
            </el-table-column>
            <el-table-column
@@ -95,7 +87,7 @@
              label="签证有效期至">
            </el-table-column>
            <el-table-column
-             prop="QFD"
+             prop="QFD_DESC"
              label="签发地">
            </el-table-column>
            <el-table-column
@@ -105,10 +97,38 @@
              </template>
            </el-table-column>
          </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult1}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult1/pageSize1)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange1"
+              :page-size="pageSize1"
+              layout="prev, pager, next"
+              :total="TotalResult1">
+            </el-pagination>
+          </div>
       </div>
-
       <div class="mb-15" v-if="yjType==2||yjType==4||yjType==5">
-        <div class="yylbt mb-15">出入境信息</div>
+        <div class="stru-lal">出入境信息</div>
         <el-table
              :data="tableData2"
              border
@@ -118,11 +138,11 @@
                label="出入境日期">
              </el-table-column>
              <el-table-column
-               prop="CRJBS"
+               prop="CRJBSMC"
                label="出入境状态">
              </el-table-column>
              <el-table-column
-               prop="IOPORT"
+               prop="CRKAMC"
                label="出入境口岸">
              </el-table-column>
              <el-table-column
@@ -132,9 +152,38 @@
                </template>
              </el-table-column>
          </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult2}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult2/pageSize2)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange2"
+              :page-size="pageSize2"
+              layout="prev, pager, next"
+              :total="TotalResult2">
+            </el-pagination>
+          </div>
       </div>
-      <div class="mb-15" v-if="yjType==1||yjType==4||yjType==5">
-        <div class="yylbt mb-15">境外人员住宿登记信息</div>
+      <div class="mb-15" v-if="yjType==1||yjType==4||yjType==5||yjType==2">
+        <div class="stru-lal">临住信息</div>
         <el-table
              :data="tableData3"
              border
@@ -152,11 +201,11 @@
                label="拟离开时间">
              </el-table-column>
              <el-table-column
-               prop="ZFZL"
+               prop="ZFZL_DESC"
                label="住宿类型">
              </el-table-column>
              <el-table-column
-               prop="DDRQ"
+               prop="DJDWMC"
                label="登记单位">
              </el-table-column>
              <el-table-column
@@ -166,9 +215,38 @@
                </template>
              </el-table-column>
          </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult3}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult3/pageSize3)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange3"
+              :page-size="pageSize3"
+              layout="prev, pager, next"
+              :total="TotalResult3">
+            </el-pagination>
+          </div>
       </div>
       <div class="mb-15" v-if="yjType==1">
-        <div class="yylbt mb-15">境外人员常住信息</div>
+        <div class="stru-lal">常住信息</div>
         <el-table
              :data="tableData4"
              border
@@ -196,9 +274,38 @@
                </template>
              </el-table-column>
          </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult4}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult4/pageSize4)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange4"
+              :page-size="pageSize4"
+              layout="prev, pager, next"
+              :total="TotalResult4">
+            </el-pagination>
+          </div>
       </div>
-      <div class="mb-15" v-if="yjType==2">
-        <div class="yylbt mb-15">非法就业信息</div>
+      <div class="mb-15" v-if="yjType==10">
+        <div class="stru-lal">非法就业信息</div>
         <el-table
              :data="tableData5"
              border
@@ -226,77 +333,42 @@
                </template>
              </el-table-column>
          </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult5}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult5/pageSize5)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange1"
+              :page-size="pageSize5"
+              layout="prev, pager, next"
+              :total="TotalResult5">
+            </el-pagination>
+          </div>
       </div>
       <div class="mb-15" v-if="yjType==2||yjType==4||yjType==5">
-        <div class="yylbt mb-15">交通信息</div>
-        <div class="stru-lal">
-          高速公路出口信息
-        </div>
-        <el-table
-             :data="tableData64"
-             border
-             style="width: 100%" class="stu-table">
-             <el-table-column
-               prop="EXITSTATION"
-               label="出口站编号">
-             </el-table-column>
-             <el-table-column
-               prop="EXITTIME"
-               label="出口日期及时间">
-             </el-table-column>
-             <el-table-column
-               prop="VEHICLECLASS"
-               label="车型">
-             </el-table-column>
-             <el-table-column
-               prop="VEHICLEKIND"
-               label="车种">
-             </el-table-column>
-             <el-table-column
-               prop="AUTOLICENSE"
-               label="牌照">
-             </el-table-column>
-             <!-- <el-table-column
-               label="操作" width="80">
-               <template slot-scope="scope">
-               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
-               </template>
-             </el-table-column> -->
-         </el-table>
-        <div class="stru-lal">
-         高速公路入口信息
-        </div>
-        <el-table
-           :data="tableData63"
-           border
-           style="width: 100%" class="stu-table">
-           <el-table-column
-             prop="ENTRYSTATION"
-             label="入口站编号">
-           </el-table-column>
-           <el-table-column
-             prop="ENTRYTIME"
-             label="入口日期及时间">
-           </el-table-column>
-           <el-table-column
-             prop="VEHICLECLASS"
-             label="车型">
-           </el-table-column>
-           <el-table-column
-             prop="VEHICLEKIND"
-             label="车种">
-           </el-table-column>
-           <el-table-column
-             prop="AUTOLICENSE"
-             label="牌照">
-           </el-table-column>
-           <!-- <el-table-column
-             label="操作" width="80">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
-             </template>
-           </el-table-column> -->
-        </el-table>
+      <el-collapse  accordion>
+       <el-collapse-item >
+         <template slot="title">
+          <div class="stru-lal">交通信息<span style="color:red;font-size:11px;"> ( 点击查看列表 )</span></div>
+         </template>
         <div class="stru-lal">
          民航进出港订票信息
         </div>
@@ -379,6 +451,75 @@
             </el-table-column> -->
         </el-table>
         <div class="stru-lal">
+          高速公路出口信息
+        </div>
+        <el-table
+             :data="tableData64"
+             border
+             style="width: 100%" class="stu-table">
+             <el-table-column
+               prop="EXITSTATION"
+               label="出口站编号">
+             </el-table-column>
+             <el-table-column
+               prop="EXITTIME"
+               label="出口日期及时间">
+             </el-table-column>
+             <el-table-column
+               prop="VEHICLECLASS"
+               label="车型">
+             </el-table-column>
+             <el-table-column
+               prop="VEHICLEKIND"
+               label="车种">
+             </el-table-column>
+             <el-table-column
+               prop="AUTOLICENSE"
+               label="牌照">
+             </el-table-column>
+             <!-- <el-table-column
+               label="操作" width="80">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
+               </template>
+             </el-table-column> -->
+         </el-table>
+        <div class="stru-lal">
+         高速公路入口信息
+        </div>
+        <el-table
+           :data="tableData63"
+           border
+           style="width: 100%" class="stu-table">
+           <el-table-column
+             prop="ENTRYSTATION"
+             label="入口站编号">
+           </el-table-column>
+           <el-table-column
+             prop="ENTRYTIME"
+             label="入口日期及时间">
+           </el-table-column>
+           <el-table-column
+             prop="VEHICLECLASS"
+             label="车型">
+           </el-table-column>
+           <el-table-column
+             prop="VEHICLEKIND"
+             label="车种">
+           </el-table-column>
+           <el-table-column
+             prop="AUTOLICENSE"
+             label="牌照">
+           </el-table-column>
+           <!-- <el-table-column
+             label="操作" width="80">
+             <template slot-scope="scope">
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
+             </template>
+           </el-table-column> -->
+        </el-table>
+
+        <div class="stru-lal">
          铁路订票信息
         </div>
         <el-table
@@ -412,6 +553,9 @@
               </template>
             </el-table-column> -->
         </el-table>
+
+      </el-collapse-item>
+    </el-collapse>
       </div>
     </div>
 
@@ -427,11 +571,11 @@
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
-        <el-button type="primary" class="mb-5" size="small" @click="">确定</el-button>
+        <el-button type="primary" class="mb-5" size="small" v-if="sshow" @click="chuli()">确定</el-button>
         <el-button type="warning" class="m0" size="small" @click="$router.go(-1)">返回</el-button>
       </el-col>
     </el-row>
-    <div class="">
+    <div class="czfont">
       处理人: {{$store.state.uname}}
     </div>
    </div>
@@ -440,7 +584,7 @@
    <!-- 签证信息 -->
      <el-dialog
              title="签证信息详情"
-             :visible.sync="QZDialogVisible">
+             :visible.sync="QZDialogVisible" width="900px">
              <el-form   ref="qzinfo">
                <el-row :gutter="2"  class="mb-6">
                    <el-col :span="12" class="input-item">
@@ -515,279 +659,26 @@
      </el-dialog>
 
 
-        <!-- 出入境信息 -->
-    <el-dialog
-                  title="出入境信息详情"
-                  :visible.sync="CRJDialogVisible">
-                  <el-form   ref="crjinfo">
-                    <el-row :gutter="2"  class="mb-6">
-                        <!-- <el-col :span="12" class="input-item">
-                         <span class="input-text">人员类别：</span>
-                         <span class="input-input detailinput">  {{crjinfo.PROTYPE}}</span>
-                        </el-col> -->
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">人员姓名：</span>
-                          <span class="input-input detailinput">  {{crjinfo.NAME}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">英文姓名：</span>
-                          <span class="input-input detailinput">  {{crjinfo.YWXM}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                         <span class="input-text">国家地区：</span>
-                         <span class="input-input detailinput">  {{crjinfo.GJHDQMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                         <span class="input-text">性别：</span>
-                         <span class="input-input detailinput">  {{crjinfo.XBMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出生日期：</span>
-                          <span class="input-input detailinput">  {{crjinfo.BIRTH}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">身份证号：</span>
-                          <span class="input-input detailinput">  {{crjinfo.SFZH}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">证件种类：</span>
-                          <span class="input-input detailinput">  {{crjinfo.ZJZLMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">证件号码：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CERTIFICATENO}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">签证类型：</span>
-                          <span class="input-input detailinput">  {{crjinfo.VISATYPE}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出入境日期：</span>
-                          <span class="input-input detailinput">  {{crjinfo.IOSTRING}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出入境时间：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CRJSJ}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出入口岸：</span>
-                          <span class="input-input detailinput">  {{crjinfo.IOPORT}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">检查员号：</span>
-                          <span class="input-input detailinput">  {{crjinfo.INSPECTORID}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">交通方式：</span>
-                          <span class="input-input detailinput">  {{crjinfo.JTFSMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">交通工具：</span>
-                          <span class="input-input detailinput">  {{crjinfo.TRAFFICTOOL}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">前往地：</span>
-                          <span class="input-input detailinput">  {{crjinfo.QWDMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">发证机关：</span>
-                          <span class="input-input detailinput">  {{crjinfo.GRANTCERTORG}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">发证日期：</span>
-                          <span class="input-input detailinput">  {{crjinfo.GRANTCERTSTRING}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出境理由：</span>
-                          <span class="input-input detailinput">  {{crjinfo.OUTREASON}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">通道号：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CHANNELNO}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">旅游团号：</span>
-                          <span class="input-input detailinput">  {{crjinfo.TOURGROUPNO}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">入库时间：</span>
-                          <span class="input-input detailinput">  {{crjinfo.INTIME}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">境内外标识：</span>
-                          <span class="input-input detailinput">  {{crjinfo.JNWBS}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出入口岸名称：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CRKAMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">出入境标识：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CRJBSMC}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">处理错误：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CLCW}}</span>
-                        </el-col>
-                        <el-col :span="12" class="input-item">
-                          <span class="input-text">处理时间：</span>
-                          <span class="input-input detailinput">  {{crjinfo.CLSJ}}</span>
-                        </el-col>
-                    </el-row>
-                  </el-form>
-                  <div slot="footer" class="dialog-footer">
-                    <el-button @click="CRJDialogVisible = false" size="small">取 消</el-button>
-                  </div>
+
+
+    <el-dialog title="出入境信息详情" :visible.sync="CRJDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+                <CRJXX :type="type" :xid="xid"></CRJXX>
+                 <div slot="footer" class="dialog-footer">
+                   <el-button @click="CRJDialogVisible = false" size="small">取 消</el-button>
+                 </div>
     </el-dialog>
 
-    <!-- 境外人员住宿登记信息 -->
-      <el-dialog
-              title="境外人员住宿登记信息详情"
-              :visible.sync="LZDialogVisible">
-              <el-form   ref="lzinfo">
-                <el-row :gutter="2"  class="mb-6">
-                    <el-col :span="12" class="input-item">
-                     <span class="input-text">英文名：</span>
-                     <span class="input-input detailinput">  {{lzinfo.YWM}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">英文姓：</span>
-                      <span class="input-input detailinput">  {{lzinfo.YWX}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                     <span class="input-text">英文姓名：</span>
-                     <span class="input-input detailinput">  {{lzinfo.YWXM}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                     <span class="input-text">出生日期：</span>
-                     <span class="input-input detailinput">  {{lzinfo.CSRQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">中文姓名：</span>
-                      <span class="input-input detailinput">  {{lzinfo.ZWXM}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">性别：</span>
-                      <span class="input-input detailinput">  {{lzinfo.XB}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">证件种类：</span>
-                      <span class="input-input detailinput">  {{lzinfo.ZJZL}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">证件号码：</span>
-                      <span class="input-input detailinput">  {{lzinfo.ZJHM}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">证件有效期至：</span>
-                      <span class="input-input detailinput">  {{lzinfo.YXQZ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">停留有效期：</span>
-                      <span class="input-input detailinput">  {{lzinfo.TLYXQZ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">国家地区：</span>
-                      <span class="input-input detailinput">  {{lzinfo.GJDQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">身份证号：</span>
-                      <span class="input-input detailinput">  {{lzinfo.FZSFZH}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">签证种类：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QZZL}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">签证(注)号码：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QZHM}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">签证(注)签发日期：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QFRQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">签发地：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QFD}}</span>
-                    </el-col>
+    <!-- 临住信息详情 -->
 
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">入境日期：</span>
-                      <span class="input-input detailinput">  {{lzinfo.RJRQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">入境口岸：</span>
-                      <span class="input-input detailinput">  {{lzinfo.RJKA}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">标准化地址名称：</span>
-                      <span class="input-input detailinput">  {{lzinfo.BZHDZMC}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">房号：</span>
-                      <span class="input-input detailinput">  {{lzinfo.FH}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">留宿单位(户主)姓名：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LSDW}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">留宿单位(户主)电话：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LSDWDH}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">与境外人员关系：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QSGX}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">留宿单位(户主)地址：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LSDWDZ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">何处来：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LYD}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">前往地区：</span>
-                      <span class="input-input detailinput">  {{lzinfo.QWD}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">拟离开日期：</span>
-                      <span class="input-input detailinput">  {{lzinfo.NLKRQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">录入人：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LRR}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">录入日期：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LRRQ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">录入单位：</span>
-                      <span class="input-input detailinput">  {{lzinfo.LRDW}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">修改人：</span>
-                      <span class="input-input detailinput">  {{lzinfo.GXR}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">修改时间：</span>
-                      <span class="input-input detailinput">  {{lzinfo.GXSJ}}</span>
-                    </el-col>
-                    <el-col :span="12" class="input-item">
-                      <span class="input-text">修改单位：</span>
-                      <span class="input-input detailinput">  {{lzinfo.GXDW}}</span>
-                    </el-col>
-                </el-row>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="LZDialogVisible = false" size="small">取 消</el-button>
-              </div>
+      <el-dialog title="临住信息详情" :visible.sync="LZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+        <LZXX :type="type" :xid="xid"></LZXX>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="LZDialogVisible = false" size="small">取 消</el-button>
+        </div>
       </el-dialog>
 
       <!-- 境外人员常住信息 -->
-        <el-dialog
+        <!-- <el-dialog
                 title="境外人员常住信息详情"
                 :visible.sync="CZDialogVisible">
                 <el-form   ref="czinfo">
@@ -930,13 +821,22 @@
                 <div slot="footer" class="dialog-footer">
                   <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
                 </div>
+        </el-dialog> -->
+        <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+          <CZXX :type="type" :xid="xid"></CZXX>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
+          </div>
         </el-dialog>
-
   </div>
 
 </template>
 <script>
+import LZXX from '../common/lzxx_xq'
+import CZXX from '../common/czxx_xq'
+import CRJXX from '../common/crjxx_xq'
 export default {
+  components:{LZXX,CZXX,CRJXX},
   data() {
     return {
       yjType: 0,
@@ -955,7 +855,10 @@ export default {
       tableData62:[],
       tableData63:[],
       tableData64:[],
+      type:1,
+      xid:'',
       pd: {},
+      pcl:{},
       cdt: {},
       QZDialogVisible: false,
       qzinfo: {},
@@ -965,28 +868,146 @@ export default {
       lzinfo: {},
       CZDialogVisible: false,
       czinfo: {},
-      yjid:'',
+      row:{},
       pd:{},
+      type:1,
+      xid:'',
+      CurrentPage1: 1,
+      pageSize1: 3,
+      TotalResult1: 0,
+
+      CurrentPage2: 1,
+      pageSize2: 3,
+      TotalResult2: 0,
+
+      CurrentPage3: 1,
+      pageSize3: 3,
+      TotalResult3: 0,
+
+      CurrentPage4: 1,
+      pageSize4: 3,
+      TotalResult4: 0,
+
+      CurrentPage5: 1,
+      pageSize5: 3,
+      TotalResult5: 0,
+
+      options: [{
+          value: 3,
+          label: "3"
+        },
+        {
+          value: 5,
+          label: "5"
+        },
+        {
+          value: 7,
+          label: "7"
+        }
+      ],
+      url0:this.Global.aport4 + '/warningInfoController/getEntityByYJID',//人员基本信息
+      url1:this.Global.aport4 + '/eS_RY_JWRYQZController/getResultListByParams',//签证信息
+      url2:this.Global.aport4 + '/eS_CRJJLBController/getResultListByParams',//出入境信息
+      url3:this.Global.aport4 + '/eS_LZ_LZXXController/getResultListByParams',////临住信息
+      url4:this.Global.aport3 + '/ryhx/getczryjbxx',//常住信息
+      url5:this.Global.aport4 + '/illegalEmploymentWarningController/getInfoByRybh',//非法就业
+
+      url61:this.Global.aport4 + '/eS_JT_MH_JGDPXX_NController/getResultListByParams',//民航进出港订票信息
+      url62:this.Global.aport4 + '/eS_JT_MH_JGXX_NController/getResultListByParams',//民航进出港信息
+      url63:this.Global.aport4 + '/eS_JT_TL_DPXXController/getResultListByParams',//铁路订票信息
+      url64:this.Global.aport4 + '/eS_ST_GSGL_CKXXController/getResultListByParams',//高速公路出口信息
+      url65:this.Global.aport4 + '/eS_ST_GSGL_RKXXController/getResultListByParams',//高速公路入口信息
+
+      url10:this.Global.aport4 + '/illegalEmploymentWarningController/getYuJingXinXiByRybh',//预警信息
+      sshow:true,
     }
   },
   activated() {
     this.yjType = this.$route.query.yjType;
-    this.yjid = this.$route.query.rybh;
-    console.log('this.yjid',this.yjid);
+    this.row = this.$route.query.row;
+    if(this.row.SHZT=="1"){
+      this.sshow=false;
+    }
+        this.getList(1,10,this.url0, 0); //人员基本信息
+      if(this.yjType=="1" || this.yjType=="2" || this.yjType=="5"){
+        this.getList(this.CurrentPage1,this.pageSize1,this.url1, 1); //签证信息
+      }
 
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getPersonInfoByRybh', 0); //人员基本信息
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getYuJingXinXiByRybh', 10); //预警信息
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getQianZhengInfoByRybh', 1); //签证信息
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getChuRuJingListByRybh', 2); //出入境信息
-    this.getList(this.Global.aport4 + '/visaWarningController/getLinZhuListByRybh', 3); //临住信息
-    this.getList(this.Global.aport4 + '/visaWarningController/getChangZhuListByRybh', 4); //常住信息
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getInfoByRybh', 5); //非法就业
-    this.getList(this.Global.aport4 + '/illegalEmploymentWarningController/getJiaoTongListByRybh', 6); //交通信息
+      if(this.yjType=="1" || this.yjType=="2" || this.yjType=="4" || this.yjType=="5"){
+      this.getList(this.CurrentPage2,this.pageSize2,this.url2, 2); //出入境信息
+      this.getList(1,10,this.url61, 61); //交通信息
+      this.getList(1,10,this.url62, 62); //交通信息
+      this.getList(1,10,this.url63, 63); //交通信息
+      this.getList(1,10,this.url64, 64); //交通信息
+      this.getList(1,10,this.url65, 65); //交通信息
+      }
+
+      if(this.yjType=="1" || this.yjType=="2" || this.yjType=="4" || this.yjType=="5"){
+      this.getList(this.CurrentPage3,this.pageSize3,this.url3, 3); //临住信息
+      }
+      if(this.yjType=="1"){
+          this.getList(this.CurrentPage4,this.pageSize4,this.url4, 4); //常住信息
+      }
+      if(this.yjType=="10"){
+            // this.getList(this.url10, 10); //预警信息
+            this.getList(this.CurrentPage5,this.pageSize5,this.url5, 5); //非法就业
+      }
+
   },
   mounted() {
 
   },
   methods: {
+    pageSizeChange1(val) {
+      this.pageSize1=val;
+      this.getList(this.CurrentPage1,this.pageSize1,this.url1, 1);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange1(val) {
+      this.CurrentPage1=val;
+      this.getList(this.CurrentPage1,this.pageSize1,this.url1, 1);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange2(val) {
+      this.pageSize2=val;
+      this.getList(this.CurrentPage2,this.pageSize2,this.url2, 2);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange2(val) {
+      this.CurrentPage2=val;
+      this.getList(this.CurrentPage2,this.pageSize2,this.url2, 2);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange3(val) {
+      this.pageSize3=val;
+      this.getList(this.CurrentPage3,this.pageSize3,this.url3, 3);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange3(val) {
+      this.CurrentPage3=val;
+      this.getList(this.CurrentPage3,this.pageSize3,this.url3, 3);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange4(val) {
+      this.pageSize4=val;
+      this.getList(this.CurrentPage4,this.pageSize4,this.url4, 4);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange4(val) {
+      this.CurrentPage4=val;
+      this.getList(this.CurrentPage4,this.pageSize4,this.url4, 4);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange5(val) {
+      this.pageSize5=val;
+      this.getList(this.CurrentPage5,this.pageSize5,this.url5, 5);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange5(val) {
+      this.CurrentPage5=val;
+      this.getList(this.CurrentPage5,this.pageSize5,this.url5, 5);
+      console.log(`当前页: ${val}`);
+    },
     openTc(title, type, id) {
       this.xtitle = title;
       this.xtype = type;
@@ -994,79 +1015,145 @@ export default {
       this.detailsDialogVisible = true;
       console.log(title, type)
     },
-    getList(url, type) {
-      this.cdt.rybh = this.yjid;
+    getList(currentPage,showCount, url, type) {
+
+      if(type==0){
+        console.log(this.row.YJID);
+        this.cdt={};
+        this.cdt.YJID=this.row.YJID;
+      }else {
+        this.cdt={};
+        this.cdt.RYBH = this.row.RYBH;
+      }
+
       let p = {
         "pd": this.cdt
       };
+
+      switch (type) {
+        case 1:
+        case 4:
+          p={
+            "currentPage": currentPage,
+            "showCount": showCount,
+            "pd": this.cdt
+          };
+          break;
+        case 2:
+            p={
+              "currentPage": currentPage,
+              "showCount": showCount,
+              "pd": this.cdt,
+              "orderBy":"IOSTRING",
+              "orderType":"DESC"
+            };
+            break;
+        case 3:
+          p={
+            "currentPage": currentPage,
+            "showCount": showCount,
+            "pd": this.cdt,
+            "orderBy":"ZSRQ",
+            "orderType":"DESC"
+          };
+          break;
+        default:
+
+      }
+
       this.$api.post(url, p,
         r => {
           if (type == 0) {
-            this.baseData = r.data.eS_RY_RYXXEntity
-            this.baseDatazj = r.data.eS_RY_JWRYZJEntity
-            this.baseDataqz = r.data.eS_RY_JWRYQZEntity
+            this.baseData = r.data;
           } else if (type == 10) {
             this.baseDatayj = r.data.eS_YJ_BJXXBEntity
           } else if (type == 1) {
-
-            this.tableData1 = r.data
+            this.tableData1 = r.data.resultList;
+            this.TotalResult1=r.data.totalResult;
           } else if (type == 2) {
-            this.tableData2 = r.data
+            this.tableData2 = r.data.resultList;
+            this.TotalResult2=r.data.totalResult;
           } else if (type == 3) {
-            this.tableData3 = r.data
+            this.tableData3= r.data.resultList;
+            this.TotalResult3=r.data.totalResult;
           } else if (type == 4) {
-            this.tableData4 = r.data
+            this.tableData4 = r.data.resultList;
+            this.TotalResult4=r.data.totalResult;
           } else if (type == 5) {
             this.tableData5 = r.data
-          } else if (type == 6) {
-            this.tableData60 = r.data.eS_JT_MH_JGDPXX_NList//民航进出港订票信息
-            this.tableData61 = r.data.eS_JT_MH_JGXX_NList//民航进出港信息
-            this.tableData62 = r.data.eS_JT_TL_DPXXList//铁路订票信息
+          } else if (type == 61) {
+            this.tableData60=r.data.resultList;
+          }
+          else if (type == 62) {
+           this.tableData61=r.data.resultList;
+          }
+          else if (type == 63) {
+           this.tableData62=r.data.resultList;
+          }
+          else if (type == 64) {
+             this.tableData64=r.data.resultList;
+          }
+          else if (type == 65) {
+           this.tableData63=r.data.resultList;
           }
         })
     },
     getDetails(n, t) {
       switch (t) {
         case 1:
+          this.xid=n.RGUID;
           this.QZDialogVisible = true;
           this.qzinfo = n;
           break;
         case 2:
+
+          this.xid=n.RGUID;
+          console.log("nnn---",this.type);
           this.CRJDialogVisible = true;
-          this.crjinfo = n;
           break;
         case 3:
+          this.xid=n.DTID;
+          this.type=0;
           this.LZDialogVisible = true;
-          this.lzinfo = n;
           break;
         case 4:
+          this.xid=n.RGUID;
           this.CZDialogVisible = true;
           this.czinfo = n;
           break;
         default:
-
       }
     },
     chuli() {
+      console.log(this.pd.CLJG);
+      if(this.pd.CLJG=="" || this.pd.CLJG==undefined)
+      {
+        this.$alert('甄别结果不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        return;
+      }
+      this.pcl.YJID=this.row.YJID;
+      this.pcl.CLJG=this.pd.CLJG;
+      this.pcl.CLDW=this.$store.state.orgid;
+      this.pcl.CLR=this.withname;
+      this.pcl.CLRID=this.$store.state.uid;
       let p = {
-        "YJID": this.yjid,
-        "CLJG": this.pd.CLJG,
-        "CLDW": this.$store.state.org,
-        "CLR": this.$store.state.uname,
-        "CLRID":this.$store.state.uid
+        "pd":this.pcl
       };
-      this.$api.post('/warningInfoController/saveCLJG', p,
+      this.$api.post(this.Global.aport4+'/warningInfoController/saveCLJG', p,
         r => {
           if(r.success){
           this.$message({
             message: '处理成功！',
             type: 'success'
-          });
-        }else {
-              this.$message.error('处理失败了');
-        }
+           });
+          }else {
+            this.$message.error('处理失败了');
+          }
         })
-    }
+    },
+
   }
 
 }

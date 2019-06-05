@@ -1,4 +1,32 @@
 <template lang="html">
+    <!-- 难民 -->
+</template>
+
+<script>
+export default {
+  data(){
+    return {}
+
+},
+activated(){
+     this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
+},
+  mounted(){
+
+
+  },
+
+}
+</script>
+
+<style scoped>
+</style>
+
+
+
+
+
+<!-- <template lang="html">
   <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
@@ -170,7 +198,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post('/warningInfoController/getInfoListByMxLx', p,
+      this.$api.post(this.Global.aport4+'/eS_NM_JBXXController/getInfoListByMxLx', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -183,4 +211,4 @@ export default {
 
 <style scoped>
 
-</style>
+</style> -->

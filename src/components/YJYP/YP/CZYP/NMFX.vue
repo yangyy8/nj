@@ -277,23 +277,7 @@ export default {
         label: "30"
       }
     ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: 'XXXXX'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
+      tableData: [],
 
     }
   },

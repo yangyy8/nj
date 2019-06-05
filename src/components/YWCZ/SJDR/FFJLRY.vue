@@ -163,6 +163,7 @@
                 :file-list="fileList"
                 multiple
                 :on-success="upSuccess"
+                :data="uploadIconData"
                 :before-upload="beforeAvatarUpload"
                 :limit="1"
                 :auto-upload="false">
@@ -516,6 +517,7 @@
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
+                   :data="uploadIconData"
                    :before-upload="beforeAvatarUpload"
                    :limit="1"
                    :auto-upload="false">
@@ -835,6 +837,7 @@
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
+                   :data="uploadIconData"
                    :before-upload="beforeAvatarUpload"
                    :limit="1"
                    :auto-upload="false">
@@ -1206,6 +1209,7 @@
                    :file-list="fileList"
                    multiple
                    :on-success="upSuccess"
+                   :data="uploadIconData"
                    :before-upload="beforeAvatarUpload"
                    :limit="1"
                    :auto-upload="false">
@@ -1472,6 +1476,7 @@ export default {
       pageSize3: 10,
       TotalResult3: 0,
       pd: {},
+      uploadIconData:{token:this.$store.state.token},
       nation: [],
       fileList: [],
       actions: "",
@@ -1580,7 +1585,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token,
       };
       this.$api.post(this.Global.aport3 + '/drffjlyndjlxk/getFFJL_YNDJLXKPage', p,
         r => {
@@ -1596,7 +1602,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token,
       };
       this.$api.post(this.Global.aport3 + '/drffjlyrjkawzswjlxk/getFFJL_YRJKAWZSWJLXKPage', p,
         r => {
@@ -1608,7 +1615,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token,
       };
       this.$api.post(this.Global.aport3 + '/drffjlyzswjlxk/getFFJL_YZSWJLXKPage', p,
         r => {
@@ -1620,7 +1628,8 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token,
       };
       this.$api.post(this.Global.aport3 + '/drffjlyqynrcjtxz/getFFJL_YQYNRCJTXZPage', p,
         r => {
@@ -1713,7 +1722,8 @@ export default {
     },
     deletes(i, t) {
       let p = {
-        "RYBH": i.RYBH
+        "RYBH": i.RYBH,
+        "token":this.$store.state.token,
       };
       var url = this.Global.aport3 + '/drffjlyndjlxk/deleteFFJL_YNDJLXKById';
       if (t == 1) {
@@ -1783,11 +1793,12 @@ export default {
     beforeAvatarUpload(file) {
       console.log(file.type)
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=file.type==='application/vnd.ms-excel';
 
-      if (!isEXL) {
-        this.$message.error('上传文件只能是 xlsl 格式!');
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
       }
-      return isEXL;
+      return isEXL?isEXL:isExls;
     },
     showUpload(t) {
       this.uploadDialogVisible = true;
@@ -1800,7 +1811,8 @@ export default {
       }
 
       this.typemd = "";
-      this.actions = this.Global.aport3;
+        // this.actions = "http://10.0.9.51:9439";
+      this.actions = window.IPConfig.IP+this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();

@@ -1,5 +1,29 @@
 <template lang="html">
-  <!-- 临住布控预警 -->
+    <!-- 临住布控预警 -->
+</template>
+
+<script>
+export default {
+  data(){
+    return {}
+
+},
+activated(){
+     this.$router.push({name:'ZBKYJ_X',query:{type:5}});
+},
+  mounted(){
+
+
+  },
+
+}
+</script>
+
+
+
+
+<!-- <template lang="html">
+
   <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
@@ -175,7 +199,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      this.pd.MXLX='LZ_BKYJ';
+      this.pd.MXLX='BKYJ';
 
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
@@ -193,7 +217,4 @@ export default {
     },
   }
 }
-</script>
-<style scoped>
-
-</style>
+</script> -->
