@@ -79,7 +79,7 @@
 
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="3" @visible-change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input"  style="width:58%!important; margin-right:10px;">
+                    <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="3" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input"  style="width:58%!important; margin-right:10px;">
                       <el-option
                         v-for="item in fjlist"
                         :key="item.dm"
@@ -87,19 +87,21 @@
                         :value="item.dm">
                       </el-option>
                     </el-select>
-                    <el-radio v-model="pd.LRDW_BH_Like" label="0" @change="getRadio(0)" style="width:50px;">包含</el-radio>
+                    <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    <!-- <el-radio v-model="pd.LRDW_BH_Like" label="0" @change="getRadio(0)" style="width:50px;">包含</el-radio> -->
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">派出所：</span>
                     <el-select v-model="pd.LRDW" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" style="width:58%!important; margin-right:10px;">
                       <el-option
-                        v-for="item in $store.state.pcs"
+                        v-for="item in pcslist"
                         :key="item.dm"
                         :label="item.mc"
                         :value="item.dm">
                       </el-option>
                     </el-select>
-                      <el-radio v-model="pd.LRDW_BH" label="0" @change="getRadio(1)" style="width:50px;">包含</el-radio>
+                    <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                      <!-- <el-radio v-model="pd.LRDW_BH" label="0" @change="getRadio(1)" style="width:50px;">包含</el-radio> -->
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="24"  class="input-item">
                     <span class="input-text" style="width:11%!important">旅馆名称：</span>
@@ -228,12 +230,16 @@ import echarts from 'echarts'
       pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201'},
       pd0:{},
       fjlist:[],
+      pcslist:[],
+      checkedfj:true,
+      checkedpcs:true,
       tableData:[],
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
       options:this.pl.options,
       dataname:[],
+      rr:0,
     }
   },
   mounted(){
@@ -273,18 +279,33 @@ import echarts from 'echarts'
           this.fjlist = r.data.SSFJ;
         })
     },
-    getRadio(n){
-      if(n==0){
- 
+    getRadiofj(n){
+      if(n==true){
+        this.pd.LRDW_BH_Like='0'
       }
-      else if (n==1) {
+      else if (n==false) {
+        this.pd.LRDW_BH_Like='1'
+      }
+    },
+    getRadiopcs(n){
+      if(n==true){
+        this.pd.LRDW_BH='0'
+      }else if(n==false){
+        this.pd.LRDW_BH='1'
+      }
+    },
+    getPCS(arr){
+      let p={
+        "fjdmList":arr
+      }
+      this.$api.post(this.Global.aport3+'/data_report/selectPcsDm',p,
+       r=>{
+         if(r.success){
+           this.pcslist = r.data.PCS;
+         }
+       })
+    },
 
-      }
-    },
-    getPCS(arr)
-    {
-      console.log('----',arr);
-    },
     getList(){
       this.pd.LRRQ_DateRange.begin=this.pd0.begin;
       this.pd.LRRQ_DateRange.end=this.pd0.end;
@@ -356,15 +377,14 @@ import echarts from 'echarts'
           }
       ],
       series: [
-
-          {
-              name:'',
-              type:'line',
-              xAxisIndex: 1,
-              smooth: true,
-              data:count
-            //  data: [2.9, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-          },
+        {
+            name:'',
+            type:'line',
+            xAxisIndex: 1,
+            smooth: true,
+            data:count
+          //  data: [2.9, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+        },
       ]
            })
       },
