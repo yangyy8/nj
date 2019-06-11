@@ -2765,6 +2765,7 @@ export default {
   },
   activated(){
     this.row=this.$route.query.row;
+    console.log('this.row',this.row);
   },
   mounted() {
 

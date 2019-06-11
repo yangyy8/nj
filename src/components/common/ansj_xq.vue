@@ -688,7 +688,7 @@
                        label="中文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="XB"
+                       prop="XB_DESC"
                        label="性别">
                      </el-table-column>
                      <el-table-column
@@ -696,7 +696,7 @@
                        label="出生日期">
                      </el-table-column>
                      <el-table-column
-                       prop="GJDQ"
+                       prop="GJDQ_DESC"
                        label="国家/地区">
                      </el-table-column>
                      <el-table-column
@@ -773,7 +773,7 @@
                        label="中文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="XB"
+                       prop="XB_DESC"
                        label="性别">
                      </el-table-column>
                      <el-table-column
@@ -785,8 +785,8 @@
                        label="身份证号码">
                      </el-table-column>
                      <el-table-column
-                       prop="GJDQ"
-                       label="国家/地区">
+                       prop="GJDQ_DESC"
+                       label="国家地区">
                      </el-table-column>
                      <el-table-column
                        prop="ZJYXQZ"
@@ -1333,27 +1333,50 @@
 </template>
 <script scoped>
 export default {
-  data(){
-    return{
-      page:0,
-      aForm1:{},
-      aForm2:[],
-      aForm3:[],
-      aForm4:[],
-      aForm5:[],
-      aForm6:{},
-      asjbh:'',
-      pd:{},
+  name: 'ANSJ',
+  props: ['type', 'xid','dtid'],
+  data() {
+    return {
+      page: 0,
+      aForm1: {},
+      aForm2: [],
+      aForm3: [],
+      aForm4: [],
+      aForm5: [],
+      aForm6: {},
+      asjbh: '',
+      pd: {},
+      px:{},
+      pages: this.type,
+      id: this.xid,
+      did:this.dtid,
     }
   },
-activated(){
-  this.asjbh=this.$route.query.dtid;
-  this.getData(this.asjbh);
-},
-  mounted(){
+  activated() {
+    this.getData(this.id);
+  },
+  mounted() {
 
   },
-  methods:{
+  watch: {
+    type: function(val) {
+      this.pages = val;
+    },
+    xid: {
+      handler(val) {
+        this.id = val;
+        this.getData(val);
+      },
+      immediate: true
+    },
+    dtid: {
+      handler(val) {
+        this.did = val;
+      },
+      immediate: true
+    },
+  },
+  methods: {
     base() {
       this.page = 0;
     },
@@ -1373,22 +1396,55 @@ activated(){
       this.page = 5;
     },
 
-    getData(xid){
-      this.pd.ASJBH=xid;
+    getData(xid) {
+        this.pd.RGUID = xid;
+        this.px.DTID=this.did;
+
+
       let p = {
+        "pd": this.px
+      };
+      let pp={
         "pd": this.pd
       };
-      this.$api.post(this.Global.aport4+'/educationParController/getASJXXXQInfo', p,
+
+      //人员基本信息
+      this.$api.post(this.Global.aport4 + '/eS_AJ_JBXXController/getEntityByRGUID', pp,
         r => {
-          this.aForm1 = r.data.eS_AJ_JBXXEntity;
-          this.aForm2 = r.data.eS_AJ_RY_JBXXList;
-          this.aForm3 = r.data.eS_AJ_RY_XYRXXList;
-          this.aForm4 = r.data.eS_AJ_RY_ZJXXList;
-          this.aForm5 = r.data.eS_AJ_SADWList;
-          this.aForm6 = r.data.eS_AJ_CLJGEntity;
+          this.aForm1 = r.data;
         })
+      //涉案人员基本信息
+      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_JBXXController/getResultListByParams', p,
+        r => {
+          this.aForm2 = r.data.resultList;
+        })
+      //涉案人员嫌疑人信息
+      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_XYRXXController/getResultListByParams', p,
+        r => {
+          this.aForm3 = r.data.resultList;
+        })
+      //案件人员证件信息
+      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_ZJXXController/getResultListByParams', p,
+        r => {
+          this.aForm4 = r.data.resultList;
+        })
+      //案件涉案单位
+      this.$api.post(this.Global.aport4 + '/eS_AJ_SADWController/getResultListByParams', p,
+        r => {
+          this.aForm5 = r.data.resultList;
+        })
+        //处理结果
+        this.$api.post(this.Global.aport4 + '/eS_AJ_CLJGController/getEntityByDTID', p,
+          r => {
+            this.aForm6 = r.data;
+          })
+
     },
 
   },
 }
 </script>
+<style scoped>
+.input-text{width: 35%!important; text-align: left;}
+.input-input{width: 55%!important;}
+</style>

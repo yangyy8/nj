@@ -275,7 +275,7 @@ import echarts from 'echarts'
     },
     getRadio(n){
       if(n==0){
- 
+
       }
       else if (n==1) {
 
