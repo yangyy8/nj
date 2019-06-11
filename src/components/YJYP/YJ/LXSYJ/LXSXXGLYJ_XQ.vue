@@ -327,7 +327,135 @@
           </div>
 
         <div v-if='bkshow'>
-           <ANSJ :type="type" :xid="xid"></ANSJ>
+          <div class="stru-lal">案事件信息</div>
+          <el-table
+
+               :data="asjData"
+               border
+               style="width: 100%" class="stu-table"
+               >
+               <el-table-column
+                 prop="ASJBH"
+                 label="案事件编号">
+               </el-table-column>
+               <el-table-column
+                 prop="AJMC"
+                 label="案件名称">
+               </el-table-column>
+               <el-table-column
+                 prop="AJLB"
+                 label="案件类别">
+               </el-table-column>
+               <el-table-column
+                 prop="AJZT"
+                 label="案件状态">
+               </el-table-column>
+               <el-table-column
+                 prop="FXSJ"
+                 label="发现时间">
+               </el-table-column>
+               <el-table-column
+                 label="操作" width="80">
+                 <template slot-scope="scope">
+                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
+                 </template>
+               </el-table-column>
+           </el-table>
+           <div class="middle-foot mt-10">
+              <div class="page-msg">
+                <div class="">
+              共{{asjTotalResult}}条记录
+                </div>
+                <div class="">
+                  每页显示
+                  <el-select v-model="asjpageSize" @change="asjpageSizeChange(asjpageSize)" placeholder="10" size="mini" class="page-select">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                  条
+                </div>
+                <div class="">
+                  共{{Math.ceil(asjTotalResult/asjpageSize)}}页
+                </div>
+              </div>
+              <el-pagination
+                background
+                @current-change="asjhandleCurrentChange"
+                :page-size="asjpageSize"
+                layout="prev, pager, next"
+                :total="asjTotalResult">
+              </el-pagination>
+            </div>
+            <div class="stru-lal">警综渉警信息</div>
+            <el-table
+                 ref="multipleTable"
+                 :data="sjtableData"
+                 border
+                 style="width: 100%" class="stu-table">
+                 <el-table-column
+                   prop="SJRYDJDW"
+                   label="涉警人员登记单位">
+                 </el-table-column>
+                 <el-table-column
+                   prop="SJRYDJDWMC"
+                   label="涉警人员登记单位名称">
+                 </el-table-column>
+                 <el-table-column
+                   prop="SJRYDJRXM"
+                   label="涉警人员登记人姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="SJRYDJSJ"
+                   label="涉警人员登记时间">
+                 </el-table-column>
+                 <el-table-column
+                   prop="SJRYSJLB"
+                   label="涉警人员涉警类别">
+                 </el-table-column>
+                 <el-table-column
+                   prop="SJRYXGDWMC"
+                   label="涉警人员修改单位">
+                 </el-table-column>
+                 <el-table-column
+                   label="操作" width="70">
+                   <template slot-scope="scope">
+                   <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailssj(scope.row)"></el-button>
+                   </template>
+                 </el-table-column>
+             </el-table>
+             <div class="middle-foot mt-10">
+                <div class="page-msg">
+                  <div class="">
+                共{{sjTotalResult}}条记录
+                  </div>
+                  <div class="">
+                    每页显示
+                    <el-select v-model="sjpageSize" @change="sjpageSizeChange(sjpageSize)" placeholder="10" size="mini" class="page-select">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    条
+                  </div>
+                  <div class="">
+                    共{{Math.ceil(sjTotalResult/sjpageSize)}}页
+                  </div>
+                </div>
+                <el-pagination
+                  background
+                  @current-change="sjhandleCurrentChange"
+                  :page-size="sjpageSize"
+                  layout="prev, pager, next"
+                  :total="sjTotalResult">
+                </el-pagination>
+              </div>
         </div>
         <div v-if="skshow">
             <div class="stru-lal">非法居留信息</div>
@@ -544,6 +672,18 @@
      <TBRY :type="type" :xid="xid"></TBRY>
      <div slot="footer" class="dialog-footer">
        <el-button @click="tbryDialogVisible = false" size="small">取 消</el-button>
+     </div>
+   </el-dialog>
+   <el-dialog title="案事件信息详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+     <ANSJ :type="type" :xid="xid" :dtid="dtid"></ANSJ>
+     <div slot="footer" class="dialog-footer">
+       <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
+     </div>
+   </el-dialog>
+   <el-dialog title="警综涉警信息详情" :visible.sync="sjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+     <JZSJ :type="type" :xid="xid"></JZSJ>
+     <div slot="footer" class="dialog-footer">
+       <el-button @click="sjDialogVisible = false" size="small">取 消</el-button>
      </div>
    </el-dialog>
    <!-- 出入境信息 -->
@@ -818,8 +958,9 @@ import LZXX from '../../../common/lzxx_xq'
 import TBRY from '../../../common/tbry_xq'
 import ANSJ from '../../../common/ansj_xq'
 import CRJXX from '../../../common/crjxx_xq'
+import JZSJ from '../../../common/jzsj_xq'
 export default {
-  components:{LZXX,TBRY,ANSJ,CRJXX},
+  components:{LZXX,TBRY,ANSJ,CRJXX,JZSJ},
   data() {
     return {
       CurrentPage: 1,
@@ -850,6 +991,14 @@ export default {
       pageSize6: 3,
       TotalResult6: 0,
 
+      asjCurrentPage: 1,
+      asjpageSize: 3,
+      asjTotalResult: 0,
+
+      sjCurrentPage: 1,
+      sjpageSize: 3,
+      sjTotalResult: 0,
+
       tableData1:[],
       tableData2:[],
       tableData3:[],
@@ -858,6 +1007,8 @@ export default {
       tableData6:[],
       tableData7:[],
       tableData8:[],
+      asjData:[],
+      sjtableData:[],
       lzshow:true,
       crjshow:true,
       tbshow:true,
@@ -879,6 +1030,7 @@ export default {
       nzinfo:{},
       type:1,
       xid:'',
+      dtid:'',
       options: [{
           value: 3,
           label: "3"
@@ -899,6 +1051,8 @@ export default {
       jzDialogVisible:false,
       ffjlDialogVisible:false,
       nmDialogVisible:false,
+      asjDialogVisible:false,
+      sjDialogVisible:false,
       withname:this.$store.state.uname,
       sshow:true,
     }
@@ -915,25 +1069,23 @@ export default {
     this.px.RYBH=this.row.RYBH;
     this.xid=this.row.RYBH;
     this.getBase();
+    this.crjshow=false;
+    this.lzshow=false;
+    this.tbshow=false;
+    this.skshow=false;
+    this.bkshow=false;
+    this.zjshow=false;
+    this.qzshow=false;
+    this.nmshow=false;
     if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
 
         this.crjshow=true;
-        this.lzshow=false;
-        this.tbshow=false;
-        this.skshow=false;
-        this.bkshow=false;
-        this.zjshow=false;
-        this.qzshow=false;
-        this.nmshow=false;
        this.getCrjxx(this.CurrentPage1,this.pageSize1);
     }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
     {
 
       this.crjshow=true;
       this.lzshow=true;
-      this.tbshow=false;
-      this.skshow=false;
-      this.bkshow=false;
       this.zjshow=true;
       this.qzshow=true;
       this.getZJXX(this.CurrentPage4,this.pageSize4);
@@ -942,13 +1094,8 @@ export default {
       this.getCrjxx(this.CurrentPage1,this.pageSize1);
     }
     else {
-      this.crjshow=false;
+
       this.lzshow=true;
-      this.zjshow=false;
-      this.qzshow=false;
-      this.tbshow=false;
-      this.skshow=false;
-      this.bkshow=false;
       this.pm.YWX=this.row.YWX;
       this.pm.YWM=this.row.YWM;
       this.pm.XB=this.row.XB;
@@ -956,7 +1103,6 @@ export default {
       if(this.row.MXLX=="LZ_HC"){   //临住核查预警
         this.tbshow=true;
         this.skshow=true;
-        this.bkshow=false;
         this.nmshow=true;
         this.pp={};
         this.getTBRY(this.pm);
@@ -967,11 +1113,10 @@ export default {
       }else if(this.row.MXLX=="BKYJ")  //布控预警
       { this.crjshow=true;
         this.tbshow=true;
-        this.bkshow=true;
         this.getTBRY(this.pm);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
       }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
-        this.lzshow=false;
+
         this.zjshow=true;
         this.qzshow=true;
         this.tbshow=true;
@@ -981,10 +1126,14 @@ export default {
 
       }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
         this.crjshow=true;
-        this.lzshow=true;
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
       }
-
+      else if(this.row.MXLX=="LXS_ZSYJ") { //教育厅
+        this.bkshow=true;
+        this.lzshow=false;
+        this.getData0(this.asjCurrentPage,this.asjpageSize);
+          this.getData1(this.sjCurrentPage,this.sjpageSize);
+      }
       this.getLzxx(this.CurrentPage,this.pageSize);
     }
   },
@@ -992,6 +1141,22 @@ export default {
 
   },
   methods: {
+    asjpageSizeChange(val) {
+    this.getData0(this.asjCurrentPage,val);
+      console.log(`每页 ${val} 条`);
+    },
+    asjhandleCurrentChange(val) {
+      this.getData0(val,this.asjpageSize);
+      console.log(`当前页: ${val}`);
+    },
+    sjpageSizeChange(val) {
+    this.getData1(this.sjCurrentPage,val);
+      console.log(`每页 ${val} 条`);
+    },
+    sjhandleCurrentChange(val) {
+      this.getData1(val,this.sjpageSize);
+      console.log(`当前页: ${val}`);
+    },
     pageSizeChange(val) {
     this.getLzxx(this.CurrentPage,val);
       console.log(`每页 ${val} 条`);
@@ -1047,6 +1212,31 @@ export default {
     handleCurrentChange6(val) {
        this.getNMXX(val,this.pageSize6);
        console.log(`当前页: ${val}`);
+    },
+    getData0(currentPage,showCount){
+
+      let p = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+      };
+      this.$api.post(this.Global.aport4+'/eS_AJ_GroupController/getAnJianInfoByRYBH', p,
+        r => {
+          this.asjData=r.data.resultList;
+          this.asjTotalResult=r.data.totalResult;
+      })
+    },
+    getData1(currentPage,showCount){
+      let p = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+      };
+      this.$api.post(this.Global.aport4+'/eS_JCJ_SJXXController/getResultListByParams', p,
+        r => {
+          this.sjtableData=r.data.resultList;
+          this.sjTotalResult=r.data.totalResult;
+      })
     },
     getBase() {
       let p = {
@@ -1218,7 +1408,15 @@ export default {
       this.ffjlDialogVisible=true;
     },
 
-
+    detailsasj(n){
+       this.xid=n.RGUID;
+       this.dtid=n.DTID;
+      this.asjDialogVisible=true;
+    },
+    detailssj(n){
+      this.xid=n.RGUID;
+     this.sjDialogVisible=true;
+    },
   addSaves(){
     console.log(this.pd.CHANGE_RESON);
     if(this.pc.CHANGE_RESON=="" || this.pc.CHANGE_RESON==undefined)
