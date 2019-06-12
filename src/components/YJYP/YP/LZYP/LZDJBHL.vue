@@ -279,15 +279,10 @@ import echarts from 'echarts'
           this.fjlist = r.data.SSFJ;
         })
     },
-<<<<<<< HEAD
+
     getRadiofj(n){
       if(n==true){
         this.pd.LRDW_BH_Like='0'
-=======
-    getRadio(n){
-      if(n==0){
-
->>>>>>> 07e696196a1f570ef62abf138a1351abfef77036
       }
       else if (n==false) {
         this.pd.LRDW_BH_Like='1'
