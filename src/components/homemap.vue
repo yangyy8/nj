@@ -87,17 +87,25 @@ export default {
         pd:{},
         diatext:'标准化地址',
         tableData:[],
-        // tableData:[{QZQFD_DESC:'XXXXXX'}],
         options:this.pl.options,
-        bzhDialogVisible:true,
-        value:'',
+        bzhDialogVisible:false,
+        lrdw:'320116',
+        lrdwmc:'六合区',
+        rs:'34',
+        type:'L',
+        yf:'Y',
+        sevalue:[],
       }
     },
     mounted(){
       window.vm=this;
-      this.xzqh=this.$route.query.dqdm;
-      createMapL("320116");
-      // this.getpcs("320116");
+      this.lrdw=this.$route.query.dqdm;
+      this.type=this.$route.query.type;
+      this.rs=this.$route.query.rs;
+      this.lrdwmc=this.$route.query.mc;
+      this.yf=this.$route.query.yf;
+      createMapL(this.lrdw,this.lrdwmc,this.rs);
+      //this.getpcs("320116");
       // this.getbzhdz("320116620000");
       // this.getRyxx(this.CurrentPage,this.pageSize,"320116620000");
     },
@@ -111,66 +119,67 @@ export default {
         console.log(`当前页: ${val}`);
       },
       //得到派出所
-       getpcs(n)
+      getpcs(n,callback)
         {
 
           var searchResult = [];
             let p={
-              "yf":"Y",
-              "lrdw":n,
+              "lrdw":this.lrdw,
+              "yf":this.yf,
+
             };
             var url=this.Global.aport+"/zxdt/getLSZSDJXXPCSList";
-          this.$api.post(url, p,
+           this.$api.post(url, p,
               r => {
-
                 if (r.success) {
-
-                  this.value=r.data;
-                  console.log(this.value);
+                  var arr=r.data;
+                  for (var i = 0; i < arr.length; i++) {
+                  searchResult.push(arr[i]);
+                  }
+                  console.log('-----111',searchResult);
+                  callback && callback(searchResult)
                 }
               });
-              console.log('=====--==',this.value);
-    return  searchResult;
       },
-
       //获取标准化地址
-      getbzhdz(n){
-        var searchResult = [
-          { dm: '320116620000', mc: '六合分局横梁派出所', num: 111},
-          { dm: '320116640000', mc: '六合分局新篁派出所', num: 111},
-          { dm: '320116720000', mc: '六合分局程桥派出所', num: 111},
-          ];
+      getbzhdz(n,callback){
+          console.log('---',n);
+        var searchResult = [];
           let p={
-            "yf":"Y",
+            "yf":this.yf,
             "lrdw":n,
           };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
           this.$api.post(url, p,
             r => {
               if (r.success) {
-                console.log(r.data);
-                searchResult=r.data;
+                var arr=r.data;
+                for (var i = 0; i < arr.length; i++) {
+                searchResult.push(arr[i]);
+                }
+                console.log('-----222',searchResult);
+                callback && callback(searchResult)
               }
             });
-         return  searchResult;
       },
       //人员信息
-      getRyxx(currentPage,showCount,bzhid)
+      getRyxx(currentPage,showCount,bzhid,mc)
       {
-         this.diatext="标准化地址";
+        console.log('this.lrdw',this.lrdw);
+         this.diatext=mc;
          let p={
            "currentPage":currentPage,
            "showCount":showCount,
            "dzdtid":bzhid,
-           "yf":"Y",
-           "lrdw":n,
+           "yf":this.yf,
+           "lrdw":this.lrdw,
          };
          var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
          this.$api.post(url, p,
            r => {
              if (r.success) {
                console.log(r.data);
-               searchResult=r.data;
+               this.tableData=r.data;
              }
            });
          this.bzhDialogVisible=true;
@@ -194,13 +203,16 @@ export default {
 <style>
 .my-div-icon {
          background: blue;
-        border-radius: 50%;
+         border-radius: 50%;
         /* width: 50 !important;
         height: 50px !important; */
         line-height:50px;
         text-align: center;
+        background: url(../assets/img/tb/mapt.png) no-repeat;
+        background-position: 100% 100%;
         color: #ffffff;
         vertical-align: middle;
         font-weight:border;
 }
+.icon1{background: url(../assets/img/tb/map1.png)  no-repeat;}
 </style>
