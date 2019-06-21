@@ -1,0 +1,64 @@
+.t-tsh{
+  min-height: 350px;
+}
+.t-choose{
+  padding: 0 0 20px 5%;
+}
+.t-tj{
+  background-color: #f5f7fa;
+  color: #909399;
+  vertical-align: middle;
+  display: table-cell;
+  /* position: relative; */
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 0 20px;
+  width: 1px;
+  white-space: nowrap;
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.t-sr{
+  display: table-cell;
+}
+.t-sr .el-input__inner{
+  border-top-left-radius: 0!important;
+  border-bottom-left-radius: 0!important;
+  height: 34px!important;
+  line-height: 34px!important;
+}
+.t-tjsr{
+  display: inline-table;
+}
+.t-ak-tab-pane{
+  border: 1px #dddddd solid;
+  padding: 30px 70px 30px 0px;
+  border-radius: 10px;
+}
+.t-mt10{
+  margin-top: 10px!important;
+}
+.t-mt20{
+  margin-top: 20px!important;
+}
+.t-must{
+  color: red;
+  padding: 2px;
+}
+.my-form-group{
+   position: relative;
+ }
+ .err__msg {
+   color: red;
+   display: block;
+   font-size: 12px;
+   line-height: 24px;
+   position: absolute;
+   background: #fff;
+   padding: 0px 5px;
+   box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 0 6px rgba(0,0,0,.04);
+   border-radius: 4px;
+   top:-5px;
+   right:0;
+ }
