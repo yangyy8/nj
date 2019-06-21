@@ -284,10 +284,8 @@ import echarts from 'echarts'
           this.fjlist = r.data.SSFJ;
         })
     },
-<<<<<<< HEAD
 
-=======
->>>>>>> 2cf99c060c0edc2b16b8f76dfa97bcb6bc703889
+
     getRadiofj(n){
       if(n==true){
         this.pd.LRDW_BH_Like='0'

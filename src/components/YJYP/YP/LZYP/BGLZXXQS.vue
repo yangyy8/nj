@@ -5,19 +5,17 @@
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
-
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">时间范围：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
-                       v-model="pd0.begin" format="yyyy-MM-dd"
+                        v-model="pd0.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd0.endBJSJ" format="yyyy-MM-dd"
+
                         v-model="pd0.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
