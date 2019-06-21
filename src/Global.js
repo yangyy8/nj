@@ -2,6 +2,7 @@ const token='';//this.$store.state.token
 const userName='';
 const hasEnter=false;
 const org="";
+const xsd=80;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="/api-reporter";//大师网关
 // const aport="http://192.168.3.217:9420";//大师
@@ -44,10 +45,13 @@ const dwxz="/service/getRedisDataByDm?tablename=JZ_DWSX"//单位性质
 const zsbg="/service/getRedisDataByDm?tablename=JZ_LGBM"//住宿宾馆
 const tlyxq="/service/getRedisDataByDm?tablename=DM_TLYXQ";//停留有效期
 const sf="/service/getRedisDataByDm?tablename=DM_JWRYSF";//身份
+const clzt="/service/getRedisDataByDm?tablename=DM_CLZT";//处理状态
+const sjly="/service/getRedisDataByDm?tablename=DM_SJLY";//数据来源
 const tablists=[];
 export default
 {
   org,//用户机构代码
+  xsd,//相似度
   userName,//用户名
   token,//用户token身份
   hasEnter,//用户登录状态
@@ -58,5 +62,5 @@ export default
   aport4,//李文龙
   aport5,//李文龙
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly
 }

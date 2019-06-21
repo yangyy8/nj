@@ -21,7 +21,7 @@
              </el-col>
              <el-col :span="24" class="mb-15 colleft">
                <span class="input-text" style="float:left"> 相&nbsp; 似 度：</span>
-               <slider :min='0' :max='100' v-model="pd.xsd" class="input-input"></slider>
+               <slider :min='0' :max='100' v-model="pxr" class="input-input"></slider>
              </el-col>
              <el-col :span="24" class="mb-15 colleft">
                <span class="input-text">人员性别：</span>
@@ -83,7 +83,7 @@ export default {
   components:{slider},
   data(){
     return {
-      pd:{xb:'1',xsd:80},
+      pd:{xb:'1'},
       limitNum:1,
       fileList2: [],
       TotalResult:0,
@@ -100,6 +100,7 @@ export default {
       xshow:false,
       fshow:true,
       hnum:1,
+      pxr:this.Global.xsd,
 
     };
   },
@@ -108,7 +109,7 @@ export default {
      console.log('------',this.$route.query.row);
      if(this.$route.query.row){
        this.pd.xb=this.$route.query.row.xb;
-       this.pd.xsd=this.$route.query.row.xsd;
+       this.pxr=this.$route.query.row.xsd;
        this.num1=this.$route.query.row.age1;
        this.num2=this.$route.query.row.age2;
        this.imageUrl=this.$route.query.row.base64._v;
@@ -191,9 +192,9 @@ export default {
         "image":this.base64,
         "xb":this.pd.xb,
         "csrq":this.pd.csrq,
-        "xsd":this.pd.xsd
+        "xsd":this.Global.xsd
       };
-
+     console.log("xsd",this.Global.xsd);
       // var url='http://10.0.9.175:9439/rlsb';
       var url=this.Global.aport3+"/rlsb";
 

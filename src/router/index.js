@@ -25,6 +25,12 @@ export default new Router({
     component:resolve => require(['@/components/homemap'], resolve),
     },
     {
+    path:'/indexmap',
+    name:'Indexmap',
+    meta: {logined:true},
+    component:resolve => require(['@/components/indexmap'], resolve),
+    },
+    {
       path: '/Home',
       name: 'Home',
       meta: {logined:true},
@@ -257,7 +263,7 @@ export default new Router({
         {
           path: 'CQQZFFJYYJ',
           name: 'CQQZFFJYYJ',
-          meta:{title:['预警研判','预警','案事件预警','持长期签证非法就业预警']},
+          meta:{title:['预警研判','预警信息','留学生非法就业预警']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/CQQZFFJYYJ'], resolve),
         },
         {
@@ -402,7 +408,7 @@ export default new Router({
         {
           path: 'JWRYCZWYHFX',
           name: 'JWRYCZWYHFX',
-          meta:{title:['预警研判','研判','临住研判','境外人员出租房屋隐患分析']},
+          meta:{title:['数据分析','临住分析','境外人员出租房屋隐患分析']},
           component: resolve => require(['@/components/YJYP/YP/LZYP/JWRYCZWYHFX'], resolve),
         },
         {

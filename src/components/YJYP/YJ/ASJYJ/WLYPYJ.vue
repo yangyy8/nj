@@ -47,14 +47,15 @@
 
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">处理状态：</span>
-                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="1" label="1 - 未通过">
-                    </el-option>
-                    <el-option value="0" label="0 - 已通过">
+                  <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="item in $store.state.clzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
-
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
@@ -156,18 +157,20 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{}},
+      pd: {BJSJ_DateRange:{begin:'',end:''}},
       pd0:{},
       options: this.pl.ps,
       tableData: [],
     }
   },
   activated(){
+    
+      this.pd={BJSJ_DateRange:{begin:'',end:''}};
       this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
     this.$store.dispatch('getGjdq');
-
+    this.$store.dispatch('getClzt');
   },
   methods: {
     pageSizeChange(val) {

@@ -8,15 +8,15 @@
                 >
                 <el-table-column
                   prop="zp"
-                  label="照片">
+                  label="照片" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="sf"
-                  label="身份">
+                  label="身份" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="dw"
-                  label="单位">
+                  label="单位" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="ywxm"
@@ -37,6 +37,10 @@
                 <el-table-column
                   prop="gjdq"
                   label="国家地区">
+                </el-table-column>
+                <el-table-column
+                  prop="zjzl"
+                  label="证件种类">
                 </el-table-column>
                 <el-table-column
                   prop="zjhm"
@@ -83,7 +87,7 @@
   </div>
 </template>
 <script>
-import {createMapL} from '@/assets/js/SuperMap/homemap.js'
+import {createMapL} from '@/assets/js/SuperMap/indexmap.js'
 let vm;
 export default {
     data(){
@@ -97,13 +101,14 @@ export default {
         tableData:[],
         options:this.pl.options,
         bzhDialogVisible:false,
-        lrdw:'320111',
-        lrdwmc:'江北新区',
+        lrdw:'320112',
+        lrdwmc:'江北新区',//320113   320112江北
         rs:'11523',
-        type:'L',
+        type:'C',
         yf:'Y',
         sevalue:[],
         bzhid:'',
+        czshow:false,
       }
     },
     mounted(){
@@ -113,7 +118,13 @@ export default {
       // this.rs=this.$route.query.rs;
       // this.lrdwmc=this.$route.query.mc;
       // this.yf=this.$route.query.yf;
-      createMapL(this.lrdw,this.lrdwmc,this.rs);
+      createMapL(this.lrdw,this.lrdwmc,this.rs,this.type);
+      if(this.type=="C")
+      {
+        this.czshow=true;
+      }else {
+        this.czshow=false;
+      }
       //this.getpcs("320116");
       // this.getbzhdz("320116620000");
       // this.getRyxx(this.CurrentPage,this.pageSize,"320116620000");
@@ -135,7 +146,13 @@ export default {
               "lrdw":this.lrdw,
               "yf":this.yf,
             };
-            var url=this.Global.aport+"/zxdt/getLSZSDJXXPCSList";
+          var url=this.Global.aport+"/zxdt/getLSZSDJXXPCSList";
+           if(this.type=="C"){
+             p={
+               "lrdw":this.lrdw,
+             };
+             url=this.Global.aport+"/zxdt/getCZDJXXPCSList";
+           }
            this.$api.post(url, p,
               r => {
                 if (r.success) {
@@ -143,7 +160,6 @@ export default {
                   for (var i = 0; i < arr.length; i++) {
                   searchResult.push(arr[i]);
                   }
-
                   callback && callback(searchResult)
                 }
               });
@@ -156,6 +172,12 @@ export default {
             "lrdw":n,
           };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
+          if(this.type=="C"){
+            p={
+              "sspcs":n,
+            };
+            url=this.Global.aport+"/zxdt/getCZDJXXJZDList";
+          }
           this.$api.post(url, p,
             r => {
               if (r.success) {
@@ -185,7 +207,16 @@ export default {
            "yf":this.yf,
            "lrdw":this.lrdw,
          };
-         var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+          var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+         if(this.type=="C"){
+           p={
+             "currentPage":currentPage,
+             "showCount":showCount,
+             "xxdz":this.bzhid,
+           };
+           url=this.Global.aport+"/zxdt/getCZDJXXRYList";
+         }
+
          this.$api.post(url, p,
            r => {
              if (r.success) {

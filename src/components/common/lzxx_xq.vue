@@ -146,7 +146,7 @@
                 </el-col>
                 <el-col :span="8"   class="crcolor">
                   <span class="yy-input-text">派出所名称：</span>
-                    <el-input placeholder="" size="small" v-model="form.SSDW"  class="yy-input-input"></el-input>
+                    <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
                 </el-col>
                 <el-col :span="8">
                   <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
@@ -175,11 +175,11 @@
                 </el-col>
                 <el-col :span="8">
                   <span class="yy-input-text">录入单位：</span>
-                  <el-input placeholder="" size="small" v-model="form.DJDWMC"  class="yy-input-input"></el-input>
+                  <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
                 </el-col>
                 <el-col :span="8">
                   <span class="yy-input-text">录入日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.DJRQ"  class="yy-input-input"></el-input>
+                  <el-input placeholder="" size="small" v-model="form.LRRQ"  class="yy-input-input"></el-input>
                 </el-col>
               </el-row>
               <el-row :gutter="3">
@@ -287,8 +287,8 @@ export default {
       };
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', p,
         r => {
-          this.form=r.data;
-          this.typet=r.data.LB_SFBG;
+          this.form=r.data.resultList[0];
+          this.typet=r.data.resultList[0].LB_SFBG;
           if(this.typet=="2"){
             this.shm=false;
           }else{

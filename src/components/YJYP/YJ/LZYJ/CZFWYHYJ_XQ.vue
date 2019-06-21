@@ -12,7 +12,7 @@
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>派出所：</span>
-                  {{baseData.PCS}}
+                  {{baseData.PCS_DESC}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>警务责任区：</span>
@@ -68,17 +68,20 @@
           <el-table-column
           prop="ZWXM"
           label="姓名">
+          <template slot-scope="scope">
+            <span>{{getXM(scope.row.ZWXM,scope.row.YWXM)}}</span>
+          </template>
           </el-table-column>
           <el-table-column
-          prop="XB"
+          prop="XB_DESC"
           label="性别">
           </el-table-column>
           <el-table-column
-          prop="GJDQ"
+          prop="GJDQ_DESC"
           label="国家地区">
           </el-table-column>
           <el-table-column
-          prop="ZJZL"
+          prop="ZJZL_DESC"
           label="证件种类">
           </el-table-column>
           <el-table-column
@@ -94,7 +97,7 @@
           label="证件有效期">
           </el-table-column>
           <el-table-column
-          prop="QZZL"
+          prop="QZZL_DESC"
           label="签证种类">
           </el-table-column>
           <el-table-column
@@ -163,7 +166,7 @@
       </div>
     </div>
 
-  <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+  <el-dialog title="案件信息详情" :visible.sync="lzxxDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
        <LZXX :type="type" :xid="xid"></LZXX>
        <div v-if='flag'>
        <div class="yylbt mt-10">案件信息</div>
@@ -220,6 +223,7 @@ export default {
       pd:{},
       pp:{BZHDZID:''},
       pm:{},
+      pcl:{},
       options:[{
          value: 10,
          label: "10"
@@ -276,7 +280,7 @@ export default {
     },
     getList(currentPage, showCount, pd){
       pd.DZDTID=this.row.BZHDZID;
-      console.log('this.row.ZSRQ',this.row.ZSRQ);
+      console.log('this.row.YJID',this.row.YJID);
       pd.ZSRQ=this.row.ZSRQ;
       let p = {
         "currentPage":currentPage,
@@ -286,14 +290,24 @@ export default {
       this.$api.post(this.Global.aport4+'/rentingHouseHiddenDangerWarning/getLinZhuListByDZDTIDAndZSRQ', p,
         r => {
             this.tableData1=r.data.resultList;
+            this.TotalResult=r.data.totalResult;
         });
     },
     chuli(){
+
+    if(this.pm.CHANGE_RESON=="" || this.pm.CHANGE_RESON==undefined)
+    {
+      this.$alert('甄别结果不能为空！', '提示', {
+        confirmButtonText: '确定',
+      });
+      return;
+    }
+    this.pcl.YJID=this.row.YJID;
+    this.pcl.CLJG=this.pm.CHANGE_RESON;
+    this.pcl.CLDW=this.$store.state.orgname;
+    this.pcl.CLR=this.withname;
       let p = {
-        "YJID": this.row.yjid,
-        "CLJG": this.pm.CHANGE_RESON,
-        "CLDW": this.$store.state.org,
-        "CLR": this.withname,
+        "pd": this.pcl
       };
       this.$api.post(this.Global.aport4+'/fangWuWarningInfoController/saveCLJG', p,
         r => {
@@ -323,10 +337,23 @@ export default {
           r => {
              if(r.success){
                   this.tableData2=r.data;
+
              }
 
           })
       }
+    },
+    getXM(zw,yw){
+
+      if(zw!=undefined && yw!=undefined){
+        return yw+"("+zw+")";
+      }else if(zw!=undefined){
+          return zw;
+      }
+      else {
+        return yw;
+      }
+
     },
   }
 

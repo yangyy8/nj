@@ -105,7 +105,7 @@
              label="行政区划">
            </el-table-column>
            <el-table-column
-             prop="PCS"
+             prop="PCS_DESC"
              label="派出所">
            </el-table-column>
            <el-table-column

@@ -100,6 +100,14 @@
              label="身份证号">
            </el-table-column>
            <el-table-column
+             prop="BKRQSTART"
+             label="布控开始时间">
+           </el-table-column>
+           <el-table-column
+             prop="BKRQEND"
+             label="布控结束时间">
+           </el-table-column>
+           <el-table-column
              prop="GJDQMC"
              label="国家地区">
            </el-table-column>
@@ -249,7 +257,14 @@
             <span class="input-text">国家地区：</span>
             <span class="input-input detailinput">  {{mapForm.GJDQMC}}</span>
           </el-col>
-
+          <el-col :span="12" class="input-item">
+            <span class="input-text">布控开始时间：</span>
+            <span class="input-input detailinput">  {{mapForm.BKRQSTART}}</span>
+          </el-col>
+          <el-col :span="12" class="input-item">
+            <span class="input-text">布控结束时间：</span>
+            <span class="input-input detailinput">  {{mapForm.BKRQEND}}</span>
+          </el-col>
       </el-row>
       <el-row :gutter="2">
           <el-col :span="12" class="input-item">
@@ -435,7 +450,7 @@ export default {
 </script>
 
 <style scoped>
-
+.input-text{ width: 30%!important;}
 </style>
 <style>
 

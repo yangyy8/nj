@@ -9,10 +9,11 @@
          <el-col :span="24" class="stu-left">
            <el-row type="flex" class="stu-row">
              <el-col :span="6">
-               <span>姓名：</span>
+               <span class="texth">姓名：
             <label v-if="basedata.YWXM!=undefined && basedata.ZWXM!=undefined">{{basedata.YWXM}}({{basedata.ZWXM}})</label>
             <label v-else-if="basedata.ZWXM!=undefined">{{basedata.ZWXM}}</label>
             <label v-else>{{basedata.YWXM}}</label>
+            </span>
              </el-col>
              <el-col :span="6" class="stu-col-row">
                <span>性别：</span>
@@ -250,11 +251,11 @@
                 label="出入境日期">
               </el-table-column>
               <el-table-column
-                prop="CRJBSMC"
+                prop="CRJBS_DESC"
                 label="出入境状态">
               </el-table-column>
               <el-table-column
-                prop="IOPORT"
+                prop="IOPORT_DESC"
                 label="出入境口岸">
               </el-table-column>
               <el-table-column
@@ -654,8 +655,8 @@
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
-        <el-button type="primary"  size="small" class="mb-5" @click="addSaves()">确定</el-button>
-        <el-button type="warning" size="small" class="m0" @click="$router.go(-1)">返回</el-button>
+        <el-button type="primary" v-if="qdshow"  size="small" class="mb-5" @click="addSaves()">确定</el-button>
+        <el-button type="warning" size="small" class="m0" @click="getback()">返回</el-button>
       </el-col>
     </el-row>
     <el-row type="flex">
@@ -1045,6 +1046,7 @@ export default {
         }
       ],
       basedata:{},
+      qdshow:true,
       lzxxDialogVisible:false,
       crjDialogVisible:false,
       tbryDialogVisible:false,
@@ -1054,7 +1056,7 @@ export default {
       asjDialogVisible:false,
       sjDialogVisible:false,
       withname:this.$store.state.uname,
-      sshow:true,
+
     }
   },
   activated(){
@@ -1062,8 +1064,10 @@ export default {
     this.lzxxDialogVisible=false;
     this.crjDialogVisible=false;
     this.row=this.$route.query.row;
-    if(this.row.SHZT!="1"){
-      this.sshow=false;
+    this.pc={};
+    this.qdshow=true;
+    if(this.row.CLZT==0){
+      this.qdshow=false;
     }
     this.pd.YJID=this.row.YJID;
     this.px.RYBH=this.row.RYBH;
@@ -1416,9 +1420,58 @@ export default {
     detailssj(n){
       this.xid=n.RGUID;
      this.sjDialogVisible=true;
-    },
+   },
+   getMX(mm){
+
+     switch (mm) {
+     case 'LXS_SWLZYJ':
+         //留学生市外临住预警
+         this.$router.push({name:'LXSSWLZ_X',query:{type:0}});
+         break;
+     case 'LXS_SKYJ':
+      //留学生涉恐预警
+      this.$router.push({name:'LXSSKYJ_X',query:{type:1}});
+       break;
+     case 'LXS_CRJTX':
+      //留学生出入境提醒
+      this.$router.push({name:'LXSCRJYJ_X',query:{type:2}});
+       break;
+     case 'LZ_HC':
+         //临住核查预警
+         this.$router.push({name:'LZHCYJ_X',query:{type:3}});
+       break;
+     case 'CZ_NMYJ':
+        //难民
+         this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
+         break;
+     case 'BKYJ':
+        //布控预警
+          this.$router.push({name:'ZBKYJ_X',query:{type:5}});
+         break;
+     case 'LXS_WBDYJ':
+         //留学生录取未报到预警
+         this.$router.push({name:'LXSWBDYJ_X',query:{type:6}});
+         break;
+     case 'QZ_HCYJ':
+          //受理、签发信息核查预警
+          this.$router.push({name:'SLQFXXYJ',query:{type:7}});
+         break;
+     case 'ASJ_SKGJRY':
+         //涉恐国家人员预警
+         this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
+         break;
+     default:
+        break;
+      }
+
+   },
+   getback(){
+
+     this.getMX(this.row.MXLX);
+
+   },
   addSaves(){
-    console.log(this.pd.CHANGE_RESON);
+
     if(this.pc.CHANGE_RESON=="" || this.pc.CHANGE_RESON==undefined)
     {
       this.$alert('甄别结果不能为空！', '提示', {
@@ -1441,8 +1494,9 @@ export default {
              type: 'success'
            });
 
+    this.getMX(this.row.MXLX);
          }
-      this.$router.go(-1);
+
       })
   },
 },
@@ -1450,6 +1504,7 @@ export default {
 </script>
 <style scoped>
 .input-text{width: 30%!important;}
+.texth{line-height: 20px;}
 </style>
 <style>
 .el-table--border, .el-table--group {

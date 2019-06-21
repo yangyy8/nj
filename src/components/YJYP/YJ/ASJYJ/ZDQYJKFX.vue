@@ -53,13 +53,11 @@
                         </el-option>
                       </el-select>
                   </el-col>
-
                   <el-col :span="24">
                       <span class="yy-input-text">类别：</span>
-                      <el-radio value="1" label="常住" v-model="radio"></el-radio>
-                      <el-radio value="2" label="临住" v-model="radio"></el-radio>
+                      <el-radio value="1" label="1" v-model="radioe">常住</el-radio>
+                      <el-radio value="2" label="2" v-model="radioe">临住</el-radio>
                   </el-col>
-
                 </el-row>
                 <el-row type="flex">
                   <el-col :span="24" style="text-align:center;">
@@ -71,15 +69,94 @@
              </div>
             </el-collapse-transition>
         </div>
+
+        <div class="bghome">
+          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
+            <el-table
+                 :data="tableData"
+                 style="width: 100%"
+                 >
+                 <el-table-column
+                   prop="ywxm"
+                   label="英文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zwxm"
+                   label="中文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="xb"
+                   label="性别" width="60">
+                 </el-table-column>
+                 <el-table-column
+                   prop="csrq"
+                   label="出生日期">
+                 </el-table-column>
+                 <el-table-column
+                   prop="gjdq"
+                   label="国家地区">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjzl"
+                   label="证件种类">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjhm"
+                   label="证件号码">
+                 </el-table-column>
+             </el-table>
+             <div class="middle-foot mt-10">
+                <div class="page-msg">
+                  <div class="crrcolor">
+                  共{{TotalResult}}条记录
+                  </div>
+                  <div class="crrcolor">
+                    <!-- 每页显示
+                    <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    条 -->
+                  </div>
+                  <div class="crrcolor">
+                    <!-- 共{{Math.ceil(TotalResult/pageSize)}}页 -->
+                  </div>
+                </div>
+                <el-pagination
+                background
+                  @current-change="handleCurrentChange"
+                  :current-page.sync ="CurrentPage"
+                  :page-size="pageSize"
+                  layout="prev, pager, next"
+                  :total="TotalResult">
+                </el-pagination>
+              </div>
+            <div slot="footer">
+              <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
+            </div>
+           <div class="arrow_line" style="left:0px;top:0px; border-bottom-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;top:0px; border-bottom-width:0;border-left-width:0"></div>
+           <div class="arrow_line" style="left:0px;bottom:0px; border-top-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;bottom:0px; border-top-width:0;border-left-width:0"></div>
+          </el-dialog>
+        </div>
       </div>
 </template>
 
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,doSearch} from '@/assets/js/SuperMap/zdjkmap.js'
+let vm;
 export default {
   data(){
     return{
+      CurrentPage: 1,
+      pageSize: 5,
+      TotalResult: 0,
        pd:{},
        swdw:[],
        show:true,
@@ -87,17 +164,32 @@ export default {
        lgshow:false,
        pcs:[],
        xzqh:[],
-       radio:1,
+       radioe:'2',
+       tableData:[],
+       bzhDialogVisible:false,
+       diatext:'标准化地址',
+       bzhid:'',
+       mc:'',
+       lrdw:'',
     }
   },
 
   mounted() {
+    window.vm=this;
    this.$store.dispatch("getGjdq");
    this.$store.dispatch("getQzzl");
     createMapL();
 
   },
   methods:{
+    pageSizeChange(val) {
+      this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+      console.log(`当前页: ${val}`);
+    },
       changtab(){
         this.show=!this.show;
       },
@@ -134,10 +226,37 @@ export default {
       this.$set(this.pd,"qzzl",'');
     },
     getSearch(className) {
-     console.log('ssss',className);
        doSearch(className);
     },
+    //人员信息
+    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    {
+      if(currentPage==1){
+        this.CurrentPage=1;
+      }
+       this.bzhid=bzhid;
+       this.mc=mc;
+       this.lrdw=lrdw;
+       this.diatext=this.mc;
 
+       let p={
+         "currentPage":currentPage,
+         "showCount":showCount,
+         "dzdtid":this.bzhid,
+         "yf":'Y',
+         "lrdw":this.lrdw,
+       };
+       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+       this.$api.post(url, p,
+         r => {
+           if (r.success) {
+             console.log(r.data);
+             this.tableData=r.data.resultList;
+             this.TotalResult=r.data.totalResult;
+           }
+         });
+       this.bzhDialogVisible=true;
+    }
 
 
 
@@ -155,13 +274,13 @@ export default {
 .lzxx  .my-div-icon {
         background-color: rgba(0, 167, 91, 0.8);
         border-radius: 50%;
-        border:1px solid #ccc;
+
         line-height:20px;
         text-align: center;
         vertical-align: middle;
     }
 .lzxx    .lz {
-			background-color: rgba(0, 167, 91, 0.8);
+			background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
 		}
 
 .lzxx		.cz {

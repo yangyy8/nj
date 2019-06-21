@@ -16,7 +16,7 @@
                 <el-row :gutter="2">
                     <el-col :span="12">
                         <span class="yy-input-text">国家地区：</span>
-                        <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-select v-model="pd.gjdq" multiple   filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option
                             v-for="(item,ind1) in $store.state.gjdq"
                             :key="ind1"
@@ -26,8 +26,19 @@
                         </el-select>
                     </el-col>
                     <el-col :span="12">
+                        <span class="yy-input-text">身份：</span>
+                        <el-select v-model="pd.sf" multiple     filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                          <el-option
+                            v-for="(item,ind) in $store.state.sf"
+                            :key="ind"
+                            :label="item.mc"
+                            :value="item.dm">
+                          </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="12">
                         <span class="yy-input-text">停留有效期：</span>
-                        <el-select v-model="pd.tlyxq" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-select v-model="pd.tlyxq"  filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option
                             v-for="(item,ind1) in $store.state.tlyxq"
                             :key="ind1"
@@ -36,7 +47,7 @@
                           </el-option>
                         </el-select>
                     </el-col>
-                    <el-col :span="12">
+                    <!-- <el-col :span="12">
                         <span class="yy-input-text">入住方式：</span>
                         <el-select v-model="pd.rzfs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option label="自租房" value="1">
@@ -54,7 +65,7 @@
                           <el-option label="其他" value="7">
                           </el-option>
                         </el-select>
-                    </el-col>
+                    </el-col> -->
                     <el-col :span="12">
                         <span class="yy-input-text">性别：</span>
                         <el-select v-model="pd.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -67,27 +78,10 @@
                         </el-select>
                     </el-col>
                     <el-col :span="12">
-                        <span class="yy-input-text">学校名称：</span>
-                        <el-select v-model="pd.xxmc" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                          <el-option
-                            v-for="(item,ind1) in xxmc"
-                            :key="ind1"
-                            :label="item.mc"
-                            :value="item.xdid">
-                          </el-option>
-                        </el-select>
+                        <span class="yy-input-text">服务处所：</span>
+                        <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
                     </el-col>
-                  <el-col :span="12">
-                      <span class="yy-input-text">身份：</span>
-                      <el-select v-model="pd.sf" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind) in $store.state.sf"
-                          :key="ind"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                  </el-col>
+
                   <el-col :span="12">
                       <span class="yy-input-text">证件种类：</span>
                       <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -99,7 +93,7 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="12">
+                  <!-- <el-col :span="12">
                       <span class="yy-input-text">签证种类：</span>
                       <el-select v-model="pd.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
@@ -109,8 +103,8 @@
                           :value="item.dm">
                         </el-option>
                       </el-select>
-                  </el-col>
-                  <el-col :span="12">
+                  </el-col> -->
+                  <!-- <el-col :span="12">
                       <span class="yy-input-text">住房类型：</span>
                       <el-select v-model="pd.zflx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option value="1" label="住宅小区">
@@ -128,10 +122,10 @@
                         <el-option value="7" label="其他">
                         </el-option>
                       </el-select>
-                  </el-col>
+                  </el-col> -->
                   <el-col :span="12">
                       <span class="yy-input-text">居留事由：</span>
-                      <el-select v-model="pd.rjsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                      <el-select v-model="pd.rjsy" multiple    filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind) in $store.state.rjsy"
                           :key="ind"
@@ -203,7 +197,7 @@
                        </el-date-picker>
                     </div>
                    </el-col>
-                   <el-col :span="24" class="input-item">
+                   <!-- <el-col :span="24" class="input-item">
                      <span class="input-text">分局接收时间：</span>
                      <div class="input-input t-flex">
                        <el-date-picker
@@ -234,7 +228,7 @@
                           placeholder="结束时间" >
                       </el-date-picker>
                    </div>
-                  </el-col>
+                  </el-col> -->
                 </el-row>
                 <el-row type="flex">
                   <el-col :span="24" style="text-align:center;">
@@ -245,20 +239,102 @@
              </div>
             </el-collapse-transition>
         </div>
+
+        <div class="bghome">
+          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
+            <el-table
+                 :data="tableData"
+                 style="width: 100%"
+                 >
+                 <el-table-column
+                   prop="ywxm"
+                   label="英文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zwxm"
+                   label="中文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="xb"
+                   label="性别" width="60">
+                 </el-table-column>
+                 <el-table-column
+                   prop="csrq"
+                   label="出生日期">
+                 </el-table-column>
+                 <el-table-column
+                   prop="gjdq"
+                   label="国家地区">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjzl"
+                   label="证件种类">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjhm"
+                   label="证件号码">
+                 </el-table-column>
+             </el-table>
+             <div class="middle-foot mt-10">
+                <div class="page-msg">
+                  <div class="crrcolor">
+                  共{{TotalResult}}条记录
+                  </div>
+                  <div class="crrcolor">
+                    <!-- 每页显示
+                    <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                    条 -->
+                  </div>
+                  <div class="crrcolor">
+                    <!-- 共{{Math.ceil(TotalResult/pageSize)}}页 -->
+                  </div>
+                </div>
+                <el-pagination
+                background
+                  @current-change="handleCurrentChange"
+                  :current-page.sync ="CurrentPage"
+                  :page-size="pageSize"
+                  layout="prev, pager, next"
+                  :total="TotalResult">
+                </el-pagination>
+              </div>
+            <div slot="footer">
+              <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
+            </div>
+           <div class="arrow_line" style="left:0px;top:0px; border-bottom-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;top:0px; border-bottom-width:0;border-left-width:0"></div>
+           <div class="arrow_line" style="left:0px;bottom:0px; border-top-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;bottom:0px; border-top-width:0;border-left-width:0"></div>
+          </el-dialog>
+        </div>
       </div>
 </template>
 
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
-import {createMapL} from '@/assets/js/SuperMap/jwrymap.js'
+import {createMapL,getSearch} from '@/assets/js/SuperMap/jwrymap.js'
+let vm;
 export default {
   data(){
     return{
+      CurrentPage: 1,
+      pageSize: 8,
+      TotalResult: 0,
+      tableData:[],
        pd:{},
        swdw:[],
        show:true,
        bzhshow:false,
        lgshow:false,
+       bzhDialogVisible:false,
+       diatext:'标准化地址',
        pcs:[],
        xzqh:[],
        xxmc:[],
@@ -267,6 +343,7 @@ export default {
   },
 
   mounted() {
+    window.vm=this;
    this.$store.dispatch('getQzzl');
    this.$store.dispatch('getZjzl');
    this.$store.dispatch('getGjdq');
@@ -280,6 +357,14 @@ export default {
 
   },
   methods:{
+    pageSizeChange(val) {
+        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+      console.log(`当前页: ${val}`);
+    },
       changtab(){
         this.show=!this.show;
       },
@@ -326,8 +411,65 @@ export default {
       this.$set(this.pd,"endsjd",'');
     },
     getSearch() {
-
+        this.show=!this.show;
+      getSearch();
     },
+    //得到标准化地址
+    getBZHDZ(callback){
+      var searchResult = [
+        {dm:'32010100000001915459',count:123},
+        {dm:'32010100000002760597',count:123},
+        {dm:'32010100000022930618',count:123},
+        {dm:'32010100000003007102',count:123}
+      ];
+        // let p={
+        //   "yf":this.yf,
+        //   "lrdw":"",
+        // };
+        // var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
+        // this.$api.post(url, p,
+        //   r => {
+        //     if (r.success) {
+        //       var arr=r.data;
+        //       for (var i = 0; i < arr.length; i++) {
+        //       searchResult.push(arr[i]);
+        //       }
+        //       console.log('-----222',searchResult);
+        //       callback && callback(searchResult)
+        //     }
+        //   });
+
+          callback(searchResult);
+    },
+    //人员信息
+    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    {
+      if(currentPage==1){
+        this.CurrentPage=1;
+      }
+       this.bzhid=bzhid;
+       this.mc=mc;
+       this.lrdw=lrdw;
+       this.diatext=this.mc;
+
+       let p={
+         "currentPage":currentPage,
+         "showCount":showCount,
+         "dzdtid":this.bzhid,
+         "yf":'Y',
+         "lrdw":this.lrdw,
+       };
+       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+       this.$api.post(url, p,
+         r => {
+           if (r.success) {
+             console.log(r.data);
+             this.tableData=r.data.resultList;
+             this.TotalResult=r.data.totalResult;
+           }
+         });
+       this.bzhDialogVisible=true;
+    }
   },
 
 }
@@ -339,19 +481,13 @@ export default {
 .fxleft{width: 600px!important;}
 </style>
 <style>
-.lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
-        border-radius: 50%;
-        border:1px solid #ccc;
-        line-height:20px;
-        text-align: center;
-        vertical-align: middle;
-    }
+
 .lzxx    .lz {
 			background-color: rgba(0, 167, 91, 0.8);
 		}
 
 .lzxx		.cz {
-			background-color: rgba(155, 0, 0, 0.8);
+		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
 		}
+.bghome .el-dialog{ width: 70%!important;}
 </style>
