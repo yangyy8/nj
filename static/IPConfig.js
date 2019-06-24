@@ -1,6 +1,7 @@
 
 window.IPConfig = {
-   IP: 'http://10.33.72.145:1101/',
+   // IP: 'http://10.33.72.145:1101/',
+   IP: 'http://192.168.3.217:1101',
    INDEX: 'http://10.33.72.145:1101',
    LXSSJFX:'http://10.33.72.145:9420/map/map/lxs.html',//留学生散居社会面分析
    ZDQYJKFX:'http://10.33.72.145:9420/map/map/zdqyjk.html',//重点区域监控分析
