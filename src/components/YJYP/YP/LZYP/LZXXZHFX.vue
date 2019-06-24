@@ -133,9 +133,11 @@
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                       <span class="yy-input-text">数据来源：</span>
                       <el-select v-model="pd.SJLY" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
-                        <el-option value="JZ" label="JZ - 警宗">
-                        </el-option>
-                        <el-option value="HX" label="HX - 航信">
+                        <el-option v-for="item in $store.state.sjly"
+                         :key="item.dm"
+                         :label="item.dm+' - '+item.mc"
+                         :value="item.dm"
+                        >
                         </el-option>
                       </el-select>
                     </el-col>
@@ -246,12 +248,12 @@
                border
                style="width: 100%">
                <el-table-column
-                 prop="ZWXM"
-                 label="中文姓名">
-               </el-table-column>
-               <el-table-column
                  prop="YWXM"
                  label="英文姓名">
+               </el-table-column>
+               <el-table-column
+                 prop="ZWXM"
+                 label="中文姓名">
                </el-table-column>
                <el-table-column
                  prop="XB_DESC"
@@ -322,231 +324,7 @@
         </div>
      <div class="bj">
         <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-          <el-form :model="form"  class="crcolor" style="padding:10px">
-            <el-row type="flex">
-              <el-col :span="16">
-                <el-row :gutter="2">
-                  <el-col :span="12">
-                    <span  class="yy-input-text">英文姓：</span>
-                      <el-input placeholder="" size="small" v-model="form.YWX"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">英文名：</span>
-                    <el-input placeholder="" size="small" v-model="form.YWM"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">英文姓名：</span>
-                    <el-input placeholder="" size="small" v-model="form.YWXM"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">中文姓名：</span>
-                    <el-input placeholder="" size="small" v-model="form.ZWXM"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">证件种类：</span>
-                    <el-input placeholder="" size="small" v-model="form.ZJZL_DESC"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">证件号码：</span>
-                    <el-input placeholder="" size="small" v-model="form.ZJHM"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">国家地区：</span>
-                    <el-input placeholder="" size="small" v-model="form.GJDQ_DESC"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">出生日期：</span>
-                    <el-input placeholder="" size="small" v-model="form.CSRQ"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">性别：</span>
-                    <el-input placeholder="" size="small" v-model="form.XB_DESC"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12">
-                    <span class="yy-input-text">身份证号：</span>
-                    <el-input placeholder="" size="small" v-model="form.SFZH"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12" >
-                    <span class="yy-input-text">签证种类：</span>
-                    <el-input placeholder="" size="small" v-model="form.QZZL_DESC"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12" >
-                    <span class="yy-input-text" title="签证(注)号码">签证(注)号码：</span>
-                      <el-input placeholder="" size="small" v-model="form.QZHM"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12" >
-                    <span class="yy-input-text">签发机关：</span>
-                    <el-input placeholder="" size="small" v-model="form.QFD"  class="yy-input-input"></el-input>
-                  </el-col>
-                  <el-col :span="12" >
-                    <span class="yy-input-text" title="签证(注)有效期至">停留有效期至：</span>
-                      <el-input placeholder="" size="small" v-model="form.TLYXQ"  class="yy-input-input"></el-input>
-                  </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="8">
-                <div class="block">
-                  <el-carousel height="270px">
-                    <el-carousel-item v-for="(item,ind7) in imagess" :key="ind7" v-if="imgshow1">
-                      <img  :src="item.tp" >
-                    </el-carousel-item>
-                    <el-carousel-item v-if="imgshow2">
-                      <img src="../../../../assets/img/t1.png" >
-                    </el-carousel-item>
-                  </el-carousel>
-                </div>
-              </el-col>
-
-            </el-row>
-
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">行政区划：</span>
-                    <el-input placeholder="" size="small" v-model="form.XZQH_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="签证签发日期：">签证签发日期：</span>
-                      <el-input placeholder="" size="small" v-model="form.QFRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">何处来：</span>
-                  <el-radio v-model="radio1" label="0">国内</el-radio>
-                  <el-radio v-model="radio1" label="1">国外</el-radio>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">入境日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.RJRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">入境口岸：</span>
-                  <el-input placeholder="" size="small" v-model="form.RJKA"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">&nbsp;</span>
-                  <el-input placeholder="" size="small" v-model="form.XZQH_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">入境事由：</span>
-                  <el-input placeholder="" size="small" v-model="form.JLSY"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">入住日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.ZSRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">何处去：</span>
-                  <el-radio-group v-model="radio2">
-                    <el-radio  label="0">国内</el-radio>
-                    <el-radio  label="1">国外</el-radio>
-                  </el-radio-group>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">接待单位：</span>
-                    <el-input placeholder="" size="small" v-model="form.JDDW"  class="yy-input-input"></el-input>
-                </el-col>
-
-                <el-col :span="8">
-                  <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
-                    <el-input placeholder="" size="small" v-model="form.NLKRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">&nbsp;</span>
-                  <el-input placeholder="" size="small" v-model="form.XZQH_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8" class="crcolor">
-                  <span class="yy-input-text">投宿于：</span>
-                  <el-radio v-model="typet" label="1" >社会面</el-radio>
-                  <el-radio v-model="typet" label="2" >旅馆</el-radio>
-                </el-col>
-                <el-col :span="16" v-show="shm"  class="crcolor">
-                  <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
-                   <el-input placeholder="" size="small" v-model="form.BZHDZMC"  class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="16" v-show="lg"  class="crcolor">
-                  <span class="yy-input-text" style="width:17.4%">旅馆名称：</span>
-                   <el-input placeholder="" size="small" v-model="form.DJDWMC"   class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="8"  class="crcolor">
-                  <span class="yy-input-text">房号：</span>
-                  <el-input placeholder="" size="small" v-model="form.FH"  class="yy-input-input"></el-input>
-                </el-col>
-
-                <el-col :span="8">
-                  <span class="yy-input-text" title="本人联系电话">本人联系电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.BRLXDH"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="紧急情况联系人">紧急情况联系人：</span>
-                      <el-input placeholder="" size="small" v-model="form.JJLXR"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.JJLXDH"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8"   class="crcolor">
-                  <span class="yy-input-text">派出所名称：</span>
-                    <el-input placeholder="" size="small" v-model="form.SSDW"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.LSDWDH"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="16">
-                  <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
-                  <el-input placeholder="" size="small" v-model="form.LSDW"  class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
-                  <el-input placeholder="" size="small" v-model="form.QSGX"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">房屋性质：</span>
-                  <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
-                    <el-input placeholder="" size="small" v-model="form.FZSFZH"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">录入人：</span>
-                    <el-input placeholder="" size="small" v-model="form.DJ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">录入单位：</span>
-                  <el-input placeholder="" size="small" v-model="form.DJDWMC"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">录入日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.DJRQ"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3">
-                <el-col :span="8">
-                  <span class="yy-input-text">修改人：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXR"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8" >
-                  <span class="yy-input-text">修改单位：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXDW"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8" >
-                  <span class="yy-input-text">修改日期：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXSJ"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-
-          </el-form>
+            <LZXX :type="type" :xid="xid"></LZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -557,8 +335,9 @@
 
     </template>
     <script>
-
+import LZXX from '../../../common/lzxx_xq'
     export default {
+        components:{LZXX},
       data() {
         return {
           radio1:'0',
@@ -576,6 +355,8 @@
           imgshow2:true,
           shm:false,
           lg:false,
+          type:1,
+          xid:'',
           detailsDialogVisible:false,
           options:[{
             value: 10,
@@ -607,7 +388,7 @@
          this.$store.dispatch("getRjqzzl");
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
-
+         this.$store.dispatch("getSjly");
       },
       methods: {
         handleSelectionChange(val) {
@@ -817,27 +598,28 @@
         },
         details(i) {
 
-          if(i.LB_LYD==undefined){
-            this.radio1='0';
-          }
-          if(i.LB_QWD==undefined){
-            this.radio2='0';
-          }
-          if(i.LB_DJDW==undefined){
-            this.typet='1';
-            this.shm=true;
-            this.lg=false;
-          }else if(i.LB_DJDW=='1'){
-             this.typet='2';
-             this.shm=false;
-             this.lg=true;
-          }else {
-            this.typet='1';
-            this.shm=true;
-            this.lg=false;
-          }
+          // if(i.LB_LYD==undefined){
+          //   this.radio1='0';
+          // }
+          // if(i.LB_QWD==undefined){
+          //   this.radio2='0';
+          // }
+          // if(i.LB_DJDW==undefined){
+          //   this.typet='1';
+          //   this.shm=true;
+          //   this.lg=false;
+          // }else if(i.LB_DJDW=='1'){
+          //    this.typet='2';
+          //    this.shm=false;
+          //    this.lg=true;
+          // }else {
+          //   this.typet='1';
+          //   this.shm=true;
+          //   this.lg=false;
+          // }
+          this.xid=i.DTID;
           this.detailsDialogVisible = true;
-          this.form=i;
+          // this.form=i;
         },
       }
     }

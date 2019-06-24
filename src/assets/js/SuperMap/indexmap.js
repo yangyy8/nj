@@ -4,15 +4,21 @@ var layerGroup;
 var MAP_SIZE = [11, 15];
 var SEARCH_HEIGHT = 100;
 var esservice;
+var type;
+var centers=[32.03613281, 118.78211975];
+
 //地图加载
-export function createMapL(id,mc,num) {
+export function createMapL(id,mc,num,t) {
+type=t;
+
+var ss=getcenter(id,function(centers){
   map = L.map('mainMap', {
     crs: L.CRS.EPSG4326,
     preferCanvas: true,
-    center: [32.03613281, 118.78211975],
+    center: centers,
     maxZoom: 18,
+    minZoom: 8,
     zoom: 10,
-    maxZoom: 16,
     zoomControl: false,
     attributionControl: false,
     closePopupOnClick: false //点击地图不关闭popup框
@@ -25,17 +31,16 @@ export function createMapL(id,mc,num) {
     transparent: true
   }).addTo(map);
   markerLayer = L.featureGroup().addTo(map);
-
-  esservice = new SuperMap.ElasticSearch("http://10.33.69.24:9200/");
   getSearch(id,mc,num);
+  // esservice = new SuperMap.ElasticSearch("http://10.33.69.24:9200/");
+});
+
   //var url = "http://10.33.66.183:8090/iserver/services/map-ugcv5-njcaihuimapsymbol/rest/maps/nj_caihui@mapsymbol";
   //加载图层
   //L.supermap.tiledMapLayer(url).addTo(map);
 }
 
-//查询行政区划
-export function getSearch(id,mc,num) {
-  markerLayer.clearLayers();
+function getcenter(id,callback) {
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
       name: "XZ_QU_A@ORCL_gt8",
@@ -50,20 +55,62 @@ export function getSearch(id,mc,num) {
     .getFeaturesBySQL(sqlParam, function(serviceResult) {
       var resultData = serviceResult.result.features;
       var resultList = resultData.features;
+      for (var index = 0; index < resultList.length; index++) {
+       var cc = L.latLngBounds(changeLonAndLat(resultList[index].geometry.coordinates)).getCenter();
+       centers=[];
+       centers.push(cc.lat);
+       centers.push(cc.lng);
+      }
+
+callback(centers);
+
+    });
+}
+//查询行政区划
+export function getSearch(id,mc,num) {
+  console.log(id);
+  var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
+    queryParameter: {
+      name: "gajg_fj_3201_pg@ORCL_gt8",
+      //attributeFilter: "ADMINCODE='1CHN" + id + "'"
+      attributeFilter:"DWBM='" + id + "000000'"
+    },
+    datasetNames: ["ORCL_gt8:gajg_fj_3201_pg"]
+  });
+
+  // 列出选中的区域。
+  L.supermap
+    .featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data")
+    .getFeaturesBySQL(sqlParam, function(serviceResult) {
+      var resultData = serviceResult.result.features;
+      var resultList = resultData.features;
+
       var layers = [];
       for (var index = 0; index < resultList.length; index++) {
+
         var resultLayer = L.polygon(changeLonAndLat(resultList[index].geometry.coordinates), {
           color: 'red',
           fillColor: 'red',
           fillOpacity: 0.2,
-          className: 'pcs-layer'
+          className: 'pcs-layer',
         });
-        var center = L.latLngBounds(changeLonAndLat(resultList[index].geometry.coordinates)).getCenter();
+
         layers.push(resultLayer);
+       var cc = L.latLngBounds(changeLonAndLat(resultList[index].geometry.coordinates)).getCenter();
+       console.log(cc.lat);
+       console.log(cc.lng);
+       centers=[];
+       centers.push(cc.lat);
+       centers.push(cc.lng);
       }
+
       layerGroup = L.layerGroup(layers);
       map.addLayer(layerGroup);
+
     });
+
+
+
 
   //   var parameters = new Array();
   //   parameters.push({index: "es_lz_lzxx", type: "doc"});
@@ -141,8 +188,12 @@ export function queryZrqByServer(data) {
     for (var i = 0; i < features.length; i++) {
       var center = L.latLngBounds(changeLonAndLat(features[i].geometry.coordinates)).getCenter();
       //features[i].properties.DWDM;
-
-      renderMarker([center.lat, center.lng], data);
+      console.log('data.dm',data.dm+'--'+ center.lng);
+      if(data.dm=="320112000000"){
+      renderMarker([center.lat+0.05, center.lng-0.07], data);
+    }else {
+        renderMarker([center.lat, center.lng], data);
+      }
 
     }
   });
@@ -152,9 +203,9 @@ export function renderMarker(point, data) {
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
-    html: "<div style='line-height:50px;text-align:center'>" + data.num + "</div>",
+    html: "<div style='line-height:48px;text-align:center;font-size:16px;'>" + data.num + "</div>",
     className: 'my-div-icon',
-    iconSize: 65
+    iconSize: 60
   });
   var tempMarker = L.marker(point, {
     icon: myIcon,
@@ -175,27 +226,20 @@ export function renderMarker(point, data) {
     // alert(e.target.options.pcsmc);
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
-
      var  searchResult=window.vm.getpcs(data.dm,function(data){
-
-
        if(data!=undefined){
        for (var i = 0; i < data.length; i++) {
             renderPCS(data[i]);
        }
       }
      });
-
-
-
   });
 }
-
 
 //获取派出所
 function renderPCS(data) {
   markerLayer.clearLayers();
-
+console.log();
   //数据集SQL查询服务参数
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
@@ -225,7 +269,7 @@ export function renderMarkerpcs(point, data) {
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
-    html: "<div style='line-height:50px;text-align:center'>" + data.count + "</div>",
+    html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
     className: 'my-div-icon icon1',
     iconSize: 50
   });
@@ -294,19 +338,26 @@ function renderBzhid(data) {
   //   else {
   //     alert("地图库中未录入该地址的坐标。");
   //   }
+   var uurl="JWPTBH='"+data.dm+"'";
 
-    mapSqlSearch("JWPTBH='"+data.dm+"'", 0, 5, function(features) {
+   if(type=="C")
+   {
+     var mm=data.dm.split("号");
+     uurl="DZMC='"+mm[0]+"号'";
+   }
+   console.log(uurl);
+    mapSqlSearch(uurl, 0, 5, function(features) {
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
         // var y = features[0].properties.SMY;
        for (var i = 0; i < features.length; i++) {
          console.log(features[i]);
-         var mc=features[i].properties.JLXDZXZ;
+         var mc=features[i].properties.DZMC;
         renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
       }
       else {
-        alert("地图库中未录入该地址的坐标。");
+        //alert("地图库中未录入该地址的坐标。");
       }
     });
 
@@ -315,8 +366,7 @@ function renderBzhid(data) {
 
 function mapSqlSearch(attributeFilter, from, to, callback) {
   //向服务器发送请求，并对返回的结果进行处理
-      var url = "http://10.33.66.183:2333/iserver/services/data-gt8/rest/data";
-
+  var url = "http://10.33.66.183:2333/iserver/services/data-gt8/rest/data";
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
                           queryParameter: {
                               name: "dz_mlpxx_3201_pt@ORCL_gt8",
@@ -337,8 +387,8 @@ console.log('--==',point);
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
-    html: "<div style='line-height:50px;text-align:center'>" + data.count + "</div>",
-    className: 'my-div-icon icon1',
+    html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
+    className: 'my-div-icon icon2',
     iconSize: 50
   });
   var tempMarker = L.marker(point, {
@@ -360,8 +410,8 @@ console.log('--==',point);
     // alert(e.target.options.pcsmc);
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
- console.log('data.dm',data.dm);
-    window.vm.getRyxx(1,10,data.dm,mc);
+
+    window.vm.getRyxx(1,5,data.dm,mc,'');
 
   });
 }

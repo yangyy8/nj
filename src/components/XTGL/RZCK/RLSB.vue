@@ -19,7 +19,7 @@
               <div class="tkinr" v-if="lh">
                  <el-row :gutter="1" style="text-align:left;color:rgba(19,210,247,1)">
                    <el-col :span="24" style="margin-top:50px;">
-                    <span style="float:left;"> 相 似 度：</span> <slider :min='0' :max='100' v-model="pd.xsd" class="input-input"></slider>
+                    <span style="float:left;"> 相 似 度：</span> <slider :min='0' :max='100' v-model="per" class="input-input"></slider>
                    </el-col>
                    <el-col :span="24" style="margin-top:90px;">人员性别：
                      <el-button :class="tshow ? 'sex' : 'sexx'"  circle @click="getXB(1)">男</el-button>
@@ -38,10 +38,11 @@
 <script>
 import slider from '../../common/slider.vue'
 export default {
-    components:{slider},
+  components:{slider},
   data(){
     return {
-      pd:{xsd:80},
+      pd:{},
+      per:80,
       limitNum:1,
       fileList2: [],
       uploadDialogVisible:false,
@@ -204,6 +205,7 @@ export default {
              this.$message.error('请上传图片!');
             return;
        }
+        this.pd.xsd=this.Global.xsd;
         this.$router.push({name:'TZSF',query:{row:this.pd}});
       },
   },

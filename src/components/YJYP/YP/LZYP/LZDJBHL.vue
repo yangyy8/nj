@@ -21,7 +21,7 @@
                     </el-date-picker>
                  </div>
                 </el-col>
-                <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
+                <el-col :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">证件种类：</span>
                     <el-select v-model="pd.ZJZL" multiple  :multiple-limit="5"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
@@ -76,7 +76,6 @@
                       </el-option>
                     </el-select>
                 </el-col> -->
-
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">所属分局：</span>
                     <div class="input-input t-fuzzy-12 t-flex">
@@ -289,6 +288,8 @@ import echarts from 'echarts'
           this.fjlist = r.data.SSFJ;
         })
     },
+
+
     getRadiofj(n){
       if(n==true){
         this.pd.LRDW_BH_Like='0'

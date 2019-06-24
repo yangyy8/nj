@@ -4,7 +4,7 @@
         <div class="thunk" ref="trunk" :style="{left}">
             <div class="block"></div>
             <div class="tips">
-            <span>{{scale*100}} %</span>
+            <span>{{scale*100}}%</span>
             <i class="fas fa-caret-down" ></i>
         </div>
         </div>
@@ -44,10 +44,14 @@
                 _this.per = Math.ceil((_this.max - _this.min) * scale + _this.min);
                 _this.per = Math.max(_this.per,_this.min);
                 _this.per = Math.min(_this.per,_this.max);
-            }
+                _this.Global.xsd=_this.per;
+
+
+            }          
             document.onmouseup = function(){
                 document.onmousemove = document.onmouseup = null;
             }
+
             return false;
         }
       },

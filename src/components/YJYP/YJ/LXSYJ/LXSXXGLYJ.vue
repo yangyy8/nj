@@ -48,9 +48,11 @@
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">处理状态：</span>
                   <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="1" label="1 - 未通过">
-                    </el-option>
-                    <el-option value="0" label="0 - 已通过">
+                    <el-option
+                      v-for="item in $store.state.clzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -155,7 +157,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{}},
+      pd: {BJSJ_DateRange:{begin:'',end:''}},
       pd0:{},
       options: this.pl.ps,
       tableData: [],
@@ -164,7 +166,9 @@ export default {
   },
   activated(){
     this.type=this.$route.query.type;
-    console.log('=======',this.type);
+
+    this.pd={BJSJ_DateRange:{begin:'',end:''}};
+    this.pd0={};
      if(this.type==undefined){
        this.type=0;
      }
@@ -202,7 +206,9 @@ export default {
      this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
+
     this.$store.dispatch('getGjdq');
+    this.$store.dispatch('getClzt');
   },
   methods: {
     pageSizeChange(val) {
@@ -240,8 +246,7 @@ export default {
       }
     },
     getXM(zw,yw){
-      console.log('------1',zw);
-      console.log('------2',yw);
+
       if(zw!=undefined && yw!=undefined){
         return yw+"("+zw+")";
       }else {

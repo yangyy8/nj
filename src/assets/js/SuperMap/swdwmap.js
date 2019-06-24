@@ -24,10 +24,16 @@ export function createMapL() {
     transparent: true
   }).addTo(map);
   markerLayer = L.featureGroup().addTo(map);
-   // esservice = new SuperMap.ElasticSearch("http://10.33.69.24:9200/");
+ esservice = new SuperMap.ElasticSearch("http://10.33.69.24:9200/");
   //var url = "http://10.33.66.183:8090/iserver/services/map-ugcv5-njcaihuimapsymbol/rest/maps/nj_caihui@mapsymbol";
   //加载图层
   //L.supermap.tiledMapLayer(url).addTo(map);
+}
+
+export function getSearh(obj){
+
+
+
 }
 
 export function queryZrqByServer(data) {
@@ -61,7 +67,7 @@ export function renderMarker(point, data) {
   // 画圆
   var myIcon = L.divIcon({
     html: "<div style='line-height:40px;text-align:center'>" + data.num + "</div>",
-    // className: 'my-div-icon',
+    className: 'my-div-icon',
     iconSize: 40
   });
   var tempMarker = L.marker(point, {

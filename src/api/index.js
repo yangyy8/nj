@@ -61,7 +61,7 @@ function apiAxios (method, url, params, success, failure) {
         withCredentials: false
     })
     .then(function (res) {
-
+  
       if (res.status === 200) {
           if(loadingInstance1){
             loadingInstance1.close();
@@ -72,7 +72,9 @@ function apiAxios (method, url, params, success, failure) {
 
           }
           if(res.data.code=='1000001'){
+            console.log('1111',res.data.code);
             window.location.href ="#/";
+
           }else if(!res.data.success){
             // console.log(",,,,")
             Message.error(res.data.message);

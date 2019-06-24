@@ -95,11 +95,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出入口岸名称：</span>
-          <span class="input-input detailinput">  {{crjinfo.CRKAMC}}</span>
+          <span class="input-input detailinput">  {{crjinfo.IOPORT_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出入境标识：</span>
-          <span class="input-input detailinput">  {{crjinfo.CRJBSMC}}</span>
+          <span class="input-input detailinput">  {{crjinfo.CRJBS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">处理错误：</span>
@@ -127,7 +127,7 @@ export default {
   },
   mounted(){
       this.initData();
-      console.log('this.pp.RGUID',this.pp.RGUID);
+      console.log('this.pp.RGUID',this.type);
    },
   watch:{
       type: function(val){

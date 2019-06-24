@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="yymain">
     <div class="yycontent" style="margin-top: 0px!important;">
-      <div class="mb-15">
+      <!-- <div class="mb-15">
       <div class="yylbt mb-15">基本信息</div>
       <el-row type="flex" class="yyf">
         <el-col :span="24" class="stu-left">
@@ -44,7 +44,7 @@
         </el-col>
 
       </el-row>
-    </div>
+    </div> -->
       <div class="mb-15">
         <div class="yylbt mb-15">人员基本信息</div>
         <el-row type="flex" class="yyf">
@@ -424,8 +424,8 @@
 
        </el-col>
        <el-col :span="4"  class="down-btn-area">
-         <el-button type="primary"  size="small" class="mb-5" @click="" >确定</el-button>
-         <el-button type="warning" size="small" class="m0" @click="$router.go(-1)">返回</el-button>
+         <el-button type="primary"  size="small" class="mb-5" @click="chuli()" >确定</el-button>
+         <el-button type="warning" size="small" class="m0" @click="back()">返回</el-button>
        </el-col>
      </el-row>
      <el-row type="flex">
@@ -459,6 +459,7 @@ export default {
       tableData5:[],
       pd:{},
       px:{},
+      pcl:{},
       bshow:false,
       xtitle:"",
       detailsDialogVisible:false,
@@ -626,17 +627,27 @@ export default {
           this.TotalResult2=r.data.totalResult;
         })
     },
+    back(){
+      this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
+    },
     chuli(){
+      if(this.pd.CHANGE_RESON=="" || this.pd.CHANGE_RESON==undefined)
+      {
+        this.$alert('甄别结果不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        return;
+      }
+      this.pcl.YJID=this.row.YJID;
+      this.pcl.CLJG=this.pc.CHANGE_RESON;
+      this.pcl.CLDW=this.$store.state.orgname;
+      this.pcl.CLR=this.withname;
       let p = {
-        "yjid": this.yjid,
-        "cljg": this.form.cljg,
-        "cldw": '',
-        "clr":'',
-        "shjg":'',
+        "pd":this.pcl
       };
       this.$api.post('/educationParController/saveWarningInfo', p,
         r => {
-
+          this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
         })
     }
   }

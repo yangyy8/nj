@@ -4,6 +4,7 @@ var layerGroup;
 var MAP_SIZE = [11, 15];
 var SEARCH_HEIGHT = 100;
 var esservice;
+var resultLayer;
 //地图加载
 export function createMapL() {
   map = L.map('mainMap', {
@@ -36,7 +37,7 @@ export function createMapL() {
 
 // 左边列表点击
 export	function createDWMap(id, mc) {
-  console.log('id',id);
+
 		//map.zoomTo(14);
 		markerLayer.clearLayers();
 		mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5, function(features) {
@@ -44,17 +45,101 @@ export	function createDWMap(id, mc) {
 				var x = features[0].properties.SMX;
 				var y = features[0].properties.SMY;
 				var tm = L.marker([y, x]).bindPopup(mc);
-				markerLayer.addLayer(tm);
-				tm.openPopup();
-				map.flyTo(L.latLng(y, x), 12);
-				// getStudents(id, parseFloat(x), parseFloat(y));
-			}
-			else {
-				alert("地图库中未录入该地址的坐标。");
-			}
-		});
-	}
 
+				markerLayer.addLayer(tm);
+				// tm.openPopup();
+				// map.flyTo(L.latLng(y, x), 12);
+        var arr=[];
+        arr.push(y);
+        arr.push(x);
+        var relt=window.vm.getXXDZ(id,function(data) {
+
+        for (var i = 0; i < data.length; i++) {
+              var num=data[i].count;
+              mapSqlSearch("dz_mlpxx_3201_pt", "JWPTBH='" +data[i].dm + "'", 0, 5, function(features) {
+                console.log(num);
+                for (var j = 0; j < features.length; j++) {
+                  var mc=features[j].properties.JLXDZXZ;
+                  var dm=features[j].properties.JWPTBH;
+                    renderMarkerbzh(features[j].geometry.coordinates.reverse(),dm,mc,arr,num);
+                 }
+              });
+            }
+    });
+// getStudents(id, parseFloat(x), parseFloat(y));
+  }
+  else {
+  alert("地图库中未录入该地址的坐标。");
+  }
+  });
+
+
+}
+
+  export function renderMarkerbzh(point,dm,mc,arr,num) {
+
+     measureDistance(point[0],point[1],arr[0],arr[1],dm,mc,num);
+    //debugger;
+    // 画圆
+    // var myIcon = L.divIcon({
+    //   html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
+    //   className: 'my-div-icon lz',
+    //   iconSize: 50
+    // });
+    // var tempMarker = L.marker(point, {
+    //   icon: myIcon,
+    //   pcsdm: data.dm,
+    //   pcsmc: mc,
+    //   num: data.count
+    // });
+    // markerLayer.addLayer(tempMarker);
+    //
+    // markerLayer.on("mousemove", function(e) {
+    //   e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "总人数：" + e.layer.options.num + "</div>").openPopup();
+    // });
+    // markerLayer.on("mouseout", function(e) {
+    //   e.layer.closePopup();
+    // });
+    //
+    // tempMarker.on('click', function(e) {
+    //   // alert(e.target.options.pcsmc);
+    //  //  requestTableData(e.target.options.pcsdm, 1);
+    //  //从库里得到派出所数据
+    //
+    // //  window.vm.getRyxx(1,5,data.dm,mc,'');
+    //
+    // });
+  }
+  function measureDistance(x1,y1,x2,y2,dm,mc,num) {
+
+         var polyLine = L.polyline([[x1, y1], [x2, y2]], {color: "red"});
+         var marker1 = L.marker([x1, y1]), marker2 = L.marker([x2, y2]);
+
+          // markerLayer.addLayer(marker2);
+         var distanceMeasureParam = new SuperMap.MeasureParameters(polyLine);
+         L.supermap
+             .measureService("http://10.33.66.183:2334/iserver/services/map-world/rest/maps/World")
+             .measureDistance(distanceMeasureParam, function (serviceResult) {
+               var  gl=parseInt(serviceResult.result.distance/1000);
+
+               if(gl>window.vm.jlsz){
+                 markerLayer.addLayer(polyLine);
+                 markerLayer.addLayer(marker1);
+               }else {
+                 return;
+               }
+                 var content = "<div style='line-height:25px;'>距离： 大约 <font style='color:red;font-weight:bold;font-size:16px;'>" + gl  + "</font>  公里<br/>"+mc+" <br/>总人数："+num+"</div>";
+
+                 marker1.bindPopup(content).openPopup(marker1.getLatLng());
+                 marker1.on("mousemove", function(e) {
+                    marker1.bindPopup(content).openPopup(marker1.getLatLng());
+                 });
+                 marker1.on('click', function(e) {
+
+                      window.vm.getRyxx(1,5,dm,mc,'');
+                 });
+             });
+ }
   //dz_mlpxx_3201_pt	DH_PT学校
 export function mapSqlSearch(tableName, attributeFilter, from, to, callback) {
   //向服务器发送请求，并对返回的结果进行处理
@@ -67,6 +152,7 @@ export function mapSqlSearch(tableName, attributeFilter, from, to, callback) {
                           fromIndex:0,
                           toIndex:10
                       });
+
    L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesBySQL(sqlParam, function (serviceResult) {
           var features = serviceResult.result.features.features;
     callback(features);

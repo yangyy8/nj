@@ -8,10 +8,11 @@
           <el-col :span="24" class="stu-left">
             <el-row type="flex" class="stu-row">
               <el-col :span="6">
-                <span>姓名：</span>
-                <label v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
-                <label v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
-                <label v-else>{{baseData.YWXM}}</label>
+             <span class="texth">  姓名：
+                <label  v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
+                <label  v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
+                <label  v-else>{{baseData.YWXM}}</label>
+              </span>
               </el-col>
               <el-col :span="6" class="stu-col-row2">
                 <span>性别：</span>
@@ -138,11 +139,11 @@
                label="出入境日期">
              </el-table-column>
              <el-table-column
-               prop="CRJBSMC"
+               prop="CRJBS_DESC"
                label="出入境状态">
              </el-table-column>
              <el-table-column
-               prop="CRKAMC"
+               prop="IOPORT_DESC"
                label="出入境口岸">
              </el-table-column>
              <el-table-column
@@ -593,7 +594,7 @@
                    </el-col>
                    <el-col :span="12" class="input-item">
                      <span class="input-text">签证种类：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QZZL}}</span>
+                     <span class="input-input detailinput">  {{qzinfo.QZZL_DESC}}</span>
                    </el-col>
                    <el-col :span="12" class="input-item">
                     <span class="input-text">签证有效期：</span>
@@ -621,11 +622,11 @@
                    </el-col>
                    <el-col :span="12" class="input-item">
                      <span class="input-text">签发机关：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QFJG}}</span>
+                     <span class="input-input detailinput">  {{qzinfo.QFJG_DESC}}</span>
                    </el-col>
                    <el-col :span="12" class="input-item">
                      <span class="input-text">签发地：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QFD}}</span>
+                     <span class="input-input detailinput">  {{qzinfo.QFD_DESC}}</span>
                    </el-col>
                    <el-col :span="12" class="input-item">
                      <span class="input-text">居留证件种类：</span>
@@ -925,7 +926,9 @@ export default {
   activated() {
     this.yjType = this.$route.query.yjType;
     this.row = this.$route.query.row;
-    if(this.row.SHZT=="1"){
+    this.sshow=true;
+     this.pd={};
+    if(this.row.CLZT==0){
       this.sshow=false;
     }
         this.getList(1,10,this.url0, 0); //人员基本信息
@@ -950,7 +953,7 @@ export default {
       }
       if(this.yjType=="10"){
             // this.getList(this.url10, 10); //预警信息
-            this.getList(this.CurrentPage5,this.pageSize5,this.url5, 5); //非法就业
+        this.getList(this.CurrentPage5,this.pageSize5,this.url5, 5); //非法就业
       }
 
   },
@@ -1106,9 +1109,8 @@ export default {
           this.qzinfo = n;
           break;
         case 2:
-
           this.xid=n.RGUID;
-          console.log("nnn---",this.type);
+          console.log("nnn---",this.xid);
           this.CRJDialogVisible = true;
           break;
         case 3:
@@ -1148,6 +1150,7 @@ export default {
             message: '处理成功！',
             type: 'success'
            });
+            this.$router.go(-1);
           }else {
             this.$message.error('处理失败了');
           }
@@ -1165,6 +1168,7 @@ export default {
 .el-dialog {
   width: 60%!important;
 }
+.texth{line-height: 20px;}
 </style>
 <style>
 
