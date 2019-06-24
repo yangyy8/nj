@@ -2,7 +2,7 @@
   min-height: 350px;
 }
 .t-choose{
-  padding: 0 0 20px 5%;
+  padding: 0 0 20px 0%;
 }
 .t-tj{
   background-color: #f5f7fa;
@@ -33,7 +33,7 @@
 }
 .t-ak-tab-pane{
   border: 1px #dddddd solid;
-  padding: 30px 70px 30px 0px;
+  padding: 30px 5% 30px 0%;
   border-radius: 10px;
 }
 .t-mt10{
@@ -61,4 +61,17 @@
    border-radius: 4px;
    top:-5px;
    right:0;
+ }
+ .t-flex{
+    display: flex;
+    justify-content: space-between;
+  }
+ .t-fuzzy-12 .el-select{
+   width: 85%!important;
+ }
+ .t-fuzzy-8 .el-select{
+   width: 78%!important;
+ }
+ .t-fuzzy-12 .el-checkbox,.t-fuzzy-8 .el-checkbox{
+   line-height: 2!important;
  }

@@ -14,7 +14,7 @@
            <el-row class="t-choose">
              <el-col  :sm="24" :md="12" :lg="8"  class="input-item t-tjsr">
                <span class="input-text t-tj">选择组合查询条件：</span>
-               <el-select v-model="queryTerm" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input t-sr">
+               <el-select v-model="queryTerm" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input t-sr" @change="conditionChange">
                  <el-option value="1" label="证件号码+证件种类+国籍"></el-option>
                  <el-option value="2" label="姓名+性别+出生日期+国籍"></el-option>
                </el-select>
@@ -103,7 +103,7 @@
 
           <el-row type="flex" class="t-mt20">
              <el-col :span="24">
-                <el-button type="primary" size="small"  @click="getList()">&nbsp;&nbsp;高级查询&nbsp;&nbsp;</el-button>
+                <el-button type="primary" size="small"  @click="getListBet()">&nbsp;&nbsp;高级查询&nbsp;&nbsp;</el-button>
              </el-col>
            </el-row>
        </div>
@@ -125,26 +125,42 @@ export default {
     }
   },
   mounted() {
-    this.gjshow=true;
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getXB');
     this.$store.dispatch('getZjzl');
   },
   methods: {
-    getList() {
+    getList(){
+      this.$router.push({name:'RYHX_XQ'})
+    },
+    conditionChange(){
+      this.V.$reset('demo1')
+    },
+    getListBet() {
       let p={}
       if(this.queryTerm=='1'){
         p=this.pd1
+        this.V.$submit('demo1', (canSumit,data) => {
+          if(!canSumit) return
+          this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',p,
+           r =>{
+
+           })
+        })
       }else if(this.queryTerm=='2'){
         p=this.pd2
-      }
-      this.V.$submit('demo1', (canSumit,data) => {
-        if(!canSumit) return
+        if((this.pd2.zwxm==''||this.pd2.zwxm==undefined)&&(this.pd2.ywxm==''||this.pd2.ywxm==undefined)){
+          this.$alert('中文姓名和英文姓名二者必选其一！', '提示', {
+            confirmButtonText: '确定',
+          });
+          return false
+        }
         this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',p,
          r =>{
 
          })
-      })
+      }
+
 
       // if (this.zjhm == "") {
       //   this.$alert('证件号码不能为空！', '提示', {

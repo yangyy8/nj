@@ -68,27 +68,32 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="3" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input"  style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in fjlist"
-                        :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-8 t-flex">
+                      <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="5" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in fjlist"
+                          :key="item.dm"
+                          :label="item.dm+' - '+item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>&nbsp;&nbsp;
+                      <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">派出所：</span>
-                    <el-select v-model="pd.LRDW" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in pcslist"
-                        :key="item.dm"
-                        :label="item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-8 t-flex">
+                      <el-select v-model="pd.LRDW" multiple :multiple-limit="5"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in pcslist"
+                          :key="item.dm"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                      <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    </div>
+
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">旅馆名称：</span>
@@ -365,14 +370,14 @@ import echarts from 'echarts'
          console.log('ppppp',p,that.pd);
          that.page=1;
          that.detailOperion=true;
-         that.$api.post(that.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
-          r =>{
-            if(r.success){
-              that.tableData=r.data.resultList;
-              that.TotalResult=r.data.totalResult;
-              that.listDialogVisible=true;
-            }
-          })
+         // that.$api.post(that.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
+         //  r =>{
+         //    if(r.success){
+         //      that.tableData=r.data.resultList;
+         //      that.TotalResult=r.data.totalResult;
+         //      that.listDialogVisible=true;
+         //    }
+         //  })
        })
       this.lineChart.resize()
    },

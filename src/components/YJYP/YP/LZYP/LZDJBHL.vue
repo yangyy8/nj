@@ -9,21 +9,21 @@
                   <span class="input-text">时间范围：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd0.begin" format="yyyy-MM-dd HH:ss:mm"
-                       type="datetime" size="small" value-format="yyyyMMddHHssmm"
+                       v-model="pd0.begin" format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd0.end" format="yyyy-MM-dd HH:ss:mm"
-                        type="datetime" size="small" value-format="yyyyMMddHHssmm"
-                        placeholder="结束时间" >
+                        v-model="pd0.end" format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyyMMdd"
+                        placeholder="结束时间">
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">证件种类：</span>
-                    <el-select v-model="pd.ZJZL" multiple  :multiple-limit="3"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.ZJZL" multiple  :multiple-limit="5"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.zjzl"
                         :key="item.dm"
@@ -34,7 +34,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">签证种类：</span>
-                    <el-select v-model="pd.QZZl" multiple :multiple-limit="3"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.QZZl" multiple :multiple-limit="5"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.qzzl"
                         :key="item.dm"
@@ -45,7 +45,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.GJDQ" multiple :multiple-limit="3"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQ" multiple :multiple-limit="5"   collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.gjdq"
                         :key="item.dm"
@@ -56,7 +56,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">停留事由：</span>
-                    <el-select v-model="pd.JLSY" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.JLSY" multiple :multiple-limit="5"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.rjsy"
                         :key="item.dm"
@@ -79,31 +79,35 @@
 
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="3" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input"  style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in fjlist"
-                        :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-12 t-flex">
+                      <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="5" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in fjlist"
+                          :key="item.dm"
+                          :label="item.dm+' - '+item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>&nbsp;&nbsp;
+                      <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">派出所：</span>
-                    <el-select v-model="pd.LRDW" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in pcslist"
-                        :key="item.dm"
-                        :label="item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-12 t-flex">
+                      <el-select v-model="pd.LRDW" multiple :multiple-limit="5"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in pcslist"
+                          :key="item.dm"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>&nbsp;&nbsp;
+                      <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    </div>
                 </el-col>
-                <el-col  :sm="24" :md="12" :lg="24"  class="input-item">
-                    <span class="input-text" style="width:11%!important">旅馆名称：</span>
-                    <el-select v-model="pd.DJDWDM" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" style="width:85%!important">
+                <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
+                    <span class="input-text">旅馆名称：</span>
+                    <el-select v-model="pd.DJDWDM" multiple :multiple-limit="5"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.zsbg"
                         :key="item.dm"
@@ -231,7 +235,7 @@ import echarts from 'echarts'
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201',LB_DJDW:'1'},
+      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201',LB_DJDW:''},
       pd0:{},
       fjlist:[],
       pcslist:[],
@@ -320,8 +324,7 @@ import echarts from 'echarts'
       };
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getCountByParam', p,
         r => {
-            console.log('====',r.data);
-            this.drawLine(r.data.legend,r.data.header,r.data.series);
+          this.drawLine(r.data.legend,r.data.header,r.data.series);
         })
 
     },
@@ -394,7 +397,10 @@ import echarts from 'echarts'
         console.log('ppppp',p,that.pd);
         that.page=1;
         that.detailOperion=true;
-        // this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams')
+        // that.$api.post(that.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
+        //   r =>{
+        //
+        //   })
       })
       this.liangChart.resize();
     },
