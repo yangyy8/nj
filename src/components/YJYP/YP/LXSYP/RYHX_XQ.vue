@@ -1,128 +1,180 @@
 <template lang="html">
-   <div class="yycontent">
-  <div class="tshu" id="target">
-       <el-row>
-          <el-col :span="3" style="">
-           <img src="../../../../assets/img/mrzp.png" v-if="imgshow">
-           <img :src="imgdm" v-else>
-           <el-button type="primary"  size="mini" style="width:80%" @click="getZP()">历史照片</el-button>
-          </el-col>
-          <el-col :span="21" class="bainfo">
-              <el-row :gutter="3">
-                <el-col :span="8">
-                  英文姓名：{{baseinfo.YWXM}}
-                </el-col>
-                <el-col :span="8">
-                  中文姓名：{{baseinfo.ZWXM}}
-                </el-col>
-                <el-col :span="8">
-                  性别：{{baseinfo.XB_DESC}}
-                </el-col>
-                <el-col :span="8">
-                  国家地区：{{baseinfo.GJDQ_DESC}}
-                </el-col>
-                <el-col :span="8">
-                  宗教信仰：{{baseinfo.ZJXY_DESC}}
-                </el-col>
-                <el-col :span="8">
-                  出生日期：{{baseinfo.CSRQ}}
-                </el-col>
-                <el-col :span="8">
-                  证件号码：{{baseinfo.ZJHM}}
-                </el-col>
-              </el-row>
-              <el-row class="mb-10">
-                <el-col :span="22">
-                  <span v-for="(item,i) in labs">
-                  <el-button :type="suc[i]" size="small" @click="delid(item.BQBH)">{{item.MC}}</el-button>  &nbsp;
-                  </span>
-                  <span>&nbsp;
-                    <el-button type="primary" plain  size="small" icon="el-icon-plus" @click="addLable">添加标签</el-button>
-                    <el-button type="warning" plain  size="small" icon="el-icon-delete" @click="delLable">删除标签</el-button>
-                  </span>
+   <div class="">
+    <div class="tshu" id="target">
+      <div class="yycontent">
+        <el-row>
+           <el-col :span="3" style="">
+            <div class="photo-content">
+              <img :src="imgdm" @click="getZP()" style="height:160px;width:128px;">
+              <div class="hisPhoto">
+                查看历史照片
+              </div>
+            </div>
+           </el-col>
+           <el-col :span="21" class="bainfo">
+               <el-row :gutter="3">
+                 <el-col :span="8">
+                   英文姓名：{{baseinfo.ywxm}}
+                 </el-col>
+                 <el-col :span="8">
+                   中文姓名：{{baseinfo.zwxm}}
+                 </el-col>
+                 <el-col :span="8">
+                   性别：{{baseinfo.xb}}
+                 </el-col>
+                 <el-col :span="8">
+                   国家地区：{{baseinfo.gjdq}}
+                 </el-col>
+                 <el-col :span="8">
+                   出生日期：{{baseinfo.csrq}}
+                 </el-col>
+                 <el-col :span="8">
+                   证件号码：{{baseinfo.zjhm}}
+                 </el-col>
+               </el-row>
+               <el-row class="mb-10">
+                 <el-col :span="22">
+                   <span v-for="(item,i) in labs">
+                   <el-button :type="suc[i]" size="small" @click="delid(item.BQBH)">{{item.MC}}</el-button>  &nbsp;
+                   </span>
+                   <span>&nbsp;
+                     <el-button type="primary" plain  size="small" icon="el-icon-plus" @click="addLable">添加标签</el-button>
+                     <el-button type="warning" plain  size="small" icon="el-icon-delete" @click="delLable">删除标签</el-button>
+                   </span>
 
-                </el-col>
-                <el-col :span="2">
-                  <el-button type="primary" size="small" @click="$router.go(-1)" style="margin-left:15px;">返 回</el-button>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
+                 </el-col>
+                 <el-col :span="2">
+                   <el-button type="primary" size="small" @click="$router.go(-1)" style="margin-left:15px;">返 回</el-button>
+                 </el-col>
+               </el-row>
+           </el-col>
+        </el-row>
+      </div>
 
-  <el-table
-      :data="tableData10"
-      border
-      style="width: 100%" class="stu-table">
-      <el-table-column
-        prop="ZJZL_DESC"
-        label="证件种类">
-      </el-table-column>
-      <el-table-column
-        prop="ZJHM"
-        label="证件号码">
-      </el-table-column>
-      <el-table-column
-        prop="ZJYXQ"
-        label="证件有效期">
-      </el-table-column>
+      <div class="yycontent">
 
-    </el-table>
-</el-col>
-                  </el-row>
-
-          </el-col>
-       </el-row>
-
-          <div class="stru-lal">签证信息</div>
-       <el-table
-           :data="tableData11"
+        <div class="ak-tabs bb" style="display:flex;justify-content: space-between;margin-bottom:10px">
+            <div class="qz" id="box1">签证信息</div>
+            <div class="t-flex" style="">
+              <!-- <div class="ak-tab-item hand" :class="{'ak-checked':pageQz==0}" @click="pageQz=0;" v-if="tableDataQ.length!=0">
+                全部
+              </div> -->
+              <div class="ak-tab-item hand" :class="{'ak-checked':pageQz==(ind+1)}" @click="pageQz=(ind+1);" v-for="(i,ind) in tabLength">
+                证件{{ind+1}}
+              </div>
+            </div>
+        </div>
+        <!-- <div v-if="pageQz==0&&tableDataQ.length!=0">
+          <el-row :gutter="3" class="bainfo">
+            <el-col :span="6">
+              证件种类：{{j.xczjzl_desc}}
+            </el-col>
+            <el-col :span="6">
+              证件号码：{{j.xczjhm}}
+            </el-col>
+            <el-col :span="6">
+              证件有效期：{{j.xczjyxqz}}
+            </el-col>
+          </el-row>
+          <el-table
+           :data="tableDataQ"
            border
            style="width: 100%;margin-left:5px;" class="stu-table">
            <el-table-column
-             prop="QZZL_DESC"
+             prop="qzzl_desc"
              label="签证种类">
            </el-table-column>
            <el-table-column
-             prop="QZHM"
+             prop="qzhm"
              label="签证号码">
            </el-table-column>
            <el-table-column
-             prop="QZYXQ"
+             prop="qzyxqz"
              label="签证有效期">
            </el-table-column>
            <el-table-column
-             prop="QFJG_DESC"
-             label="签证机关">
+             prop="qzqfjg"
+             label="签发单位">
              </el-table-column>
              <el-table-column
-               prop="QFRQ"
+               prop="qzqfrq"
                label="签发日期">
              </el-table-column>
              <el-table-column
-               prop="QZCS"
-               label="签证次数">
+               prop="qzyxcs"
+               label="签证有效次数">
              </el-table-column>
              <el-table-column
-               prop="TLSY"
-               label="停留事由">
+               prop="jlxksy_desc"
+               label="居留许可事由">
              </el-table-column>
-       </el-table-column>
-         </el-table>
-       <div class="stru-lal">出入境记录</div>
-       <el-table
-           :data="tableData1"
+             </el-table>
+        </div> -->
+        <div v-for="(j,ind) in tabLength" v-if="pageQz==(ind+1)">
+          <el-row :gutter="10" class="bainfo t-mb10">
+            <el-col :span="3" class="basicInfo">
+              证件种类：{{j.xczjzl_desc}}
+            </el-col>
+            <el-col :span="3" class="basicInfo">
+              证件号码：{{j.xczjhm}}
+            </el-col>
+            <el-col :span="4" class="basicInfo">
+              证件有效期：{{j.xczjyxqz}}
+            </el-col>
+          </el-row>
+          <el-table
+           :data="j.wgrqzxxs"
            border
-           style="width: 100%;" class="stu-table">
+           style="width: 100%;margin-left:5px;" class="stu-table">
            <el-table-column
-             prop="IOTIME"
-             label="出入境时间">
+             prop="qzzl_desc"
+             label="签证种类">
            </el-table-column>
            <el-table-column
-             prop="CRKAMC"
-             label="出入境状态">
+             prop="qzhm"
+             label="签证号码">
            </el-table-column>
            <el-table-column
-             prop="CRJBSMC"
+             prop="qzyxqz"
+             label="签证有效期">
+           </el-table-column>
+           <el-table-column
+             prop="qzqfjg"
+             label="签发单位">
+             </el-table-column>
+             <el-table-column
+               prop="qzqfrq"
+               label="签发日期">
+             </el-table-column>
+             <el-table-column
+               prop="qzyxcs"
+               label="签证有效次数">
+             </el-table-column>
+             <el-table-column
+               prop="jlxksy_desc"
+               label="居留许可事由">
+             </el-table-column>
+             </el-table>
+        </div>
+      </div>
+
+      <div class="yycontent">
+        <div class="stru-lal bb" id="box2">出入境记录</div>
+        <el-table
+           :data="tableData1.length==0?tableData1:tableData1.slice((CurrentPage1-1)*pageSize1,CurrentPage1*pageSize1)"
+           border
+
+           style="width: 100%;" class="stu-table t-mt10">
+           <el-table-column
+             prop="ioDate"
+             label="出入境日期">
+           </el-table-column>
+           <el-table-column
+             prop="personType.value"
+             label="人员类别（出入境状态）">
+           </el-table-column>
+           <el-table-column
+             prop="ioPort.value"
              label="出入境口岸">
            </el-table-column>
            <el-table-column
@@ -132,7 +184,7 @@
              </template>
            </el-table-column>
          </el-table>
-      <div class="middle-foot">
+        <div class="middle-foot">
         <div class="page-msg">
           <div class="">
         共{{TotalResult1}}条记录
@@ -163,30 +215,30 @@
         </el-pagination>
       </div>
 
-       <div class="stru-lal">临住信息</div>
-       <el-table
-           :data="tableData2"
+        <div class="stru-lal bb" id="box3">临住信息</div>
+        <el-table
+          :data="tableData2.length==0?tableData2:tableData2.slice((CurrentPage2-1)*pageSize2,CurrentPage2*pageSize2)"
            border
-           style="width: 100%" class="stu-table">
+           style="width: 100%" class="stu-table t-mt10">
            <el-table-column
-             prop="LRRQ"
-             label="录入日期">
+             prop="resideTime"
+             label="住宿日期">
            </el-table-column>
            <el-table-column
-             prop="QZZL_DESC"
-             label="签证种类">
+             prop="leaveTime"
+             label="离开日期">
            </el-table-column>
            <el-table-column
-             prop="DJDWMC"
+             prop="tmpResideRegOrgName"
              label="登记单位">
            </el-table-column>
            <el-table-column
-             prop="BZHDZMC"
-             label="登记地址">
+             prop="tmpResideRegOrgArea_desc"
+             label="登记单位行政区划">
            </el-table-column>
            <el-table-column
-             prop="ZFZL_DESC"
-             label="住房种类">
+             prop="visaType_desc"
+             label="签证种类">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -195,14 +247,130 @@
              </template>
            </el-table-column>
          </el-table>
-      <div class="middle-foot">
+        <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult2}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult2/pageSize2)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange2"
+            :current-page:sync="CurrentPage2"
+            :page-size="pageSize2"
+            layout="prev, pager, next"
+            :total="TotalResult2">
+          </el-pagination>
+        </div>
+        <div class="stru-lal bb" id="box4">常住信息</div>
+        <el-table
+            :data="tableData3.length==0?tableData3:tableData3.slice((CurrentPage3-1)*pageSize3,CurrentPage3*pageSize3)"
+            border
+            style="width: 100%" class="stu-table t-mt10">
+            <el-table-column
+              prop="inhabiDetailAddr"
+              label="居住地详细地址">
+            </el-table-column>
+            <el-table-column
+              prop="assignmentOrg_desc"
+              label="签发机关">
+            </el-table-column>
+            <el-table-column
+              prop="degreeCode_desc"
+              label="身份">
+            </el-table-column>
+            <el-table-column
+              prop="resideReason_desc"
+              label="居留事由">
+            </el-table-column>
+            <el-table-column
+              label="操作" width="120">
+              <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscz(scope.row)"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        <div class="middle-foot">
+         <div class="page-msg">
+           <div class="">
+         共{{TotalResult3}}条记录
+           </div>
+           <div class="">
+             每页显示
+             <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
+               <el-option
+                 v-for="item in options"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+               </el-option>
+             </el-select>
+             条
+           </div>
+           <div class="">
+             共{{Math.ceil(TotalResult3/pageSize3)}}页
+           </div>
+         </div>
+         <el-pagination
+           background
+           @current-change="handleCurrentChange3"
+           :current-page:sync="CurrentPage3"
+           :page-size="pageSize3"
+           layout="prev, pager, next"
+           :total="TotalResult3">
+         </el-pagination>
+       </div>
+        <div class="stru-lal bb" id="box5">案事件记录</div>
+        <el-table
+           :data="tableData4.length==0?tableData4:tableData4.slice((CurrentPage4-1)*pageSize4,CurrentPage4*pageSize4)"
+           border
+           style="width: 100%" class="stu-table t-mt10">
+           <el-table-column
+             prop="caseType_desc"
+             label="案事件类型">
+           </el-table-column>
+           <el-table-column
+             prop="caseTime"
+             label="案发时间">
+           </el-table-column>
+           <el-table-column
+             prop="caseName"
+             label="案件名称">
+           </el-table-column>
+           <el-table-column
+             prop="caseRegion_desc"
+             label="案发地区">
+           </el-table-column>
+           <el-table-column
+             label="操作" width="120">
+             <template slot-scope="scope">
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
+             </template>
+           </el-table-column>
+         </el-table>
+        <div class="middle-foot">
         <div class="page-msg">
           <div class="">
-        共{{TotalResult2}}条记录
+        共{{TotalResult4}}条记录
           </div>
           <div class="">
             每页显示
-            <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+            <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -213,56 +381,54 @@
             条
           </div>
           <div class="">
-            共{{Math.ceil(TotalResult2/pageSize2)}}页
+            共{{Math.ceil(TotalResult4/pageSize4)}}页
           </div>
         </div>
         <el-pagination
           background
-          @current-change="handleCurrentChange2"
-          :current-page:sync="CurrentPage2"
-          :page-size="pageSize2"
+          @current-change="handleCurrentChange4"
+          :current-page:sync="CurrentPage4"
+          :page-size="pageSize4"
           layout="prev, pager, next"
-          :total="TotalResult2">
+          :total="TotalResult4">
         </el-pagination>
       </div>
-
-
-      <div class="stru-lal">常住信息</div>
-      <el-table
-          :data="tableData3"
+        <div class="stru-lal bb" id="box6">民航进出港信息</div>
+        <el-table
+          :data="tableData5"
           border
-          style="width: 100%" class="stu-table">
+          style="width: 100%" class="stu-table t-mt10">
           <el-table-column
-            prop="DJRQ"
-            label="登记日期">
+            prop="STA_ARVETM"
+            label="进港时间">
           </el-table-column>
           <el-table-column
-            prop="DJDW"
-            label="登记单位">
+            prop="STA_DEPTTM"
+            label="出港时间">
           </el-table-column>
           <el-table-column
-            prop="SFDM_DESC"
-            label="身份">
+            prop="FLT_AIRLCODE"
+            label="航空公司代码">
           </el-table-column>
           <el-table-column
-            prop="RJSY"
-            label="入境事由">
+            prop="FLT_NUMBER"
+            label="航班号">
           </el-table-column>
           <el-table-column
             label="操作" width="120">
             <template slot-scope="scope">
-            <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscz(scope.row)"></el-button>
+            <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsMH(scope.row)"></el-button>
             </template>
           </el-table-column>
         </el-table>
-     <div class="middle-foot">
+        <div class="middle-foot">
        <div class="page-msg">
          <div class="">
-       共{{TotalResult3}}条记录
+       共{{TotalResult5}}条记录
          </div>
          <div class="">
            每页显示
-           <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
+           <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
              <el-option
                v-for="item in options"
                :key="item.value"
@@ -273,58 +439,50 @@
            条
          </div>
          <div class="">
-           共{{Math.ceil(TotalResult3/pageSize3)}}页
+           共{{Math.ceil(TotalResult5/pageSize5)}}页
          </div>
        </div>
        <el-pagination
          background
-         @current-change="handleCurrentChange3"
-         :current-page:sync="CurrentPage3"
-         :page-size="pageSize3"
+         @current-change="handleCurrentChange5"
+         :current-page:sync="CurrentPage5"
+         :page-size="pageSize5"
          layout="prev, pager, next"
-         :total="TotalResult3">
+         :total="TotalResult5">
        </el-pagination>
      </div>
-     <div class="stru-lal">案事件记录</div>
-     <el-table
-         :data="tableData4"
+        <div class="stru-lal bb" id="box7">单位信息</div>
+        <el-table
+         :data="tableData6"
          border
-         style="width: 100%" class="stu-table">
+         style="width: 100%" class="stu-table t-mt10">
          <el-table-column
-           prop="ASJLX"
-           label="案事件类型">
+           prop="GZD_MC"
+           label="单位名称">
          </el-table-column>
          <el-table-column
-           prop="AJLB_DESC"
-           label="案件类别">
+           prop="GZD_ZZJG"
+           label="组织机构代码">
          </el-table-column>
          <el-table-column
-           prop="AJMC"
-           label="案件名称">
-         </el-table-column>
-         <el-table-column
-           prop="DJSJ"
-           label="登记时间">
-         </el-table-column>
-         <el-table-column
-           prop="DJDWMC"
-           label="登记单位">
+           prop="XXDZ"
+           label="单位地址">
          </el-table-column>
          <el-table-column
            label="操作" width="120">
            <template slot-scope="scope">
-           <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
+           <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsdw(scope.row)"></el-button>
            </template>
          </el-table-column>
        </el-table>
-    <div class="middle-foot">
+        <div class="middle-foot">
       <div class="page-msg">
         <div class="">
-      共{{TotalResult4}}条记录
+      共{{TotalResult6}}条记录
         </div>
         <div class="">
           每页显示
-          <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
+          <el-select v-model="pageSize6" @change="pageSizeChange6(pageSize6)" placeholder="10" size="mini" class="page-select">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -335,54 +493,50 @@
           条
         </div>
         <div class="">
-          共{{Math.ceil(TotalResult4/pageSize4)}}页
+          共{{Math.ceil(TotalResult6/pageSize6)}}页
         </div>
       </div>
       <el-pagination
         background
-        @current-change="handleCurrentChange4"
-        :current-page:sync="CurrentPage4"
-        :page-size="pageSize4"
+        @current-change="handleCurrentChange6"
+        :current-page:sync="CurrentPage6"
+        :page-size="pageSize6"
         layout="prev, pager, next"
-        :total="TotalResult4">
+        :total="TotalResult6">
       </el-pagination>
     </div>
-    <div class="stru-lal">民航进出港信息</div>
-    <el-table
-        :data="tableData5"
+        <div class="stru-lal bb" id="box8">留学生信息-申请信息</div>
+        <el-table
+        :data="tableData7"
         border
-        style="width: 100%" class="stu-table">
+        style="width: 100%" class="stu-table t-mt10">
         <el-table-column
-          prop="STA_ARVETM"
-          label="进港时间">
+          prop="STAREPORTS"
+          label="报到时间">
         </el-table-column>
         <el-table-column
-          prop="STA_DEPTTM"
-          label="出港时间">
+          prop="CFACULTY"
+          label="院系中文名称">
         </el-table-column>
         <el-table-column
-          prop="FLT_AIRLCODE"
-          label="航空公司代码">
-        </el-table-column>
-        <el-table-column
-          prop="FLT_NUMBER"
-          label="航班号">
+          prop="ACCACADEMY"
+          label="学校名称">
         </el-table-column>
         <el-table-column
           label="操作" width="120">
           <template slot-scope="scope">
-          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsMH(scope.row)"></el-button>
+          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
           </template>
         </el-table-column>
       </el-table>
-   <div class="middle-foot">
+        <div class="middle-foot">
      <div class="page-msg">
        <div class="">
-     共{{TotalResult5}}条记录
+     共{{TotalResult7}}条记录
        </div>
        <div class="">
          每页显示
-         <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
+         <el-select v-model="pageSize7" @change="pageSizeChange7(pageSize7)" placeholder="10" size="mini" class="page-select">
            <el-option
              v-for="item in options"
              :key="item.value"
@@ -393,174 +547,122 @@
          条
        </div>
        <div class="">
-         共{{Math.ceil(TotalResult5/pageSize5)}}页
+         共{{Math.ceil(TotalResult7/pageSize7)}}页
        </div>
      </div>
-     <el-pagination
-       background
-       @current-change="handleCurrentChange5"
-       :current-page:sync="CurrentPage5"
-       :page-size="pageSize5"
-       layout="prev, pager, next"
-       :total="TotalResult5">
-     </el-pagination>
-   </div>
-   <div class="stru-lal">单位信息</div>
-   <el-table
-       :data="tableData6"
-       border
-       style="width: 100%" class="stu-table">
-       <el-table-column
-         prop="GZD_MC"
-         label="单位名称">
-       </el-table-column>
-       <el-table-column
-         prop="GZD_ZZJG"
-         label="组织机构代码">
-       </el-table-column>
-       <el-table-column
-         prop="XXDZ"
-         label="单位地址">
-       </el-table-column>
-       <el-table-column
-         label="操作" width="120">
-         <template slot-scope="scope">
-         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsdw(scope.row)"></el-button>
-         </template>
-       </el-table-column>
-     </el-table>
-  <div class="middle-foot">
-    <div class="page-msg">
-      <div class="">
-    共{{TotalResult6}}条记录
-      </div>
-      <div class="">
-        每页显示
-        <el-select v-model="pageSize6" @change="pageSizeChange6(pageSize6)" placeholder="10" size="mini" class="page-select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        条
-      </div>
-      <div class="">
-        共{{Math.ceil(TotalResult6/pageSize6)}}页
-      </div>
-    </div>
-    <el-pagination
-      background
-      @current-change="handleCurrentChange6"
-      :current-page:sync="CurrentPage6"
-      :page-size="pageSize6"
-      layout="prev, pager, next"
-      :total="TotalResult6">
-    </el-pagination>
-  </div>
-  <div class="stru-lal">留学生信息</div>
-  <el-table
-      :data="tableData7"
-      border
-      style="width: 100%" class="stu-table">
-      <el-table-column
-        prop="STAREPORTS"
-        label="报到时间">
-      </el-table-column>
-      <el-table-column
-        prop="CFACULTY"
-        label="院系中文名称">
-      </el-table-column>
-      <el-table-column
-        prop="ACCACADEMY"
-        label="学校名称">
-      </el-table-column>
-      <el-table-column
-        label="操作" width="120">
-        <template slot-scope="scope">
-        <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
-        </template>
-      </el-table-column>
-    </el-table>
- <div class="middle-foot">
-   <div class="page-msg">
-     <div class="">
-   共{{TotalResult7}}条记录
-     </div>
-     <div class="">
-       每页显示
-       <el-select v-model="pageSize7" @change="pageSizeChange7(pageSize7)" placeholder="10" size="mini" class="page-select">
-         <el-option
-           v-for="item in options"
-           :key="item.value"
-           :label="item.label"
-           :value="item.value">
-         </el-option>
-       </el-select>
-       条
-     </div>
-     <div class="">
-       共{{Math.ceil(TotalResult7/pageSize7)}}页
-     </div>
-   </div>
-       <el-pagination
-         background
-         @current-change="handleCurrentChange7"
-         :current-page:sync="CurrentPage7"
-         :page-size="pageSize7"
-         layout="prev, pager, next"
-         :total="TotalResult7">
-       </el-pagination>
-     </div>
+         <el-pagination
+           background
+           @current-change="handleCurrentChange7"
+           :current-page:sync="CurrentPage7"
+           :page-size="pageSize7"
+           layout="prev, pager, next"
+           :total="TotalResult7">
+         </el-pagination>
+       </div>
 
-     <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-       <ANSJ :type="type" :xid="xid"></ANSJ>
-       <div slot="footer" class="dialog-footer">
-         <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
-       </div>
-     </el-dialog>
-     <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-       <LZXX :type="type" :xid="xid" :rid="rid"></LZXX>
-       <div slot="footer" class="dialog-footer">
-         <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
-       </div>
-     </el-dialog>
-     <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-       <CZXX :type="type" :xid="xid"></CZXX>
-       <div slot="footer" class="dialog-footer">
-         <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
-       </div>
-     </el-dialog>
-     <el-dialog title="民航进出港信息详情" :visible.sync="mhDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-       <MHXX :type="type" :xid="xid"></MHXX>
-       <div slot="footer" class="dialog-footer">
-         <el-button @click="mhDialogVisible = false" size="small">取 消</el-button>
-       </div>
-     </el-dialog>
-     <!-- 出入境信息 -->
-    <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-              <CRJXX :type="type" :xid="xid"></CRJXX>
-                 <div slot="footer" class="dialog-footer">
-                   <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
-                 </div>
-    </el-dialog>
-    <!-- 单位信息详情 -->
-   <el-dialog title="单位信息详情" :visible.sync="dwDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-             <DWXX :type="type" :xid="xid"></DWXX>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="dwDialogVisible = false" size="small">取 消</el-button>
-                </div>
-   </el-dialog>
+       <div class="stru-lal bb">留学生信息-在校信息</div>
+       <el-table
+           :data="tableData8"
+           border
+           style="width: 100%" class="stu-table t-mt10">
+           <el-table-column
+             prop="STAREPORTS"
+             label="报到时间">
+           </el-table-column>
+           <el-table-column
+             prop="CFACULTY"
+             label="院系中文名称">
+           </el-table-column>
+           <el-table-column
+             prop="ACCACADEMY"
+             label="学校名称">
+           </el-table-column>
+           <el-table-column
+             label="操作" width="120">
+             <template slot-scope="scope">
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
+             </template>
+           </el-table-column>
+         </el-table>
+         <div class="middle-foot">
+           <div class="page-msg">
+             <div class="">
+           共{{TotalResult8}}条记录
+             </div>
+             <div class="">
+               每页显示
+               <el-select v-model="pageSize8" @change="pageSizeChange8(pageSize8)" placeholder="10" size="mini" class="page-select">
+                 <el-option
+                   v-for="item in options"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+                 </el-option>
+               </el-select>
+               条
+             </div>
+             <div class="">
+               共{{Math.ceil(TotalResult8/pageSize8)}}页
+             </div>
+           </div>
+               <el-pagination
+                 background
+                 @current-change="handleCurrentChange8"
+                 :current-page:sync="CurrentPage8"
+                 :page-size="pageSize8"
+                 layout="prev, pager, next"
+                 :total="TotalResult8">
+               </el-pagination>
+             </div>
 
-    <!-- 留学生信息详情 -->
-    <el-dialog title="留学生信息详情" :visible.sync="lxsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-                <LXSXX :type="type" :xid="xid"></LXSXX>
-                <div slot="footer" class="dialog-footer">
-                  <el-button @click="lxsDialogVisible = false" size="small">取 消</el-button>
-                </div>
-   </el-dialog>
-</div>
+       <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+         <ANSJ :type="type" :xid="xid"></ANSJ>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
+         </div>
+       </el-dialog>
+       <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+         <LZXX :type="type" :xid="xid" :rid="rid"></LZXX>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
+         </div>
+       </el-dialog>
+       <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+         <CZXX :type="type" :xid="xid"></CZXX>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
+         </div>
+       </el-dialog>
+       <el-dialog title="民航进出港信息详情" :visible.sync="mhDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+         <MHXX :type="type" :xid="xid"></MHXX>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="mhDialogVisible = false" size="small">取 消</el-button>
+         </div>
+       </el-dialog>
+       <!-- 出入境信息 -->
+      <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+                <CRJXX :type="type" :xid="xid"></CRJXX>
+                   <div slot="footer" class="dialog-footer">
+                     <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
+                   </div>
+      </el-dialog>
+      <!-- 单位信息详情 -->
+     <el-dialog title="单位信息详情" :visible.sync="dwDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+               <DWXX :type="type" :xid="xid"></DWXX>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dwDialogVisible = false" size="small">取 消</el-button>
+                  </div>
+     </el-dialog>
+
+      <!-- 留学生信息详情 -->
+      <el-dialog title="留学生信息详情" :visible.sync="lxsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+                  <LXSXX :type="type" :xid="xid"></LXSXX>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="lxsDialogVisible = false" size="small">取 消</el-button>
+                  </div>
+     </el-dialog>
+       </div>
+      </div>
 <!-- 弹出小的窗口 -->
        <el-dialog title="添加标签" :visible.sync="bqDialogVisible">
          <el-row :gutter="1">
@@ -589,6 +691,18 @@
            <el-button @click="zpDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
+       <div class="meunSlid">
+         <ul>
+           <li><a href="#box1">签证信息</a></li>
+           <li><a href="#box2">出入境信息</a></li>
+           <li><a href="#box3">临住信息</a></li>
+           <li><a href="#box4">常住信息</a></li>
+           <li><a href="#box5">案事件记录</a></li>
+           <li><a href="#box6">民航进出港信息</a></li>
+           <li><a href="#box7">单位信息</a></li>
+           <li><a href="#box8">留学生信息</a></li>
+         </ul>
+       </div>
    </div>
 </template>
 <script scoped>
@@ -599,10 +713,13 @@ import LXSXX from '../../../common/lxsxx_xq'
 import CZXX from '../../../common/czxx_xq'
 import DWXX from '../../../common/dwxx_xq'
 import MHXX from '../../../common/mhjcg_xq'
+import imgUrl from '../../../../assets/img/mrzp.png'
 export default{
     components:{LZXX,ANSJ,CRJXX,LXSXX,CZXX,DWXX,MHXX},
   data(){
     return{
+      tabLength:[],
+      pageQz:1,
       suc:['success','info','warning','danger','primary'],
        baseinfo:{},
        row:{},
@@ -615,9 +732,9 @@ export default{
        xid:'',
        rid:'',
        pd:{},
-       imgdm:'',
+       imgdm:imgUrl,
        moveid:'',
-       imgshow:true,
+       // imgshow:true,
        bqDialogVisible:false,
        zpDialogVisible:false,
        lzxxDialogVisible:false,
@@ -634,8 +751,10 @@ export default{
        tableData5:[],
        tableData6:[],
        tableData7:[],
+       tableData8:[],
        tableData10:[],
        tableData11:[],
+       tableDataQ:[],
        CurrentPage1: 1,
        pageSize1: 3,
        TotalResult1: 0,
@@ -657,6 +776,9 @@ export default{
        CurrentPage7: 1,
        pageSize7: 3,
        TotalResult7: 0,
+       CurrentPage8: 1,
+       pageSize8: 3,
+       TotalResult8: 0,
        options:[{
          value: 3,
          label: "3"
@@ -675,7 +797,7 @@ export default{
   },
   activated(){
     this.row=this.$route.query.row;
-    this.zjhm=this.$route.query.ZJHM;
+    this.zjhm=this.$route.query.zjhm;
 
     if(this.zjhm!="" && this.zjhm!=undefined){
       this.pd.ZJHM=this.zjhm;
@@ -693,44 +815,53 @@ export default{
     this.getMHJCGXX(this.CurrentPage5,this.pageSize5,this.pd);
     this.getDWJBXX(this.CurrentPage6,this.pageSize6,this.pd);
     this.getLXSXX(this.CurrentPage7,this.pageSize7,this.pd);
+    this.getLXSXXZXXX(this.CurrentPage8,this.pageSize8,this.pd);
     this.getQZXX(this.pd);
-    this.getZJXX(this.pd);
+    // this.getZJXX(this.pd);
   },
   mounted(){
 
   },
   methods:{
     pageSizeChange1(val) {
-        this.getCrj(this.CurrentPage1,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.pageSize1=val;
+      //   this.getCrj(this.CurrentPage1,val,this.pd);
+      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
-        this.getCrj(val,this.pageSize1,this.pd);
-      console.log(`当前页: ${val}`);
+      //   this.getCrj(val,this.pageSize1,this.pd);
+      // console.log(`当前页: ${val}`);
+      this.CurrentPage1=val;
     },
     pageSizeChange2(val) {
-      this.getLzxx(this.CurrentPage2, val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.pageSize2=val;
+      // this.getLzxx(this.CurrentPage2, val,this.pd);
+      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange2(val) {
-      this.getLzxx(val, this.pageSize2,this.pd);
-      console.log(`当前页: ${val}`);
+      // this.getLzxx(val, this.pageSize2,this.pd);
+      // console.log(`当前页: ${val}`);
+      this.CurrentPage2=val;
     },
     pageSizeChange3(val) {
-      this.getCZXX(this.CurrentPage3,val,this.pd)
-      console.log(`每页 ${val} 条`);
+      // this.getCZXX(this.CurrentPage3,val,this.pd)
+      // console.log(`每页 ${val} 条`);
+      this.pageSize3=val;
     },
     handleCurrentChange3(val) {
-      this.getCZXX(val,this.pageSize3,this.pd)
-      console.log(`当前页: ${val}`);
+      // this.getCZXX(val,this.pageSize3,this.pd)
+      // console.log(`当前页: ${val}`);
+      this.CurrentPage3=val;
     },
     pageSizeChange4(val) {
-    this.getASJXX(this.CurrentPage4,val,this.pd);
-      console.log(`每页 ${val} 条`);
+    // this.getASJXX(this.CurrentPage4,val,this.pd);
+    //   console.log(`每页 ${val} 条`);
+    this.pageSize4=val;
     },
     handleCurrentChange4(val) {
-      this.getASJXX(val,this.pageSize4,this.pd);
-      console.log(`当前页: ${val}`);
+      // this.getASJXX(val,this.pageSize4,this.pd);
+      // console.log(`当前页: ${val}`);
+      this.CurrentPage4=val;
     },
     pageSizeChange5(val) {
         this.getMHJCGXX(this.CurrentPage5,val,this.pd);
@@ -756,6 +887,14 @@ export default{
       this.getLXSXX(val,this.pageSize7,this.pd);
       console.log(`当前页: ${val}`);
     },
+    pageSizeChange8(val) {
+        this.getLXSXXZXXX(this.CurrentPage8,val,this.pd);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange8(val) {
+      this.getLXSXXZXXX(val,this.pageSize8,this.pd);
+      console.log(`当前页: ${val}`);
+    },
     //最新照片
     getZXZP(){
       let p = {
@@ -769,21 +908,22 @@ export default{
         r => {
           console.log('r.data.resultList.ZPNR',r.data.resultList.ZPNR);
           if(r.data.resultList.ZPNR){
-          this.imgshow=false;
-          this.imgdm = r.data.resultList.ZPNR;
+          // this.imgshow=false;
+          this.imgdm = r.data.resultList.ZPNR||imgUrl;
           }
         })
 
     },
     //人员基本信息
     getRYXX(){
-
       let p = {
-        "pd": this.pd,
+        "certificateNO": this.$route.query.zjhm,
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getryryxx', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getryryxx', p,
         r => {
-          this.baseinfo = r.data.resultList[0];
+          // if(r.data.resultList.length!=0){
+            this.baseinfo = r.data;
+          // }
         })
     },
     //获取标签
@@ -797,10 +937,10 @@ export default{
           this.labs = r.data.resultList;
         })
     },
-     //添加标签
+     //获取标签标签
     addLable(){
      this.bqDialogVisible=true;
-      this.$api.post(this.Global.aport3+'/ryhx/getreslab', null,
+      this.$api.post(this.Global.aport3+'/ryhx/getreslab',{},
         r => {
           this.labels = r.data.resultList;
           this.getLable();
@@ -808,7 +948,7 @@ export default{
     },
     //保存标签
     saveLabls(){
-         var srr=this.labmc.split(',');
+      var srr=this.labmc.split(',');
       let p={
         "RYBH":this.row.RYBH,
         "BM":srr[0],
@@ -860,12 +1000,14 @@ export default{
     //历史照片
     getZP(){
       this.pd={};
-      this.pd.RYBH=this.row.RYBH;
+      if(this.row){
+        this.pd.RYBH=this.row.RYBH;
+      }
+
       let p={
         "pd":this.pd,
-
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getrytpxx', null,
+      this.$api.post(this.Global.aport3+'/ryhx/getrytpxx', p,
         r => {
           this.images = r.data.resultList;
         })
@@ -876,13 +1018,14 @@ export default{
       let p={
         "currentPage":currentPage,
       	"showCount":showCount,
-        "pd":pd
-
+        // "pd":pd
+        "certificateNO":this.$route.query.zjhm,
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getcrjjl', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getcrjjl', p,
         r => {
-          this.tableData1 = r.data.resultList;
-          this.TotalResult1=r.data.totalResult;
+          this.tableData1 = r.data;
+          console.log(this.tableData1.length)
+          this.TotalResult1=r.data.length;
         })
     },
     //临住信息
@@ -890,13 +1033,14 @@ export default{
       let p={
         "currentPage":currentPage,
         "showCount":showCount,
-        "pd":pd
+        // "pd":pd
+        "paperNO":this.$route.query.zjhm,
 
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getlzlzxx', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getlzxx', p,
         r => {
-          this.tableData2 = r.data.resultList;
-          this.TotalResult2=r.data.totalResult;
+          this.tableData2 = r.data.info;
+          this.TotalResult2=r.data.info.length;
         })
     },
     // 常住信息
@@ -904,13 +1048,13 @@ export default{
       let p={
         "currentPage":currentPage,
         "showCount":showCount,
-        "pd":pd
-
+        // "pd":pd
+        "paperNO":this.$route.query.zjhm,
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getczryjbxx', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getczxx', p,
         r => {
-          this.tableData3 = r.data.resultList;
-          this.TotalResult3=r.data.totalResult;
+          this.tableData3 = r.data.info;
+          this.TotalResult3=r.data.info.length;
         })
     },
     // 案事件
@@ -918,13 +1062,14 @@ export default{
       let p={
         "currentPage":currentPage,
         "showCount":showCount,
-        "pd":pd
+        // "pd":pd
+        "paperNO":this.$route.query.zjhm,
 
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getajjbxx', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getajjbxx', p,
         r => {
-          this.tableData4 = r.data.resultList;
-          this.TotalResult4=r.data.totalResult;
+          this.tableData4 = r.data;
+          this.TotalResult4=r.data.length;
         })
     },
     // 民航进出港
@@ -968,33 +1113,51 @@ export default{
           this.TotalResult7=r.data.totalResult;
         })
     },
-    //证件信息
-    getZJXX(pd){
+    // 留学生基本信息 在校信息
+    getLXSXXZXXX(currentPage,showCount,pd){
       let p={
-        "currentPage":"1",
-        "showCount":"1",
-        "pd":pd,
-        "orderBy":"RJRQ",
-        "orderType":"DESC"
+        "currentPage":currentPage,
+        "showCount":showCount,
+        "pd":pd
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getryjwryzj', p,
+      this.$api.post(this.Global.aport3+'/ryhx/getzyxdcrjstudent', p,
         r => {
-          this.tableData10 = r.data.resultList;
+          this.tableData8 = r.data.resultList;
+          this.TotalResult8=r.data.totalResult;
         })
     },
+    //证件信息
+    // getZJXX(pd){
+    //   let p={
+    //     "currentPage":"1",
+    //     "showCount":"1",
+    //     "pd":pd,
+    //     "orderBy":"RJRQ",
+    //     "orderType":"DESC"
+    //   };
+    //   this.$api.post(this.Global.aport3+'/ryhx/getryjwryzj', p,
+    //     r => {
+    //       this.tableData10 = r.data.resultList;
+    //     })
+    // },
     //签证信息
     getQZXX(pd){
       let p={
-        "currentPage":"1",
-        "showCount":"1",
-        "pd":pd,
-        "orderBy":"RJRQ",
-        "orderType":"DESC"
-
+        // "currentPage":"1",
+        // "showCount":"1",
+        // "pd":pd,
+        // "orderBy":"RJRQ",
+        // "orderType":"DESC"
+        "zjhm":this.$route.query.zjhm
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getryjwryqz', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getwgrqzsqxx', p,
         r => {
-          this.tableData11 = r.data.resultList;
+          this.tabLength = r.data.wgrxxs;
+          this.tableDataQ = r.data.wgrqzxxs;
+          // for(var i=0;i<this.tabLength.length,i++){
+          //
+          // }
+          // this.tableData11 = r.data.resultList;
         })
     },
     detailscrj(n){

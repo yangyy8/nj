@@ -101,7 +101,7 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-             prop="XZQHMC"
+             prop="XZQH_DESC"
              label="行政区划">
            </el-table-column>
            <el-table-column

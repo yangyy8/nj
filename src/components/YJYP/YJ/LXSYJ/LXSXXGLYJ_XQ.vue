@@ -651,7 +651,8 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 3}"
           placeholder="预警处理必须填写原因(不超过100个字符)"
-          v-model="pc.CHANGE_RESON">
+          v-model="pc.CHANGE_RESON"
+          :disabled="$route.query.row.CLZT=='0'">
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
@@ -1066,7 +1067,7 @@ export default {
     this.row=this.$route.query.row;
     this.pc={};
     this.qdshow=true;
-    if(this.row.CLZT==0){
+    if(this.row.CLZT=='0'){
       this.qdshow=false;
     }
     this.pd.YJID=this.row.YJID;
@@ -1466,8 +1467,8 @@ export default {
 
    },
    getback(){
-
-     this.getMX(this.row.MXLX);
+     this.$router.go(-1)
+     // this.getMX(this.row.MXLX);
 
    },
   addSaves(){
@@ -1494,7 +1495,8 @@ export default {
              type: 'success'
            });
 
-    this.getMX(this.row.MXLX);
+    // this.getMX(this.row.MXLX);
+    this.$router.go(-1);
          }
 
       })

@@ -5,7 +5,11 @@
       <div class="yycontent ryhm">
         <div class="title"><img src="../../../../assets/img/js.png" border='0'></div>
         <div>
-          <el-input placeholder="请输入证件号码" v-model="zjhm" class="inputs"></el-input>
+          <div class="my-form-group" style="display:inline-block" data-scope="demo2" data-name="zjhm" data-type="input"
+       v-validate-easy="[['required']]">
+            <el-input placeholder="请输入证件号码" v-model="zjhm" class="inputs"></el-input>
+          </div>
+
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
           <el-button type="primary"  @click="gjshow=!gjshow">高级查询</el-button>
           <el-button type="warning"  @click="$router.push({name:'RYPLCX',query:{}})">模板导入</el-button>
@@ -109,6 +113,54 @@
        </div>
       </div>
     </div>
+    <el-dialog title="列表" :visible.sync="listDialogVisible"  width="900px">
+      <el-table
+         :data="tableData"
+         border
+         style="width: 100%">
+         <el-table-column
+           prop="zwxm"
+           label="中文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="ywxm"
+           label="英文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="xb_desc"
+           label="性别">
+         </el-table-column>
+         <el-table-column
+           prop="csrq"
+           label="出生日期">
+         </el-table-column>
+         <el-table-column
+           prop="gjdq_desc"
+           label="国家地区">
+         </el-table-column>
+         <el-table-column
+           prop="zjzl_desc"
+           label="证件种类">
+         </el-table-column>
+         <el-table-column
+           prop="zjhm"
+           label="证件号码">
+           <template slot-scope="scope">
+              <span class="tc-b hand" @click="moreFn(scope.row)">{{scope.row.zjhm}}</span>
+            </template>
+         </el-table-column>
+         <el-table-column
+           prop="zjyxq"
+           label="证件有效期">
+         </el-table-column>
+         <!-- <el-table-column
+           label="操作">
+           <template slot-scope="scope">
+             <el-button type="text"  class="a-btn" title="详情" size="mini" icon="el-icon-tickets" @click="details(scope.row)"></el-button>
+           </template>
+         </el-table-column> -->
+       </el-table>
+    </el-dialog>
   </div>
 </template>
 <script scoped>
@@ -122,6 +174,8 @@ export default {
       pd2:{},
       pd: {CSRQ_DateRange:{},TLYXQ_DateRange:{},DDRQ_DateRange:{}},
       pd0:{},
+      listDialogVisible:false,
+      tableData:[],
     }
   },
   mounted() {
@@ -130,8 +184,15 @@ export default {
     this.$store.dispatch('getZjzl');
   },
   methods: {
+    moreFn(i){
+      this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i}})
+    },
     getList(){
-      this.$router.push({name:'RYHX_XQ'})
+      this.V.$submit('demo2', (canSumit,data) => {
+        if(!canSumit) return
+        this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})
+      })
+
     },
     conditionChange(){
       this.V.$reset('demo1')
@@ -144,7 +205,10 @@ export default {
           if(!canSumit) return
           this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',p,
            r =>{
-
+             if(r.success){
+               this.listDialogVisible=true;
+               this.tableData=r.data;
+             }
            })
         })
       }else if(this.queryTerm=='2'){
@@ -157,7 +221,8 @@ export default {
         }
         this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',p,
          r =>{
-
+           this.listDialogVisible=true;
+           this.tableData=r.data;
          })
       }
 

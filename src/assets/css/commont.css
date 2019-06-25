@@ -42,6 +42,9 @@
 .t-mt20{
   margin-top: 20px!important;
 }
+.t-mb10{
+  margin-bottom: 10px!important;
+}
 .t-must{
   color: red;
   padding: 2px;
@@ -75,3 +78,82 @@
  .t-fuzzy-12 .el-checkbox,.t-fuzzy-8 .el-checkbox{
    line-height: 2!important;
  }
+ .tc-b{
+   color: #409EFF;
+ }
+ .hand{
+  cursor: pointer;
+}
+.meunSlid{
+  position:fixed;
+  right: 30px;
+  top:50%;
+  background-color: rgba(40,99,165, 0.8);
+  border-radius: 6px;
+  width: 100px;
+  z-index: 999;
+}
+.meunSlid ul{
+  padding: 10px;
+}
+.meunSlid ul li{
+  margin: 12px 0px;
+  text-align: center;
+}
+.meunSlid ul li a{
+  color: #fff;
+  font-size: 14px;
+}
+.photo-content{
+  position: relative;
+}
+.hisPhoto{
+  position: absolute;
+  bottom: 0px;
+  background-color:rgba(0,0,0,0.5);
+  color: #fff;
+  width: 128px;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px 0px;
+}
+.basicInfo{
+  border: 1px solid #dcdfe6;;
+  /* padding: 5px; */
+  text-align: center;
+  border-radius: 4px;
+  -moz-box-shadow:2px 2px 10px #c1cdda;
+  -webkit-box-shadow:2px 2px 10px #c1cdda;
+  box-shadow:2px 2px 10px #c1cdda;
+  background-color: #fff;
+  margin-right: 10px
+}
+.bb{
+  border-bottom: 1px solid #ddd;
+}
+.qz{
+  font-weight: bold;
+  font-size: 14px;
+}
+.width-14{
+  width: 16%
+}
+.width-86{
+  width: 84%;
+}
+.t-ak-tab-item{
+  background: #399bfe;
+  color: #fff;
+  font-size: 14px;
+  margin-right: 3%;
+  border-radius: 3px 3px 0 0;
+  padding: 0 5%;
+  line-height: 30px!important;
+}
+.ak-checked{
+  background: #fff;
+  color: #399bfe;
+  border: 1px #dddddd solid;
+  border-bottom: 1px #fff solid;
+  margin-bottom: -1px;
+}

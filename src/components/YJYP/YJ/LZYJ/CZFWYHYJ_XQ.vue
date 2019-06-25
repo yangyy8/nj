@@ -152,11 +152,12 @@
              type="textarea"
              :autosize="{ minRows: 3, maxRows: 4}"
              placeholder="甄别说明必须填写原因(不超过100个字符)"
-             v-model="pm.CHANGE_RESON">
+             v-model="pm.CHANGE_RESON"
+             :disabled="$route.query.row.SHZT=='0'">
            </el-input>
          </el-col>
          <el-col :span="4"  class="down-btn-area">
-           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" >确定</el-button>
+           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" v-if="$route.query.row.SHZT!='0'">确定</el-button>
            <el-button type="warning"  class="m0" size="small" @click="$router.go(-1)">返回</el-button>
          </el-col>
        </el-row>
@@ -318,7 +319,7 @@ export default {
              });
 
            }
-           this.$router.push({name: 'CZFQYHYJ'})
+           this.$router.go(-1)
         })
     },
     details(n)
