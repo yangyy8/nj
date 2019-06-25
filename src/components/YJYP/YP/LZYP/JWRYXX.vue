@@ -386,9 +386,9 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      pd.GJDQ=this.row.GJDQ;
-      pd.ZJZL=this.row.ZJZL;
-
+      // pd.GJDQ=this.row.GJDQ;
+      // pd.ZJZL=this.row.ZJZL;
+      pd = Object.assign({}, pd, this.row);
       console.log('pd--',pd);
       let p = {
         "currentPage": currentPage,

@@ -67,27 +67,32 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="3" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input"  style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in fjlist"
-                        :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-8 t-flex">
+                      <el-select v-model="pd.LRDW_Like" multiple :multiple-limit="5" @change="getPCS(pd.LRDW_Like)"  collapse-tags  filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in fjlist"
+                          :key="item.dm"
+                          :label="item.dm+' - '+item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>&nbsp;&nbsp;
+                      <el-checkbox v-model="checkedfj"  @change="getRadiofj(checkedfj)">包含</el-checkbox>
+                    </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">派出所：</span>
-                    <el-select v-model="pd.LRDW" multiple :multiple-limit="3"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" style="width:58%!important; margin-right:10px;">
-                      <el-option
-                        v-for="item in pcslist"
-                        :key="item.dm"
-                        :label="item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                    <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    <div class="input-input t-fuzzy-8 t-flex">
+                      <el-select v-model="pd.LRDW" multiple :multiple-limit="5"  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                        <el-option
+                          v-for="item in pcslist"
+                          :key="item.dm"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                      <el-checkbox v-model="checkedpcs"  @change="getRadiopcs(checkedpcs)">包含</el-checkbox>
+                    </div>
+
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">旅馆名称：</span>
@@ -122,46 +127,50 @@
         <div id = "echarts" style = "width: 100%;height: 400px"></div>
       </div>
     </div>
-    <el-dialog title="列表" :visible.sync="listDialogVisible"  width="640px">
+    <el-dialog title="列表" :visible.sync="listDialogVisible"  width="1000px">
       <el-table
          :data="tableData"
          border
          style="width: 100%">
          <el-table-column
-           prop="AJBH"
+           prop="YWXM"
            label="英文姓名">
          </el-table-column>
          <el-table-column
-           prop="XM"
+           prop="ZWXM"
            label="中文姓名">
          </el-table-column>
          <el-table-column
-           prop="XBMC"
+           prop="XB"
            label="性别">
          </el-table-column>
          <el-table-column
-           prop="CSRQ"
+           prop="GJDQ_DESC"
            label="国家地区">
          </el-table-column>
          <el-table-column
-           prop="HZHM"
+           prop="CSQR"
            label="出生日期">
          </el-table-column>
          <el-table-column
-           prop="GJDQMC"
+           prop="ZJJL_DESC"
            label="证件种类">
          </el-table-column>
          <el-table-column
-           prop="ZCRQ"
+           prop="ZJHM"
            label="证件号码">
          </el-table-column>
          <el-table-column
-           prop="ZCRQ"
+           prop="QZZL_DESC"
            label="签证种类">
          </el-table-column>
          <el-table-column
-           prop="ZCRQ"
+           prop="QZHM"
            label="签证号码">
+         </el-table-column>
+         <el-table-column
+           prop="LRDW_DESC"
+           label="派出所名称">
          </el-table-column>
          <el-table-column
            label="操作">
@@ -201,13 +210,25 @@
           </el-pagination>
         </div>
     </el-dialog>
+    <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+        <LZXX :type="type" :xid="xid"></LZXX>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script scoped>
 import echarts from 'echarts'
+import {formatDate} from '@/assets/js/date.js'
+import LZXX from '../../../common/lzxx_xq'
  export default {
+   components:{LZXX},
   data() {
     return {
+      detailsDialogVisible:false,
+      type:1,
+      xid:'',
       listDialogVisible:false,
       fjlist:[],
       pcslist:[],
@@ -215,7 +236,11 @@ import echarts from 'echarts'
       pageSize: 10,
       TotalResult: 0,
       pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201',LB_DJDW:'1'},
-      pd0:{},
+      pdTu:{},
+      pd0:{
+        begin:'',
+        end:'',
+      },
       checkedfj:true,
       checkedpcs:true,
       CurrentPage: 1,
@@ -244,16 +269,25 @@ import echarts from 'echarts'
     this.$store.dispatch("getPcs");
     this.$store.dispatch("getRjsy");
     this.$store.dispatch("getZsbg");
+    // this.pd0.begin=formatDate(new Date(),'yyyyMMdd');
+    // this.pd0.end=formatDate(new Date(),'yyyyMMdd');
     this.getList()
   },
+  activated(){
+
+  },
   methods:{
+    details(i){
+      this.xid=i.DTID;
+      this.detailsDialogVisible = true;
+    },
     pageSizeChange(val) {
       this.pageSize=val;
-      // this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getListTu(this.CurrentPage,val,this.pdTu);
     },
     handleCurrentChange(val) {
       this.CurrentPage=val;
-      // this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getListTu(val,this.pageSize,this.pdTu);
     },
     getRadiofj(n){
       if(n==true){
@@ -271,8 +305,15 @@ import echarts from 'echarts'
       }
     },
     getList(){
-      this.pd.LRRQ_DateRange.begin=this.pd0.begin;
-      this.pd.LRRQ_DateRange.end=this.pd0.end;
+      // if((this.pd0.begin==''||this.pd0.begin==undefined||this.pd0.begin==null)&&(this.pd0.end==''||this.pd0.end==undefined||this.pd0.end==null)){
+      //   this.$message({
+      //     message: '时间范围不能为空',
+      //     type: 'warning'
+      //   });
+      //   return
+      // }
+      this.pd0.begin==''?this.pd.LRRQ_DateRange.begin='':this.pd0.begin==null?this.pd.LRRQ_DateRange.begin=null:this.pd.LRRQ_DateRange.begin=this.pd0.begin+'000000';
+      this.pd0.end==''?this.pd.LRRQ_DateRange.end='':this.pd0.end==null?this.pd.LRRQ_DateRange.end=null:this.pd.LRRQ_DateRange.end=this.pd0.end+'000000';
       let p = {
         "pd": this.pd
       };
@@ -292,6 +333,20 @@ import echarts from 'echarts'
            this.pcslist = r.data.PCS;
          }
        })
+    },
+    getListTu(currentPage,pageSize,pd){
+      let p={
+        'currentPage':currentPage,
+        'showCount':pageSize,
+        'pd':pd
+      }
+      this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
+        r =>{
+          if(r.success){
+            that.tableData=r.data.resultList;
+            that.TotalResult=r.data.totalResult;
+          }
+        })
     },
     //折线图
     drawLine(dataname,ydata,series){
@@ -323,11 +378,7 @@ import echarts from 'echarts'
                   },
                   axisLine: {
                       onZero: false,
-                      lineStyle: {
-                          color: colors[1]
-                      }
                   },
-
                   data: ydata
               },
               {
@@ -337,9 +388,6 @@ import echarts from 'echarts'
                   },
                   axisLine: {
                       onZero: false,
-                      lineStyle: {
-                          color: colors[0]
-                      }
                   },
                   data: ydata
               },
@@ -357,21 +405,17 @@ import echarts from 'echarts'
          p=Object.assign({}, that.pd);
          if(p.hasOwnProperty('LRDW_BH_Like')){delete p.LRDW_BH_Like};
          if(p.hasOwnProperty('LRDW_BH')){delete p.LRDW_BH};
-         p.LRRQ_DateRange={'begin':that.pd0.begin,'end':that.pd0.end};
+         p.LRRQ_DateRange={
+           'begin':that.pd0.begin==''?'':that.pd0.begin==null?null:that.pd0.begin+'000000',
+           'end':that.pd0.end==''?'':that.pd0.end==null?null:that.pd0.end+'000000',
+         };
          p.HEADER=ydata;
          p.TIME=params.name;
          p.DW=params.seriesName;
+         that.pdTu=p;
          console.log('ppppp',p,that.pd);
-         that.page=1;
-         that.detailOperion=true;
-         that.$api.post(that.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
-          r =>{
-            if(r.success){
-              that.tableData=r.data.resultList;
-              that.TotalResult=r.data.totalResult;
-              that.listDialogVisible=true;
-            }
-          })
+         that.listDialogVisible=true;
+         that.getListTu(that.CurrentPage,that.pageSize,that.pdTu);
        })
       this.lineChart.resize()
    },

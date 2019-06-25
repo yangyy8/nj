@@ -276,7 +276,7 @@
                  label="证件有效期">
                </el-table-column> -->
                <el-table-column
-                 prop="QZZL"
+                 prop="QZZL_DESC"
                  label="签证种类">
                </el-table-column>
                <el-table-column
