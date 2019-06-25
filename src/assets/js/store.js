@@ -39,6 +39,7 @@ var store = new Vuex.Store({
     sf:[],
     clzt:[],
     sjly:[],
+    rzfs:[],
   },
   mutations: {
     getToken(state, data) {
@@ -137,6 +138,9 @@ var store = new Vuex.Store({
     },
     getSjly(state,data){
       state.sjly=data;
+    },
+    getRzfs(state,data){
+      state.rzfs=data;
     },
   },
   actions: {
@@ -280,6 +284,12 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.sjly, null,
         r => {
           context.commit('getSjly', ToArray(r.data))
+        })
+    },
+    getRzfs(context){
+      api.get(global_.aport1 + global_.rzfs, null,
+        r => {
+          context.commit('getRzfs', ToArray(r.data))
         })
     },
   }

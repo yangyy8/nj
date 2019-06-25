@@ -194,7 +194,7 @@ export function renderMarker(point, data,dm,mc) {
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
 
-    window.vm.getRyxx(1,5,dm,mc,"");
+    window.lzvm.getRyxx(1,5,dm,mc,"");
 
   });
   }

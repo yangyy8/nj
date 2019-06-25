@@ -40,7 +40,7 @@ export function getSearch() {
 
 
 
-  var  searchResult=window.vm.getBZHDZ(function(data){
+  var  searchResult=window.czvm.getBZHDZ(function(data){
     console.log('data',data);
     if(data!=undefined && data!=""){
     for (var i = 0; i < data.length; i++) {
@@ -117,8 +117,8 @@ export function renderMarkerbzh(point, data,mc) {
     // alert(e.target.options.pcsmc);
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
- console.log('data.dm',data.dm);
-    window.vm.getRyxx(1,10,data.dm,mc);
+
+    window.czvm.getRyxx(1,5,data.dm,mc);
 
   });
 }

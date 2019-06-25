@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="bghome">
+  <div class="bghome bgh1">
       <div id="mainMap" class="mapbj"></div>
          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
            <el-table
@@ -71,6 +71,7 @@
                <el-pagination
                background
                  @current-change="handleCurrentChange"
+                 :current-page.sync ="CurrentPage"
                  :page-size="pageSize"
                  layout="prev, pager, next"
                  :total="TotalResult">
@@ -101,8 +102,8 @@ export default {
         tableData:[],
         options:this.pl.options,
         bzhDialogVisible:false,
-        lrdw:'320112',
-        lrdwmc:'江北新区',//320113   320112江北
+        lrdw:'320115',
+        lrdwmc:'江宁区',//320113   320112江北
         rs:'11523',
         type:'C',
         yf:'Y',
@@ -113,11 +114,11 @@ export default {
     },
     mounted(){
       window.vm=this;
-      // this.lrdw=this.$route.query.dqdm;
-      // this.type=this.$route.query.type;
-      // this.rs=this.$route.query.rs;
-      // this.lrdwmc=this.$route.query.mc;
-      // this.yf=this.$route.query.yf;
+      this.lrdw=this.$route.query.dqdm;
+      this.type=this.$route.query.type;
+      this.rs=this.$route.query.rs;
+      this.lrdwmc=this.$route.query.mc;
+      this.yf=this.$route.query.yf;
       createMapL(this.lrdw,this.lrdwmc,this.rs,this.type);
       if(this.type=="C")
       {
@@ -125,9 +126,7 @@ export default {
       }else {
         this.czshow=false;
       }
-      //this.getpcs("320116");
-      // this.getbzhdz("320116620000");
-      // this.getRyxx(this.CurrentPage,this.pageSize,"320116620000");
+
     },
     methods:{
       pageSizeChange(val) {
@@ -193,6 +192,7 @@ export default {
       //人员信息
       getRyxx(currentPage,showCount,bzhid,mc,lrdw)
       {
+
         if(currentPage==1){
           this.CurrentPage=1;
         }
@@ -260,5 +260,5 @@ export default {
 .icon1{background: url(../assets/img/tb/map1.png)  no-repeat;}
 
 .icon2{background: url(../assets/img/tb/map2.png)  no-repeat;}
-.bghome .el-dialog{ width: 90%!important;}
+.bgh1 .el-dialog{ width: 90%!important;}
 </style>

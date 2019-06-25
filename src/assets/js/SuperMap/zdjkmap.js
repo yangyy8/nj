@@ -165,7 +165,7 @@ export function doSearch(className) {
     });
 
     tempMarker.on('click', function(e) {
-      window.vm.getRyxx(1,5,dm,mc,'');
+      window.zdvm.getRyxx(1,5,dm,mc,'');
 
     });
   }

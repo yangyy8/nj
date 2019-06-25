@@ -769,7 +769,7 @@
                 </el-col>
                 <el-col :span="12" class="input-item">
                   <span class="input-text">行政区划：</span>
-                  <span class="input-input detailinput">  {{jlinfo.XZQHMC}}</span>
+                  <span class="input-input detailinput">  {{jlinfo.XZQH_DESC}}</span>
                 </el-col>
                 <el-col :span="12" class="input-item">
                   <span class="input-text">口岸：</span>
@@ -1100,8 +1100,8 @@ export default {
     else {
 
       this.lzshow=true;
-      this.pm.YWX=this.row.YWX;
-      this.pm.YWM=this.row.YWM;
+      this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
+      this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
       this.pm.XB=this.row.XB;
       this.pm.CSRQ=this.row.CSRQ;
       if(this.row.MXLX=="LZ_HC"){   //临住核查预警

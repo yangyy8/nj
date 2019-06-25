@@ -34,7 +34,7 @@ export function createMapL() {
 }
 export function getSearch() {
   markerLayer.clearLayers();
-  var  searchResult=window.vm.getBZHDZ(function(data){
+  var  searchResult=window.czwvm.getBZHDZ(function(data){
     console.log('data',data.length);
     if(data.length!=0){
     for (var i = 0; i < data.length; i++) {
@@ -54,7 +54,7 @@ function renderBzhid(data) {
 
        for (var i = 0; i < features.length; i++) {
          console.log(features[i]);
-         var mc=features[i].properties.JLXDZXZ;
+         var mc=features[i].properties.DZMC;
         renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
       }
@@ -93,7 +93,7 @@ export function renderMarkerbzh(point, data,mc) {
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
  console.log('data.dm',data.dm);
-    window.vm.getRyxx(1,10,data.dm,mc);
+    window.czwvm.getRyxx(1,5,data.dm,mc);
 
   });
 }

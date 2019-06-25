@@ -47,6 +47,7 @@ const tlyxq="/service/getRedisDataByDm?tablename=DM_TLYXQ";//停留有效期
 const sf="/service/getRedisDataByDm?tablename=DM_JWRYSF";//身份
 const clzt="/service/getRedisDataByDm?tablename=DM_CLZT";//处理状态
 const sjly="/service/getRedisDataByDm?tablename=DM_SJLY";//数据来源
+const rzfs="/service/getRedisDataByDm?tablename=DM_RZFS";//入住方式(地图用的)
 const tablists=[];
 export default
 {
@@ -62,5 +63,5 @@ export default
   aport4,//李文龙
   aport5,//李文龙
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs
 }
