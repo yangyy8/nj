@@ -46,6 +46,12 @@
                    {{basedata.BJSJ}}
              </el-col>
            </el-row>
+           <el-row type="flex" class="stu-row">
+             <el-col :span="6" class="stu-col-row">
+               <span>出生日期：</span>
+                   {{basedata.CSRQ}}
+             </el-col>
+           </el-row>
          </el-col>
 
        </el-row>
@@ -1311,7 +1317,7 @@ export default {
         "showCount": showCount,
         "pd": this.px,
         // "pdNotIn":this.pd,
-        "orderBy":"ZSRQ",
+        "orderBy":{value:"ZSRQ",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', p,

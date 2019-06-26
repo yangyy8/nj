@@ -235,7 +235,7 @@ import LZXX from '../../../common/lzxx_xq'
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201',LB_DJDW:'1'},
+      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'0',LRDW_BH:'0',DJDWXZQH:'3201',LB_SFBG:'2'},
       pdTu:{},
       pd0:{
         begin:'',
@@ -260,6 +260,7 @@ import LZXX from '../../../common/lzxx_xq'
         }
       ],
       tableData: [],
+      lineChart:null,
     }
   },
   mounted(){
@@ -398,7 +399,7 @@ import LZXX from '../../../common/lzxx_xq'
               }
           ],
           series: series
-       })
+       },true)
        that.lineChart.on('click',function(params){
          console.log(params);
          let p={};

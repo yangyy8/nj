@@ -6,53 +6,61 @@
         <div class="yylbt mb-15">基本信息</div>
         <el-row type="flex" class="yyf">
           <el-col :span="24" class="stu-left">
-            <el-row type="flex" class="stu-row">
-              <el-col :span="6">
+            <el-row  class="stu-row tt-bb">
+              <el-col :span="6" class="stu-col-row t-bb">
              <span class="texth">  姓名：
                 <label  v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
                 <label  v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
                 <label  v-else>{{baseData.YWXM}}</label>
               </span>
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>性别：</span>
                    {{baseData.XB_DESC}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>国家/地区：</span>
                    {{baseData.GJDQ_DESC}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>证件种类：</span>
                    {{baseDatazj.ZJZL_DESC}}
               </el-col>
-                </el-row>
-            <el-row  :gutter="4">
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span >证件有效期：</span>
                    {{baseData.ZJYXQ}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>证件号码：</span>
                    {{baseData.ZJHM}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>签证种类：</span>
                    {{baseData.QZZL_DESC}}
               </el-col>
-              <el-col :span="6" class="stu-col-row2">
+              <el-col :span="6" class="stu-col-row t-bb">
                 <span>签证号码：</span>
                    {{baseData.QZHM}}
               </el-col>
+              <el-col :span="6" class="stu-col-row">
+                <span>预警时间：</span>
+                  {{baseData.BJSJ}}
+              </el-col>
+              <el-col :span="6" class="stu-col-row">
+                <span>出生日期：</span>
+                  {{baseData.CSRQ}}
+              </el-col>
+                </el-row>
+            <el-row  :gutter="4" class="stu-row">
 
             </el-row>
-            <el-row  :gutter="4">
+            <!-- <el-row  :gutter="4">
               <el-col :span="6" class="stu-col-row2">
                 <span>预警时间：</span>
                   {{baseData.BJSJ}}
               </el-col>
 
-            </el-row>
+            </el-row> -->
           </el-col>
           <!-- <el-col :span="4" class="stu-right">
             <el-button type="primary" size="small" @click="$router.push({name:'StuBaseInfo',query:{id:'11',AlarmType:'11'}})">详情</el-button>
@@ -1047,7 +1055,7 @@ export default {
               "currentPage": currentPage,
               "showCount": showCount,
               "pd": this.cdt,
-              "orderBy":"IOSTRING",
+              "orderBy":{value:"IOSTRING",dataType:"date"},
               "orderType":"DESC"
             };
             break;
@@ -1056,7 +1064,7 @@ export default {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": this.cdt,
-            "orderBy":"ZSRQ",
+            "orderBy":{value:"ZSRQ",dataType:"date"},
             "orderType":"DESC"
           };
           break;

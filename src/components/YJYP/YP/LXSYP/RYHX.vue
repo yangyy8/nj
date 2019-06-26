@@ -185,7 +185,8 @@ export default {
   },
   methods: {
     moreFn(i){
-      this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i}})
+      this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i}});
+      this.listDialogVisible=false;
     },
     getList(){
       this.V.$submit('demo2', (canSumit,data) => {

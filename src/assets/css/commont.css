@@ -131,6 +131,12 @@
 .bb{
   border-bottom: 1px solid #ddd;
 }
+.t-bb{
+  border-bottom: 1px solid #eee;
+}
+.tt-bb{
+  border-bottom: none;
+}
 .qz{
   font-weight: bold;
   font-size: 14px;

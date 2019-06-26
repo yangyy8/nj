@@ -35,7 +35,8 @@
                   {{baseData.qzhm}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
-               <span></span>
+               <span>出生日期：</span>
+                  {{baseData.csrq}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span></span>

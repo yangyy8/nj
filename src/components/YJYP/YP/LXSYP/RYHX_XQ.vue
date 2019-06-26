@@ -20,10 +20,10 @@
                    中文姓名：{{baseinfo.zwxm}}
                  </el-col>
                  <el-col :span="8">
-                   性别：{{baseinfo.xb}}
+                   性别：{{baseinfo.xb_desc}}
                  </el-col>
                  <el-col :span="8">
-                   国家地区：{{baseinfo.gjdq}}
+                   国家地区：{{baseinfo.gjdq_desc}}
                  </el-col>
                  <el-col :span="8">
                    出生日期：{{baseinfo.csrq}}
@@ -616,19 +616,19 @@
              </div>
 
        <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <ANSJ :type="type" :xid="xid"></ANSJ>
+         <ANSJRY :type="type" :xid="xid" :random="randomasj"></ANSJRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
        <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <LZXX :type="type" :xid="xid" :rid="rid"></LZXX>
+         <LZXXRY :type="type" :xid="xid" :random="randomlzxx"></LZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
        <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <CZXX :type="type" :xid="xid"></CZXX>
+         <CZXXRY :type="type" :xid="xid" :random="randomczxx"></CZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -641,7 +641,7 @@
        </el-dialog>
        <!-- 出入境信息 -->
       <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-                <CRJXX :type="type" :xid="xid"></CRJXX>
+                <CRJXXRY :type="type" :xid="xid" :random="randomcrj"></CRJXXRY>
                    <div slot="footer" class="dialog-footer">
                      <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
                    </div>
@@ -706,18 +706,19 @@
    </div>
 </template>
 <script scoped>
-import LZXX from '../../../common/lzxx_xq'
-import ANSJ from '../../../common/ansj_xq'
-import CRJXX from '../../../common/crjxx_xq'
+import LZXXRY from './lzxxxq_ry'
+import ANSJRY from './ansjxq_ry'
+import CRJXXRY from './crjxq_ry'
 import LXSXX from '../../../common/lxsxx_xq'
-import CZXX from '../../../common/czxx_xq'
+import CZXXRY from './czxxxq_ry'
 import DWXX from '../../../common/dwxx_xq'
 import MHXX from '../../../common/mhjcg_xq'
 import imgUrl from '../../../../assets/img/mrzp.png'
 export default{
-    components:{LZXX,ANSJ,CRJXX,LXSXX,CZXX,DWXX,MHXX},
+    components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX},
   data(){
     return{
+      rybh:'',
       tabLength:[],
       pageQz:1,
       suc:['success','info','warning','danger','primary'],
@@ -730,6 +731,10 @@ export default{
        images:[],
        type:2,
        xid:'',
+       randomcrj:'',
+       randomlzxx:'',
+       randomczxx:'',
+       randomasj:'',
        rid:'',
        pd:{},
        imgdm:imgUrl,
@@ -923,6 +928,7 @@ export default{
         r => {
           // if(r.data.resultList.length!=0){
             this.baseinfo = r.data;
+            this.rybh = r.data.RYBH;
           // }
         })
     },
@@ -950,10 +956,17 @@ export default{
     saveLabls(){
       var srr=this.labmc.split(',');
       let p={
-        "RYBH":this.row.RYBH,
+        // "RYBH":this.row.RYBH||this.rybh,
         "BM":srr[0],
         "MC":srr[1],
       };
+      if(this.row){
+        p.RYBH=this.row.RYBH
+      }else if(this.rybh){
+        p.RYBH=this.rybh
+      }else{
+        p.RYBH=''
+      }
       this.$api.post(this.Global.aport3+'/ryhx/addrybqbyrybh', p,
         r => {
           if(r.success){
@@ -962,6 +975,7 @@ export default{
               type: 'success'
             });
            this.bqDialogVisible=false;
+           this.getLable();
           }else {
             this.$message.error(r.message);return;
           }
@@ -1160,19 +1174,24 @@ export default{
           // this.tableData11 = r.data.resultList;
         })
     },
+    //出入境详情
     detailscrj(n){
-          this.xid=n.RGUID;
-          target.scrollIntoView();
-          console.log('RGUID',n.RGUID);
-          this.crjDialogVisible=true;
+        this.xid=n;
+        this.randomcrj=new Date().getTime();
+        target.scrollIntoView();
+        this.crjDialogVisible=true;
     },
+    //临住信息详情
     detailslzxx(n){
-      this.xid=n.GUID;
+      this.xid=n;
+      this.randomlzxx=new Date().getTime();
       target.scrollIntoView();
       this.lzxxDialogVisible=true;
     },
+    //案事件信息详情
     detailsasj(n){
-      this.xid=n.GUID;
+      this.xid=n;
+      this.randomasj=new Date().getTime();
       target.scrollIntoView();
       this.asjDialogVisible=true;
     },
@@ -1182,10 +1201,11 @@ export default{
       console.log(n.DTID);
       this.lxsDialogVisible=true;
     },
+    //常住信息详情
     detailscz(n){
-    this.xid=n.RGUID;
+    this.xid=n;
     this.rid=n.RYBH;
-    console.log('this.rid',this.rid);
+    this.randomczxx=new Date().getTime();
     target.scrollIntoView();
     this.czDialogVisible=true;
     },

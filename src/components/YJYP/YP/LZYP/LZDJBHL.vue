@@ -118,7 +118,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="getList()">查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -253,6 +253,8 @@ import LZXX from '../../../common/lzxx_xq'
       options:this.pl.options,
       dataname:[],
       rr:0,
+      lineChart:null,
+      seriesT:[],
     }
   },
   mounted(){
@@ -267,6 +269,11 @@ import LZXX from '../../../common/lzxx_xq'
     this.getFJ();
     this.getList();
   },
+  // beforeDestroy(){
+  //   this.lineChart.dispose();
+  //   this.lineChart=null;
+  //   this.seriesT=[];
+  // },
   methods:{
     pageSizeChange(val) {
       this.pageSize=val;
@@ -334,7 +341,13 @@ import LZXX from '../../../common/lzxx_xq'
       };
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getCountByParam', p,
         r => {
-          this.drawLine(r.data.legend,r.data.header,r.data.series);
+          if(r.success){
+            this.seriesT = r.data.series;
+            this.drawLine(r.data.legend,r.data.header,this.seriesT);
+          }
+          // console.log(r.data.series)
+
+
         })
 
     },
@@ -402,7 +415,8 @@ import LZXX from '../../../common/lzxx_xq'
             }
         ],
         series: series
-      })
+      },true)
+      console.log('series',series)
       that.lineChart.on('click',function(params){
         let p={};
         p=Object.assign({}, that.pd);
