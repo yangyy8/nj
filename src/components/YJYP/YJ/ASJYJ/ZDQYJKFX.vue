@@ -150,7 +150,7 @@
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,doSearch} from '@/assets/js/SuperMap/zdjkmap.js'
-let vm;
+let zdvm;
 export default {
   data(){
     return{
@@ -175,7 +175,7 @@ export default {
   },
 
   mounted() {
-    window.vm=this;
+    window.zdvm=this;
    this.$store.dispatch("getGjdq");
    this.$store.dispatch("getQzzl");
     createMapL();

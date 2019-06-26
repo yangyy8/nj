@@ -40,7 +40,7 @@ export	function createDWMap(id, mc) {
 
 		//map.zoomTo(14);
 		markerLayer.clearLayers();
-		mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5, function(features) {
+		mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5,0, function(features) {
 			if (features.length > 0) {
 				var x = features[0].properties.SMX;
 				var y = features[0].properties.SMY;
@@ -52,16 +52,17 @@ export	function createDWMap(id, mc) {
         var arr=[];
         arr.push(y);
         arr.push(x);
-        var relt=window.vm.getXXDZ(id,function(data) {
+        var relt=window.ffvm.getXXDZ(id,function(data) {
 
         for (var i = 0; i < data.length; i++) {
-              var num=data[i].count;
-              mapSqlSearch("dz_mlpxx_3201_pt", "JWPTBH='" +data[i].dm + "'", 0, 5, function(features) {
-                console.log(num);
+          var num=data[i].count;
+
+              mapSqlSearch("dz_mlpxx_3201_pt", "JWPTBH='" +data[i].dm + "'", 0, 5,num, function(features,nums) {
+
                 for (var j = 0; j < features.length; j++) {
-                  var mc=features[j].properties.JLXDZXZ;
+                  var mc=features[j].properties.DZMC;
                   var dm=features[j].properties.JWPTBH;
-                    renderMarkerbzh(features[j].geometry.coordinates.reverse(),dm,mc,arr,num);
+                    renderMarkerbzh(features[j].geometry.coordinates.reverse(),dm,mc,arr,nums);
                  }
               });
             }
@@ -122,7 +123,7 @@ export	function createDWMap(id, mc) {
              .measureDistance(distanceMeasureParam, function (serviceResult) {
                var  gl=parseInt(serviceResult.result.distance/1000);
 
-               if(gl>window.vm.jlsz){
+               if(gl>window.ffvm.jlsz){
                  markerLayer.addLayer(polyLine);
                  markerLayer.addLayer(marker1);
                }else {
@@ -136,12 +137,12 @@ export	function createDWMap(id, mc) {
                  });
                  marker1.on('click', function(e) {
 
-                      window.vm.getRyxx(1,5,dm,mc,'');
+                      window.ffvm.getRyxx(1,5,dm,mc,'');
                  });
              });
  }
   //dz_mlpxx_3201_pt	DH_PT学校
-export function mapSqlSearch(tableName, attributeFilter, from, to, callback) {
+export function mapSqlSearch(tableName, attributeFilter, from, to, num,callback) {
   //向服务器发送请求，并对返回的结果进行处理
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
                           queryParameter: {
@@ -155,6 +156,6 @@ export function mapSqlSearch(tableName, attributeFilter, from, to, callback) {
 
    L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesBySQL(sqlParam, function (serviceResult) {
           var features = serviceResult.result.features.features;
-    callback(features);
+    callback(features,num);
   });
 }

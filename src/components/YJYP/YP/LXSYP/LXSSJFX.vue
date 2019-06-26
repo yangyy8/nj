@@ -26,19 +26,11 @@
                   <el-col :span="24">
                       <span class="yy-input-text">入住方式：</span>
                       <el-select v-model="pd.rzfs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option label="自租房" value="1">
-                        </el-option>
-                        <el-option label="自购房" value="2">
-                        </el-option>
-                        <el-option label="自建房" value="3">
-                        </el-option>
-                        <el-option label="单位租房" value="4">
-                        </el-option>
-                        <el-option label="单位购房" value="5">
-                        </el-option>
-                        <el-option label="单位建房" value="6">
-                        </el-option>
-                        <el-option label="其他" value="7">
+                        <el-option
+                          v-for="(item,ind) in $store.state.rzfs"
+                          :key="ind"
+                          :label="item.mc"
+                          :value="item.xdid">
                         </el-option>
                       </el-select>
                   </el-col>
@@ -165,6 +157,7 @@ export default {
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getRjsy');
+    this.$store.dispatch('getRzfs');
     this.getGX();
     this.getSsfj();
     this.$nextTick(()=>{

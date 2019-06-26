@@ -320,7 +320,7 @@
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,getSearch} from '@/assets/js/SuperMap/jwrymap.js'
-let vm;
+let czvm;
 export default {
   data(){
     return{

@@ -120,7 +120,7 @@
             </el-collapse-transition>
         </div>
       <div class="bghome">
-        <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
+        <el-dialog :title="diatext" :visible.sync="lzhDialogVisible">
           <el-table
                :data="tableData"
                style="width: 100%"
@@ -185,7 +185,7 @@
               </el-pagination>
             </div>
           <div slot="footer">
-            <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
+            <img src="../../../../assets/img/qx.png" border="0" @click="lzhDialogVisible = false" style="cursor:pointer" >
           </div>
          <div class="arrow_line" style="left:0px;top:0px; border-bottom-width:0;border-right-width:0"></div>
          <div class="arrow_line" style="right:0px;top:0px; border-bottom-width:0;border-left-width:0"></div>
@@ -199,7 +199,7 @@
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,getSearh} from '@/assets/js/SuperMap/lzmap.js'
-let vm;
+let lzvm;
 export default {
   data(){
     return{
@@ -215,7 +215,7 @@ export default {
        list:[],
        tableData:[],
        loading:false,
-       bzhDialogVisible:false,
+       lzhDialogVisible:false,
        diatext:'标准化地址',
        bzhid:'',
        mc:'',
@@ -223,7 +223,7 @@ export default {
     }
   },
   mounted() {
-    window.vm=this;
+    window.lzvm=this;
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getRjsy');
     this.$store.dispatch('getZjzl');
@@ -314,6 +314,7 @@ export default {
          "dzdtid":this.bzhid,
          "yf":'Y',
          "lrdw":this.lrdw,
+
        };
        var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
        this.$api.post(url, p,
@@ -324,7 +325,7 @@ export default {
              this.TotalResult=r.data.totalResult;
            }
          });
-       this.bzhDialogVisible=true;
+       this.lzhDialogVisible=true;
     }
   },
 
@@ -345,7 +346,6 @@ export default {
 .lzxx  .my-div-icon {
         background-color: rgba(0, 167, 91, 0.8);
         border-radius: 50%;
-        border:1px solid #ccc;
         line-height:20px;
         text-align: center;
         vertical-align: middle;
@@ -353,11 +353,11 @@ export default {
         font-size: 16px;
     }
 .lzxx    .lz {
-		background:url(../../../../assets/img/tb/location_red.png) no-repeat;font-size:12px; font-weight: bold;
+		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;
 		}
 
 .lzxx		.cz {
 			background-color: rgba(155, 0, 0, 0.8);
 		}
-    .bghome .el-dialog{ width: 60%!important;}
+    .bghome .el-dialog{ width: 70%!important;}
 </style>

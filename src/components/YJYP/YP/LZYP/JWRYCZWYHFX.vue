@@ -15,19 +15,19 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text">行政区划：</span>
-                        <el-select v-model="pd.xzqh" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                       <el-option
-                         v-for="(item,ind) in xzqh"
-                         :key="ind"
-                         :label="item.mc"
-                         :value="item.dm">
-                       </el-option>
-                     </el-select>
+                      <span class="yy-input-text">所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-option
+                          v-for="(item,ind1) in ssfj"
+                          :key="ind1"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
                   </el-col>
                   <el-col :span="24">
                       <span class="yy-input-text">派出所：</span>
-                        <el-select v-model="pd.pcs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-select v-model="pd.pcs" filterable clearable default-first-option placeholder="请输入关键字"  size="small" class="yy-input-input">
                        <el-option
                          v-for="(item,ind1) in pcs"
                          :key="ind1"
@@ -224,6 +224,7 @@
                 <el-pagination
                 background
                   @current-change="handleCurrentChange"
+                  :current-page:sync="CurrentPage"
                   :page-size="pageSize"
                   layout="prev, pager, next"
                   :total="TotalResult">
@@ -269,6 +270,7 @@
      <el-pagination
      background
        @current-change="handleCurrentChange1"
+       :current-page:sync="CurrentPage1"
        :page-size="pageSize1"
        layout="prev, pager, next"
        :total="TotalResult1">
@@ -306,6 +308,7 @@
      <el-pagination
      background
        @current-change="handleCurrentChange2"
+       :current-page:sync="CurrentPage2"
        :page-size="pageSize2"
        layout="prev, pager, next"
        :total="TotalResult2">
@@ -345,16 +348,13 @@
      <el-pagination
      background
        @current-change="handleCurrentChange3"
+       :current-page:sync="CurrentPage3"
        :page-size="pageSize3"
        layout="prev, pager, next"
        :total="TotalResult3">
      </el-pagination>
    </div>
 </div>
-
-
-
-
             <div slot="footer">
               <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
             </div>
@@ -371,7 +371,7 @@
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,getSearch} from '@/assets/js/SuperMap/czwyhmap.js'
 
-let vm;
+let czwvm;
 export default {
   data(){
     return{
@@ -412,18 +412,19 @@ export default {
        bzhid:'',
        mc:'',
        rybh:'',
+       ssfj:[],
 
     }
   },
 
   mounted() {
-      window.vm=this;
+      window.czwvm=this;
       this.$store.dispatch('getGjdq');
       this.$store.dispatch('getXB');
       this.$store.dispatch('getRjsy');
       this.$store.dispatch('getZjzl');
       this.$store.dispatch('getQzzl');
-      this.getXzqh();
+      this.getSsfj();
       this.getPcs();
       this.getZrq();
       createMapL();
@@ -535,8 +536,18 @@ export default {
           this.bzhshow=false;
         }
       },
+      getSsfj(){
+         let p={
+           "operatorId":this.$store.state.uid,
+           "operatorNm":this.$store.state.uname
+         };
+        var url=this.Global.aport2+"/data_report/selectSsfjDm";
+        this.$api.post(url,p,
+        r=>{
+          this.ssfj=r.data.SSFJ;
+        })
+      },
       getPcs(){
-
         var url=this.Global.aport1+this.Global.pcs;
         this.$api.get(url,null,
         r=>{
@@ -544,7 +555,6 @@ export default {
         })
       },
       getXzqh(){
-
         var url=this.Global.aport1+this.Global.xzqh;
         this.$api.get(url,null,
         r=>{
@@ -559,12 +569,12 @@ export default {
         var url=this.Global.aport2+"/data_report/selectZrqDm";
         this.$api.post(url,p,
         r=>{
-
           this.zrq=r.data.ZRQ;
         })
       },
     doset(){
-       this.$set(this.pd,"xzqh",[]);
+       // this.$set(this.pd,"xzqh",[]);
+       this.$set(this.pd,"ssfj",'');
        this.$set(this.pd,"pcs",[]);
        this.$set(this.pd,"zrq",[]);
        this.$set(this.pd,"beginTime",'');
@@ -575,7 +585,7 @@ export default {
       var searchResult = [];
         let p={
 
-          "xzqh":this.pd.xzqh,
+          "xzqh":this.pd.ssfj,
           "pcs":this.pd.pcs,
           "zrq":this.pd.zrq,
           "rzsjStart":this.pd.beginTime,
@@ -593,11 +603,12 @@ export default {
               callback && callback(searchResult)
             }
           });
-
           // callback(searchResult);
     },
     getRyxx(currentPage,showCount,bzhid,mc){
-
+     if(currentPage==1){
+       this.CurrentPage=1;
+     }
       this.mc=mc;
       this.tshow1=true;
       this.tshow2=false;
@@ -629,16 +640,19 @@ export default {
         });
       this.bzhDialogVisible=true;
     },
-
     getRYinfo(currentPage,showCount,rybh,n){
+      if(currentPage==1){
+        this.CurrentPage1=1;
+        this.CurrentPage2=1;
+        this.CurrentPage3=1;
+      }
       let p={
         "currentPage":currentPage,
         "showCount":showCount,
         "rybh":rybh,
         "type":n,
       };
-
-      var url=this.Global.aport+"/zxdt/getLZUserInforList";
+      var url=this.Global.aport+"/ywlz/getLZUserInforList";
       this.$api.post(url, p,
         r => {
           if (r.success) {
@@ -662,7 +676,6 @@ export default {
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
-
       getSearch();
 
     },

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="bghome">
+  <div class="bghome bgh1">
       <div id="mainMap" class="mapbj"></div>
          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
            <el-table
@@ -8,15 +8,15 @@
                 >
                 <el-table-column
                   prop="zp"
-                  label="照片">
+                  label="照片" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="sf"
-                  label="身份">
+                  label="身份" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="dw"
-                  label="单位">
+                  label="单位" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="ywxm"
@@ -37,6 +37,10 @@
                 <el-table-column
                   prop="gjdq"
                   label="国家地区">
+                </el-table-column>
+                <el-table-column
+                  prop="zjzl"
+                  label="证件种类">
                 </el-table-column>
                 <el-table-column
                   prop="zjhm"
@@ -67,6 +71,7 @@
                <el-pagination
                background
                  @current-change="handleCurrentChange"
+                 :current-page.sync ="CurrentPage"
                  :page-size="pageSize"
                  layout="prev, pager, next"
                  :total="TotalResult">
@@ -97,13 +102,14 @@ export default {
         tableData:[],
         options:this.pl.options,
         bzhDialogVisible:false,
-        lrdw:'320111',
-        lrdwmc:'江北新区',
+        lrdw:'320115',
+        lrdwmc:'江宁区',//320113   320112江北
         rs:'11523',
-        type:'L',
+        type:'C',
         yf:'Y',
         sevalue:[],
         bzhid:'',
+        czshow:false,
       }
     },
     mounted(){
@@ -113,10 +119,14 @@ export default {
       // this.rs=this.$route.query.rs;
       // this.lrdwmc=this.$route.query.mc;
       // this.yf=this.$route.query.yf;
-      createMapL(this.lrdw,this.lrdwmc,this.rs);
-      //this.getpcs("320116");
-      // this.getbzhdz("320116620000");
-      // this.getRyxx(this.CurrentPage,this.pageSize,"320116620000");
+      createMapL(this.lrdw,this.lrdwmc,this.rs,this.type);
+      if(this.type=="C")
+      {
+        this.czshow=true;
+      }else {
+        this.czshow=false;
+      }
+
     },
     methods:{
       pageSizeChange(val) {
@@ -130,12 +140,21 @@ export default {
       //得到派出所
       getpcs(n,callback)
         {
+      
+          // this.lrdw=n;
+
           var searchResult = [];
             let p={
               "lrdw":this.lrdw,
               "yf":this.yf,
             };
-            var url=this.Global.aport+"/zxdt/getLSZSDJXXPCSList";
+          var url=this.Global.aport+"/zxdt/getLSZSDJXXPCSList";
+           if(this.type=="C"){
+             p={
+               "lrdw":this.lrdw,
+             };
+             url=this.Global.aport+"/zxdt/getCZDJXXPCSList";
+           }
            this.$api.post(url, p,
               r => {
                 if (r.success) {
@@ -143,7 +162,6 @@ export default {
                   for (var i = 0; i < arr.length; i++) {
                   searchResult.push(arr[i]);
                   }
-
                   callback && callback(searchResult)
                 }
               });
@@ -156,6 +174,12 @@ export default {
             "lrdw":n,
           };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
+          if(this.type=="C"){
+            p={
+              "sspcs":n,
+            };
+            url=this.Global.aport+"/zxdt/getCZDJXXJZDList";
+          }
           this.$api.post(url, p,
             r => {
               if (r.success) {
@@ -171,6 +195,7 @@ export default {
       //人员信息
       getRyxx(currentPage,showCount,bzhid,mc,lrdw)
       {
+
         if(currentPage==1){
           this.CurrentPage=1;
         }
@@ -185,7 +210,16 @@ export default {
            "yf":this.yf,
            "lrdw":this.lrdw,
          };
-         var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+          var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+         if(this.type=="C"){
+           p={
+             "currentPage":currentPage,
+             "showCount":showCount,
+             "xxdz":this.bzhid,
+           };
+           url=this.Global.aport+"/zxdt/getCZDJXXRYList";
+         }
+
          this.$api.post(url, p,
            r => {
              if (r.success) {
@@ -229,5 +263,5 @@ export default {
 .icon1{background: url(../assets/img/tb/map1.png)  no-repeat;}
 
 .icon2{background: url(../assets/img/tb/map2.png)  no-repeat;}
-.bghome .el-dialog{ width: 90%!important;}
+.bgh1 .el-dialog{ width: 90%!important;}
 </style>

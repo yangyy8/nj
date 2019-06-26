@@ -113,7 +113,7 @@
 <script scoped>
 import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,createDWMap} from '@/assets/js/SuperMap/ffjymap.js'
-let vm;
+let ffvm;
 export default {
   data(){
     return{
@@ -138,7 +138,7 @@ export default {
     }
   },
   mounted() {
-    window.vm=this;
+    window.ffvm=this;
     createMapL();
   },
   methods:{
@@ -206,7 +206,9 @@ export default {
       //    });
 
     var searchResult = [
-      {dm:'32010100000001915459',count:11}
+      {dm:'32010100000001915459',count:11},
+      {dm:'32010100000001917524',count:21},
+      {dm:'32010100000001916677',count:58},
     ];
     callback(searchResult);
     },
@@ -274,11 +276,11 @@ export default {
         vertical-align: middle;
     }
 .lzxx  .lz {
-		background:url(../../../../assets/img/tb/location_red.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
 		}
 
 .lzxx	.cz {
 			background-color: rgba(155, 0, 0, 0.8);
 		}
-  .bghome .el-dialog{ width: 60%!important;}
+  .bghome .el-dialog{ width: 70%!important;}
 </style>
