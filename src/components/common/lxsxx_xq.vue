@@ -74,13 +74,17 @@
           <span class="input-input detailinput">  {{lxsinfo.RELIGIOUS}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
+          <span class="input-text">宗教信仰（其他）：</span>
+          <span class="input-input detailinput">  {{lxsinfo.OTHERRELIGIOUS}}</span>
+        </el-col>
+        <el-col :span="8" class="input-item">
           <span class="input-text">母语：</span>
           <span class="input-input detailinput">  {{lxsinfo.MLANGUAGE}}</span>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <!-- <el-col :span="8" class="input-item">
           <span class="input-text">通道号：</span>
           <span class="input-input detailinput">  {{lxsinfo.CHANNELNO}}</span>
-        </el-col>
+        </el-col> -->
         <el-col :span="8" class="input-item">
           <span class="input-text" title="特殊身份类别">特殊身份类别：</span>
           <span class="input-input detailinput">  {{lxsinfo.SPECIALID}}</span>

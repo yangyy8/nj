@@ -580,7 +580,7 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxszx(scope.row)"></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -655,12 +655,19 @@
      </el-dialog>
 
       <!-- 留学生信息详情 -->
-      <el-dialog title="留学生信息详情" :visible.sync="lxsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+      <el-dialog title="留学生申请信息详情" :visible.sync="lxsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
                   <LXSXX :type="type" :xid="xid"></LXSXX>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="lxsDialogVisible = false" size="small">取 消</el-button>
                   </div>
      </el-dialog>
+     <!-- 留学生信息详情 -->
+     <el-dialog title="留学生在校信息详情" :visible.sync="lxsZXDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+                 <LXSXXZX :type="type" :xid="xid"></LXSXXZX>
+                 <div slot="footer" class="dialog-footer">
+                   <el-button @click="lxsZXDialogVisible = false" size="small">取 消</el-button>
+                 </div>
+    </el-dialog>
        </div>
       </div>
 <!-- 弹出小的窗口 -->
@@ -710,12 +717,13 @@ import LZXXRY from './lzxxxq_ry'
 import ANSJRY from './ansjxq_ry'
 import CRJXXRY from './crjxq_ry'
 import LXSXX from '../../../common/lxsxx_xq'
+import LXSXXZX from '../../../common/lxsZx_xq'
 import CZXXRY from './czxxxq_ry'
 import DWXX from '../../../common/dwxx_xq'
 import MHXX from '../../../common/mhjcg_xq'
 import imgUrl from '../../../../assets/img/mrzp.png'
 export default{
-    components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX},
+    components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX,LXSXXZX},
   data(){
     return{
       rybh:'',
@@ -749,6 +757,7 @@ export default{
        czDialogVisible:false,
        dwDialogVisible:false,
        mhDialogVisible:false,
+       lxsZXDialogVisible:false,
        tableData1:[],
        tableData2:[],
        tableData3:[],
@@ -1195,11 +1204,17 @@ export default{
       target.scrollIntoView();
       this.asjDialogVisible=true;
     },
+    //留学生申请信息
     detailslxs(n){
       this.xid=n.RGUID;
       target.scrollIntoView();
-      console.log(n.DTID);
       this.lxsDialogVisible=true;
+    },
+    //留学生在校信息
+    detailslxszx(n){
+      this.xid=n.RGUID;
+      target.scrollIntoView();
+      this.lxsZXDialogVisible=true;
     },
     //常住信息详情
     detailscz(n){
@@ -1209,11 +1224,11 @@ export default{
     target.scrollIntoView();
     this.czDialogVisible=true;
     },
-detailsdw(n){
-  this.xid=n.RGUID;
-  target.scrollIntoView();
-  this.dwDialogVisible=true;
-},
+    detailsdw(n){
+      this.xid=n.RGUID;
+      target.scrollIntoView();
+      this.dwDialogVisible=true;
+    },
 detailsMH(n)
 {
   this.xid=n.RGUID;
