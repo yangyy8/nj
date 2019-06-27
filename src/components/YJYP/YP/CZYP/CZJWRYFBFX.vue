@@ -153,7 +153,7 @@
                   </el-col>
 
                   <el-col :span="12">
-                      <span class="yy-input-text">所属单位：</span>
+                      <span class="yy-input-text"><font color=red>*</font>所属单位：</span>
                       <el-select v-model="pd.ssdw" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind) in $store.state.ssdw"
@@ -182,7 +182,7 @@
                     </div>
                    </el-col>
                    <el-col :span="24" class="input-item" >
-                     <span class="input-text">市局下发时间：</span>
+                     <span class="input-text"><font color=red>*</font>市局下发时间：</span>
                      <div class="input-input t-flex">
                        <el-date-picker
                           v-model="pd.beginsjxf" format="yyyy-MM-dd"
@@ -414,30 +414,48 @@ export default {
         this.show=!this.show;
       getSearch();
     },
+    getPCS(callback){
+      var searchResult = [];
+        let p={
+          "gjdq":this.pd.gjdq,
+          "zjzl":this.pd.zjzl,
+          "jzzt":this.pd.jzzt,
+          "xxmc":this.pd.fwcs,
+        };
+        var url=this.Global.aport+"/ywczdt/getCZDJXXPCSList";
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              var arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+              searchResult.push(arr[i]);
+              }
+
+              callback && callback(searchResult)
+            }
+          });
+
+          callback(searchResult);
+    },
     //得到标准化地址
     getBZHDZ(callback){
-      var searchResult = [
-        {dm:'32010100000001915459',count:123},
-        {dm:'32010100000002760597',count:123},
-        {dm:'32010100000022930618',count:123},
-        {dm:'32010100000003007102',count:123}
-      ];
-        // let p={
-        //   "yf":this.yf,
-        //   "lrdw":"",
-        // };
-        // var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
-        // this.$api.post(url, p,
-        //   r => {
-        //     if (r.success) {
-        //       var arr=r.data;
-        //       for (var i = 0; i < arr.length; i++) {
-        //       searchResult.push(arr[i]);
-        //       }
-        //       console.log('-----222',searchResult);
-        //       callback && callback(searchResult)
-        //     }
-        //   });
+      var searchResult = [];
+        let p={
+          "yf":this.yf,
+          "lrdw":"",
+        };
+        var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              var arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+              searchResult.push(arr[i]);
+              }
+
+              callback && callback(searchResult)
+            }
+          });
 
           callback(searchResult);
     },

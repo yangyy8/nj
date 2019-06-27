@@ -32,7 +32,12 @@ export function createMapL() {
 
 }
 export function doSearch(className) {
-  markerLayer.clearLayers();
+  if (markerLayer != null) {
+    markerLayer.clearLayers();
+  }
+  if (polygonLayer != null) {
+    polygonLayer.remove();
+  }
   var options = {
     position: 'topleft',
     draw: {
@@ -89,19 +94,15 @@ export function doSearch(className) {
       var ids = [];
 
       var sdata=[
-        {dm:'32010100000001213929',count:320},
-        {dm:'32010352000000034036',count:120},
-        {dm:'32010100000023324122',count:30},
-        {dm:'32010352000000034789',count:80},
-        {dm:'32010352000000024676',count:20},
+        {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:320},
       ];
       for(var i = 0; i < resultdata.length; i++) {
-        var id=resultdata[i].properties.JWPTBH;
+        var id=resultdata[i].properties.DZMC;
 
          for (var j = 0; j < sdata.length; j++) {
 
           if(sdata[j].dm==id) {
-            var mc=resultdata[i].properties.DZMC;
+            var mc=resultdata[i].properties.JWPTBH;
             renderMarkerbzh(resultdata[i].geometry.coordinates.reverse(),sdata[j].dm,sdata[j].count,mc);
           }
          }

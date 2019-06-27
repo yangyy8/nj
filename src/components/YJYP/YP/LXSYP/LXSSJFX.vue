@@ -2,7 +2,7 @@
     <!-- 留学生散居社会面分析 -->
       <div class="yymain ">
         <!-- 地图 -->
-        <div id="mainMap" class="mapbj"></div>
+        <div id="mainMap" class="mapbj lzxx"></div>
         <!-- 查询导航 -->
         <div class="fxleft">
              <div class="fxbnt">
@@ -12,6 +12,21 @@
              <el-collapse-transition>
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font>所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-option
+                          v-for="(item,ind1) in ssfj"
+                          :key="ind1"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                  </el-col>
+                <el-col :span="24">
+                    <span class="yy-input-text"><font color=red>*</font>服务处所：</span>
+                     <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
+                </el-col>
                   <el-col :span="24">
                       <span class="yy-input-text">国家地区：</span>
                       <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -23,28 +38,18 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="24">
+                  <!-- <el-col :span="24">
                       <span class="yy-input-text">入住方式：</span>
                       <el-select v-model="pd.rzfs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
-                          v-for="(item,ind) in $store.state.rzfs"
-                          :key="ind"
+                          v-for="(item,indrz) in $store.state.rzfs"
+                          :key="indrz"
                           :label="item.mc"
-                          :value="item.xdid">
+                          :value="item.dm">
                         </el-option>
                       </el-select>
-                  </el-col>
-                  <el-col :span="24">
-                      <span class="yy-input-text">学校名称：</span>
-                      <el-select v-model="pd.xxmc" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind1) in xxmc"
-                          :key="ind1"
-                          :label="item.mc"
-                          :value="item.xdid">
-                        </el-option>
-                      </el-select>
-                  </el-col>
+                  </el-col> -->
+
                   <el-col :span="24">
                       <span class="yy-input-text">证件种类：</span>
                       <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -70,23 +75,15 @@
                   <el-col :span="24">
                       <span class="yy-input-text">住房类型：</span>
                       <el-select v-model="pd.zflx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option value="1" label="住宅小区">
-                        </el-option>
-                        <el-option value="2" label="商住楼">
-                        </el-option>
-                        <el-option value="3" label="单位内部">
-                        </el-option>
-                        <el-option value="4" label="星级宾馆">
-                        </el-option>
-                        <el-option value="5" label="中小旅社">
-                        </el-option>
-                        <el-option value="6" label="居民小区">
-                        </el-option>
-                        <el-option value="7" label="其他">
+                        <el-option
+                          v-for="(item,indx) in $store.state.zflx"
+                          :key="indx"
+                          :label="item.mc"
+                          :value="item.dm">
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="24">
+                  <!-- <el-col :span="24">
                       <span class="yy-input-text">居留事由：</span>
                       <el-select v-model="pd.rjsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
@@ -96,30 +93,13 @@
                           :value="item.dm">
                         </el-option>
                       </el-select>
-                  </el-col>
+                  </el-col> -->
                   <el-col :span="24">
                       <span class="yy-input-text">居住状态类型：</span>
                       <el-select v-model="pd.jzztlx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option value="1" label="迁入">
-                        </el-option>
-                        <el-option value="2" label="所内变动">
-                        </el-option>
-                        <el-option value="3" label="迁出">
-                        </el-option>
-                        <el-option value="4" label="死亡销户">
-                        </el-option>
-                        <el-option value="5" label="人户分离">
-                        </el-option>
-                        <el-option value="6" label="查无此人">
-                        </el-option>
-                      </el-select>
-                  </el-col>
-                  <el-col :span="24">
-                      <span class="yy-input-text">所属分局：</span>
-                      <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
-                          v-for="(item,ind1) in ssfj"
-                          :key="ind1"
+                          v-for="(item,indx) in $store.state.jzztlx"
+                          :key="indx"
                           :label="item.mc"
                           :value="item.dm">
                         </el-option>
@@ -135,29 +115,103 @@
              </div>
             </el-collapse-transition>
         </div>
+
+        <div class="bghome">
+          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
+            <el-table
+                 :data="tableData"
+                 style="width: 100%"
+                 >
+                 <el-table-column
+                   prop="ywxm"
+                   label="英文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zwxm"
+                   label="中文姓名">
+                 </el-table-column>
+                 <el-table-column
+                   prop="xb"
+                   label="性别" width="60">
+                 </el-table-column>
+                 <el-table-column
+                   prop="csrq"
+                   label="出生日期">
+                 </el-table-column>
+                 <el-table-column
+                   prop="gjdq"
+                   label="国家地区">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjzl"
+                   label="证件种类">
+                 </el-table-column>
+                 <el-table-column
+                   prop="zjhm"
+                   label="证件号码">
+                 </el-table-column>
+             </el-table>
+             <div class="middle-foot mt-10">
+                <div class="page-msg">
+                  <div class="crrcolor">
+                  共{{TotalResult}}条记录
+                  </div>
+                </div>
+                <el-pagination
+                  background
+                  @current-change="handleCurrentChange"
+                  :current-page.sync ="CurrentPage"
+                  :page-size="pageSize"
+                  layout="prev, pager, next"
+                  :total="TotalResult">
+                </el-pagination>
+              </div>
+            <div slot="footer">
+              <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
+            </div>
+           <div class="arrow_line" style="left:0px;top:0px; border-bottom-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;top:0px; border-bottom-width:0;border-left-width:0"></div>
+           <div class="arrow_line" style="left:0px;bottom:0px; border-top-width:0;border-right-width:0"></div>
+           <div class="arrow_line" style="right:0px;bottom:0px; border-top-width:0;border-left-width:0"></div>
+          </el-dialog>
+        </div>
+
       </div>
 </template>
 
 <script scoped>
-import {createMapL} from '@/assets/js/SuperMap/lxssmmap.js'
+import {createMapL,getSearch} from '@/assets/js/SuperMap/lxssmmap.js'
+let lxsvm;
 export default {
   data(){
     return{
+      CurrentPage: 1,
+      pageSize: 8,
+      TotalResult: 0,
        pd:{},
        swdw:[],
        show: true,
-       detailsDialogVisible:false,
+       bzhDialogVisible:false,
        form:{},
        xxmc:[],
        ssfj:[],
+       tableData:[],
+       diatext:'标准化地址',
+       bzhid:'',
+       mc:'',
+       lrdw:'',
+
     }
   },
   mounted() {
+    window.lxsvm=this;
     this.$store.dispatch('getQzzl');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getGjdq');
-    this.$store.dispatch('getRjsy');
-    this.$store.dispatch('getRzfs');
+    // this.$store.dispatch('getRjsy');
+    // this.$store.dispatch('getRzfs');
+    this.$store.dispatch('getZflx');
+    this.$store.dispatch('getJzztlx');
     this.getGX();
     this.getSsfj();
     this.$nextTick(()=>{
@@ -165,17 +219,25 @@ export default {
     })
   },
   methods:{
+    pageSizeChange(val) {
+        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+      console.log(`当前页: ${val}`);
+    },
     changtab(){
       this.show=!this.show;
     },
     doset(){
        this.$set(this.pd,"gjdq",'');
-       this.$set(this.pd,"rzfs",'');
-        this.$set(this.pd,"xxmc",'');
+       // this.$set(this.pd,"rzfs",'');
+       this.$set(this.pd,"fwcs",'');
         this.$set(this.pd,"zjzl",'');
         this.$set(this.pd,"qzzl",'');
         this.$set(this.pd,"zflx",'');
-        this.$set(this.pd,"rjsy",'');
+        // this.$set(this.pd,"rjsy",'');
         this.$set(this.pd,"jzztlx",'');
         this.$set(this.pd,"ssfj",'');
     },
@@ -198,91 +260,122 @@ export default {
       })
     },
     doSearch() {
+      console.log(this.pd.ssfj);
+      if(this.pd.ssfj==undefined || this.pd.ssfj=="")
+      {
+         this.$message.error("请选择所属分局！");return;
+      }
+      if(this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")
+      {
+         this.$message.error("请输入服务处所！");return;
+      }
 
+      getSearch();
   	},
-}
+    //获取派出所
+    getPCS(callback){
+      var searchResult = [];
+        let p={
+          "gjdq":this.pd.gjdq,
+          "rzfs":this.pd.rzfs,
+          "zjzl":this.pd.zjzl,
+          "ssfj":this.pd.ssfj,
+          "fwcs":this.pd.fwcs,
+        };
+        var url=this.Global.aport+"/ywczdt/getCZDJXXPCSList";
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              var arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+              searchResult.push(arr[i]);
+              }
+
+              callback && callback(searchResult)
+            }
+          });
+
+          callback(searchResult);
+    },
+    //获取派出所
+    getBZHDZ(dm,callback){
+      var searchResult = [];
+        let p={
+          "gjdq":this.pd.gjdq,
+          "rzfs":this.pd.rzfs,
+          "zjzl":this.pd.zjzl,
+          "ssfj":this.pd.ssfj,
+          "fwcs":this.pd.fwcs,
+        };
+        var url=this.Global.aport+"/ywczdt/getCZDJXXBZHDZList";
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              var arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+              searchResult.push(arr[i]);
+              }
+              callback && callback(searchResult)
+            }
+          });
+
+          callback(searchResult);
+    },
+    //人员信息
+    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    {
+
+      if(currentPage==1){
+        this.CurrentPage=1;
+      }
+       this.bzhid=bzhid;
+       this.mc=mc;
+       this.lrdw=lrdw;
+       this.diatext=this.mc;
+
+       let p={
+         "currentPage":currentPage,
+         "showCount":showCount,
+         "dzdtid":this.bzhid,
+         // "yf":'Y',
+         // "lrdw":this.lrdw,
+       };
+       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+       this.$api.post(url, p,
+         r => {
+           if (r.success) {
+             console.log(r.data);
+             this.tableData=r.data.resultList;
+             this.TotalResult=r.data.totalResult;
+           }
+         });
+       this.bzhDialogVisible=true;
+    }
+  },
 
 }
+
+
 </script>
 
 <style scoped>
 .yy-input-text{text-align: left!important;}
-.my-div-icon {
-         background: red;
-        border-radius: 50%;
-        /*width: 50 !important;
-        height: 50px !important;*/
-        line-height:50px;
-        text-align: center;
-        vertical-align: middle;
-  font-weight:border;
-    }
-
-
-.leftpanel {
-  position:absolute; top:0; left:0; background-color:#fff; width:300px; height:100%; z-index:555;
-}
-.leftpanel .expanded {
-  width: 35px;
-  height: 70px;
-  line-height:60px;
-  border: 1px solid #bbb;
-  border-left-width: 0px;
-  margin-left:100%;
-  margin-top:150px;
-  background-color:#fff;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  cursor:pointer;
-  font-size:12px;
-  text-align:center;
-  vertical-align:middle;
-  font-weight: bolder;
-  position:absolute;
-}
-.leftpanel table {
-  width: 100%;
-}
-.leftpanel table .button {
-  background-color: #3992d0;
-  color:#fff;
-  padding: 6px 12px;
-  border:0;
-}
-
-#filttable td, #cztable td {
-  padding: 5px 0 5px 5px;
-}
-#cztable {
-  font-size:14px;
-}
-
-.bottompanel {
-  width: 100%;
-  height: 530px;
-  position:absolute; bottom:0; left:0; z-index:9999;
-  background:#fff;
-  border: 1px solid #3992d0;
-  text-align:middle;
-  display:none;
-}
-.bottompanel .closed{
-  position:absolute; right:10px; top:0;
-}
-.bottompanel .pagepanel {
-  padding-top:5px;
-  width: 300px;
-  text-align:center;
-  font-size:12px;
-  margin: 0 auto;
-}
-.bottompanel .pagepanel span {
-  padding: 2px 7px;
-  border: 1px solid #ccc;
-  text-align:center;
-  cursor:pointer;
-}
 </style>
 <style>
-.mapbj .leaflet-div-icon{border-radius: 50%; border: 0!important;font-weight:border; color: #ffffff;background-color: rgba(0, 167, 91, 0.8);}
+.lzxx  .my-div-icon {
+        background-color: rgba(0, 167, 91, 0.8);
+        border-radius: 50%;
+        line-height:20px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+.lzxx    .lz {
+  background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+  }
+
+.lzxx		.cz {
+		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+		}
+.bghome .el-dialog{ width: 70%!important;}
 </style>

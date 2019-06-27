@@ -15,7 +15,7 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text">时间范围：</span>
+                      <span class="yy-input-text"><font color=red>*</font>时间范围：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyyMMdd"
@@ -226,6 +226,7 @@ export default {
       this.$set(this.pd,"qzzl",'');
     },
     getSearch(className) {
+      console.log(this.radioe);
        doSearch(className);
     },
     //人员信息
@@ -258,16 +259,14 @@ export default {
        this.bzhDialogVisible=true;
     }
 
-
-
   },
 
 }
 </script>
 
 <style scoped>
-.yy-input-text{text-align: left!important; width: 25%!important;}
-.yy-input-input{width: 70%!important;}
+.yy-input-text{text-align: left!important; width: 30%!important;}
+.yy-input-input{width: 65%!important;}
 
 </style>
 <style>

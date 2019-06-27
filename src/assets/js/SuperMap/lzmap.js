@@ -35,111 +35,102 @@ export function getSearh(obj){
   if (layerGroup != null)
     {layerGroup.clearLayers();}
 
-  // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
-  // 数据模拟
-  // for (var i = 0; i < 5; i++) {
-  //   var point = [32.03613281 + i / 100, 118.78211975];
-  //   renderMarker(point, 'cz');
-  //   //社会面
-  //
-  //   var point = [32.03613281, 118.78211975 + i / 100];
-  //   renderMarker(point, 'lz');
-  //   //旅馆
-  // }
-  // return;
 
   // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
-  var parameters = new Array();
-  parameters.push({index: "es_lz_lzxx", type: "doc"});
-  var searchObject = {
-    "query": {
-      "bool": {
-        "must": [
-{
-"term": {
-"DJDWXZQH.keyword": "3201"
-}
-}
-        ]//,
-        //"filter": {
-        //	"range" {
-        //		"gte": '',
-        //		"lte": '',
-        //	}
-        //}
-      }
-    },
-    "size": 0,
-    "aggs": {
-      "all_counts": {
-        "terms": {"field": "DZDTID.keyword"},
-      }
-    }
-  };
+//   var parameters = new Array();
+//   parameters.push({index: "es_lz_lzxx", type: "doc"});
+//   var searchObject = {
+//     "query": {
+//       "bool": {
+//         "must": [
+// {
+// "term": {
+// "DJDWXZQH.keyword": "3201"
+// }
+// }
+//         ]
+//       }
+//     },
+//     "size": 0,
+//     "aggs": {
+//       "all_counts": {
+//         "terms": {"field": "DZDTID.keyword"},
+//       }
+//     }
+//   };
+//
+//   if (obj.zjzl != "" && obj.zjzl!=undefined) {
+//      var rr=getTerm("ZJZL", obj.zjzl, true);
+//      searchObject.query.bool.must.push(eval('('+rr+')'));
+//   }
+//   if (obj.qzzl != "" && obj.qzzl!=undefined) {
+//      var rr=getTerm("QZZL", obj.qzzl, true);
+//      searchObject.query.bool.must.push(eval('('+rr+')'));
+//   }
+//   if (obj.gjdq != "" && obj.gjdq!=undefined) {
+//      var rr=getTerm("GJDQ", obj.gjdq, true);
+//      searchObject.query.bool.must.push(eval('('+rr+')'));
+//   }
+//   if (obj.tlsy != "" && obj.tlsy!=undefined) {
+//      var rr=getTerm("JLSY", obj.tlsy, true);
+//      searchObject.query.bool.must.push(eval('('+rr+')'));
+//   }
+//   if (obj.beginTime != "" && obj.endTime != "" && obj.beginTime!=undefined && obj.endTime!=undefined) {
+//      var pp=[];
+//      pp.push(obj.beginTime);
+//      pp.push(obj.endTime);
+//      var rr=getTerm("ZSRQ", pp, true);
+//      searchObject.query.bool.must.push(eval('('+rr+')'));
+//   }
+//   if(obj.bzhdz!="" && obj.bzhdz!=undefined)
+//     {
+//       var ss="{'wildcard': {'BZHDZMC.keyword':{'wildcard:''*" + obj.bzhdz + "*'}}}";
+//       console.log('ss',ss);
+//       searchObject.query.bool.must.push(eval('('+ss+')'));
+//     }
+// if(obj.zsbg!="" && obj.zsbg!=undefined)
+//     {
+//     var ss="{'wildcard': {'BZHDZMC.keyword':{'wildcard:''*" + obj.zsbg + "*'}}}";
+//     searchObject.query.bool.must.push(eval('('+ss+')'));
+//   }
+//
+//   parameters.push(searchObject);
+//   console.log('parameters',searchObject);
+//   esservice.msearch({body: parameters}, function(error, result) {
+//     var buckets = result.responses[0].aggregations.all_counts.buckets;
+//     var sum=0;var kk="";
+//     for (var i = 0; i < buckets.length; i++) {
+//       kk=buckets[i].key;
+//       sum=buckets[i].doc_count;
+//      queryZrqByServer(kk,sum);
+//
+//     }
+//   });
 
-  if (obj.zjzl != "" && obj.zjzl!=undefined) {
-     var rr=getTerm("ZJZL", obj.zjzl, true);
-     searchObject.query.bool.must.push(eval('('+rr+')'));
-  }
-  if (obj.qzzl != "" && obj.qzzl!=undefined) {
-     var rr=getTerm("QZZL", obj.qzzl, true);
-     searchObject.query.bool.must.push(eval('('+rr+')'));
-  }
-  if (obj.gjdq != "" && obj.gjdq!=undefined) {
-     var rr=getTerm("GJDQ", obj.gjdq, true);
-     searchObject.query.bool.must.push(eval('('+rr+')'));
-  }
-  if (obj.tlsy != "" && obj.tlsy!=undefined) {
-     var rr=getTerm("JLSY", obj.tlsy, true);
-     searchObject.query.bool.must.push(eval('('+rr+')'));
-  }
-  if (obj.beginTime != "" && obj.endTime != "" && obj.beginTime!=undefined && obj.endTime!=undefined) {
-     var pp=[];
-     pp.push(obj.beginTime);
-     pp.push(obj.endTime);
-     var rr=getTerm("ZSRQ", pp, true);
-     searchObject.query.bool.must.push(eval('('+rr+')'));
-  }
-  if(obj.bzhdz!="" && obj.bzhdz!=undefined)
-    {
-      var ss="{'wildcard': {'BZHDZMC.keyword':{'wildcard:''*" + obj.bzhdz + "*'}}}";
-      console.log('ss',ss);
-      searchObject.query.bool.must.push(eval('('+ss+')'));
-    }
-if(obj.zsbg!="" && obj.zsbg!=undefined)
-    {
-    var ss="{'wildcard': {'BZHDZMC.keyword':{'wildcard:''*" + obj.zsbg + "*'}}}";
-    searchObject.query.bool.must.push(eval('('+ss+')'));
-  }
 
-  parameters.push(searchObject);
-  console.log('parameters',searchObject);
-  esservice.msearch({body: parameters}, function(error, result) {
-    var buckets = result.responses[0].aggregations.all_counts.buckets;
-    var sum=0;var kk="";
-    for (var i = 0; i < buckets.length; i++) {
-      kk=buckets[i].key;
-      sum=buckets[i].doc_count;
-     queryZrqByServer(kk,sum);
-      // var point = [32.03613281 + i / 100, 118.78211975];
-      // renderMarker(point, 'cz');
-      //
-      // var point = [32.03613281, 118.78211975 + i / 100];
-      // renderMarker(point, 'lz');
+markerLayer.clearLayers();
+var  searchResult=window.lzvm.getBZHDZ(function(data){
+
+  if(data.length!=0){
+  for (var i = 0; i < data.length; i++) {
+       queryZrqByServer(data[i].dm,data[i].count);
     }
-  });
+   }else {
+     alert("地图库中未录入该地址的坐标。");
+  }
+});
 }
 //调用数据集获取坐标
 export function queryZrqByServer(data,num) {
   markerLayer.clearLayers();
- console.log("data-num---",data+"---"+num);
+
   //数据集SQL查询服务参数
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
-      name: "dz_mlpxx_3201_pt@ORCL_gt8",
+      name: "dz_mlp@ORCL_gt8",
       attributeFilter: "JWPTBH='" + data + "'"
     },
-    datasetNames: ["ORCL_gt8:dz_mlpxx_3201_pt"] //数据集名称
+    datasetNames: ["ORCL_gt8:dz_mlp"] //数据集名称
   });
    var features =[];
   //向服务器发送请求，并对返回的结果进行处理
@@ -158,7 +149,7 @@ export function queryZrqByServer(data,num) {
           var pp=[];
           pp.push(y);
           pp.push(x);
-         var mc=features[0].properties.JLXDZXZ;
+         var mc=features[0].properties.DZMC;
          var dm=features[0].properties.JWPTBH;
 			   	renderMarker(pp,num,dm,mc);
 			}
@@ -177,18 +168,20 @@ export function renderMarker(point, data,dm,mc) {
           iconSize:50
       });
 
-      var tempMarker = L.marker(point, { icon: myIcon});
-      //tempMarker.on('click', function(e) {
-      //  alert(e.target.options.dm);
-      //});
+      var tempMarker = L.marker(point, {
+        icon: myIcon,
+        pcsdm: dm,
+        pcsmc: mc,
+        num: data
+      });
       markerLayer.addLayer(tempMarker);
 
-  //markerLayer.on("mousemove", function(e) {
-  //	e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.mc + "</div><div>" + "个数：" + e.layer.options.number + "</div>").openPopup();
-  //});
-  //markerLayer.on("mouseout", function(e) {
-  //	e.layer.closePopup();
-  //});
+      markerLayer.on("mousemove", function(e) {
+        e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "总人数：" + e.layer.options.num + "</div>").openPopup();
+      });
+      markerLayer.on("mouseout", function(e) {
+        e.layer.closePopup();
+      });
   tempMarker.on('click', function(e) {
     // alert(e.target.options.pcsmc);
    //  requestTableData(e.target.options.pcsdm, 1);

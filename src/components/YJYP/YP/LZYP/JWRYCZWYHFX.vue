@@ -15,7 +15,7 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text">所属分局：</span>
+                      <span class="yy-input-text"><font color=red>*</font>所属分局：</span>
                       <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind1) in ssfj"
@@ -48,7 +48,7 @@
                       </el-select>
                   </el-col>
                   <el-col :span="24">
-                      <span class="yy-input-text">入住时间：</span>
+                      <span class="yy-input-text"><font color=red>*</font>入住时间：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyyMMdd"
@@ -79,282 +79,281 @@
         <div class="bghome">
           <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
 
-<div v-if="tshow1">
-      <el-row align="center"   :gutter="2">
-        <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-          <span class="input-text">证件种类：</span>
-          <el-select v-model="pm.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-            <el-option
-              v-for="(item,ind4) in $store.state.zjzl"
-              :key="ind4"
-              :label="item.dm+' - '+item.mc"
-              :value="item.dm">
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-          <span class="input-text">签证种类：</span>
-          <el-select v-model="pm.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-            <el-option
-              v-for="(item,ind) in $store.state.qzzl"
-              :key="ind"
-              :label="item.dm+' - '+item.mc"
-              :value="item.dm">
-            </el-option>
-          </el-select>
-        </el-col>
-            <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-              <span class="input-text">国家地区：</span>
-              <el-select v-model="pm.gjdq" @visible-change="gjdq=gjdq0" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-                <el-option
-                  v-for="(item,ind5) in $store.state.gjdq"
-                  :key="ind5"
-                  :label="item.dm+' - '+item.mc"
-                  :value="item.dm">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-              <span class="input-text">停留事由：</span>
-              <el-select v-model="pm.tlsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-                <el-option
-                  v-for="(item,ind) in $store.state.rjsy"
-                  :key="ind"
-                  :label="item.dm+' - '+item.mc"
-                  :value="item.dm">
-                </el-option>
-              </el-select>
-            </el-col>
+            <div v-if="tshow1" :key="Math.random()">
+                  <el-row align="center"   :gutter="2">
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                      <span class="input-text">证件种类：</span>
+                      <el-select v-model="pm.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                        <el-option
+                          v-for="(item,ind4) in $store.state.zjzl"
+                          :key="ind4"
+                          :label="item.dm+' - '+item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                      <span class="input-text">签证种类：</span>
+                      <el-select v-model="pm.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                        <el-option
+                          v-for="(item,ind) in $store.state.qzzl"
+                          :key="ind"
+                          :label="item.dm+' - '+item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                    </el-col>
+                        <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                          <span class="input-text">国家地区：</span>
+                          <el-select v-model="pm.gjdq" @visible-change="gjdq=gjdq0" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                            <el-option
+                              v-for="(item,ind5) in $store.state.gjdq"
+                              :key="ind5"
+                              :label="item.dm+' - '+item.mc"
+                              :value="item.dm">
+                            </el-option>
+                          </el-select>
+                        </el-col>
+                        <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                          <span class="input-text">停留事由：</span>
+                          <el-select v-model="pm.tlsy" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                            <el-option
+                              v-for="(item,ind) in $store.state.rjsy"
+                              :key="ind"
+                              :label="item.dm+' - '+item.mc"
+                              :value="item.dm">
+                            </el-option>
+                          </el-select>
+                        </el-col>
 
-            <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-               <span class="input-text">英文姓名：</span>
-               <el-input placeholder="请输入内容" size="small" v-model="pm.ywxm" class="input-input"></el-input>
-            </el-col>
-            <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-              <span class="input-text">性别：</span>
-              <el-select v-model="pm.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-                <el-option
-                  v-for="(item,ind) in $store.state.xb"
-                  :key="ind"
-                  :label="item.dm+' - '+item.mc"
-                  :value="item.dm">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-              <span class="input-text">出生日期：</span>
-              <div class="input-input t-flex t-date">
-                <el-date-picker
-                   v-model="pm.begincsrq" format="yyyy-MM-dd"
-                   type="date" size="small" value-format="yyyy-MM-dd"
-                   placeholder="开始时间" >
-                </el-date-picker>
-                <span class="septum">-</span>
-                <el-date-picker
-                    v-model="pm.endcsrq" format="yyyy-MM-dd"
-                    type="date" size="small" value-format="yyyy-MM-dd"
-                    placeholder="结束时间" >
-                </el-date-picker>
-             </div>
-            </el-col>
-   <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-    &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="getRyxx(CurrentPage,pageSize,pm,bzhid,mc)" class="mb-15">查询</el-button>
-   </el-col>
-      </el-row>
-            <el-table ref="table"
-                 :data="tableData"
-                 style="width: 100%"
-                 >
-                 <el-table-column
-                   prop="ywxm"
-                   label="英文姓名">
-                 </el-table-column>
-                 <el-table-column
-                   prop="zwxm"
-                   label="中文姓名">
-                 </el-table-column>
-                 <el-table-column
-                   prop="xb"
-                   label="性别">
-                 </el-table-column>
-                 <el-table-column
-                   prop="csrq"
-                   label="出生日期">
-                 </el-table-column>
-                 <el-table-column
-                   prop="gjdq"
-                   label="国家地区">
-                 </el-table-column>
-                 <el-table-column
-                   prop="zjzl"
-                   label="证件种类">
-                 </el-table-column>
-                 <el-table-column
-                   prop="zjhm"
-                   label="证件号码">
-                 </el-table-column>
-                 <el-table-column
-                   label="操作">
-                   <template slot-scope="scope">
-                     <el-button type="text" icon="el-icon-view" @click="details(scope.row)"></el-button>
-                   </template>
-                 </el-table-column>
-             </el-table>
-             <div class="middle-foot mt-10">
-                <div class="page-msg">
-                  <div class="crrcolor">
-                  共{{TotalResult}}条记录
-                  </div>
-                  <div class="crrcolor">
-                    <!-- 每页显示
-                    <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
-                      <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
-                    条 -->
-                  </div>
-                  <div class="crrcolor">
-                    <!-- 共{{Math.ceil(TotalResult/pageSize)}}页 -->
-                  </div>
-                </div>
-                <el-pagination
-                background
-                  @current-change="handleCurrentChange"
-                  :current-page:sync="CurrentPage"
-                  :page-size="pageSize"
-                  layout="prev, pager, next"
-                  :total="TotalResult">
-                </el-pagination>
-              </div>
-</div>
-<div v-if="tshow2">
-  <el-row>
-  <el-col :span="24" style="text-align:right">
-    <el-button type="primary" size="mini" @click="back()">返回</el-button>
-  </el-col>
- </el-row>
- <div class="rrtitle">签证信息</div>
- <el-table ref="table"
-      :data="tableDataqz"
-      style="width: 100%"
-      >
-      <el-table-column
-        prop="ywxm"
-        label="签证种类">
-      </el-table-column>
-      <el-table-column
-        prop="zwxm"
-        label="签证号码">
-      </el-table-column>
-      <el-table-column
-        prop="xb"
-        label="签证有效期">
-      </el-table-column>
+                        <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                           <span class="input-text">英文姓名：</span>
+                           <el-input placeholder="请输入内容" size="small" v-model="pm.ywxm" class="input-input"></el-input>
+                        </el-col>
+                        <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                          <span class="input-text">性别：</span>
+                          <el-select v-model="pm.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                            <el-option
+                              v-for="(item,ind) in $store.state.xb"
+                              :key="ind"
+                              :label="item.dm+' - '+item.mc"
+                              :value="item.dm">
+                            </el-option>
+                          </el-select>
+                        </el-col>
+                        <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                          <span class="input-text">出生日期：</span>
+                          <div class="input-input t-flex t-date">
+                            <el-date-picker
+                               v-model="pm.begincsrq" format="yyyy-MM-dd"
+                               type="date" size="small" value-format="yyyy-MM-dd"
+                               placeholder="开始时间" >
+                            </el-date-picker>
+                            <span class="septum">-</span>
+                            <el-date-picker
+                                v-model="pm.endcsrq" format="yyyy-MM-dd"
+                                type="date" size="small" value-format="yyyy-MM-dd"
+                                placeholder="结束时间" >
+                            </el-date-picker>
+                         </div>
+                        </el-col>
+               <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="getRyxx(CurrentPage,pageSize)" class="mb-15">查询</el-button>
+               </el-col>
+                  </el-row>
+                        <el-table
+                             :data="tableData"
+                             style="width: 100%"
+                             >
+                             <el-table-column
+                               prop="ywxm"
+                               label="英文姓名">
+                             </el-table-column>
+                             <el-table-column
+                               prop="zwxm"
+                               label="中文姓名">
+                             </el-table-column>
+                             <el-table-column
+                               prop="xb"
+                               label="性别">
+                             </el-table-column>
+                             <el-table-column
+                               prop="csrq"
+                               label="出生日期">
+                             </el-table-column>
+                             <el-table-column
+                               prop="gjdq"
+                               label="国家地区">
+                             </el-table-column>
+                             <el-table-column
+                               prop="zjzl"
+                               label="证件种类">
+                             </el-table-column>
+                             <el-table-column
+                               prop="zjhm"
+                               label="证件号码">
+                             </el-table-column>
+                             <el-table-column
+                               label="操作">
+                               <template slot-scope="scope">
+                                 <el-button type="text" icon="el-icon-view" @click="details(scope.row)"></el-button>
+                               </template>
+                             </el-table-column>
+                         </el-table>
+                         <div class="middle-foot mt-10">
+                            <div class="page-msg">
+                              <div class="crrcolor">
+                              共{{TotalResult}}条记录
+                              </div>
+                              <div class="crrcolor">
+                                <!-- 每页显示
+                                <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                                  <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                  </el-option>
+                                </el-select>
+                                条 -->
+                              </div>
+                              <div class="crrcolor">
+                                <!-- 共{{Math.ceil(TotalResult/pageSize)}}页 -->
+                              </div>
+                            </div>
+                            <el-pagination
+                              background
+                              @current-change="handleCurrentChange"
+                              :page-size="pageSize"
+                              layout="prev, pager, next"
+                              :total="TotalResult">
+                            </el-pagination>
+                          </div>
+            </div>
+            <div v-if="tshow2" :key="Math.random()">
+              <el-row>
+              <el-col :span="24" style="text-align:right">
+                <el-button type="primary" size="mini" @click="back()">返回</el-button>
+              </el-col>
+             </el-row>
+             <div class="rrtitle">签证信息</div>
+             <el-table
+                  :data="tableqz"
+                  style="width: 100%"
+                  >
+                  <el-table-column
+                    prop="qzzl"
+                    label="签证种类">
+                  </el-table-column>
+                  <el-table-column
+                    prop="qzhm"
+                    label="签证号码">
+                  </el-table-column>
+                  <el-table-column
+                    prop="qzyxqz"
+                    label="签证有效期">
+                  </el-table-column>
 
 
-  </el-table>
-  <div class="middle-foot mt-10">
-     <div class="page-msg">
-       <div class="crrcolor">
-       共{{TotalResult1}}条记录
-       </div>
-       <div class="crrcolor">
-       </div>
-       <div class="crrcolor">
-       </div>
-     </div>
-     <el-pagination
-     background
-       @current-change="handleCurrentChange1"
-       :current-page:sync="CurrentPage1"
-       :page-size="pageSize1"
-       layout="prev, pager, next"
-       :total="TotalResult1">
-     </el-pagination>
-   </div>
- <div class="rrtitle">出入境信息</div>
- <el-table ref="table"
-      :data="tableDatacrj"
-      style="width: 100%"
-      >
-      <el-table-column
-        prop="ywxm"
-        label="出入境状态">
-      </el-table-column>
-      <el-table-column
-        prop="zwxm"
-        label="出入境时间">
-      </el-table-column>
-      <el-table-column
-        prop="xb"
-        label="出入境口岸">
-      </el-table-column>
-  </el-table>
-  <div class="middle-foot mt-10">
-     <div class="page-msg">
-       <div class="crrcolor">
-       共{{TotalResult2}}条记录
-       </div>
-       <div class="crrcolor">
+              </el-table>
+              <div class="middle-foot mt-10">
+                 <div class="page-msg">
+                   <div class="crrcolor">
+                   共{{TotalResult1}}条记录
+                   </div>
+                   <div class="crrcolor">
+                   </div>
+                   <div class="crrcolor">
+                   </div>
+                 </div>
+                 <el-pagination
+                   background
+                   @current-change="handleCurrentChange1"
+                   :current-page:sync="CurrentPage1"
+                   :page-size="pageSize1"
+                   layout="prev, pager, next"
+                   :total="TotalResult1">
+                 </el-pagination>
+               </div>
+             <div class="rrtitle">出入境信息</div>
+             <el-table
+                  :data="tablecrj"
+                  style="width: 100%"
+                  >
+                  <el-table-column
+                    prop="crjbs"
+                    label="出入境状态">
+                  </el-table-column>
+                  <el-table-column
+                    prop="crjsj"
+                    label="出入境时间">
+                  </el-table-column>
+                  <el-table-column
+                    prop="crjka"
+                    label="出入境口岸">
+                  </el-table-column>
+              </el-table>
+              <div class="middle-foot mt-10">
+                 <div class="page-msg">
+                   <div class="crrcolor">
+                   共{{TotalResult2}}条记录
+                   </div>
+                   <div class="crrcolor">
 
-       </div>
-       <div class="crrcolor">
-       </div>
-     </div>
-     <el-pagination
-     background
-       @current-change="handleCurrentChange2"
-       :current-page:sync="CurrentPage2"
-       :page-size="pageSize2"
-       layout="prev, pager, next"
-       :total="TotalResult2">
-     </el-pagination>
-   </div>
- <div class="rrtitle">临住信息</div>
- <el-table ref="table"
-      :data="tableDatalz"
-      style="width: 100%"
-      >
-      <el-table-column
-        prop="ywxm"
-        label="入住日期">
-      </el-table-column>
-      <el-table-column
-        prop="zwxm"
-        label="入住地址">
-      </el-table-column>
+                   </div>
+                   <div class="crrcolor">
+                   </div>
+                 </div>
+                 <el-pagination
+                   background
+                   @current-change="handleCurrentChange2"
+                   :current-page:sync="CurrentPage2"
+                   :page-size="pageSize2"
+                   layout="prev, pager, next"
+                   :total="TotalResult2">
+                 </el-pagination>
+               </div>
+             <div class="rrtitle">临住信息</div>
+             <el-table
+                  :data="tablelz"
+                  style="width: 100%"
+                  >
+                  <el-table-column
+                    prop="zsrq"
+                    label="入住日期">
+                  </el-table-column>
+                  <!-- <el-table-column
+                    prop="zwxm"
+                    label="入住地址">
+                  </el-table-column> -->
 
-      <el-table-column
-        label="操作">
-        <template slot-scope="scope">
-          <el-button type="text" @click="getLX(scope.row)">查看详情</el-button>
-        </template>
-      </el-table-column>
-  </el-table>
-  <div class="middle-foot mt-10">
-     <div class="page-msg">
-       <div class="crrcolor">
-       共{{TotalResult3}}条记录
-       </div>
-       <div class="crrcolor">
-       </div>
-       <div class="crrcolor">
-       </div>
-     </div>
-     <el-pagination
-     background
-       @current-change="handleCurrentChange3"
-       :current-page:sync="CurrentPage3"
-       :page-size="pageSize3"
-       layout="prev, pager, next"
-       :total="TotalResult3">
-     </el-pagination>
-   </div>
-</div>
+                  <el-table-column
+                    label="操作">
+                    <template slot-scope="scope">
+                      <el-button type="text" @click="getLX(scope.row)">查看详情</el-button>
+                    </template>
+                  </el-table-column>
+              </el-table>
+              <div class="middle-foot mt-10">
+                 <div class="page-msg">
+                   <div class="crrcolor">
+                   共{{TotalResult3}}条记录
+                   </div>
+                   <div class="crrcolor">
+                   </div>
+                   <div class="crrcolor">
+                   </div>
+                 </div>
+                 <el-pagination
+                   background
+                   @current-change="handleCurrentChange3"
+                   :current-page:sync="CurrentPage3"
+                   :page-size="pageSize3"
+                   layout="prev, pager, next"
+                   :total="TotalResult3">
+                 </el-pagination>
+               </div>
+            </div>
             <div slot="footer">
               <img src="../../../../assets/img/qx.png" border="0" @click="bzhDialogVisible = false" style="cursor:pointer" >
             </div>
@@ -432,11 +431,11 @@ export default {
   },
   methods:{
     pageSizeChange(val) {
-      this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc);
+      this.getRyxx(this.CurrentPage,val);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        this.getRyxx(val,this.pageSize,this.pd,this.bzhid,this.mc);
+      this.getRyxx(val,this.pageSize);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
@@ -585,7 +584,7 @@ export default {
       var searchResult = [];
         let p={
 
-          "xzqh":this.pd.ssfj,
+          "ssfj":this.pd.ssfj,
           "pcs":this.pd.pcs,
           "zrq":this.pd.zrq,
           "rzsjStart":this.pd.beginTime,
@@ -605,21 +604,21 @@ export default {
           });
           // callback(searchResult);
     },
-    getRyxx(currentPage,showCount,bzhid,mc){
+    getRyxx(currentPage,showCount,bzhid,mc,n){
+
      if(currentPage==1){
        this.CurrentPage=1;
      }
+
+     if(n==0){
+      this.pm=[];
+      this.bzhid=bzhid;
       this.mc=mc;
+     }
+      this.diatext=this.mc;
       this.tshow1=true;
       this.tshow2=false;
-      this.bzhid=bzhid;
-      this.diatext=this.mc;
       let p={
-        "currentPage":currentPage,
-        "showCount":showCount,
-        "dzdtid":bzhid,
-        // "yf":this.yf,
-        // "lrdw":'',
         "zjzl":this.pm.zjzl,
         "qzzl":this.pm.qzzl,
         "gjdq":this.pm.gjdq,
@@ -628,14 +627,16 @@ export default {
         "xb":this.pm.xb,
         "csrqStart":this.pm.begincsrq,
         "csrqEnd":this.pm.endcsrq,
+        "currentPage":currentPage,
+        "showCount":showCount,
+        "dzdtid":this.bzhid,
       };
       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
       this.$api.post(url, p,
         r => {
           if (r.success) {
-            console.log(r.data);
             this.tableData=r.data.resultList;
-            this.totalResult=r.data.totalResult;
+            this.TotalResult=r.data.totalResult;
           }
         });
       this.bzhDialogVisible=true;
@@ -656,7 +657,6 @@ export default {
       this.$api.post(url, p,
         r => {
           if (r.success) {
-            console.log(r.data);
           if(n==1){
            this.tableqz=r.data.resultList;
            this.TotalResult1=r.data.totalResult;
@@ -669,10 +669,7 @@ export default {
           }
           }
         });
-
     },
-
-
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
@@ -689,8 +686,8 @@ export default {
 </script>
 
 <style scoped>
-.yy-input-text{text-align: left!important; width: 25%!important;}
-.yy-input-input{width: 70%!important;}
+.yy-input-text{text-align: left!important; width: 30%!important;}
+.yy-input-input{width: 65%!important;}
 .rrtitle{font-size: 16px;color: #a9d6fd;line-height: 40px;}
 .input-text{color: #89BAE4;}
 
