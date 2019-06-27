@@ -210,7 +210,6 @@ export default {
       };
        this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', p,
         r => {
-
           if(r.data.resultList.length>0){
           this.dwinfo=r.data.resultList[0];
           }
