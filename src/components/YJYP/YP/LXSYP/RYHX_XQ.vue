@@ -34,13 +34,23 @@
                </el-row>
                <el-row class="mb-10">
                  <el-col :span="22">
-                   <span v-for="(item,i) in labs">
+                   <el-tag
+                    v-for="(item,i) in labs"
+                    :key="item.BQBH"
+                    closable
+                    :type="suc[i]"
+                    @close="delLable(item.BQBH)">
+                    {{item.MC}}
+                  </el-tag>
+                  <el-button type="primary" plain  size="small" icon="el-icon-plus" @click="addLable" style="margin-left: 10px;">添加标签</el-button>
+
+                   <!-- <span v-for="(item,i) in labs">
                    <el-button :type="suc[i]" size="small" @click="delid(item.BQBH)">{{item.MC}}</el-button>  &nbsp;
-                   </span>
-                   <span>&nbsp;
-                     <el-button type="primary" plain  size="small" icon="el-icon-plus" @click="addLable">添加标签</el-button>
-                     <el-button type="warning" plain  size="small" icon="el-icon-delete" @click="delLable">删除标签</el-button>
-                   </span>
+                   </span> -->
+                   <!-- <span>&nbsp; -->
+
+                     <!-- <el-button type="warning" plain  size="small" icon="el-icon-delete" @click="delLable">删除标签</el-button> -->
+                   <!-- </span> -->
 
                  </el-col>
                  <el-col :span="2">
@@ -566,16 +576,16 @@
            border
            style="width: 100%" class="stu-table t-mt10">
            <el-table-column
-             prop="STAREPORTS"
+             prop="COLLEGENAME"
+             label="院系名称">
+           </el-table-column>
+           <el-table-column
+             prop="MAJORNAME"
+             label="学习专业">
+           </el-table-column>
+           <el-table-column
+             prop="SIGNUPDATE"
              label="报到时间">
-           </el-table-column>
-           <el-table-column
-             prop="CFACULTY"
-             label="院系中文名称">
-           </el-table-column>
-           <el-table-column
-             prop="ACCACADEMY"
-             label="学校名称">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -671,7 +681,7 @@
        </div>
       </div>
 <!-- 弹出小的窗口 -->
-       <el-dialog title="添加标签" :visible.sync="bqDialogVisible">
+       <el-dialog title="添加标签" :visible.sync="bqDialogVisible" width="600px">
          <el-row :gutter="1">
            <el-col  :span="24"  class="input-item">
               <span class="input-text">标签名称：</span>
@@ -698,18 +708,26 @@
            <el-button @click="zpDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
-       <div class="meunSlid">
-         <ul>
-           <li><a href="#box1">签证信息</a></li>
-           <li><a href="#box2">出入境信息</a></li>
-           <li><a href="#box3">临住信息</a></li>
-           <li><a href="#box4">常住信息</a></li>
-           <li><a href="#box5">案事件记录</a></li>
-           <li><a href="#box6">民航进出港信息</a></li>
-           <li><a href="#box7">单位信息</a></li>
-           <li><a href="#box8">留学生信息</a></li>
-         </ul>
-       </div>
+        <transition name="el-zoom-in-top">
+         <div class="meunSlid" v-show="menuShow">
+           <ul>
+             <li><a href="#box1">签证信息</a></li>
+             <li><a href="#box2">出入境信息</a></li>
+             <li><a href="#box3">临住信息</a></li>
+             <li><a href="#box4">常住信息</a></li>
+             <li><a href="#box5">案事件记录</a></li>
+             <li><a href="#box6">民航进出港信息</a></li>
+             <li><a href="#box7">单位信息</a></li>
+             <li><a href="#box8">留学生信息</a></li>
+           </ul>
+           <span class="switch el-icon-caret-right hand" @click="menuShow=!menuShow"></span>
+         </div>
+        </transition>
+        <transition name="el-zoom-in-bottom">
+         <div class="meunSlidhide" v-show="!menuShow">
+           <span class="switchhide el-icon-caret-left hand" @click="menuShow=!menuShow"></span>
+         </div>
+        </transition>
    </div>
 </template>
 <script scoped>
@@ -726,10 +744,12 @@ export default{
     components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX,LXSXXZX},
   data(){
     return{
+      menuShow:true,
       rybh:'',
       tabLength:[],
       pageQz:1,
       suc:['success','info','warning','danger','primary'],
+      colorType:'',
        baseinfo:{},
        row:{},
        labmc:'',
@@ -949,15 +969,26 @@ export default{
       };
       this.$api.post(this.Global.aport3+'/ryhx/getrybqxx', p,
         r => {
-          this.labs = r.data.resultList;
+          var arrAfter=[];
+          var arrReal=[];
+          for(var i=0;i<r.data.resultList.length;i++){
+            if(arrAfter.indexOf(r.data.resultList[i].MC)==-1){
+              arrAfter.push(r.data.resultList[i].MC);
+              arrReal.push(r.data.resultList[i])
+            }
+          }
+          this.labs = arrReal;
         })
     },
      //获取标签标签
     addLable(){
-     this.bqDialogVisible=true;
+      this.bqDialogVisible=true;
       this.$api.post(this.Global.aport3+'/ryhx/getreslab',{},
         r => {
           this.labels = r.data.resultList;
+          // let rand = Math.floor( Math.random() * this.suc.length );
+          // console.log('rand',rand)
+          // this.colorType = this.suc.slice(rand, 1)[0];
           this.getLable();
         })
     },
@@ -995,17 +1026,21 @@ export default{
       this.moveid=dm;
     },
     // 删除标签
-    delLable(){
-
-      if(this.moveid=="" || this.moveid==undefined){
-          this.$message.error("请选择标签!");return;
+    delLable(i){
+      if(i==""||i==undefined){
+        this.$message.error("请选择标签!");
+        return;
       }
-
       let p={
-        "RYBH":this.pd.RYBH,
-        "BQBH":this.moveid,
-
+        "BQBH":i,
       };
+      if(this.row){
+        p.RYBH=this.row.RYBH
+      }else if(this.rybh){
+        p.RYBH=this.rybh
+      }else{
+        p.RYBH=''
+      }
       this.$api.post(this.Global.aport3+'/ryhx/deleterybqbyrybh', p,
         r => {
           if(r.success){

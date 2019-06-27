@@ -44,7 +44,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">英文姓名：</span>
-             <span class="input-input">  {{czinfo.nameEN}}</span>
+             <span class="input-input lh-ts">  {{czinfo.nameEN}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">中文姓：</span>

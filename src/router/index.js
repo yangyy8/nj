@@ -394,6 +394,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LXSYP/JYTZSTJ'], resolve),
         },
         {
+          path: 'JYTRYXX',
+          name: 'JYTRYXX',
+          meta:{title:['预警研判','研判','留学生研判','教育厅招生统计'],father:'JYTZSTJ'},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/JYTRYXX'], resolve),
+        },
+        {
           path: 'LZXXZHFX',
           name: 'LZXXZHFX',
           meta:{title:['预警研判','研判','临住研判','临住信息综合分析']},
