@@ -77,12 +77,7 @@
         <el-table
            :data="tableData1"
            border
-           style="width: 100%" class="stu-table"
-           >
-           <el-table-column
-             prop="ZJHM"
-             label="证件号码">
-           </el-table-column>
+           style="width: 100%" class="stu-table">
            <el-table-column
              prop="QZZL_DESC"
              label="签证种类">
@@ -96,7 +91,7 @@
              label="签证有效期至">
            </el-table-column>
            <el-table-column
-             prop="QFD_DESC"
+             prop="QFJG_DESC"
              label="签发地">
            </el-table-column>
            <el-table-column
@@ -592,79 +587,12 @@
 
    <!-- 签证信息 -->
      <el-dialog
-             title="签证信息详情"
-             :visible.sync="QZDialogVisible" width="900px">
-             <el-form   ref="qzinfo">
-               <el-row :gutter="2"  class="mb-6">
-                   <el-col :span="12" class="input-item">
-                    <span class="input-text">证件号码：</span>
-                    <span class="input-input detailinput">  {{qzinfo.ZJHM}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">签证种类：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QZZL_DESC}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                    <span class="input-text">签证有效期：</span>
-                    <span class="input-input detailinput">  {{qzinfo.QZYXQ}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                    <span class="input-text">签证号码：</span>
-                    <span class="input-input detailinput">  {{qzinfo.QZHM}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">签证次数：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QZCS}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">多次签注号码：</span>
-                     <span class="input-input detailinput">  {{qzinfo.DCQZHM}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">多次有效期：</span>
-                     <span class="input-input detailinput">  {{qzinfo.DCYXQ}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">签发日期：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QFRQ}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">签发机关：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QFJG_DESC}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">签发地：</span>
-                     <span class="input-input detailinput">  {{qzinfo.QFD_DESC}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">居留证件种类：</span>
-                     <span class="input-input detailinput">  {{qzinfo.JLZJZL}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">居留证号码：</span>
-                     <span class="input-input detailinput">  {{qzinfo.JLZHM}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">停留有效期：</span>
-                     <span class="input-input detailinput">  {{qzinfo.TLYXQ}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">居留证签发日期：</span>
-                     <span class="input-input detailinput">  {{qzinfo.JLZQFRQ}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">居留证签发机关：</span>
-                     <span class="input-input detailinput">  {{qzinfo.JLZQFJG}}</span>
-                   </el-col>
-                   <el-col :span="12" class="input-item">
-                     <span class="input-text">停留事由：</span>
-                     <span class="input-input detailinput">  {{qzinfo.TLSY}}</span>
-                   </el-col>
-               </el-row>
-             </el-form>
-             <div slot="footer" class="dialog-footer">
-               <el-button @click="QZDialogVisible = false" size="small">取 消</el-button>
-             </div>
+         title="签证信息详情"
+         :visible.sync="QZDialogVisible" width="900px">
+         <QZ :xid="xid" :random="new Date().getTime()"></QZ>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="QZDialogVisible = false" size="small">取 消</el-button>
+         </div>
      </el-dialog>
 
 
@@ -844,8 +772,9 @@
 import LZXX from '../common/lzxx_xq'
 import CZXX from '../common/czxx_xq'
 import CRJXX from '../common/crjxx_xq'
+import QZ from '../common/qz_xq'
 export default {
-  components:{LZXX,CZXX,CRJXX},
+  components:{LZXX,CZXX,CRJXX,QZ},
   data() {
     return {
       yjType: 0,
@@ -915,7 +844,7 @@ export default {
         }
       ],
       url0:this.Global.aport4 + '/warningInfoController/getEntityByYJID',//人员基本信息
-      url1:this.Global.aport4 + '/eS_RY_JWRYQZController/getResultListByParams',//签证信息
+      url1:this.Global.aport4 + '/eS_FNVISASController/getResultListByParams',//签证信息
       url2:this.Global.aport4 + '/eS_CRJJLBController/getResultListByParams',//出入境信息
       url3:this.Global.aport4 + '/eS_LZ_LZXXController/getResultListByParams',////临住信息
       url4:this.Global.aport3 + '/ryhx/getczryjbxx',//常住信息
@@ -1114,7 +1043,6 @@ export default {
         case 1:
           this.xid=n.RGUID;
           this.QZDialogVisible = true;
-          this.qzinfo = n;
           break;
         case 2:
           this.xid=n.RGUID;

@@ -121,33 +121,29 @@
                ref="multipleTable"
                :data="tableData7"
                border
-               style="width: 100%" class="stu-table"
-               >
+               style="width: 100%" class="stu-table">
                <el-table-column
                  prop="QZZL_DESC"
                  label="签证种类">
-               </el-table-column>
-               <el-table-column
-                 prop="ZJHM"
-                 label="证件号码">
                </el-table-column>
                <el-table-column
                  prop="QZHM"
                  label="签证号码">
                </el-table-column>
                <el-table-column
-                 prop="QFRQ"
-                 label="签证日期">
-               </el-table-column>
-               <el-table-column
                  prop="QZYXQ"
-                 label="签证有效期">
+                 label="签证有效期至">
                </el-table-column>
                <el-table-column
                  prop="QFJG_DESC"
-                 label="签发机关">
+                 label="签发地">
                </el-table-column>
-
+               <el-table-column
+                 label="操作" width="80">
+                 <template slot-scope="scope">
+                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row)"></el-button>
+                 </template>
+               </el-table-column>
            </el-table>
            <div class="middle-foot mt-10">
               <div class="page-msg">
@@ -670,6 +666,13 @@
       <el-col :span="24" class="czfont">处理人：{{withname}}</el-col>
     </el-row>
    </div>
+   <el-dialog
+       title="签证信息详情" :visible.sync="QZDialogVisible" width="900px">
+       <QZ :xid="xid" :random="new Date().getTime()"></QZ>
+       <div slot="footer" class="dialog-footer">
+         <el-button @click="QZDialogVisible = false" size="small">取 消</el-button>
+       </div>
+   </el-dialog>
    <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
      <LZXX :type="type" :xid="xid"></LZXX>
      <div slot="footer" class="dialog-footer">
@@ -967,8 +970,9 @@ import TBRY from '../../../common/tbry_xq'
 import ANSJ from '../../../common/ansj_xq'
 import CRJXX from '../../../common/crjxx_xq'
 import JZSJ from '../../../common/jzsj_xq'
+import QZ from '../../../common/qz_xq'
 export default {
-  components:{LZXX,TBRY,ANSJ,CRJXX,JZSJ},
+  components:{LZXX,TBRY,ANSJ,CRJXX,JZSJ,QZ},
   data() {
     return {
       CurrentPage: 1,
@@ -1062,6 +1066,7 @@ export default {
       nmDialogVisible:false,
       asjDialogVisible:false,
       sjDialogVisible:false,
+      QZDialogVisible:false,
       withname:this.$store.state.uname,
 
     }
@@ -1224,6 +1229,10 @@ export default {
        this.getNMXX(val,this.pageSize6);
        console.log(`当前页: ${val}`);
     },
+    getDetails(n){
+      this.xid=n.RGUID;
+      this.QZDialogVisible = true;
+    },
     getData0(currentPage,showCount){
 
       let p = {
@@ -1282,7 +1291,7 @@ export default {
         "showCount": showCount,
         "pd": this.pd
       };
-      this.$api.post(this.Global.aport4+'/eS_RY_JWRYQZController/getResultListByParams', p,
+      this.$api.post(this.Global.aport4+'/eS_FNVISASController/getResultListByParams', p,
         r => {
           this.tableData7 = r.data.resultList;
           this.TotalResult5=r.data.totalResult;
