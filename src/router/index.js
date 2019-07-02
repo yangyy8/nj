@@ -322,6 +322,18 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/CZYP/NMFX'], resolve),
         },
         {
+          path: 'NMFX_LIST',
+          name: 'NMFX_LIST',
+          meta:{title:['预警研判','研判','常住研判','难民和寻求庇护者分析'],father:'NMFX'},
+          component: resolve => require(['@/components/YJYP/YP/CZYP/NMFX_LIST'], resolve),
+        },
+        {
+          path: 'NMFX_XQ',
+          name: 'NMFX_XQ',
+          meta:{title:['预警研判','研判','常住研判','难民和寻求庇护者分析'],father:'NMFX'},
+          component: resolve => require(['@/components/YJYP/YP/CZYP/NMFX_XQ'], resolve),
+        },
+        {
           path: 'CZDJBHL',
           name: 'CZDJBHL',
           meta:{title:['预警研判','研判','常住研判','常住登记变化量']},

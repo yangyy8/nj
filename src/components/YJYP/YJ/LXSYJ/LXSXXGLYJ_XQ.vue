@@ -1090,7 +1090,7 @@ export default {
     this.nmshow=false;
     if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
 
-        this.crjshow=true;
+       this.crjshow=true;
        this.getCrjxx(this.CurrentPage1,this.pageSize1);
     }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
     {

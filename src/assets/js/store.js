@@ -150,6 +150,8 @@ var store = new Vuex.Store({
     getJzztlx(state,data){
       state.jzztlx=data;
     },
+
+
   },
   actions: {
     getSsdw(context) {

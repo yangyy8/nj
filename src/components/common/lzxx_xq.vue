@@ -119,11 +119,11 @@
                   <el-radio v-model="typet" label="1" disabled >社会面</el-radio>
                   <el-radio v-model="typet" label="2" disabled >旅馆</el-radio>
                 </el-col>
-                <el-col :span="16" v-if="shm"  class="crcolor">
+                <el-col :span="16" v-if="shm1"  class="crcolor">
                   <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
                    <el-input placeholder="" size="small" v-model="form.BZHDZMC"  class="input-input" style="width:80%!important"></el-input>
                 </el-col>
-                <el-col :span="16" v-else  class="crcolor">
+                <el-col :span="16" v-if="shm2"  class="crcolor">
                   <span class="yy-input-text" style="width:17.4%">旅馆名称：</span>
                    <el-input placeholder="" size="small" v-model="form.DJDWMC"   class="input-input" style="width:80%!important"></el-input>
                 </el-col>
@@ -152,21 +152,18 @@
                   <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
                   <el-input placeholder="" size="small" v-model="form.LSDWDH"  class="yy-input-input"></el-input>
                 </el-col>
+                 <el-col :span="8">
+                    <span class="yy-input-text">房屋性质：</span>
+                    <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
+                  </el-col>
                 <el-col :span="16">
                   <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
                   <el-input placeholder="" size="small" v-model="form.LSDW"  class="input-input" style="width:80%!important"></el-input>
                 </el-col>
-
                 <el-col :span="8">
-                  <span class="yy-input-text">房屋性质：</span>
-                  <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-
                   <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
                     <el-input placeholder="" size="small" v-model="form.FZSFZH"  class="yy-input-input"></el-input>
                 </el-col>
-
               </el-row>
               <el-row :gutter="3" >
                 <el-col :span="8">
@@ -213,7 +210,8 @@ export default {
       imgshow1:false,
       imgshow2:true,
       typet:'1',
-      shm:true,
+      shm1:true,
+      shm2:true,
       pp:{},
     }
   },
@@ -271,9 +269,14 @@ export default {
           if(r.data.LB_SFBG=="2"){
             console.log('-----',r.data.LB_SFBG);
 
-            this.shm=false;
-          }else{
-            this.shm=true;
+            this.shm1=false;
+            this.shm2=true;
+          }else if(r.data.LB_SFBG=="1"){
+            this.shm1=true;
+            this.shm2=false;
+          }else {
+            this.shm1=true;
+            this.shm2=true;
           }
       this.typet=r.data.LB_SFBG;
       })
@@ -290,9 +293,14 @@ export default {
           this.form=r.data.resultList[0];
           this.typet=r.data.resultList[0].LB_SFBG;
           if(this.typet=="2"){
-            this.shm=false;
-          }else{
-            this.shm=true;
+            this.shm1=true;
+            this.shm2=false;
+          }else if(this.typet=="1"){
+            this.shm1=false;
+            this.shm2=true;
+          }else {
+            this.shm1=true;
+            this.shm2=true;
           }
       })
     },

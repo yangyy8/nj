@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="yymain">
+  <div class="yymain tshu">
     <div class="yycontent" style="margin-top: 0px!important;">
       <!-- <div class="mb-15">
       <div class="yylbt mb-15">基本信息</div>
@@ -134,12 +134,12 @@
           prop="ZT_JZZT"
           label="居住状态类型">
           </el-table-column>
-          <el-table-column
+          <!-- <el-table-column
           label="操作" width="80">
           <template slot-scope="scope">
-          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="openTc('常住居住地信息',0,scope.row.DTID)"></el-button>
+          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="openTc(0,scope.row.DTID)"></el-button>
           </template>
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -173,7 +173,71 @@
         </div>
       </div>
       <div class="mb-15">
-        <div class="yylbt mb-15">出入境记录表</div>
+        <div class="yylbt mb-15">临住信息</div>
+        <el-table
+          :data="tableData6"
+          border
+          style="width: 100%" class="stu-table">
+          <el-table-column
+          prop="ZSRQ"
+          label="住宿时间">
+          </el-table-column>
+          <el-table-column
+          prop="LSDWDZ"
+          label="住宿地址">
+          </el-table-column>
+          <el-table-column
+          prop="NLKRQ"
+          label="拟离开时间">
+          </el-table-column>
+          <el-table-column
+          prop="ZFZL_DESC"
+          label="住宿类型">
+          </el-table-column>
+          <el-table-column
+          prop="DJDWMC"
+          label="登记单位">
+          </el-table-column>
+          <el-table-column
+          label="操作" width="80">
+          <template slot-scope="scope">
+          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
+          </template>
+          </el-table-column>
+        </el-table>
+        <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult3}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult3/pageSize3)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange3"
+            :current-page:sync="CurrentPage3"
+            :page-size="pageSize3"
+            layout="prev, pager, next"
+            :total="TotalResult3">
+          </el-pagination>
+        </div>
+      </div>
+      <div class="mb-15">
+        <div class="yylbt mb-15">出入境记录</div>
         <el-table
           :data="tableData2"
           border
@@ -205,7 +269,7 @@
           <el-table-column
           label="操作" width="80">
           <template slot-scope="scope">
-          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="openTc('出入境记录表',1,scope.row.RYBH)"></el-button>
+          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="openTc(2,scope.row.RGUID)"></el-button>
           </template>
           </el-table-column>
         </el-table>
@@ -432,12 +496,29 @@
        <el-col :span="24" class="czfont">处理人：{{withname}}</el-col>
      </el-row>
     </div>
+
+    <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+      <LZXX :type="type" :xid="xid"></LZXX>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
+      </div>
+    </el-dialog>
+    <!-- 出入境信息 -->
+   <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+               <CRJXX :type="type" :xid="xid"></CRJXX>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
+                </div>
+   </el-dialog>
   </div>
 </template>
 <script>
 import XQTC from '../../../GYZJ/XQ_TC'
+import LZXX from '../../../common/lzxx_xq'
+import CRJXX from '../../../common/crjxx_xq'
+
 export default {
-  components:{XQTC},
+  components:{XQTC,LZXX,CRJXX},
   data() {
     return {
       CurrentPage: 1,
@@ -449,6 +530,9 @@ export default {
       CurrentPage2: 1,
       pageSize2: 3,
       TotalResult2: 0,
+      CurrentPage3: 1,
+      pageSize3: 3,
+      TotalResult3: 0,
       rybh:'',
       yjid:'',
       baseData:{},
@@ -457,13 +541,16 @@ export default {
       tableData3:[],
       tableData4:[],
       tableData5:[],
+      tableData6:[],
       pd:{},
       px:{},
       pcl:{},
       bshow:false,
       xtitle:"",
+      lzxxDialogVisible:false,
+      crjDialogVisible:false,
       detailsDialogVisible:false,
-      xtype:0,
+      type:0,
       xid:'',
       form:{},
       baseinfo:{},
@@ -495,9 +582,9 @@ export default {
     this.getBase();
 
     this.getCZXX(this.CurrentPage, this.pageSize);
-    this.getCRJ(this.CurrentPage, this.pageSize);
-    this.getSJ(this.CurrentPage, this.pageSize);
-
+    this.getCRJ(this.CurrentPage1, this.pageSize1);
+    this.getSJ(this.CurrentPage2, this.pageSize2);
+    this.getLZ(this.CurrentPage3, this.pageSize3);
     // this.getList('/refugeesWarningController/getRefugeesPersBasicInfo',0);
     // this.getList('/refugeesWarningController/getPermanentResidenceInfo',1);
     // this.getList('/refugeesWarningController/getMovementRecord',2);
@@ -517,7 +604,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.CurrentPage=val;
-      this.getCRJ(this.CurrentPage, this.pageSize);
+      this.getCZXX(this.CurrentPage, this.pageSize);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
@@ -527,7 +614,7 @@ export default {
     },
     handleCurrentChange1(val) {
       this.CurrentPage1=val;
-      this.getSJ(this.CurrentPage1, this.pageSize1);
+      this.getCRJ(this.CurrentPage1, this.pageSize1);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange2(val) {
@@ -540,12 +627,31 @@ export default {
       this.getSJ(this.CurrentPage2, this.pageSize2);
       console.log(`当前页: ${val}`);
     },
-    openTc(title,type,id){
-      this.xtitle=title;
-      this.xtype=type;
+    pageSizeChange3(val) {
+      this.pageSize3=val;
+      this.getLZ(this.CurrentPage3, this.pageSize3);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange3(val) {
+      this.CurrentPage3=val;
+      this.getLZ(this.CurrentPage3, this.pageSize3);
+      console.log(`当前页: ${val}`);
+    },
+    openTc(n,id){
       this.xid=id;
-      this.detailsDialogVisible=true;
-      console.log(title,type)
+          if(n==1)//常住居住地
+          {
+
+            this.detailsDialogVisible=true;
+          }else if(n==2)//出入境
+          {    this.type=1;
+               this.crjDialogVisible=true;
+          }
+    },
+    details(n)
+    { this.type=0;
+      this.xid=n.DTID;
+      this.lzxxDialogVisible=true;
     },
     getList(url,type){
       let p = {
@@ -595,6 +701,20 @@ export default {
         r => {
           this.tableData1 = r.data.resultList;
           this.TotalResult=r.data.totalResult;
+        })
+    },
+    getLZ(currentPage, showCount){
+      let pp = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+        "orderBy":"ZSRQ",
+        "orderType":"DESC"
+      };
+      this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', pp,
+        r => {
+          this.tableData6 = r.data.resultList;
+          this.TotalResult3=r.data.totalResult;
         })
     },
     getCRJ(currentPage, showCount)//出入境

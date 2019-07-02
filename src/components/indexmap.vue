@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="bghome bgh1">
+  <div class="bgh1">
       <div id="mainMap" class="mapbj"></div>
          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
            <el-table
@@ -105,11 +105,12 @@ export default {
         lrdw:'320115',
         lrdwmc:'江宁区',//320113   320112江北
         rs:'11523',
-        type:'C',
+        type:'L',
         yf:'Y',
         sevalue:[],
         bzhid:'',
         czshow:false,
+        ssfj:'',
       }
     },
     mounted(){
@@ -166,14 +167,16 @@ export default {
       //获取标准化地址
       getbzhdz(n,callback){
         var searchResult = [];
+          this.ssfj=n;
           let p={
             "yf":this.yf,
             "lrdw":n,
           };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
           if(this.type=="C"){
+
             p={
-              "sspcs":n,
+              "ssfj":n,
             };
             url=this.Global.aport+"/zxdt/getCZDJXXJZDList";
           }
@@ -205,7 +208,8 @@ export default {
            "showCount":showCount,
            "dzdtid":this.bzhid,
            "yf":this.yf,
-           "lrdw":this.lrdw,
+           "lrdw":this.ssfj,
+
          };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
          if(this.type=="C"){
@@ -213,6 +217,7 @@ export default {
              "currentPage":currentPage,
              "showCount":showCount,
              "xxdz":this.bzhid,
+             "ssfj":this.ssfj,
            };
            url=this.Global.aport+"/zxdt/getCZDJXXRYList";
          }
@@ -260,5 +265,72 @@ export default {
 .icon1{background: url(../assets/img/tb/map1.png)  no-repeat;}
 
 .icon2{background: url(../assets/img/tb/map2.png)  no-repeat;}
-.bgh1 .el-dialog{ width: 90%!important;}
+.bgh1 .crrcolor{color: #1BA5C2!important;}
+
+.bgh1 .el-dialog{ width: 90%!important;
+  color: #ffffff!important;
+  border: 1px solid #2e9de7;
+  background-color: rgba(7,67,124,0.9);
+  border-radius: 2px;}
+  .bgh1 .el-dialog__title{
+        color: #86cdfb!important;
+  font-size: 18px;font-weight: lighter;
+        border-left: 4px #86cdfb solid;padding-left: 10px;
+      }
+    .bgh1 .el-dialog__header{
+        border-bottom: none;
+      }
+    .bgh1 .el-dialog__body {
+      padding: 10px 20px;
+      line-height: 30px!important;
+  }
+      .bgh1 .el-dialog__footer{
+        background: none;
+      }
+      .bgh1 .el-table {
+        border: none;
+        background: none;
+
+      }
+     .bgh1 .el-table::before {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 0px!important;
+  }
+      .bgh1 .el-table th{
+         background:rgba(1,34,79,0.9) !important;
+         color: #25daf5; border: none;
+         border-top:  1px #2071A0 dashed;
+      }
+      .bgh1 .el-table tr{
+          background-color: rgba(7,67,124);color:#a9d6fd;
+          border: none;
+
+      }
+      .bgh1 .el-table tr td{
+        border: none;
+        border-top:  1px #2071A0 dashed;
+        border-bottom:   1px #2071A0 dashed;
+      }
+      .bgh1 .el-table--border, .el-table--group{
+        border: none;
+      }
+      .bgh1 .el-table--enable-row-hover .el-table__body tr:hover>td {
+           background-color: rgba(7,67,124);color:#a9d6fd;
+      }
+      .bgh1 .el-table__expanded-cell{
+       background:#023062 !important;
+      }
+        .bgh1 .el-table__empty-block{
+            background:rgba(7,67,124);
+            border-bottom:   1px #2071A0 dashed;
+        }
+        .bgh1 .el-table__empty-text{
+          color: #a9d6fd;
+        }
+      .bgh1 .el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled
+      {
+        background: none;
+      }
 </style>
