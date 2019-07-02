@@ -15,7 +15,23 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text">证件种类：</span>
+                      <span class="yy-input-text"><font color=red>*</font>住宿时间：</span>
+                        <el-date-picker class="yy-input-input"
+                           v-model="pd.beginTime" format="yyyy-MM-dd"
+                           type="date" size="small" value-format="yyyyMMdd"
+                           placeholder="开始时间" >
+                        </el-date-picker>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"></span>
+                        <el-date-picker class="yy-input-input"
+                            v-model="pd.endTime" format="yyyy-MM-dd"
+                            type="date" size="small" value-format="yyyyMMdd"
+                            placeholder="结束时间" >
+                        </el-date-picker>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font>证件种类：</span>
                       <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind4) in $store.state.zjzl"
@@ -59,22 +75,6 @@
                       </el-select>
                   </el-col>
                   <el-col :span="24">
-                      <span class="yy-input-text">住宿时间：</span>
-                        <el-date-picker class="yy-input-input"
-                           v-model="pd.beginTime" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
-                           placeholder="开始时间" >
-                        </el-date-picker>
-                  </el-col>
-                  <el-col :span="24">
-                      <span class="yy-input-text"></span>
-                        <el-date-picker class="yy-input-input"
-                            v-model="pd.endTime" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
-                            placeholder="结束时间" >
-                        </el-date-picker>
-                  </el-col>
-                  <el-col :span="24">
                       <span class="yy-input-text">投宿于：</span>
                       <el-select v-model="pd.tsj" @change="changeTSY(pd.tsj)" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option label="旅馆" value="1">
@@ -99,7 +99,7 @@
                          placeholder="请输入关键词"
                          :remote-method="remoteMethod"
                          :loading="loading"
-                          size="small">
+                          size="small"  class="yy-input-input">
                          <el-option
                            v-for="(item,ind0) in zsbg"
                            :key="ind0"
@@ -297,6 +297,33 @@ export default {
     },
 
 
+    //得到标准化地址
+    getBZHDZ(callback){
+      var searchResult = [];
+        let p={
+          "zjzl":this.pd.zjzl,
+          "qzzl":this.pd.qzzl,
+          "gjdq":this.pd.gjdq,
+          "tlsy":this.pd.tlsy,
+          "rzsjStart":this.pd.beginTime,
+          "rzsjEnd":this.pd.endTime,
+          "zsbg":this.pd.zsbg,
+          "bzhdzMc":this.pd.bzhdz,
+        };
+        var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              var arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+              searchResult.push(arr[i]);
+              }
+              callback && callback(searchResult)
+            }
+          });
+          // callback(searchResult);
+    },
+
     //人员信息
     getRyxx(currentPage,showCount,bzhid,mc,lrdw)
     {
@@ -312,8 +339,16 @@ export default {
          "currentPage":currentPage,
          "showCount":showCount,
          "dzdtid":this.bzhid,
-         "yf":'Y',
-         "lrdw":this.lrdw,
+         // "yf":'Y',
+         // "lrdw":this.lrdw,
+         "zjzl":this.pd.zjzl,
+         "qzzl":this.pd.qzzl,
+         "gjdq":this.pd.gjdq,
+         "tlsy":this.pd.tlsy,
+         "rzsjStart":this.pd.beginTime,
+         "rzsjEnd":this.pd.endTime,
+         "zsbg":this.pd.zsbg,
+         "bzhdzMc":this.pd.bzhdz,
 
        };
        var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
@@ -333,8 +368,8 @@ export default {
 </script>
 
 <style scoped>
-.yy-input-text{text-align: left!important; width: 25%!important;}
-.yy-input-input{width: 70%!important;}
+.yy-input-text{text-align: left!important; width: 30%!important;}
+.yy-input-input{width: 65%!important;}
 .arrow_line {
     position: absolute;
     width: 10px;

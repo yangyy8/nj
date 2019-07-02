@@ -38,13 +38,11 @@ export function getSearch() {
 //划区域
   //endTime
 
-
-
-  var  searchResult=window.czvm.getBZHDZ(function(data){
+  var  searchResult=window.czvm.getPCS(function(data){
     console.log('data',data);
     if(data!=undefined && data!=""){
     for (var i = 0; i < data.length; i++) {
-         renderBzhid(data[i]);
+         renderPCS(data[i]);
       }
      }else {
       alert("地图库中未录入该地址的坐标。");
@@ -68,8 +66,85 @@ function loadHeatMap(x,y) {
     minOpacity:0.5
   }).addTo(map);
 
-  console.log('resultLayer',resultLayer);
 }
+//获取派出所
+function renderPCS(data) {
+
+
+  //数据集SQL查询服务参数
+  var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
+    queryParameter: {
+      name: "gajg_pcs_3201_pg@ORCL_gt8",
+      attributeFilter: "DWBM='" + data.dm + "'"
+    },
+    datasetNames: ["ORCL_gt8:gajg_pcs_3201_pg"] //数据集名称
+  });
+
+  //向服务器发送请求，并对返回的结果进行处理
+  L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesBySQL(sqlParam, function(serviceResult) {
+    //debugger;
+
+    var features = serviceResult.result.features.features;
+   var layers=[];
+    for (var i = 0; i < features.length; i++) {
+      var resultLayers = L.polygon(changeLonAndLat(features[i].geometry.coordinates), {
+        color: 'red',
+        fillColor: 'red',
+        fillOpacity: 0.2,
+        className: 'pcs-layer',
+      });
+      layers.push(resultLayers);
+
+      layerGroup= L.layerGroup(layers);
+      map.addLayer(layerGroup);
+      var center = L.latLngBounds(changeLonAndLat(features[i].geometry.coordinates)).getCenter();
+      renderMarkerpcs([center.lat, center.lng], data);
+
+    }
+
+
+
+  });
+}
+export function renderMarkerpcs(point, data) {
+  //debugger;
+  // 画圆
+  var myIcon = L.divIcon({
+    html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
+    className: 'my-div-icon icon1',
+    iconSize: 50
+  });
+  var tempMarker = L.marker(point, {
+    icon: myIcon,
+    pcsdm: data.dm,
+    pcsmc: data.mc,
+    num: data.count
+  });
+  markerLayer.addLayer(tempMarker);
+
+  markerLayer.on("mousemove", function(e) {
+    e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "总人数：" + e.layer.options.num + "</div>").openPopup();
+  });
+  markerLayer.on("mouseout", function(e) {
+    e.layer.closePopup();
+  });
+
+  tempMarker.on('click', function(e) {
+
+    var searchResult=window.czvm.getBZHDZ(data.dm,function(data){
+
+        for (var i = 0; i < data.length; i++) {
+             renderBzhid(data[i]);
+        }
+      });
+  });
+
+}
+
+
+
+
+
 function renderBzhid(data) {
     markerLayer.clearLayers();
     mapSqlSearch("JWPTBH='"+data.dm+"'", 0, 5, function(features) {

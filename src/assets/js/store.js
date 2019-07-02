@@ -40,6 +40,8 @@ var store = new Vuex.Store({
     clzt:[],
     sjly:[],
     rzfs:[],
+    zflx:[],
+    jzztlx:[],
   },
   mutations: {
     getToken(state, data) {
@@ -141,6 +143,12 @@ var store = new Vuex.Store({
     },
     getRzfs(state,data){
       state.rzfs=data;
+    },
+    getZflx(state,data){
+      state.zflx=data;
+    },
+    getJzztlx(state,data){
+      state.jzztlx=data;
     },
   },
   actions: {
@@ -290,6 +298,18 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.rzfs, null,
         r => {
           context.commit('getRzfs', ToArray(r.data))
+        })
+    },
+    getZflx(context){
+      api.get(global_.aport1 + global_.zflx, null,
+        r => {
+          context.commit('getZflx', ToArray(r.data))
+        })
+    },
+    getJzztlx(context){
+      api.get(global_.aport1 + global_.jzztlx, null,
+        r => {
+          context.commit('getJzztlx', ToArray(r.data))
         })
     },
   }
