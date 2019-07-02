@@ -749,7 +749,7 @@ export default {
   methods:{
     initData(){
       switch (this.page) {
-        case 2://人员画像
+        case 2://人员画像&在校学生突发增量预警
             this.getData2();
             break;
         default:

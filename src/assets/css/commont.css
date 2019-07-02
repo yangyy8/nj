@@ -189,4 +189,12 @@
 }
 .el-tag + .el-tag {
     margin-left: 10px;
-  }
+}
+.photoCon{
+  display: flex;
+  flex-wrap:wrap;
+}
+.photoItem{
+  width: 22%;
+  margin: 5px 5px
+}

@@ -672,754 +672,540 @@
                      style="width: 100%" class="stu-table"
                      >
                      <el-table-column
-                       prop="ASJBH"
+                       prop="caseNO"
                        label="案事件编号">
                      </el-table-column>
                      <el-table-column
-                       prop="SAJS"
+                       prop="caseRole_desc"
                        label="涉案角色">
                      </el-table-column>
                      <el-table-column
-                       prop="YWXM"
+                       prop="enName"
                        label="英文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="ZWXM"
+                       prop="chName"
                        label="中文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="XB_DESC"
+                       prop="gender_desc"
                        label="性别">
                      </el-table-column>
                      <el-table-column
-                       prop="CSRQ"
+                       prop="birthday"
                        label="出生日期">
                      </el-table-column>
                      <el-table-column
-                       prop="GJDQ_DESC"
+                       prop="nationnality_desc"
                        label="国家/地区">
                      </el-table-column>
                      <el-table-column
-                       prop="LRSJ"
-                       label="录入时间">
-                     </el-table-column>
-                     <el-table-column
-                       prop="LRR"
-                       label="录入人">
+                       label="操作" width="80">
+                       <template slot-scope="scope">
+                         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,2)"></el-button>
+                       </template>
                      </el-table-column>
                  </el-table>
               </div>
 
               <div v-show="page==2">
                 <el-table
-                     ref="multipleTable"
-                     :data="aForm3"
-                     border
-                     style="width: 100%" class="stu-table"
-                     >
-                     <el-table-column
-                       prop="JLBH"
-                       label="嫌疑人记录编号">
-                     </el-table-column>
-                     <el-table-column
-                       prop="BMJB"
-                       label="保密级别">
-                     </el-table-column>
-                     <el-table-column
-                       prop="XZZ"
-                       label="现住址">
-                     </el-table-column>
-                     <el-table-column
-                       prop="XYRSX"
-                       label="嫌疑属性">
-                     </el-table-column>
-                     <el-table-column
-                       prop="ZAYY"
-                       label="作案原因">
-                     </el-table-column>
-                     <el-table-column
-                       prop="ZHRQ"
-                       label="抓获日期">
-                     </el-table-column>
-                     <el-table-column
-                       prop="GXR"
-                       label="更新人">
-                     </el-table-column>
-                     <el-table-column
-                       prop="GXSJ"
-                       label="更新时间">
-                     </el-table-column>
-
+                   ref="multipleTable"
+                   :data="aForm3"
+                   border
+                   style="width: 100%" class="stu-table">
+                   <el-table-column
+                     prop="JLBH"
+                     label="嫌疑人记录编号">
+                   </el-table-column>
+                   <el-table-column
+                     prop="BMJB_DESC"
+                     label="保密级别">
+                   </el-table-column>
+                   <el-table-column
+                     prop="XZZ"
+                     label="现住址">
+                   </el-table-column>
+                   <el-table-column
+                     prop="XYRSX_DESC"
+                     label="嫌疑人属性">
+                   </el-table-column>
+                   <el-table-column
+                     prop="ZAYY_DESC"
+                     label="作案原因">
+                   </el-table-column>
+                   <el-table-column
+                     prop="ZHRQ"
+                     label="抓获日期">
+                   </el-table-column>
+                   <el-table-column
+                     label="操作" width="80">
+                     <template slot-scope="scope">
+                       <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,3)"></el-button>
+                     </template>
+                   </el-table-column>
                  </el-table>
+                 <div class="middle-foot">
+                    <div class="page-msg">
+                      <div class="">
+                    共{{TotalResult3}}条记录
+                      </div>
+                      <div class="">
+                        每页显示
+                        <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
+                          <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                        条
+                      </div>
+                      <div class="">
+                      共{{Math.ceil(TotalResult3/pageSize3)}}页
+                      </div>
+                    </div>
+                    <el-pagination
+                      background
+                      @current-change="handleCurrentChange3"
+                      :current-page:sync="CurrentPage3"
+                      :page-size="pageSize3"
+                      layout="prev, pager, next"
+                      :total="TotalResult3">
+                    </el-pagination>
+                  </div>
               </div>
 
               <div v-show="page==3">
                 <el-table
                      ref="multipleTable"
-                     :data="aForm4"
+                     :data="aForm4.length==0?aForm4:aForm4.slice((CurrentPage4-1)*pageSize4,CurrentPage4*pageSize4)"
                      border
                      style="width: 100%" class="stu-table"
                      >
                      <el-table-column
-                       prop="ASJBH"
+                       prop="casePaperNO"
                        label="案件编号">
                      </el-table-column>
                      <el-table-column
-                       prop="YWX"
+                       prop="enName"
                        label="英文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="ZWX"
+                       prop="chName"
                        label="中文姓名">
                      </el-table-column>
                      <el-table-column
-                       prop="XB_DESC"
+                       prop="gender_desc"
                        label="性别">
                      </el-table-column>
-                     <el-table-column
+                     <!-- <el-table-column
                        prop="CSRQ"
                        label="出生日期">
+                     </el-table-column> -->
+                     <el-table-column
+                       prop="paperNO"
+                       label="证件号码">
                      </el-table-column>
                      <el-table-column
-                       prop="SFZHM"
-                       label="身份证号码">
+                       prop="paperType_desc"
+                       label="证件种类">
                      </el-table-column>
                      <el-table-column
-                       prop="GJDQ_DESC"
-                       label="国家地区">
-                     </el-table-column>
-                     <el-table-column
-                       prop="ZJYXQZ"
+                       prop="usefulLifeLimit"
                        label="证件有效期至">
                      </el-table-column>
-
+                     <el-table-column
+                       label="操作" width="80">
+                       <template slot-scope="scope">
+                         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,4)"></el-button>
+                       </template>
+                     </el-table-column>
                  </el-table>
+                 <div class="middle-foot">
+                    <div class="page-msg">
+                      <div class="">
+                    共{{TotalResult4}}条记录
+                      </div>
+                      <div class="">
+                        每页显示
+                        <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
+                          <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                        条
+                      </div>
+                      <div class="">
+                      共{{Math.ceil(TotalResult4/pageSize4)}}页
+                      </div>
+                    </div>
+                    <el-pagination
+                      background
+                      @current-change="handleCurrentChange4"
+                      :current-page:sync="CurrentPage4"
+                      :page-size="pageSize4"
+                      layout="prev, pager, next"
+                      :total="TotalResult4">
+                    </el-pagination>
+                  </div>
               </div>
 
               <div v-show="page==4">
                 <el-table
+                   ref="multipleTable"
+                   :data="aForm5"
+                   border
+                   style="width: 100%" class="stu-table">
+                   <el-table-column
+                     prop="ASJBH"
+                     label="案件编号">
+                   </el-table-column>
+                   <el-table-column
+                     prop="SALB_DESC"
+                     label="涉案类别">
+                   </el-table-column>
+                   <el-table-column
+                     prop="SAJS"
+                     label="涉案角色">
+                   </el-table-column>
+                   <el-table-column
+                     prop="SAJE"
+                     label="涉案金额">
+                   </el-table-column>
+                   <el-table-column
+                     prop="JJSS"
+                     label="经济损失">
+                   </el-table-column>
+                   <el-table-column
+                     prop="DJRXM"
+                     label="登记人">
+                   </el-table-column>
+                   <el-table-column
+                     prop="DJDWMC"
+                     label="登记单位">
+                   </el-table-column>
+                   <el-table-column
+                     prop="DJSJ"
+                     label="登记时间">
+                   </el-table-column>
+                   <el-table-column
+                     label="操作" width="80">
+                     <template slot-scope="scope">
+                       <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,5)"></el-button>
+                     </template>
+                   </el-table-column>
+                 </el-table>
+                 <div class="middle-foot">
+                    <div class="page-msg">
+                      <div class="">
+                    共{{TotalResult5}}条记录
+                      </div>
+                      <div class="">
+                        每页显示
+                        <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
+                          <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                        条
+                      </div>
+                      <div class="">
+                      共{{Math.ceil(TotalResult5/pageSize5)}}页
+                      </div>
+                    </div>
+                    <el-pagination
+                      background
+                      @current-change="handleCurrentChange5"
+                      :current-page:sync="CurrentPage5"
+                      :page-size="pageSize5"
+                      layout="prev, pager, next"
+                      :total="TotalResult5">
+                    </el-pagination>
+                  </div>
+              </div>
+
+              <div v-show="page==5">
+                <el-table
                      ref="multipleTable"
-                     :data="aForm5"
+                     :data="aForm6.length==0?aForm6:aForm6.slice((CurrentPage6-1)*pageSize6,CurrentPage6*pageSize6)"
                      border
                      style="width: 100%" class="stu-table"
                      >
                      <el-table-column
-                       prop="ASJBH"
+                       prop="caseNO"
                        label="案件编号">
                      </el-table-column>
                      <el-table-column
-                       prop="SALB"
-                       label="涉案类别">
+                       prop="arbitrationDate"
+                       label="裁决日期">
                      </el-table-column>
                      <el-table-column
-                       prop="SAJS"
-                       label="涉案角色">
+                       prop="arbitrationOrg"
+                       label="裁决单位">
                      </el-table-column>
                      <el-table-column
-                       prop="SAJE"
-                       label="涉案金额">
+                       prop="arbitrationResult"
+                       label="裁决结果">
+                     </el-table-column>
+                     <!-- <el-table-column
+                       prop="CSRQ"
+                       label="出生日期">
+                     </el-table-column> -->
+                     <el-table-column
+                       prop="executeOrg"
+                       label="执行单位">
                      </el-table-column>
                      <el-table-column
-                       prop="JJSS"
-                       label="经济损失">
+                       prop="executeDate"
+                       label="执行日期">
                      </el-table-column>
                      <el-table-column
-                       prop="DJRXM"
-                       label="登记人">
+                       prop="executeResult"
+                       label="执行结果">
                      </el-table-column>
                      <el-table-column
-                       prop="DJDW"
-                       label="登记单位">
+                       label="操作" width="80">
+                       <template slot-scope="scope">
+                         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,6)"></el-button>
+                       </template>
                      </el-table-column>
-                     <el-table-column
-                       prop="ZJYXQZ"
-                       label="登记时间">
-                     </el-table-column>
-
                  </el-table>
-              </div>
-
-              <div v-show="page==5">
-                <el-form   ref="aForm6">
-                  <el-row :gutter="3"  class="mb-6">
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text">案件编号：</span>
-                       <span class="input-input detailinput">  {{aForm6.ASJBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="涉案实体编号">涉案实体编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.AJSTBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="案事件类别">案事件类别：</span>
-                       <span class="input-input detailinput">  {{aForm6.ASJLB}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="措施编号">措施编号：</span>
-                       <span class="input-input detailinput">  {{aForm6.CSBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">决定结果：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">决定期限：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDQX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="决定金额">决定金额：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDJE}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="决定时间">决定时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="决定人姓名">决定人姓名：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDRXM}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="决定单位">决定单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="决定单位名称">决定单位名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDDWMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">执行人：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">执行单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">文书号：</span>
-                        <span class="input-input detailinput">  {{aForm6.WSH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="对外说辞">对外说辞：</span>
-                        <span class="input-input detailinput">  {{aForm6.DWSC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">签证号码：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZJHM}}</span>
-                      </el-col>
-
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="要求离境时间">要求离境时间：</span>
-                       <span class="input-input detailinput">  {{aForm6.YQLJSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行金额">执行金额：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXJE}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="拘留天数">拘留天数：</span>
-                       <span class="input-input detailinput">  {{aForm6.JLTS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="执行期限">执行期限：</span>
-                       <span class="input-input detailinput">  {{aForm6.ZXQX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行地点">执行地点：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXDD}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行情况">执行情况：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXQK}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行开始时间">执行开始时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXKSSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行结束时间">执行结束时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXJSSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行标识">执行标识：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXBS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">撤销原因：</span>
-                        <span class="input-input detailinput">  {{aForm6.CXYY}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">撤销时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.CXSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="撤销审批单位">撤销审批单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.CXSPDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="撤销批准人">撤销批准人：</span>
-                        <span class="input-input detailinput">  {{aForm6.CXPZR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="撤销审批意见">撤销审批意见：</span>
-                        <span class="input-input detailinput">  {{aForm6.CXSPYJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="拘留审查结束期限">拘留审查结束期限：</span>
-                        <span class="input-input detailinput">  {{aForm6.JLSCJSQX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="接收单位">接收单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.JSDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="接收人">接收人：</span>
-                        <span class="input-input detailinput">  {{aForm6.JSR}}</span>
-                      </el-col>
-
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="接收时间">接收时间：</span>
-                       <span class="input-input detailinput">  {{aForm6.JSSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="RAS标识">RAS标识：</span>
-                        <span class="input-input detailinput">  {{aForm6.RAS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="登记时间">登记时间：</span>
-                       <span class="input-input detailinput">  {{aForm6.DJSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="登记人">登记人：</span>
-                       <span class="input-input detailinput">  {{aForm6.DJRXM}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="登记单位">登记单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.DJDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="登记单位名称">登记单位名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.DJDWMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">修改时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.XGSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">修改人：</span>
-                        <span class="input-input detailinput">  {{aForm6.XGR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">修改人姓名：</span>
-                        <span class="input-input detailinput">  {{aForm6.XGRXM}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">修改单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.XGDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">修改单位名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.XGDWMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">案件编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.AJBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">呈请类别：</span>
-                        <span class="input-input detailinput">  {{aForm6.CQLB}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="对象编号">对象编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.DXBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="对象类别">对象类别：</span>
-                        <span class="input-input detailinput">  {{aForm6.DXLB}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="对象名称">对象名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.DXMC}}</span>
-                      </el-col>
-
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="执行单位名称">执行单位名称：</span>
-                       <span class="input-input detailinput">  {{aForm6.ZXDWMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="法律依据">法律依据：</span>
-                        <span class="input-input detailinput">  {{aForm6.JGFLYJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="执行原因">执行原因：</span>
-                       <span class="input-input detailinput">  {{aForm6.ZXYY}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                       <span class="input-text" title="通知家属情况">通知家属情况：</span>
-                       <span class="input-input detailinput">  {{aForm6.TZJSQK}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="不准出境是否登记">不准出境是否登记：</span>
-                        <span class="input-input detailinput">  {{aForm6.BZCJSFDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="有无外伤">有无外伤：</span>
-                        <span class="input-input detailinput">  {{aForm6.YWWS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="是否进入候问室">是否进入候问室：</span>
-                        <span class="input-input detailinput">  {{aForm6.SFJRHWS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="传唤方式">传唤方式：</span>
-                        <span class="input-input detailinput">  {{aForm6.CHFS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="继续盘问理由">继续盘问理由：</span>
-                        <span class="input-input detailinput">  {{aForm6.JPWLY}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="代收银行">代收银行：</span>
-                        <span class="input-input detailinput">  {{aForm6.DSYX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检察机关措施意见">检察机关措施意见：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGCSYJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="办理人">办理人：</span>
-                        <span class="input-input detailinput">  {{aForm6.BLR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查地点">辨认检查地点：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRDD}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查人姓名">辨认检查人姓名：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="见证人">见证人：</span>
-                        <span class="input-input detailinput">  {{aForm6.JZRXX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="记录人">记录人：</span>
-                        <span class="input-input detailinput">  {{aForm6.JLR}}</span>
-                      </el-col>
-
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查对象">辨认检查对象：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRDX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查人住址">辨认检查人住址：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRRZZ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查人单位">辨认检查人单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRRDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查目的">辨认检查目的：</span>
-                        <span class="input-input detailinput"> {{aForm6.BRMD}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="辨认检查过程及结果">辨认检查过程及结果：</span>
-                        <span class="input-input detailinput">  {{aForm6.BRGCJJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="鉴定方式">鉴定方式：</span>
-                        <span class="input-input detailinput">  {{aForm6.JDFS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >协作具体事项：</span>
-                        <span class="input-input detailinput">  {{aForm6.XZSX}}</span>
-                      </el-col>
-
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="发布范围">发布范围：</span>
-                        <span class="input-input detailinput">  {{aForm6.FBFW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行保证人">结果执行保证人：</span>
-                        <span class="input-input detailinput">  {{aForm6.BZR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行通知对象">结果执行通知对象：</span>
-                        <span class="input-input detailinput">  {{aForm6.TZDX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行补充信息">结果执行补充信息：</span>
-                        <span class="input-input detailinput">  {{aForm6.BCXX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >有效标识：</span>
-                        <span class="input-input detailinput">  {{aForm6.YXBS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="关联措施编号">关联措施编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.GLCSBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >执行结果：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >事实情况：</span>
-                        <span class="input-input detailinput">  {{aForm6.SSQK}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >证据情况：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZJQK}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >执行方式：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXFS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >复议机关：</span>
-                        <span class="input-input detailinput">  {{aForm6.FYJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >诉讼机构：</span>
-                        <span class="input-input detailinput">  {{aForm6.SSJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >材料清单：</span>
-                        <span class="input-input detailinput">  {{aForm6.CLQD}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="材料清单数量">材料清单数量：</span>
-                        <span class="input-input detailinput">  {{aForm6.CLQDSL}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行通知对象地址">结果执行通知对象地址：</span>
-                        <span class="input-input detailinput">  {{aForm6.TZDXDZ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="主关联措施编号">主关联措施编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZGLCSBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" >检查机关：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检查机关名称">检查机关名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检查机关决定结果">检查机关决定结果：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGJDJG}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检查机关决定期限">检查机关决定期限：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGJDQX}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检查机关决定时间">检查机关决定时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGJDSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检查机关意见">检查机关意见：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGYJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行处所名称">执行处所名称：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXCSMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行处所代码">执行处所代码：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXCSDM}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="人员姓名">人员姓名：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYMC}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text">性别：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYXB}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="出生日期">出生日期：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYCSRQ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="证件种类号码">证件种类号码：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYZJZLHM}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="住(地)址">住(地)址：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYXZZ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="工作单位">工作单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYGZDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="联系方式">联系方式：</span>
-                        <span class="input-input detailinput">  {{aForm6.RYLXFS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="执行人员证件号码">执行人员证件号码：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZXZH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="检察机关文书号">检察机关文书号：</span>
-                        <span class="input-input detailinput">  {{aForm6.JCJGWSH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="措施人员编号">措施人员编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.CSRYBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="措施执行时间">措施执行时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.CSZXSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行人员工作单位">结果执行人员工作单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.JGZXLXDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行人员联系电话">结果执行人员联系电话：</span>
-                        <span class="input-input detailinput">  {{aForm6.JGZXLXDH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="结果执行联系人">结果执行联系人：</span>
-                        <span class="input-input detailinput">  {{aForm6.JGZXLXR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="涉外事件简要描述">涉外事件简要描述：</span>
-                        <span class="input-input detailinput">  {{aForm6.SWSJJYMS}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="更新时间">更新时间：</span>
-                        <span class="input-input detailinput">  {{aForm6.GXSJ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="更新人">更新人：</span>
-                        <span class="input-input detailinput">  {{aForm6.GXR}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="更新单位">更新单位：</span>
-                        <span class="input-input detailinput">  {{aForm6.GXDW}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="数据来源">数据来源：</span>
-                        <span class="input-input detailinput">  {{aForm6.SJLY}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="数据状态">数据状态：</span>
-                        <span class="input-input detailinput">  {{aForm6.ZT}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="备注">备注：</span>
-                        <span class="input-input detailinput">  {{aForm6.BZ}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="警综措施结果记录编号">警综措施结果记录编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.JZCSJGJLBH}}</span>
-                      </el-col>
-                      <el-col :span="8" class="input-item">
-                        <span class="input-text" title="内部措施结果编号">内部措施结果编号：</span>
-                        <span class="input-input detailinput">  {{aForm6.NBCSJGBH}}</span>
-                      </el-col>
-
-                  </el-row>
-                </el-form>
+                 <div class="middle-foot">
+                    <div class="page-msg">
+                      <div class="">
+                    共{{TotalResult6}}条记录
+                      </div>
+                      <div class="">
+                        每页显示
+                        <el-select v-model="pageSize6" @change="pageSizeChange6(pageSize6)" placeholder="10" size="mini" class="page-select">
+                          <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+                        </el-select>
+                        条
+                      </div>
+                      <div class="">
+                      共{{Math.ceil(TotalResult6/pageSize6)}}页
+                      </div>
+                    </div>
+                    <el-pagination
+                      background
+                      @current-change="handleCurrentChange6"
+                      :current-page:sync="CurrentPage6"
+                      :page-size="pageSize6"
+                      layout="prev, pager, next"
+                      :total="TotalResult6">
+                    </el-pagination>
+                  </div>
               </div>
           </div>
-
+          <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+              <ASJXQXQ :typec="typec" :xidc="xidc" :randomc="(new Date()).getTime()"></ASJXQXQ>
+                 <div slot="footer" class="dialog-footer">
+                   <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
+                 </div>
+          </el-dialog>
   </div>
 </template>
 <script scoped>
+import ASJXQXQ from '../../../common/asjxq_xq'
 export default {
+  components:{ASJXQXQ},
   name: 'ANSJRY',
-  props: ['type', 'xid','random'],
+  props: ['type', 'xid','random','rybh'],
   data() {
     return {
+      detailsDialogVisible:false,
+      typec:0,
+      xidc:{},
       page: 0,
       aForm1: {},
       aForm2: [],
       aForm3: [],
+      CurrentPage3:1,
+      pageSize3:10,
+      TotalResult3:0,
       aForm4: [],
+      CurrentPage4:1,
+      pageSize4:10,
+      TotalResult4:0,
       aForm5: [],
-      aForm6: {},
+      CurrentPage5:1,
+      pageSize5:10,
+      TotalResult5:0,
+      aForm6: [],
+      CurrentPage6:1,
+      pageSize6:10,
+      TotalResult6:0,
       asjbh: '',
       pd: {},
       px:{},
+      options:[{
+        value: 10,
+        label: "10"
+      },
+      {
+        value: 20,
+        label: "20"
+      },
+      {
+        value: 30,
+        label: "30"
+      }],
     }
   },
   activated() {
-    this.getData(this.xid.RGUID);
+    this.getData(this.xid);
   },
   mounted() {
-
+    this.getData(this.xid);
   },
   watch: {
     random:function(newVal,oldVal){
       this.random = newVal;
-      this.getData(this.xid.RGUID);
+      this.getData(this.xid);
     }
   },
   methods: {
+    getDetails(i,type){
+      this.xidc=i;
+      this.typec=type;
+      this.detailsDialogVisible=true;
+    },
+    pageSizeChange3(val) {
+      this.getData3(this.CurrentPage3,val,this.rybh);
+    },
+    handleCurrentChange3(val) {
+      this.getData3(val,this.pageSize3,this.rybh);
+    },
+    pageSizeChange4(val) {
+      this.pageSize4=val;
+      // this.getData4(this.CurrentPage4,val,this.rybh);
+    },
+    handleCurrentChange4(val) {
+      this.CurrentPage4=val;
+      // this.getData4(val,this.pageSize4,this.rybh);
+    },
+    pageSizeChange6(val) {
+      this.pageSize6=val;
+      // this.getData4(this.CurrentPage4,val,this.rybh);
+    },
+    handleCurrentChange6(val) {
+      this.CurrentPage6=val;
+      // this.getData4(val,this.pageSize4,this.rybh);
+    },
+    pageSizeChange5(val) {
+      this.getData5(this.CurrentPage5,val,this.rybh);
+    },
+    handleCurrentChange5(val) {
+      this.getData5(val,this.pageSize5,this.rybh);
+    },
     base() {
       this.page = 0;
     },
     base1() {
       this.page = 1;
+      this.getData2();
     },
     base2() {
       this.page = 2;
+      this.getData3(this.CurrentPage3,this.pageSize3,this.rybh);
     },
     base3() {
       this.page = 3;
+      this.getData4();
     },
     base4() {
       this.page = 4;
+      this.getData5(this.CurrentPage5,this.pageSize5,this.rybh);
     },
     base5() {
       this.page = 5;
+      this.getData6();
     },
-
-    getData(xid) {
-        this.pd.RGUID = xid;
-        // this.px.DTID=this.did;
-
-
-      let p = {
-        "pd": this.px
-      };
-      let pp={
-        "pd": this.pd
-      };
-
-      //人员基本信息
-      this.aForm1 = this.xid;
-      //涉案人员基本信息
-      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_JBXXController/getResultListByParams', p,
+    //涉案人员基本信息
+    getData2(){
+      this.$api.post(this.Global.aport3 + '/ryhxhx/getsaryjbxx',{caseNO: this.xid.caseNO},
         r => {
-          this.aForm2 = r.data.resultList;
+          this.aForm2 = r.data;
         })
-      //涉案人员嫌疑人信息
-      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_XYRXXController/getResultListByParams', p,
+    },
+    //涉案人员嫌疑人信息
+    getData3(currentPage,pageSize,pd){
+      let p={
+        "currentPage":currentPage,
+        "showCount":pageSize,
+        "pd":{"RYBH":pd}
+      }
+      this.$api.post(this.Global.aport3 + '/ryhx/getajxyrxx', p,
         r => {
           this.aForm3 = r.data.resultList;
+          this.TotalResult3 = r.data.totalResult;
         })
-      //案件人员证件信息
-      this.$api.post(this.Global.aport4 + '/eS_AJ_RY_ZJXXController/getResultListByParams', p,
+    },
+    //案件人员证件信息
+    getData4(currentPage,pageSize,pd){
+      let p={
+        // "currentPage":currentPage,
+        // "showCount":pageSize,
+        "pd":{"RYBH":this.rybh,"caseNO": this.xid.caseNO}
+      }
+      this.$api.post(this.Global.aport3 + '/ryhxhx/getajryzjxx', p,
         r => {
-          this.aForm4 = r.data.resultList;
+          this.aForm4 = r.data;
+          this.TotalResult4 = r.data.length;
         })
-      //案件涉案单位
-      this.$api.post(this.Global.aport4 + '/eS_AJ_SADWController/getResultListByParams', p,
+    },
+    //案件涉案单位
+    getData5(currentPage,pageSize,pd){
+      let p={
+        "currentPage":currentPage,
+        "showCount":pageSize,
+        "pd":{"RYBH":pd}
+      }
+      this.$api.post(this.Global.aport3 + '/ryhx/getajsadw', p,
         r => {
           this.aForm5 = r.data.resultList;
+          this.TotalResult5 = r.data.totalResult
         })
-        //处理结果
-        this.$api.post(this.Global.aport4 + '/eS_AJ_CLJGController/getEntityByDTID', p,
-          r => {
-            this.aForm6 = r.data;
-          })
+    },
+
+    getData6(currentPage,pageSize,pd){
+      let p={
+        // "currentPage":currentPage,
+        // "showCount":pageSize,
+        "pd":{"RYBH":this.rybh,"caseNO": this.xid.caseNO}
+      }
+      this.$api.post(this.Global.aport3 + '/ryhxhx/getajcljg', p,
+        r => {
+          this.aForm6 = r.data;
+          this.TotalResult6 = r.data.length;
+        })
+    },
+    getData(xid) {
+      //人员基本信息
+      this.aForm1 = xid;
+      //涉案人员基本信息
+      this.getData2();
+      //涉案人员嫌疑人信息
+      this.getData3(this.CurrentPage3,this.pageSize3,this.rybh);
+      //案件人员证件信息
+      this.getData4();
+      //案件涉案单位
+      this.getData5(this.CurrentPage5,this.pageSize5,this.rybh);
+      //处理结果
+      this.getData6();
 
     },
 

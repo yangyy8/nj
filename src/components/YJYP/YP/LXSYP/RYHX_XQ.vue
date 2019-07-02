@@ -123,45 +123,45 @@
         <div v-for="(j,ind) in tabLength" v-if="pageQz==(ind+1)">
           <el-row :gutter="10" class="bainfo t-mb10">
             <el-col :span="3" class="basicInfo">
-              证件种类：{{j.xczjzl_desc}}
-            </el-col>
-            <el-col :span="3" class="basicInfo">
-              证件号码：{{j.xczjhm}}
+              证件种类：{{j.paperType.value}}
             </el-col>
             <el-col :span="4" class="basicInfo">
-              证件有效期：{{j.xczjyxqz}}
+              证件号码：{{j.paperNO}}
+            </el-col>
+            <el-col :span="4" class="basicInfo">
+              证件有效期：{{j.paperExpiredDay}}
             </el-col>
           </el-row>
           <el-table
-           :data="j.wgrqzxxs"
+           :data="j.visaInfo"
            border
            style="width: 100%;margin-left:5px;" class="stu-table">
            <el-table-column
-             prop="qzzl_desc"
+             prop="visaType.value"
              label="签证种类">
            </el-table-column>
            <el-table-column
-             prop="qzhm"
+             prop="visaNo"
              label="签证号码">
            </el-table-column>
            <el-table-column
-             prop="qzyxqz"
+             prop="visaExpiredDay"
              label="签证有效期">
            </el-table-column>
            <el-table-column
-             prop="qzqfjg"
+             prop="visaAssignmentOrg.value"
              label="签发单位">
              </el-table-column>
              <el-table-column
-               prop="qzqfrq"
+               prop="visaAssignDay"
                label="签发日期">
              </el-table-column>
              <el-table-column
-               prop="qzyxcs"
+               prop="visaAvailableTime.value"
                label="签证有效次数">
              </el-table-column>
              <el-table-column
-               prop="jlxksy_desc"
+               prop="localizeReason.value"
                label="居留许可事由">
              </el-table-column>
              </el-table>
@@ -626,7 +626,7 @@
              </div>
 
        <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <ANSJRY :type="type" :xid="xid" :random="randomasj"></ANSJRY>
+         <ANSJRY :type="type" :xid="xid" :random="randomasj" :rybh="rybh"></ANSJRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -700,9 +700,11 @@
            <el-button @click="bqDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
-       <el-dialog title="历史照片" :visible.sync="zpDialogVisible">
-         <div v-for="img in images">
-              <img  :src="img.ZPNR" style="width:90px; height:120px;">
+       <el-dialog title="历史照片" :visible.sync="zpDialogVisible" width="800px">
+         <div class="photoCon">
+           <div class="photoItem" v-for="img in images">
+              <img  :src="img.ZPNR" style="width:100%">
+           </div>
          </div>
          <div slot="footer" class="dialog-footer">
            <el-button @click="zpDialogVisible = false" size="small">取 消</el-button>
@@ -1060,8 +1062,11 @@ export default{
       this.pd={};
       if(this.row){
         this.pd.RYBH=this.row.RYBH;
+      }else if(this.rybh){
+        this.pd.RYBH=this.rybh;
+      }else{
+        this.pd.RYBH='';
       }
-
       let p={
         "pd":this.pd,
       };
@@ -1206,16 +1211,12 @@ export default{
         // "pd":pd,
         // "orderBy":"RJRQ",
         // "orderType":"DESC"
-        "zjhm":this.$route.query.zjhm
+        "passportNO":this.$route.query.zjhm
       };
-      this.$api.post(this.Global.aport3+'/ryhxhx/getwgrqzsqxx', p,
+      this.$api.post(this.Global.aport3+'/ryhxhx/getwgrzjxx', p,
         r => {
-          this.tabLength = r.data.wgrxxs;
+          this.tabLength = r.data.paperInfo;
           this.tableDataQ = r.data.wgrqzxxs;
-          // for(var i=0;i<this.tabLength.length,i++){
-          //
-          // }
-          // this.tableData11 = r.data.resultList;
         })
     },
     //出入境详情
