@@ -654,7 +654,7 @@
           :autosize="{ minRows: 3, maxRows: 3}"
           placeholder="预警处理必须填写原因(不超过100个字符)"
           v-model="pc.CHANGE_RESON"
-          :disabled="$route.query.row.CLZT=='0'">
+          :disabled="!qdshow">
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
@@ -1076,9 +1076,11 @@ export default {
     this.lzxxDialogVisible=false;
     this.crjDialogVisible=false;
     this.row=this.$route.query.row;
+    console.log('===============');
+    console.log(this.row);
     this.pc={};
     this.qdshow=true;
-    if(this.row.CLZT=='0'){
+    if(this.row!=undefined && this.row.CLZT=='0'){
       this.qdshow=false;
     }
     this.pd.YJID=this.row.YJID;

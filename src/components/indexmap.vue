@@ -102,11 +102,11 @@ export default {
         tableData:[],
         options:this.pl.options,
         bzhDialogVisible:false,
-        lrdw:'320115',
-        lrdwmc:'江宁区',//320113   320112江北
+        lrdw:'320104',
+        lrdwmc:'秦淮区',//320113   320112江北
         rs:'11523',
         type:'L',
-        yf:'Y',
+        yf:'M',
         sevalue:[],
         bzhid:'',
         czshow:false,
@@ -115,11 +115,11 @@ export default {
     },
     mounted(){
       window.vm=this;
-      this.lrdw=this.$route.query.dqdm;
-      this.type=this.$route.query.type;
-      this.rs=this.$route.query.rs;
-      this.lrdwmc=this.$route.query.mc;
-      this.yf=this.$route.query.yf;
+      // this.lrdw=this.$route.query.dqdm;
+      // this.type=this.$route.query.type;
+      // this.rs=this.$route.query.rs;
+      // this.lrdwmc=this.$route.query.mc;
+      // this.yf=this.$route.query.yf;
       createMapL(this.lrdw,this.lrdwmc,this.rs,this.type);
       if(this.type=="C")
       {
