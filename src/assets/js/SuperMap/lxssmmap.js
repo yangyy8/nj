@@ -3,13 +3,13 @@ var markerLayer;
 var layerGroup;
 var MAP_SIZE = [11, 15];
 var SEARCH_HEIGHT = 100;
-
+var centers=[32.03613281, 118.78211975];
 //地图加载
 export function createMapL() {
   map = L.map('mainMap', {
     crs: L.CRS.EPSG4326,
     preferCanvas: true,
-    center: [32.03613281, 118.78211975],
+    center: centers,
     maxZoom: 18,
     zoom: 10,
     maxZoom: 16,
@@ -30,25 +30,58 @@ export function createMapL() {
 
 export function getSearch() {
   markerLayer.clearLayers();
-  var searchResult=window.lxsvm.getBZHDZ(function(data){
+  var searchResult=window.lxsvm.getBZHDZ(function(data,center){
+
+var ss=getcenter(center,function(centers){
+console.log('----',centers);
+
     for (var i = 0; i < data.length; i++) {
          renderBzhid(data[i]);
     }
+});
+
   });
 }
+function getcenter(id,callback) {
+  var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
+    queryParameter: {
+      name: "XZ_QU_A@ORCL_gt8",
+      attributeFilter: "ADMINCODE='1CHN" + id + "'"
+    },
+    datasetNames: ["ORCL_gt8:XZ_QU_A"]
+  });
 
+  // 列出选中的区域。
+  L.supermap
+    .featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data")
+    .getFeaturesBySQL(sqlParam, function(serviceResult) {
+      var resultData = serviceResult.result.features;
+      var resultList = resultData.features;
+        var   centers=[];
+      for (var index = 0; index < resultList.length; index++) {
+       var cc = L.latLngBounds(changeLonAndLat(resultList[index].geometry.coordinates)).getCenter();
+
+       centers.push(cc.lat);
+       centers.push(cc.lng);
+      }
+
+callback(centers);
+
+    });
+}
 //获取标准化地址
 function renderBzhid(data) {
-  markerLayer.clearLayers();
+    markerLayer.clearLayers();
    var mm=data.dm.split("号");
-   var  uurl="DZMC='"+mm[0]+"号'";
+   var  uurl="DZMC='"+data.dm+"'";
 
     mapSqlSearch(uurl, 0, 5, function(features) {
+
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
         // var y = features[0].properties.SMY;
        for (var i = 0; i < features.length; i++) {
-         console.log(features[i]);
+         console.log('-+++--',features[i]);
          var mc=features[i].properties.DZMC;
         renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
@@ -105,7 +138,7 @@ export function renderMarkerbzh(point, data,mc) {
 
   tempMarker.on('click', function(e) {
 
-    window.lxsvm.getRyxx(1,5,data.dm,mc,'');
+    window.lxsvm.getRyxx(1,5,data.DTIDS,mc);
 
   });
 }

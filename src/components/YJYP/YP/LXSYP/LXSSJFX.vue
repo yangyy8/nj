@@ -24,7 +24,7 @@
                       </el-select>
                   </el-col>
                 <el-col :span="24">
-                    <span class="yy-input-text"><font color=red>*</font>服务处所：</span>
+                    <span class="yy-input-text">服务处所：</span>
                      <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
                 </el-col>
                   <el-col :span="24">
@@ -65,9 +65,9 @@
                       <span class="yy-input-text">签证种类：</span>
                       <el-select v-model="pd.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
-                          v-for="(item,ind) in $store.state.qzzl"
+                          v-for="(item,ind) in $store.state.rjqzzl"
                           :key="ind"
-                          :label="item.mc"
+                          :label="item.dm+' - '+item.mc"
                           :value="item.dm">
                         </el-option>
                       </el-select>
@@ -123,8 +123,16 @@
                  style="width: 100%"
                  >
                  <el-table-column
-                   prop="ywxm"
-                   label="英文姓名">
+                   prop="zp"
+                   label="照片">
+                 </el-table-column>
+                 <el-table-column
+                   prop="sf"
+                   label="身份">
+                 </el-table-column>
+                 <el-table-column
+                   prop="djdw"
+                   label="单位">
                  </el-table-column>
                  <el-table-column
                    prop="zwxm"
@@ -186,7 +194,7 @@ export default {
   data(){
     return{
       CurrentPage: 1,
-      pageSize: 8,
+      pageSize: 5,
       TotalResult: 0,
        pd:{},
        swdw:[],
@@ -197,18 +205,20 @@ export default {
        ssfj:[],
        tableData:[],
        diatext:'标准化地址',
-       bzhid:'',
+       bzhid:[],
        mc:'',
        lrdw:'',
+       num:0,
+       result:[],
 
     }
   },
   mounted() {
     window.lxsvm=this;
-    this.$store.dispatch('getQzzl');
+    this.$store.dispatch('getRjqzzl');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getGjdq');
-    // this.$store.dispatch('getRjsy');
+
     // this.$store.dispatch('getRzfs');
     this.$store.dispatch('getZflx');
     this.$store.dispatch('getJzztlx');
@@ -220,11 +230,11 @@ export default {
   },
   methods:{
     pageSizeChange(val) {
-        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+        this.getRyxx(val,this.pageSize,this.bzhid,this.mc);
       console.log(`当前页: ${val}`);
     },
     changtab(){
@@ -265,14 +275,14 @@ export default {
       {
          this.$message.error("请选择所属分局！");return;
       }
-      if(this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")
-      {
-         this.$message.error("请输入服务处所！");return;
-      }
+      // if(this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")
+      // {
+      //    this.$message.error("请输入服务处所！");return;
+      // }
 
       getSearch();
   	},
-    //获取派出所
+    //获取派出所   不用
     getPCS(callback){
       var searchResult = [];
         let p={
@@ -297,17 +307,20 @@ export default {
 
           callback(searchResult);
     },
-    //获取派出所
-    getBZHDZ(dm,callback){
+    //地址
+    getBZHDZ(callback){
       var searchResult = [];
         let p={
           "gjdq":this.pd.gjdq,
-          "rzfs":this.pd.rzfs,
-          "zjzl":this.pd.zjzl,
-          "ssfj":this.pd.ssfj,
           "fwcs":this.pd.fwcs,
+          "zjzl":this.pd.zjzl,
+          "qzzl":this.pd.qzzl,
+          "zflx":this.pd.zflx,
+          "jzzt":this.pd.jzztlx,
+          "ssfj":this.pd.ssfj.substr(0,6),
+
         };
-        var url=this.Global.aport+"/ywczdt/getCZDJXXBZHDZList";
+        var url=this.Global.aport+"/ywlz/getLxsSjshmByBzhdzList";
         this.$api.post(url, p,
           r => {
             if (r.success) {
@@ -315,49 +328,54 @@ export default {
               for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
               }
-              callback && callback(searchResult)
+              callback && callback(searchResult,this.pd.ssfj.substr(0,6))
             }
           });
 
-          callback(searchResult);
+          callback(searchResult,this.pd.ssfj.substr(0,6))
     },
     //人员信息
-    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    getRyxx(currentPage,showCount,dtids,mc)
     {
-
+      this.mc=mc;
+      this.diatext=this.mc;
+      this.bzhid=dtids;
+      var chunk=5;
       if(currentPage==1){
         this.CurrentPage=1;
-      }
-       this.bzhid=bzhid;
-       this.mc=mc;
-       this.lrdw=lrdw;
-       this.diatext=this.mc;
 
+
+      var ttbal=JSON.parse(dtids);
+      var rr=[];
+      for (var i = 0,j = ttbal.length;i<j;i+=chunk) {
+         rr.push(ttbal.slice(i,i+chunk));
+      }
+       this.result=rr;
+     }
+       this.num=currentPage-1;
+
+       this.TotalResult=JSON.parse(dtids).length;
+      for (var k = this.num; k < this.num+1; k++) {
+       console.log(JSON.stringify(this.result[k]));
        let p={
-         "currentPage":currentPage,
-         "showCount":showCount,
-         "dzdtid":this.bzhid,
-         // "yf":'Y',
-         // "lrdw":this.lrdw,
+         "DTIDS":JSON.stringify(this.result[k]),
        };
-       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+       var url=this.Global.aport+"/ywlz/getLxsSjshmInforPageList";
        this.$api.post(url, p,
          r => {
            if (r.success) {
-             console.log(r.data);
-             this.tableData=r.data.resultList;
-             this.TotalResult=r.data.totalResult;
+
+             this.tableData=r.data;
+
            }
          });
+       }
+
        this.bzhDialogVisible=true;
     }
   },
-
 }
-
-
 </script>
-
 <style scoped>
 .yy-input-text{text-align: left!important;}
 </style>

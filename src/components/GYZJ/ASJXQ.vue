@@ -51,9 +51,7 @@
                   {{baseData.CSRQ}}
               </el-col>
                 </el-row>
-            <el-row  :gutter="4" class="stu-row">
 
-            </el-row>
             <!-- <el-row  :gutter="4">
               <el-col :span="6" class="stu-col-row2">
                 <span>预警时间：</span>

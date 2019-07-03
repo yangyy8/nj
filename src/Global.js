@@ -3,9 +3,10 @@ const userName='';
 const hasEnter=false;
 const org="";
 const xsd=80;
+const type=0;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="/api-reporter";//大师网关
-// const aport="http://192.168.3.217:9420";//大师
+// const aport="http://50.32.166.56:9420/";//大师
 // const aport1="http://10.33.72.144:9435";//正式环境
 const aport1="api-permission";//大师网关
 // const aport1="http://192.168.3.217:9435";//大师
@@ -21,7 +22,6 @@ const aport4="api-yujing";//李文龙 预警
 
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
-
 
 const dmall="/data_report/selectDmList" //加载全部代码
 const ssdw="/org/getSelfAndChilds"//所属单位
@@ -56,6 +56,7 @@ export default
 {
   org,//用户机构代码
   xsd,//相似度
+  type,
   userName,//用户名
   token,//用户token身份
   hasEnter,//用户登录状态

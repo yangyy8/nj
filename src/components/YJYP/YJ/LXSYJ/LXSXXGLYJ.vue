@@ -170,7 +170,9 @@ export default {
     this.pd={BJSJ_DateRange:{begin:'',end:''}};
     this.pd0={};
      if(this.type==undefined){
-       this.type=0;
+       this.type=this.Global.type;
+     }else {
+       this.Global.type=this.type;
      }
     switch (this.type) {
     case 0:
@@ -203,6 +205,8 @@ export default {
     default:
        break;
      }
+
+
      this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {

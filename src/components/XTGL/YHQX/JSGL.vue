@@ -234,7 +234,6 @@
               <el-button type="success" size="small" @click="CurrentPage1=1;getList1(CurrentPage1,pageSize1,pd1)">查询</el-button>
            </el-col>
           </el-row>
-
             <el-table
              ref="multipleTable1"
              :data="tableData1"
@@ -367,11 +366,11 @@ export default {
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
-      this.getList(this.CurrentPage1, val, this.pd1);
+      this.getList1(this.CurrentPage1, val, this.pd1);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
-      this.getList(val, this.pageSize1, this.pd1);
+      this.getList1(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
     getCompany(){

@@ -68,7 +68,7 @@ callback(centers);
 }
 //查询行政区划
 export function getSearch(id,mc,num) {
-  console.log(id);
+  // console.log(id);
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
       name: "gajg_fj_3201_pg@ORCL_gt8",
@@ -97,8 +97,7 @@ export function getSearch(id,mc,num) {
 
         layers.push(resultLayer);
        var cc = L.latLngBounds(changeLonAndLat(resultList[index].geometry.coordinates)).getCenter();
-       console.log(cc.lat);
-       console.log(cc.lng);
+
        centers=[];
        centers.push(cc.lat);
        centers.push(cc.lng);
@@ -188,7 +187,7 @@ export function queryZrqByServer(data) {
     for (var i = 0; i < features.length; i++) {
       var center = L.latLngBounds(changeLonAndLat(features[i].geometry.coordinates)).getCenter();
       //features[i].properties.DWDM;
-      console.log('data.dm',data.dm+'--'+ center.lng);
+      console.log('data.dm',data.dm);
       if(data.dm=="320112000000"){
       renderMarker([center.lat+0.05, center.lng-0.07], data);
     }else {
@@ -199,7 +198,6 @@ export function queryZrqByServer(data) {
   });
 }
 export function renderMarker(point, data) {
-
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
@@ -227,6 +225,7 @@ export function renderMarker(point, data) {
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
      var  searchResult=window.vm.getpcs(data.dm,function(data){
+
        if(data!=undefined){
        for (var i = 0; i < data.length; i++) {
             renderPCS(data[i]);
@@ -238,6 +237,7 @@ export function renderMarker(point, data) {
 
 //获取派出所
 function renderPCS(data) {
+   console.log(data.dm+'===='+data.mc);
   markerLayer.clearLayers();
 console.log();
   //数据集SQL查询服务参数
@@ -342,16 +342,16 @@ function renderBzhid(data) {
 
    if(type=="C")
    {
-     var mm=data.dm.split("号");
-     uurl="DZMC='"+mm[0]+"号'";
+     // var mm=data.dm.split("号");
+     uurl="DZMC='"+data.dm+"'";
    }
-   console.log(uurl);
+    console.log(uurl+"---"+data.count);
     mapSqlSearch(uurl, 0, 5, function(features) {
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
         // var y = features[0].properties.SMY;
        for (var i = 0; i < features.length; i++) {
-         console.log(features[i]);
+         // console.log(features[i]);
          var mc=features[i].properties.DZMC;
         renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
@@ -383,7 +383,7 @@ function mapSqlSearch(attributeFilter, from, to, callback) {
 }
 
 export function renderMarkerbzh(point, data,mc) {
-console.log('--==',point);
+// console.log('--==',point);
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
