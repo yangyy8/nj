@@ -169,102 +169,39 @@
       </div>
 
       <div class="yycontent">
-        <div class="stru-lal bb" id="box2">出入境记录</div>
-        <el-table
-           :data="tableData1.length==0?tableData1:tableData1.slice((CurrentPage1-1)*pageSize1,CurrentPage1*pageSize1)"
-           border
-
-           style="width: 100%;" class="stu-table t-mt10">
-           <el-table-column
-             prop="ioDate"
-             label="出入境日期">
-           </el-table-column>
-           <el-table-column
-             prop="personType.value"
-             label="人员类别（出入境状态）">
-           </el-table-column>
-           <el-table-column
-             prop="ioPort.value"
-             label="出入境口岸">
-           </el-table-column>
-           <el-table-column
-             label="操作" width="120">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscrj(scope.row)"></el-button>
-             </template>
-           </el-table-column>
-         </el-table>
-        <div class="middle-foot">
-        <div class="page-msg">
-          <div class="">
-        共{{TotalResult1}}条记录
-          </div>
-          <div class="">
-            每页显示
-            <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            条
-          </div>
-          <div class="">
-            共{{Math.ceil(TotalResult1/pageSize1)}}页
-          </div>
-        </div>
-        <el-pagination
-          background
-          @current-change="handleCurrentChange1"
-          :current-page:sync="CurrentPage1"
-          :page-size="pageSize1"
-          layout="prev, pager, next"
-          :total="TotalResult1">
-        </el-pagination>
-      </div>
-
-        <div class="stru-lal bb" id="box3">临住信息</div>
-        <el-table
-          :data="tableData2.length==0?tableData2:tableData2.slice((CurrentPage2-1)*pageSize2,CurrentPage2*pageSize2)"
-           border
-           style="width: 100%" class="stu-table t-mt10">
-           <el-table-column
-             prop="resideTime"
-             label="住宿日期">
-           </el-table-column>
-           <el-table-column
-             prop="leaveTime"
-             label="离开日期">
-           </el-table-column>
-           <el-table-column
-             prop="tmpResideRegOrgName"
-             label="登记单位">
-           </el-table-column>
-           <el-table-column
-             prop="tmpResideRegOrgArea_desc"
-             label="登记单位行政区划">
-           </el-table-column>
-           <el-table-column
-             prop="visaType_desc"
-             label="签证种类">
-           </el-table-column>
-           <el-table-column
-             label="操作" width="120">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslzxx(scope.row)"></el-button>
-             </template>
-           </el-table-column>
-         </el-table>
-        <div class="middle-foot">
+        <div class="stru-lal bb" id="box2" @click="con1=!con1">出入境记录<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData1.length==0?(!con1):con1">
+          <el-table
+             :data="tableData1.length==0?tableData1:tableData1.slice((CurrentPage1-1)*pageSize1,CurrentPage1*pageSize1)"
+             border
+             style="width: 100%;" class="stu-table t-mt10">
+             <el-table-column
+               prop="ioDate"
+               label="出入境日期">
+             </el-table-column>
+             <el-table-column
+               prop="personType.value"
+               label="人员类别（出入境状态）">
+             </el-table-column>
+             <el-table-column
+               prop="ioPort.value"
+               label="出入境口岸">
+             </el-table-column>
+             <el-table-column
+               label="操作" width="120">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscrj(scope.row)"></el-button>
+               </template>
+             </el-table-column>
+           </el-table>
+          <div class="middle-foot">
           <div class="page-msg">
             <div class="">
-          共{{TotalResult2}}条记录
+          共{{TotalResult1}}条记录
             </div>
             <div class="">
               每页显示
-              <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+              <el-select v-model="pageSize1" @change="pageSizeChange1(pageSize1)" placeholder="10" size="mini" class="page-select">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -275,333 +212,120 @@
               条
             </div>
             <div class="">
-              共{{Math.ceil(TotalResult2/pageSize2)}}页
+              共{{Math.ceil(TotalResult1/pageSize1)}}页
             </div>
           </div>
           <el-pagination
             background
-            @current-change="handleCurrentChange2"
-            :current-page:sync="CurrentPage2"
-            :page-size="pageSize2"
+            @current-change="handleCurrentChange1"
+            :current-page:sync="CurrentPage1"
+            :page-size="pageSize1"
             layout="prev, pager, next"
-            :total="TotalResult2">
+            :total="TotalResult1">
           </el-pagination>
         </div>
-        <div class="stru-lal bb" id="box4">常住信息</div>
-        <el-table
-            :data="tableData3.length==0?tableData3:tableData3.slice((CurrentPage3-1)*pageSize3,CurrentPage3*pageSize3)"
-            border
-            style="width: 100%" class="stu-table t-mt10">
-            <el-table-column
-              prop="inhabiDetailAddr"
-              label="居住地详细地址">
-            </el-table-column>
-            <el-table-column
-              prop="assignmentOrg_desc"
-              label="签发机关">
-            </el-table-column>
-            <el-table-column
-              prop="degreeCode_desc"
-              label="身份">
-            </el-table-column>
-            <el-table-column
-              prop="resideReason_desc"
-              label="居留事由">
-            </el-table-column>
-            <el-table-column
-              label="操作" width="120">
-              <template slot-scope="scope">
-              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscz(scope.row)"></el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        <div class="middle-foot">
-         <div class="page-msg">
-           <div class="">
-         共{{TotalResult3}}条记录
-           </div>
-           <div class="">
-             每页显示
-             <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
-               <el-option
-                 v-for="item in options"
-                 :key="item.value"
-                 :label="item.label"
-                 :value="item.value">
-               </el-option>
-             </el-select>
-             条
-           </div>
-           <div class="">
-             共{{Math.ceil(TotalResult3/pageSize3)}}页
-           </div>
-         </div>
-         <el-pagination
-           background
-           @current-change="handleCurrentChange3"
-           :current-page:sync="CurrentPage3"
-           :page-size="pageSize3"
-           layout="prev, pager, next"
-           :total="TotalResult3">
-         </el-pagination>
-       </div>
-        <div class="stru-lal bb" id="box5">案事件记录</div>
-        <el-table
-           :data="tableData4.length==0?tableData4:tableData4.slice((CurrentPage4-1)*pageSize4,CurrentPage4*pageSize4)"
-           border
-           style="width: 100%" class="stu-table t-mt10">
-           <el-table-column
-             prop="caseType_desc"
-             label="案事件类型">
-           </el-table-column>
-           <el-table-column
-             prop="caseTime"
-             label="案发时间">
-           </el-table-column>
-           <el-table-column
-             prop="caseName"
-             label="案件名称">
-           </el-table-column>
-           <el-table-column
-             prop="caseRegion_desc"
-             label="案发地区">
-           </el-table-column>
-           <el-table-column
-             label="操作" width="120">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
-             </template>
-           </el-table-column>
-         </el-table>
-        <div class="middle-foot">
-        <div class="page-msg">
-          <div class="">
-        共{{TotalResult4}}条记录
-          </div>
-          <div class="">
-            每页显示
-            <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            条
-          </div>
-          <div class="">
-            共{{Math.ceil(TotalResult4/pageSize4)}}页
+        </div>
+        <div class="stru-lal bb" id="box3" @click="con2=!con2">临住信息<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData2.length==0?(!con2):con2">
+          <el-table
+            :data="tableData2.length==0?tableData2:tableData2.slice((CurrentPage2-1)*pageSize2,CurrentPage2*pageSize2)"
+             border
+             style="width: 100%" class="stu-table t-mt10">
+             <el-table-column
+               prop="resideTime"
+               label="住宿日期">
+             </el-table-column>
+             <el-table-column
+               prop="leaveTime"
+               label="离开日期">
+             </el-table-column>
+             <el-table-column
+               prop="tmpResideRegOrgName"
+               label="登记单位">
+             </el-table-column>
+             <el-table-column
+               prop="tmpResideRegOrgArea_desc"
+               label="登记单位行政区划">
+             </el-table-column>
+             <el-table-column
+               prop="visaType_desc"
+               label="签证种类">
+             </el-table-column>
+             <el-table-column
+               label="操作" width="120">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslzxx(scope.row)"></el-button>
+               </template>
+             </el-table-column>
+           </el-table>
+          <div class="middle-foot">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult2}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize2" @change="pageSizeChange2(pageSize2)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult2/pageSize2)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange2"
+              :current-page:sync="CurrentPage2"
+              :page-size="pageSize2"
+              layout="prev, pager, next"
+              :total="TotalResult2">
+            </el-pagination>
           </div>
         </div>
-        <el-pagination
-          background
-          @current-change="handleCurrentChange4"
-          :current-page:sync="CurrentPage4"
-          :page-size="pageSize4"
-          layout="prev, pager, next"
-          :total="TotalResult4">
-        </el-pagination>
-      </div>
-        <div class="stru-lal bb" id="box6">民航进出港信息</div>
-        <el-table
-          :data="tableData5"
-          border
-          style="width: 100%" class="stu-table t-mt10">
-          <el-table-column
-            prop="STA_ARVETM"
-            label="进港时间">
-          </el-table-column>
-          <el-table-column
-            prop="STA_DEPTTM"
-            label="出港时间">
-          </el-table-column>
-          <el-table-column
-            prop="FLT_AIRLCODE"
-            label="航空公司代码">
-          </el-table-column>
-          <el-table-column
-            prop="FLT_NUMBER"
-            label="航班号">
-          </el-table-column>
-          <el-table-column
-            label="操作" width="120">
-            <template slot-scope="scope">
-            <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsMH(scope.row)"></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <div class="middle-foot">
-       <div class="page-msg">
-         <div class="">
-       共{{TotalResult5}}条记录
-         </div>
-         <div class="">
-           每页显示
-           <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
-             <el-option
-               v-for="item in options"
-               :key="item.value"
-               :label="item.label"
-               :value="item.value">
-             </el-option>
-           </el-select>
-           条
-         </div>
-         <div class="">
-           共{{Math.ceil(TotalResult5/pageSize5)}}页
-         </div>
-       </div>
-       <el-pagination
-         background
-         @current-change="handleCurrentChange5"
-         :current-page:sync="CurrentPage5"
-         :page-size="pageSize5"
-         layout="prev, pager, next"
-         :total="TotalResult5">
-       </el-pagination>
-     </div>
-        <div class="stru-lal bb" id="box7">单位信息</div>
-        <el-table
-         :data="tableData6"
-         border
-         style="width: 100%" class="stu-table t-mt10">
-         <el-table-column
-           prop="GZD_MC"
-           label="单位名称">
-         </el-table-column>
-         <el-table-column
-           prop="GZD_ZZJG"
-           label="组织机构代码">
-         </el-table-column>
-         <el-table-column
-           prop="XXDZ"
-           label="单位地址">
-         </el-table-column>
-         <el-table-column
-           label="操作" width="120">
-           <template slot-scope="scope">
-           <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsdw(scope.row)"></el-button>
-           </template>
-         </el-table-column>
-       </el-table>
-        <div class="middle-foot">
-      <div class="page-msg">
-        <div class="">
-      共{{TotalResult6}}条记录
-        </div>
-        <div class="">
-          每页显示
-          <el-select v-model="pageSize6" @change="pageSizeChange6(pageSize6)" placeholder="10" size="mini" class="page-select">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          条
-        </div>
-        <div class="">
-          共{{Math.ceil(TotalResult6/pageSize6)}}页
-        </div>
-      </div>
-      <el-pagination
-        background
-        @current-change="handleCurrentChange6"
-        :current-page:sync="CurrentPage6"
-        :page-size="pageSize6"
-        layout="prev, pager, next"
-        :total="TotalResult6">
-      </el-pagination>
-    </div>
-        <div class="stru-lal bb" id="box8">留学生信息-申请信息</div>
-        <el-table
-        :data="tableData7"
-        border
-        style="width: 100%" class="stu-table t-mt10">
-        <el-table-column
-          prop="STAREPORTS"
-          label="报到时间">
-        </el-table-column>
-        <el-table-column
-          prop="CFACULTY"
-          label="院系中文名称">
-        </el-table-column>
-        <el-table-column
-          prop="ACCACADEMY"
-          label="学校名称">
-        </el-table-column>
-        <el-table-column
-          label="操作" width="120">
-          <template slot-scope="scope">
-          <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-        <div class="middle-foot">
-     <div class="page-msg">
-       <div class="">
-     共{{TotalResult7}}条记录
-       </div>
-       <div class="">
-         每页显示
-         <el-select v-model="pageSize7" @change="pageSizeChange7(pageSize7)" placeholder="10" size="mini" class="page-select">
-           <el-option
-             v-for="item in options"
-             :key="item.value"
-             :label="item.label"
-             :value="item.value">
-           </el-option>
-         </el-select>
-         条
-       </div>
-       <div class="">
-         共{{Math.ceil(TotalResult7/pageSize7)}}页
-       </div>
-     </div>
-         <el-pagination
-           background
-           @current-change="handleCurrentChange7"
-           :current-page:sync="CurrentPage7"
-           :page-size="pageSize7"
-           layout="prev, pager, next"
-           :total="TotalResult7">
-         </el-pagination>
-       </div>
-
-       <div class="stru-lal bb">留学生信息-在校信息</div>
-       <el-table
-           :data="tableData8"
-           border
-           style="width: 100%" class="stu-table t-mt10">
-           <el-table-column
-             prop="COLLEGENAME"
-             label="院系名称">
-           </el-table-column>
-           <el-table-column
-             prop="MAJORNAME"
-             label="学习专业">
-           </el-table-column>
-           <el-table-column
-             prop="SIGNUPDATE"
-             label="报到时间">
-           </el-table-column>
-           <el-table-column
-             label="操作" width="120">
-             <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxszx(scope.row)"></el-button>
-             </template>
-           </el-table-column>
-         </el-table>
-         <div class="middle-foot">
+        <div class="stru-lal bb" id="box4" @click="con3=!con3">常住信息<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData3.length==0?(!con3):con3">
+          <el-table
+              :data="tableData3.length==0?tableData3:tableData3.slice((CurrentPage3-1)*pageSize3,CurrentPage3*pageSize3)"
+              border
+              style="width: 100%" class="stu-table t-mt10">
+              <el-table-column
+                prop="inhabiDetailAddr"
+                label="居住地详细地址">
+              </el-table-column>
+              <el-table-column
+                prop="assignmentOrg_desc"
+                label="签发机关">
+              </el-table-column>
+              <el-table-column
+                prop="degreeCode_desc"
+                label="身份">
+              </el-table-column>
+              <el-table-column
+                prop="resideReason_desc"
+                label="居留事由">
+              </el-table-column>
+              <el-table-column
+                label="操作" width="120">
+                <template slot-scope="scope">
+                <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscz(scope.row)"></el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          <div class="middle-foot">
            <div class="page-msg">
              <div class="">
-           共{{TotalResult8}}条记录
+           共{{TotalResult3}}条记录
              </div>
              <div class="">
                每页显示
-               <el-select v-model="pageSize8" @change="pageSizeChange8(pageSize8)" placeholder="10" size="mini" class="page-select">
+               <el-select v-model="pageSize3" @change="pageSizeChange3(pageSize3)" placeholder="10" size="mini" class="page-select">
                  <el-option
                    v-for="item in options"
                    :key="item.value"
@@ -612,19 +336,307 @@
                条
              </div>
              <div class="">
-               共{{Math.ceil(TotalResult8/pageSize8)}}页
+               共{{Math.ceil(TotalResult3/pageSize3)}}页
              </div>
            </div>
-               <el-pagination
-                 background
-                 @current-change="handleCurrentChange8"
-                 :current-page:sync="CurrentPage8"
-                 :page-size="pageSize8"
-                 layout="prev, pager, next"
-                 :total="TotalResult8">
-               </el-pagination>
+           <el-pagination
+             background
+             @current-change="handleCurrentChange3"
+             :current-page:sync="CurrentPage3"
+             :page-size="pageSize3"
+             layout="prev, pager, next"
+             :total="TotalResult3">
+           </el-pagination>
+         </div>
+       </div>
+        <div class="stru-lal bb" id="box5" @click="con4=!con4">案事件记录<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData4.length==0?(!con4):con4">
+          <el-table
+             :data="tableData4.length==0?tableData4:tableData4.slice((CurrentPage4-1)*pageSize4,CurrentPage4*pageSize4)"
+             border
+             style="width: 100%" class="stu-table t-mt10">
+             <el-table-column
+               prop="caseType_desc"
+               label="案事件类型">
+             </el-table-column>
+             <el-table-column
+               prop="caseTime"
+               label="案发时间">
+             </el-table-column>
+             <el-table-column
+               prop="caseName"
+               label="案件名称">
+             </el-table-column>
+             <el-table-column
+               prop="caseRegion_desc"
+               label="案发地区">
+             </el-table-column>
+             <el-table-column
+               label="操作" width="120">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
+               </template>
+             </el-table-column>
+           </el-table>
+          <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+          共{{TotalResult4}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize4" @change="pageSizeChange4(pageSize4)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+              共{{Math.ceil(TotalResult4/pageSize4)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange4"
+            :current-page:sync="CurrentPage4"
+            :page-size="pageSize4"
+            layout="prev, pager, next"
+            :total="TotalResult4">
+          </el-pagination>
+        </div>
+      </div>
+        <div class="stru-lal bb" id="box6" @click="con5=!con5">民航进出港信息<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData5.length==0?(!con5):con5">
+          <el-table
+            :data="tableData5"
+            border
+            style="width: 100%" class="stu-table t-mt10">
+            <el-table-column
+              prop="STA_ARVETM"
+              label="进港时间">
+            </el-table-column>
+            <el-table-column
+              prop="STA_DEPTTM"
+              label="出港时间">
+            </el-table-column>
+            <el-table-column
+              prop="FLT_AIRLCODE"
+              label="航空公司代码">
+            </el-table-column>
+            <el-table-column
+              prop="FLT_NUMBER"
+              label="航班号">
+            </el-table-column>
+            <el-table-column
+              label="操作" width="120">
+              <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsMH(scope.row)"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="middle-foot">
+         <div class="page-msg">
+           <div class="">
+         共{{TotalResult5}}条记录
+           </div>
+           <div class="">
+             每页显示
+             <el-select v-model="pageSize5" @change="pageSizeChange5(pageSize5)" placeholder="10" size="mini" class="page-select">
+               <el-option
+                 v-for="item in options"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+               </el-option>
+             </el-select>
+             条
+           </div>
+           <div class="">
+             共{{Math.ceil(TotalResult5/pageSize5)}}页
+           </div>
+         </div>
+         <el-pagination
+           background
+           @current-change="handleCurrentChange5"
+           :current-page:sync="CurrentPage5"
+           :page-size="pageSize5"
+           layout="prev, pager, next"
+           :total="TotalResult5">
+         </el-pagination>
+       </div>
+     </div>
+        <div class="stru-lal bb" id="box7" @click="con6=!con6">单位信息<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData6.length==0?(!con6):con6">
+          <el-table
+           :data="tableData6"
+           border
+           style="width: 100%" class="stu-table t-mt10">
+           <el-table-column
+             prop="GZD_MC"
+             label="单位名称">
+           </el-table-column>
+           <el-table-column
+             prop="GZD_ZZJG"
+             label="组织机构代码">
+           </el-table-column>
+           <el-table-column
+             prop="XXDZ"
+             label="单位地址">
+           </el-table-column>
+           <el-table-column
+             label="操作" width="120">
+             <template slot-scope="scope">
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsdw(scope.row)"></el-button>
+             </template>
+           </el-table-column>
+         </el-table>
+          <div class="middle-foot">
+            <div class="page-msg">
+              <div class="">
+            共{{TotalResult6}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="pageSize6" @change="pageSizeChange6(pageSize6)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(TotalResult6/pageSize6)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="handleCurrentChange6"
+              :current-page:sync="CurrentPage6"
+              :page-size="pageSize6"
+              layout="prev, pager, next"
+              :total="TotalResult6">
+            </el-pagination>
+          </div>
+        </div>
+        <div class="stru-lal bb" id="box8" @click="con7=!con7">留学生信息-申请信息<i class="el-icon-d-caret"></i></div>
+        <div v-show="tableData7.length==0?(!con7):con7">
+          <el-table
+          :data="tableData7"
+          border
+          style="width: 100%" class="stu-table t-mt10">
+          <el-table-column
+            prop="STAREPORTS"
+            label="报到时间">
+          </el-table-column>
+          <el-table-column
+            prop="CFACULTY"
+            label="院系中文名称">
+          </el-table-column>
+          <el-table-column
+            prop="ACCACADEMY"
+            label="学校名称">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="120">
+            <template slot-scope="scope">
+            <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxs(scope.row)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="middle-foot">
+         <div class="page-msg">
+           <div class="">
+         共{{TotalResult7}}条记录
+           </div>
+           <div class="">
+             每页显示
+             <el-select v-model="pageSize7" @change="pageSizeChange7(pageSize7)" placeholder="10" size="mini" class="page-select">
+               <el-option
+                 v-for="item in options"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+               </el-option>
+             </el-select>
+             条
+           </div>
+           <div class="">
+             共{{Math.ceil(TotalResult7/pageSize7)}}页
+           </div>
+         </div>
+         <el-pagination
+           background
+           @current-change="handleCurrentChange7"
+           :current-page:sync="CurrentPage7"
+           :page-size="pageSize7"
+           layout="prev, pager, next"
+           :total="TotalResult7">
+         </el-pagination>
+       </div>
+     </div>
+       <div class="stru-lal bb" @click="con8=!con8">留学生信息-在校信息<i class="el-icon-d-caret"></i></div>
+       <div v-show="tableData8.length==0?(!con8):con8">
+         <el-table
+             :data="tableData8"
+             border
+             style="width: 100%" class="stu-table t-mt10">
+             <el-table-column
+               prop="COLLEGENAME"
+               label="院系名称">
+             </el-table-column>
+             <el-table-column
+               prop="MAJORNAME"
+               label="学习专业">
+             </el-table-column>
+             <el-table-column
+               prop="SIGNUPDATE"
+               label="报到时间">
+             </el-table-column>
+             <el-table-column
+               label="操作" width="120">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailslxszx(scope.row)"></el-button>
+               </template>
+             </el-table-column>
+           </el-table>
+           <div class="middle-foot">
+             <div class="page-msg">
+               <div class="">
+             共{{TotalResult8}}条记录
+               </div>
+               <div class="">
+                 每页显示
+                 <el-select v-model="pageSize8" @change="pageSizeChange8(pageSize8)" placeholder="10" size="mini" class="page-select">
+                   <el-option
+                     v-for="item in options"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+                   </el-option>
+                 </el-select>
+                 条
+               </div>
+               <div class="">
+                 共{{Math.ceil(TotalResult8/pageSize8)}}页
+               </div>
              </div>
-
+                 <el-pagination
+                   background
+                   @current-change="handleCurrentChange8"
+                   :current-page:sync="CurrentPage8"
+                   :page-size="pageSize8"
+                   layout="prev, pager, next"
+                   :total="TotalResult8">
+                 </el-pagination>
+               </div>
+             </div>
        <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
          <ANSJRY :type="type" :xid="xid" :random="randomasj" :rybh="rybh"></ANSJRY>
          <div slot="footer" class="dialog-footer">
@@ -638,7 +650,7 @@
          </div>
        </el-dialog>
        <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <CZXXRY :type="type" :xid="xid" :random="randomczxx"></CZXXRY>
+         <CZXXRY :type="type" :xid="rybh" :random="randomczxx" :rid="rid"></CZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -713,21 +725,14 @@
         <transition name="el-zoom-in-top">
          <div class="meunSlid" v-show="menuShow">
            <ul>
-             <li><a href="#box1">签证信息</a></li>
-             <li><a href="#box2">出入境信息</a></li>
-             <li><a href="#box3">临住信息</a></li>
-             <li><a href="#box4">常住信息</a></li>
-             <li><a href="#box5">案事件记录</a></li>
-             <li><a href="#box6">民航进出港信息</a></li>
-             <li><a href="#box7">单位信息</a></li>
-             <li><a href="#box8">留学生信息</a></li>
+             <li v-for="(item,ind) in menu" :key="ind" @click="toTegional(item.id)">{{item.name}}</li>
            </ul>
-           <span class="switch el-icon-caret-right hand" @click="menuShow=!menuShow"></span>
+           <span class="switch el-icon-d-arrow-right hand" @click="menuShow=!menuShow"></span>
          </div>
         </transition>
         <transition name="el-zoom-in-bottom">
          <div class="meunSlidhide" v-show="!menuShow">
-           <span class="switchhide el-icon-caret-left hand" @click="menuShow=!menuShow"></span>
+           <span class="switchhide el-icon-d-arrow-left hand" @click="menuShow=!menuShow"></span>
          </div>
         </transition>
    </div>
@@ -746,6 +751,49 @@ export default{
     components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX,LXSXXZX},
   data(){
     return{
+      con1:true,
+      con2:true,
+      con3:true,
+      con4:true,
+      con5:true,
+      con6:true,
+      con7:true,
+      con8:true,
+      con9:true,
+      menu:[
+        {
+          name:'签证信息',
+          id:'box1'
+        },
+        {
+          name:'出入境信息',
+          id:'box2'
+        },
+        {
+          name:'临住信息',
+          id:'box3'
+        },
+        {
+          name:'常住信息',
+          id:'box4'
+        },
+        {
+          name:'案事件记录',
+          id:'box5'
+        },
+        {
+          name:'民航进出港信息',
+          id:'box6'
+        },
+        {
+          name:'单位信息',
+          id:'box7'
+        },
+        {
+          name:'留学生信息',
+          id:'box8'
+        },
+      ],
       menuShow:true,
       rybh:'',
       tabLength:[],
@@ -765,7 +813,7 @@ export default{
        randomlzxx:'',
        randomczxx:'',
        randomasj:'',
-       rid:'',
+       rid:{},
        pd:{},
        imgdm:imgUrl,
        moveid:'',
@@ -834,13 +882,13 @@ export default{
   activated(){
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
-
     if(this.zjhm!="" && this.zjhm!=undefined){
       this.pd.ZJHM=this.zjhm;
-    }else {
+    }else if(this.row.RYBH){
       this.pd.RYBH=this.row.RYBH;
+    }else{
+      this.pd.RYBH=""
     }
-
     this.getRYXX();
     this.getLable();
     this.getZXZP();
@@ -859,6 +907,10 @@ export default{
 
   },
   methods:{
+    toTegional(id){
+      console.log()
+      document.querySelector('#'+id).scrollIntoView(true);
+    },
     pageSizeChange1(val) {
       this.pageSize1=val;
       //   this.getCrj(this.CurrentPage1,val,this.pd);
@@ -934,18 +986,18 @@ export default{
     //最新照片
     getZXZP(){
       let p = {
-        "pd": this.pd,
+        "pd": {ZJHM:this.$route.query.zjhm},
         "currentPage":1,
       	"showCount":1,
-      	"orderBy":"GXSJ",
+      	"orderBy":"RQRB",
       	"orderType":"DESC"
       };
       this.$api.post(this.Global.aport3+'/ryhx/getrytpxx', p,
         r => {
-          console.log('r.data.resultList.ZPNR',r.data.resultList.ZPNR);
-          if(r.data.resultList.ZPNR){
-          // this.imgshow=false;
-          this.imgdm = r.data.resultList.ZPNR||imgUrl;
+          console.log('r.data.resultList.ZPNR',r.data.resultList[0]);
+          this.imgdm = imgUrl
+          if(r.data.resultList[0].ZPNR){
+            this.imgdm = r.data.resultList[0].ZPNR;
           }
         })
 
@@ -1254,11 +1306,10 @@ export default{
     },
     //常住信息详情
     detailscz(n){
-    this.xid=n;
-    this.rid=n.RYBH;
-    this.randomczxx=new Date().getTime();
-    target.scrollIntoView();
-    this.czDialogVisible=true;
+      this.rid=n;
+      this.randomczxx=new Date().getTime();
+      target.scrollIntoView();
+      this.czDialogVisible=true;
     },
     detailsdw(n){
       this.xid=n.RGUID;

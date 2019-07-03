@@ -42,6 +42,7 @@ var store = new Vuex.Store({
     rzfs:[],
     zflx:[],
     jzztlx:[],
+    xxdm:[],
   },
   mutations: {
     getToken(state, data) {
@@ -150,8 +151,9 @@ var store = new Vuex.Store({
     getJzztlx(state,data){
       state.jzztlx=data;
     },
-
-
+    getXxdm(state,data){
+      state.xxdm=data;
+    }
   },
   actions: {
     getSsdw(context) {
@@ -312,6 +314,12 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.jzztlx, null,
         r => {
           context.commit('getJzztlx', ToArray(r.data))
+        })
+    },
+    getXxdm(context){
+      api.get(global_.aport1 + global_.xxdm, null,
+        r => {
+          context.commit('getXxdm', ToArray(r.data))
         })
     },
   }

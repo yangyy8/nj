@@ -26,24 +26,13 @@
                     <span class="input-text">学校代码：</span>
                     <el-select v-model="pd.DWID" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.gjdq"
+                        v-for="item in $store.state.xxdm"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
-                <!-- <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">院校：</span>
-                    <el-select v-model="pd.RJSY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-                      <el-option
-                        v-for="item in $store.state.rjsy"
-                        :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                </el-col> -->
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
@@ -54,7 +43,7 @@
 
     <div class="yycontent">
       <div class="ak-tabs">
-        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0">
+        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0;getListTu(pd)">
           图表
         </div>
         <div class="ak-tab-item hand" :class="{'ak-checked':page==1}" @click="page=1">
