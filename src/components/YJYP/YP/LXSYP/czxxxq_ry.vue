@@ -4,22 +4,22 @@
     <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==0}" @click="base">
       人员基本信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==1}" @click="base1" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==1}" @click="base1">
       居住地信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==2}" @click="base2" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==2}" @click="base2">
       工作地信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==3}" @click="base3" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==3}" @click="base3">
       走访信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==4}" @click="base4" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==4}" @click="base4">
       安保信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==5}" @click="base5" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==5}" @click="base5">
       重点列管信息
     </div>
-    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==6}" @click="base6" v-if="false">
+    <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==6}" @click="base6">
       同户人信息
     </div>
   </div>
@@ -28,8 +28,8 @@
     <div v-show="page==0" style="padding:0 15px;">
       <el-row type="flex">
         <el-col :span="3" style="min-width:150px;">
-          <img src="../../../../assets/img/mrzp.png" v-if="imgshow" >
-          <img :src="imgdm" v-else>
+          <img src="../../../../assets/img/mrzp.png" v-if="!czinfo.photo" >
+          <img :src="czinfo.photo" v-else>
         </el-col>
         <el-col :span="21">
           <el-row :gutter="3">
@@ -243,10 +243,6 @@
           <span class="input-input detailinput">  {{czinfo.reportTime}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">照片：</span>
-          <span class="input-input detailinput">  {{czinfo.photo}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
           <span class="input-text">省代码：</span>
           <span class="input-input detailinput">  {{czinfo.province}}</span>
         </el-col>
@@ -271,20 +267,26 @@
           border
           style="width: 100%">
           <el-table-column
-            prop="JZD_PCS"
+            prop="JZD_PCSMC"
             label="居住地所属派出所">
           </el-table-column>
           <el-table-column
-            prop="ZT_JZZT"
-            label="居住状态类型">
+            prop="XXDZ"
+            label="详细地址">
           </el-table-column>
           <el-table-column
-            prop="JZD_DZTXT"
-            label="标准化地址">
+            prop="ZT_JZZT_DESC"
+            label="居住状态名称">
           </el-table-column>
           <el-table-column
             prop="RQ_RZRQ"
             label="入住日期">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'jz')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -318,6 +320,7 @@
           </el-pagination>
         </div>
       <div v-if="jzshow" class="mt-10">
+      <hr/>
       <el-row :gutter="3"  class="mb-6">
         <el-col :span="8" class="input-item">
           <span class="input-text" title="居住地行政区划">居住地行政区划：</span>
@@ -444,6 +447,10 @@
             <span class="input-text">居住地责任区：</span>
             <span class="input-input detailinput">  {{jzinfo.JZD_ZRQ}}</span>
           </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text">居住地社区：</span>
+            <span class="input-input detailinput">  {{jzinfo.JZD_SQ}}</span>
+          </el-col>
 
           <el-col :span="8" class="input-item">
             <span class="input-text">入住日期：</span>
@@ -491,7 +498,7 @@
             label="工作单位名称">
           </el-table-column>
           <el-table-column
-            prop="GZD_SFDM"
+            prop="GZD_SFDM_DESC"
             label="工作单位人员身份">
           </el-table-column>
           <el-table-column
@@ -509,6 +516,12 @@
           <el-table-column
             prop="XXDZ"
             label="工作单位详细地址">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'gz')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -550,11 +563,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位所属派出所">工作单位所属派出所：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_PCS}}</span>
-            </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="input-text" title="工作单位机构代码">工作单位机构代码：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_ZZJG}}</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_PCSMC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位名称">工作单位名称：</span>
@@ -562,7 +571,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位人员身份">工作单位人员身份：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_SFDM}}</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_SFDM_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="任职日期">任职日期：</span>
@@ -594,7 +603,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
             <span class="input-text" title="录入单位">录入单位：</span>
-            <span class="input-input detailinput">  {{gzinfo.LRDW}}</span>
+            <span class="input-input detailinput">  {{gzinfo.LRDW_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="录入日期">录入日期：</span>
@@ -603,6 +612,10 @@
           <el-col :span="8" class="input-item">
             <span class="input-text" title="工作状态类型">工作状态类型：</span>
             <span class="input-input detailinput">  {{gzinfo.ZT_GZZT}}</span>
+          </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text" title="是否核对">是否核对：</span>
+            <span class="input-input detailinput">  {{gzinfo.ZT_SFHD==0?'否':'是'}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="处理单位">处理单位：</span>
@@ -680,6 +693,14 @@
           <span class="input-text" title="备注">备注：</span>
           <span class="input-input detailinput">  {{gzinfo.BZ}}</span>
         </el-col>
+        <el-col :span="8" class="input-item">
+          <span class="input-text" title="注销日期">地址X坐标：</span>
+          <span class="input-input detailinput">  {{gzinfo.DZXZB}}</span>
+        </el-col>
+        <el-col :span="8" class="input-item">
+          <span class="input-text" title="备注">地址Y坐标：</span>
+          <span class="input-input detailinput">  {{gzinfo.DZYZB}}</span>
+        </el-col>
      </el-row>
     </div>
     </div>
@@ -708,6 +729,12 @@
           <el-table-column
             prop="ZT"
             label="状态">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'zf')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -822,11 +849,11 @@
           @row-click="getAB"
           style="width: 100%">
           <el-table-column
-            prop="FFBM"
+            prop="FFBM_DESC"
             label="防范部门">
           </el-table-column>
           <el-table-column
-            prop="ZHAQYS"
+            prop="ZHAQYS_DESC"
             label="住户安全意识">
           </el-table-column>
           <el-table-column
@@ -841,7 +868,12 @@
             prop="BCSM"
             label="补充说明">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'ab')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -878,24 +910,24 @@
 <el-row :gutter="3">
   <el-col :span="8" class="input-item">
     <span class="input-text" title="防范部门">防范部门：</span>
-    <span class="input-input detailinput">  {{abinfo.FFBM}}</span>
+    <span class="input-input detailinput">  {{abinfo.FFBM_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text" title="人防手段">人防手段：</span>
-    <span class="input-input detailinput">  {{abinfo.RFSD}}</span>
+    <span class="input-input detailinput">  {{abinfo.RFSD_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text" title="技防手段">技防手段：</span>
-    <span class="input-input detailinput">  {{abinfo.JFSD}}</span>
+    <span class="input-input detailinput">  {{abinfo.JFSD_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text" title="设施防范">设施防范：</span>
-    <span class="input-input detailinput">  {{abinfo.SSFF}}</span>
+    <span class="input-input detailinput">  {{abinfo.SSFF_DESC}}</span>
   </el-col>
 
   <el-col :span="8" class="input-item">
     <span class="input-text" title="住户安全意识">住户安全意识：</span>
-    <span class="input-input detailinput">  {{abinfo.ZHAQYS}}</span>
+    <span class="input-input detailinput">  {{abinfo.ZHAQYS_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text" title="检查项目">检查项目：</span>
@@ -944,18 +976,23 @@
             label="性别">
           </el-table-column>
           <el-table-column
-            prop="GJDQ"
+            prop="GJDQ_DESC"
             label="国家地区">
           </el-table-column>
           <el-table-column
-            prop="ZJZL"
+            prop="ZJZL_DESC"
             label="证件种类">
           </el-table-column>
           <el-table-column
             prop="ZJHM"
             label="证件号码">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'lg')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -1008,7 +1045,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">国家地区：</span>
-    <span class="input-input detailinput">  {{lginfo.GJDQ}}</span>
+    <span class="input-input detailinput">  {{lginfo.GJDQ_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">出生日期：</span>
@@ -1020,7 +1057,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">证件种类：</span>
-    <span class="input-input detailinput">  {{lginfo.ZJZL}}</span>
+    <span class="input-input detailinput">  {{lginfo.ZJZL_DESC}}</span>
   </el-col>
 
   <el-col :span="8" class="input-item">
@@ -1073,22 +1110,31 @@
             label="中文姓名">
           </el-table-column>
           <el-table-column
-            prop="XB"
+            prop="CSRQ"
+            label="出生日期">
+          </el-table-column>
+          <el-table-column
+            prop="XB_DESC"
             label="性别">
           </el-table-column>
           <el-table-column
-            prop="GJDQ"
+            prop="GJDQ_DESC"
             label="国家地区">
           </el-table-column>
           <el-table-column
-            prop="ZJZL"
+            prop="ZJZL_DESC"
             label="证件种类">
           </el-table-column>
           <el-table-column
             prop="ZJHM"
             label="证件号码">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'th')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -1139,11 +1185,11 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">性别：</span>
-            <span class="input-input detailinput">  {{thinfo.XB}}</span>
+            <span class="input-input detailinput">  {{thinfo.XB_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">国家地区：</span>
-            <span class="input-input detailinput">  {{thinfo.GJDQ}}</span>
+            <span class="input-input detailinput">  {{thinfo.GJDQ_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">出生日期：</span>
@@ -1152,7 +1198,7 @@
 
           <el-col :span="8" class="input-item">
             <span class="input-text">证件种类：</span>
-            <span class="input-input detailinput">  {{thinfo.ZJZL}}</span>
+            <span class="input-input detailinput">  {{thinfo.ZJZL_DESC}}</span>
           </el-col>
 
           <el-col :span="8" class="input-item">
@@ -1203,8 +1249,8 @@ export default {
       abshow:false,
       lgshow:false,
       thshow:false,
-      types:this.type,
-      id:this.xid,
+      // types:this.type,
+      // id:this.xid,
       pp:{},
       pd:{},
       pc:{},
@@ -1217,7 +1263,6 @@ export default {
       tableDatazf:[],
       tableDatagz:[],
       tableDatajz:[],
-      rid:this.rid,
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,
@@ -1252,99 +1297,88 @@ export default {
     }
   },
   mounted(){
-    console.log('this.rid-------',this.rid);
-    console.log('this.types-------',this.types);
-      this.initData();
+      // this.initData();
+      this.getData2()
+   },
+   activated(){
+
    },
   watch:{
       random:function(newVal,oldVal){
         this.random = newVal;
-        this.initData();
-      },
-      type: function(val){
-        this.types=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
+        // this.initData();
+        this.getData2()
       },
     },
 
   methods:{
     pageSizeChange1(val) {
-          this.gettableDatajz(this.CurrentPage1,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatajz(this.CurrentPage1,val,this.xid);
     },
     handleCurrentChange1(val) {
-      this.gettableDatajz(val,this.pageSize1,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatajz(val,this.pageSize1,this.xid);
     },
     pageSizeChange2(val) {
-      this.gettableDatagz(this.CurrentPage2,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatagz(this.CurrentPage2,val,this.xid);
     },
     handleCurrentChange2(val) {
-     this.gettableDatagz(val,this.pageSize2,this.pd);
-      console.log(`当前页: ${val}`);
+     this.gettableDatagz(val,this.pageSize2,this.xid);
     },
     pageSizeChange3(val) {
-        this.gettableDatazf(this.CurrentPage3,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatazf(this.CurrentPage3,val,this.xid);
     },
     handleCurrentChange3(val) {
-        this.gettableDatazf(val,this.pageSize3,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatazf(val,this.pageSize3,this.xid);
     },
     pageSizeChange4(val) {
-    this.gettableDataab(this.CurrentPage4,val,this.pd);
-      console.log(`每页 ${val} 条`);
+     this.gettableDataab(this.CurrentPage4,val,this.xid);
     },
     handleCurrentChange4(val) {
-      this.gettableDataab(val,this.pageSize4,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDataab(val,this.pageSize4,this.xid);
     },
     pageSizeChange5(val) {
-          this.gettableDatalg(this.CurrentPage5,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatalg(this.CurrentPage5,val,this.xid);
     },
     handleCurrentChange5(val) {
-          this.gettableDatalg(val,this.pageSize5,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatalg(val,this.pageSize5,this.xid);
     },
     pageSizeChange6(val) {
-        this.gettableDatath(this.CurrentPage6,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatath(this.CurrentPage6,val,this.xid);
     },
     handleCurrentChange6(val) {
-        this.gettableDatath(val,this.pageSize6,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatath(val,this.pageSize6,this.xid);
     },
     base() {
       this.page = 0;
     },
     base1() {
       this.page = 1;
+      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.xid);
     },
     base2() {
       this.page = 2;
+      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.xid);
     },
     base3() {
       this.page = 3;
+      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.xid);
     },
     base4() {
       this.page = 4;
+      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.xid);
     },
     base5() {
       this.page = 5;
+      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.xid);
     },
     base6() {
       this.page = 6;
     },
+    getDetails(i,type){
+
+    },
     initData(){
-      switch (this.types) {
+      switch (this.type) {
         case 1://预警
         case 2://人员画像
             this.getData2();
@@ -1353,112 +1387,119 @@ export default {
       }
     },
     getData2(){
-      this.pp.RGUID=this.id;
-      this.pd.RYBH=this.rid;
-      // let p = {
-      //   "pd": this.pp
-      // };
-      // //人员基本信息
-      //  this.$api.post(this.Global.aport3+'/ryhx/getczryjbxx', p,
-      //   r => {
-      //     if(r.data.resultList.length!=0)
-      //      {
-      //         this.czinfo=r.data.resultList[0];
-      //      }
-      // })
-      this.czinfo=this.id;
-      // this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.pd);
-      // this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.pd);
-      // this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.pd);
-      // this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pd);
-      // this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pd);
-      // this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pd);
+      this.gzshow=false;
+      this.jzshow=false;
+      this.zfshow=false;
+      this.abshow=false;
+      this.lgshow=false;
+      this.thshow=false;
+      //人员基本信息
+      this.czinfo=this.rid;
+      //居住地信息
+      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.xid);
+      //工作地信息
+      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.xid);
+      //走访信息
+      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.xid);
+      //安保信息
+      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.xid);
+      //重点列管信息
+      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.xid);
+      //同户信息
+      this.gettableDatath(this.CurrentPage6,this.pageSize6,this.xid);
     },
     // 居住地信息
-   gettableDatajz(currentPage,showCount,pd)
-   {
-     let pp = {
-       "pd": pd
-     };
-     this.$api.post(this.Global.aport3+'/ryhx/getczjzdxx', pp,
-      r => {
-            if(r.success){
-              this.tableDatajz=r.data.resultList;
-              this.TotalResult1=r.data.totalResult;
-            }
-
-    })
-
-   },
+    gettableDatajz(currentPage,showCount,pd){
+      let p = {
+        "currentPage":currentPage,
+        "showCount":showCount,
+        "pd": {RYBH:pd}
+      };
+      this.$api.post(this.Global.aport3+'/ryhx/getczjzdxx', p,
+       r => {
+         if(r.success){
+           this.tableDatajz=r.data.resultList;
+           this.TotalResult1=r.data.totalResult;
+         }
+       })
+    },
    //工作地信息
    gettableDatagz(currentPage,showCount,pd){
-     let pp = {
-       "pd": pd
+     let p = {
+       "pd": {RYBH:pd},
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
-      this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', pp,
+      this.$api.post(this.Global.aport3+'/ryhx/getczgzd', p,
        r => {
-           if(r.success){
-             this.tableDatagz=r.data.resultList;
-             this.TotalResult2=r.data.totalResult;
-            }
-     })
+         if(r.success){
+           this.tableDatagz=r.data.resultList;
+           this.TotalResult2=r.data.totalResult;
+          }
+       })
    },
    //走访信息
    gettableDatazf(currentPage,showCount,pd){
-     let pp = {
-       "pd": pd
+     let p = {
+       "pd": {RYBH:pd},
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
-
-      this.$api.post(this.Global.aport3+'/ryhx/getczzfxx', pp,
+      this.$api.post(this.Global.aport3+'/ryhx/getczzfxx', p,
        r => {
-           if(r.success){
-             this.tableDatazf=r.data.resultList;
-             this.TotalResult3=r.data.totalResult;
-            }
-      })
+         if(r.success){
+           this.tableDatazf=r.data.resultList;
+           this.TotalResult3=r.data.totalResult;
+          }
+       })
    },
 
      //安保信息
      gettableDataab(currentPage,showCount,pd){
-       let pp = {
-         "pd": pd
+       let p = {
+         "pd": {RYBH:pd},
+         "currentPage":currentPage,
+         "showCount":showCount,
        };
-        this.$api.post(this.Global.aport3+'/ryhx/getczabxx', pp,
+        this.$api.post(this.Global.aport3+'/ryhx/getczabxx', p,
          r => {
-             if(r.success){
-               this.tableDataab=r.data.resultList;
-               this.TotalResult4=r.data.totalResult;
-              }
-       })
+           if(r.success){
+             this.tableDataab=r.data.resultList;
+             this.TotalResult4=r.data.totalResult;
+            }
+         })
        },
 
       //重点列管信息
        gettableDatalg(currentPage,showCount,pd){
-         let pp = {
-           "pd": pd
+         let p = {
+           "pd": {RYBH:pd},
+           "currentPage":currentPage,
+           "showCount":showCount,
          };
-
-          this.$api.post(this.Global.aport3+'/ryhx/getczzdlgxx', pp,
+          this.$api.post(this.Global.aport3+'/ryhx/getczzdlgxx', p,
            r => {
-               if(r.success){
-                 this.tableDatalg=r.data.resultList;
-                 this.TotalResult5=r.data.totalResult;
-                }
-          })
+             if(r.success){
+               this.tableDatalg=r.data.resultList;
+               this.TotalResult5=r.data.totalResult;
+              }
+           })
          },
         //同户信息
           gettableDatath(currentPage,showCount,pd){
-            let pp = {
-              "pd": pd
+            let p = {
+              "pd": {RYBH:pd},
+              "currentPage":currentPage,
+              "showCount":showCount,
             };
-             this.$api.post(this.Global.aport3+'/ryhx/getczthrxx',pp,
+             this.$api.post(this.Global.aport3+'/ryhx/getczthrxx',p,
               r => {
-                  if(r.success){
-                    this.tableDatath=r.data.resultList;
-                    this.TotalResult6=r.data.totalResult;
-                   }
-             })
-            },
+                if(r.success){
+                  this.tableDatath=r.data.resultList;
+                  this.TotalResult6=r.data.totalResult;
+                 }
+              })
+          },
           getJZ(row,event,column)
             {
               console.log(row,event,column);

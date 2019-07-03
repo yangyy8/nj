@@ -603,7 +603,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        "orderBy":"CRJSJ",
+        "orderBy":{value:"IOSTRING",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_CRJJLBController/getResultListByParams', pp,
@@ -618,7 +618,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        "orderBy":"CJSJ",
+        "orderBy":{value:"CJSJ",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_JCJ_SJXXController/getResultListByParams', pp,

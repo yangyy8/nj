@@ -1341,7 +1341,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        "orderBy":"CRJSJ",
+        "orderBy":{value:"IOSTRING",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_CRJJLBController/getResultListByParams', p,
@@ -1377,7 +1377,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd":px,
-        "orderBy":"CJSJ",
+        "orderBy":{value:"CJSJ",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_FFJL_GroupController/getResultListByParams', p,
@@ -1392,7 +1392,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd":px,
-        "orderBy":"CJSJ",
+        "orderBy":{value:"CJSJ",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_KZ_CZWGMTJZController/getResultListByParams', p,

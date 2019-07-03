@@ -90,7 +90,7 @@
   top:50%;
   background-color: rgba(40,99,165, 0.8);
   border-radius: 6px;
-  width: 100px;
+  width: 117px;
   z-index: 999;
 }
 .meunSlid ul{
@@ -99,19 +99,18 @@
 .meunSlid ul li{
   margin: 12px 0px;
   text-align: center;
-}
-.meunSlid ul li a{
   color: #fff;
   font-size: 14px;
 }
 .switch{
   position: relative;
-  top: -146px;
+  top: -152px;
+  padding: 3px;
 }
 .switchhide{
-
+  padding: 2px;
 }
-.meunSlid .el-icon-caret-right,.meunSlidhide .el-icon-caret-left{
+.meunSlid .el-icon-d-arrow-right,.meunSlidhide .el-icon-d-arrow-left{
   color: #fff;
 }
 .meunSlidhide{

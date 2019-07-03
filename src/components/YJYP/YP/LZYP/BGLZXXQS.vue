@@ -124,7 +124,7 @@
 
     <div class="yycontent">
       <div class="ak-tabs">
-        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0">
+        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0;getList()">
           图表
         </div>
         <div class="ak-tab-item hand" :class="{'ak-checked':page==1}" @click="page=1">
