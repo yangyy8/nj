@@ -50,7 +50,9 @@ const sjly="/service/getRedisDataByDm?tablename=DM_SJLY";//数据来源
 const rzfs="/service/getRedisDataByDm?tablename=DM_RZFS";//入住方式(地图用的)
 const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地图用的）
 const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态类型（地图用的）
-const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//学校代码
+const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
+const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
+
 const tablists=[];
 export default
 {
@@ -67,5 +69,5 @@ export default
   aport4,//李文龙
   aport5,//李文龙
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm
 }

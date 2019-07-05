@@ -43,6 +43,7 @@ var store = new Vuex.Store({
     zflx:[],
     jzztlx:[],
     xxdm:[],
+    erxxdm:[],
   },
   mutations: {
     getToken(state, data) {
@@ -153,6 +154,9 @@ var store = new Vuex.Store({
     },
     getXxdm(state,data){
       state.xxdm=data;
+    },
+    geterXxdm(state,data){
+      state.erxxdm=data;
     }
   },
   actions: {
@@ -320,6 +324,12 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.xxdm, null,
         r => {
           context.commit('getXxdm', ToArray(r.data))
+        })
+    },
+    geterXxdm(context){
+      api.get(global_.aport1 + global_.erxxdm, null,
+        r => {
+          context.commit('geterXxdm', ToArray(r.data))
         })
     },
   }

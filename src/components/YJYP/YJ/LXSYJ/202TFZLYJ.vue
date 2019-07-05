@@ -26,7 +26,7 @@
                     <span class="input-text">学校代码：</span>
                     <el-select v-model="pd.DWID" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.xxdm"
+                        v-for="item in $store.state.erxxdm"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
@@ -200,6 +200,7 @@ import echarts from 'echarts'
     }
   },
   mounted(){
+    this.$store.dispatch("geterXxdm");
     this.getListTu(this.pd);
   },
   methods:{

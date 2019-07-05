@@ -686,7 +686,7 @@
      </div>
    </el-dialog>
    <el-dialog title="案事件信息详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <ANSJ :type="type" :xid="xid" :dtid="dtid"></ANSJ>
+     <ANSJ :type="type" :xid="xid" :dtid="dtid" :random="(new Date()).getTime()"></ANSJ>
      <div slot="footer" class="dialog-footer">
        <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
      </div>

@@ -24,645 +24,645 @@
           </div>
           <div class="ak-tab-pane" >
               <div v-show="page==0">
-                        <el-form   ref="aForm1">
-                          <el-row :gutter="3"  class="mb-6">
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text">人员编号：</span>
-                               <span class="input-input detailinput">  {{aForm1.RYBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="航信案事件编号">航信案事件编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.HXASJBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="案事件编号">案事件编号：</span>
-                               <span class="input-input detailinput">  {{aForm1.ASJBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="警综案件编号">警综案件编号：</span>
-                               <span class="input-input detailinput">  {{aForm1.JZAJBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件密级：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJMJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件类别：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJLB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件副案别">案件副案别：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJFAB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件可防性案件类别">案件可防性案件类别：</span>
-                                <span class="input-input detailinput">  {{aForm1.KFXAJLB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件侵害关系">案件侵害关系：</span>
-                                <span class="input-input detailinput">  {{aForm1.QHGX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="被侵害对象类别">被侵害对象类别：</span>
-                                <span class="input-input detailinput">  {{aForm1.BQHDXLB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件属性：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJSX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件状态：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJZT}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件性质：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJXZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案事件类型">案事件类型：</span>
-                                <span class="input-input detailinput">  {{aForm1.ASJLX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">案件来源：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJLY}}</span>
-                              </el-col>
+                <el-form   ref="aForm1">
+                  <el-row :gutter="3"  class="mb-6">
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text">人员编号：</span>
+                       <span class="input-input detailinput">  {{aForm1.RYBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="航信案事件编号">航信案事件编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.HXASJBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="案事件编号">案事件编号：</span>
+                       <span class="input-input detailinput">  {{aForm1.ASJBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="警综案件编号">警综案件编号：</span>
+                       <span class="input-input detailinput">  {{aForm1.JZAJBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件密级：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJMJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件类别：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJLB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件副案别">案件副案别：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJFAB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件可防性案件类别">案件可防性案件类别：</span>
+                        <span class="input-input detailinput">  {{aForm1.KFXAJLB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件侵害关系">案件侵害关系：</span>
+                        <span class="input-input detailinput">  {{aForm1.QHGX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="被侵害对象类别">被侵害对象类别：</span>
+                        <span class="input-input detailinput">  {{aForm1.BQHDXLB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件属性：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJSX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件状态：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJZT}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件性质：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJXZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案事件类型">案事件类型：</span>
+                        <span class="input-input detailinput">  {{aForm1.ASJLX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">案件来源：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJLY}}</span>
+                      </el-col>
 
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="报案人姓名">报案人姓名：</span>
-                               <span class="input-input detailinput">  {{aForm1.BARXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人性别">报案人性别：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARXB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="报案人出生日期">报案人出生日期：</span>
-                               <span class="input-input detailinput">  {{aForm1.BARCSRQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="报案人单位">报案人单位：</span>
-                               <span class="input-input detailinput">  {{aForm1.BARDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人联系方式">报案人联系方式：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARLXFS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人住址">报案人住址：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARZZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人证件种类">报案人证件种类：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARZJZL}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人证件号码">报案人证件号码：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARZJHM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人保密级别">报案人保密级别：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARBMJB}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">报案时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.BASJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">发现时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.FXSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="发案时间上限">发案时间上限：</span>
-                                <span class="input-input detailinput">  {{aForm1.FASJSX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="发案时间下限">发案时间下限：</span>
-                                <span class="input-input detailinput">  {{aForm1.FASJXX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="省市县区">省市县区：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJSSXQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="街路巷">街路巷：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJJLX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="门楼牌号">门楼牌号：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJMLPH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="门牌后缀">门牌后缀：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJMPHZ}}</span>
-                              </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="报案人姓名">报案人姓名：</span>
+                       <span class="input-input detailinput">  {{aForm1.BARXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人性别">报案人性别：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARXB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="报案人出生日期">报案人出生日期：</span>
+                       <span class="input-input detailinput">  {{aForm1.BARCSRQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="报案人单位">报案人单位：</span>
+                       <span class="input-input detailinput">  {{aForm1.BARDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人联系方式">报案人联系方式：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARLXFS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人住址">报案人住址：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARZZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人证件种类">报案人证件种类：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARZJZL}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人证件号码">报案人证件号码：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARZJHM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人保密级别">报案人保密级别：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARBMJB}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">报案时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.BASJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">发现时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.FXSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="发案时间上限">发案时间上限：</span>
+                        <span class="input-input detailinput">  {{aForm1.FASJSX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="发案时间下限">发案时间下限：</span>
+                        <span class="input-input detailinput">  {{aForm1.FASJXX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="省市县区">省市县区：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJSSXQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="街路巷">街路巷：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJJLX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="门楼牌号">门楼牌号：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJMLPH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="门牌后缀">门牌后缀：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJMPHZ}}</span>
+                      </el-col>
 
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="门楼详址">门楼详址：</span>
-                               <span class="input-input detailinput">  {{aForm1.AJMLXZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件详细地址名称">案件详细地址名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJDZMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="案件所属责任区">案件所属责任区：</span>
-                               <span class="input-input detailinput">  {{aForm1.AJSSZRQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="案件所属责任区名称">案件所属责任区名称：</span>
-                               <span class="input-input detailinput">  {{aForm1.AJSSZRQMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="发案地域">发案地域：</span>
-                                <span class="input-input detailinput">  {{aForm1.FADY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">发案处所：</span>
-                                <span class="input-input detailinput">  {{aForm1.FACS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">发案部位：</span>
-                                <span class="input-input detailinput">  {{aForm1.FABW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">受理时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">受理人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">受理单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">受理单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">受理方式：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLFS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">简要案情：</span>
-                                <span class="input-input detailinput">  {{aForm1.JYAQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="对外说辞">对外说辞：</span>
-                                <span class="input-input detailinput">  {{aForm1.DWSC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="主办单位">主办单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZBDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="主办单位名称">主办单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZBDWMC}}</span>
-                              </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="门楼详址">门楼详址：</span>
+                       <span class="input-input detailinput">  {{aForm1.AJMLXZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件详细地址名称">案件详细地址名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJDZMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="案件所属责任区">案件所属责任区：</span>
+                       <span class="input-input detailinput">  {{aForm1.AJSSZRQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="案件所属责任区名称">案件所属责任区名称：</span>
+                       <span class="input-input detailinput">  {{aForm1.AJSSZRQMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="发案地域">发案地域：</span>
+                        <span class="input-input detailinput">  {{aForm1.FADY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">发案处所：</span>
+                        <span class="input-input detailinput">  {{aForm1.FACS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">发案部位：</span>
+                        <span class="input-input detailinput">  {{aForm1.FABW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">受理时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">受理人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">受理单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">受理单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">受理方式：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLFS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">简要案情：</span>
+                        <span class="input-input detailinput">  {{aForm1.JYAQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="对外说辞">对外说辞：</span>
+                        <span class="input-input detailinput">  {{aForm1.DWSC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="主办单位">主办单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZBDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="主办单位名称">主办单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZBDWMC}}</span>
+                      </el-col>
 
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="主办单位警种">主办单位警种：</span>
-                               <span class="input-input detailinput">  {{aForm1.ZBDWJZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件协办单位">案件协办单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.XBDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="直属办案单位">直属办案单位：</span>
-                               <span class="input-input detailinput">  {{aForm1.ZSBADW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                               <span class="input-text" title="直属办案单位名称">直属办案单位名称：</span>
-                               <span class="input-input detailinput">  {{aForm1.ZSBADWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案发地管辖机关联系人">案发地管辖机关联系人：</span>
-                                <span class="input-input detailinput">  {{aForm1.AFDGXJGLXR}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案发地管辖机关联系电话">案发地管辖机关联系电话：</span>
-                                <span class="input-input detailinput">  {{aForm1.AFDGXJGLXDH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="主办人姓名">主办人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZBRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="协办人姓名">协办人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.XBRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="立案单位">立案单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.LADW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="立案单位名称">立案单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.LADWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">立案时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.LASJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="立案批准人姓名">立案批准人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.LAPZRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="专案标记">专案标记：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZABJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="补立原因">补立原因：</span>
-                                <span class="input-input detailinput">  {{aForm1.BLYY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="危害程度">危害程度：</span>
-                                <span class="input-input detailinput">  {{aForm1.WHCD}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="督办级别">督办级别：</span>
-                                <span class="input-input detailinput">  {{aForm1.DBJB}}</span>
-                              </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="主办单位警种">主办单位警种：</span>
+                       <span class="input-input detailinput">  {{aForm1.ZBDWJZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件协办单位">案件协办单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.XBDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="直属办案单位">直属办案单位：</span>
+                       <span class="input-input detailinput">  {{aForm1.ZSBADW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                       <span class="input-text" title="直属办案单位名称">直属办案单位名称：</span>
+                       <span class="input-input detailinput">  {{aForm1.ZSBADWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案发地管辖机关联系人">案发地管辖机关联系人：</span>
+                        <span class="input-input detailinput">  {{aForm1.AFDGXJGLXR}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案发地管辖机关联系电话">案发地管辖机关联系电话：</span>
+                        <span class="input-input detailinput">  {{aForm1.AFDGXJGLXDH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="主办人姓名">主办人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZBRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="协办人姓名">协办人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.XBRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="立案单位">立案单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.LADW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="立案单位名称">立案单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.LADWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">立案时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.LASJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="立案批准人姓名">立案批准人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.LAPZRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="专案标记">专案标记：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZABJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="补立原因">补立原因：</span>
+                        <span class="input-input detailinput">  {{aForm1.BLYY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="危害程度">危害程度：</span>
+                        <span class="input-input detailinput">  {{aForm1.WHCD}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="督办级别">督办级别：</span>
+                        <span class="input-input detailinput">  {{aForm1.DBJB}}</span>
+                      </el-col>
 
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text">督办编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.DBBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="管辖分工">管辖分工：</span>
-                                <span class="input-input detailinput">  {{aForm1.GXFG}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="犯罪主体类型">犯罪主体类型：</span>
-                                <span class="input-input detailinput">  {{aForm1.FZZTLX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案日期">破案日期：</span>
-                                <span class="input-input detailinput"> {{aForm1.PARQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案方式">破案方式：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAFS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案类型">破案类型：</span>
-                                <span class="input-input detailinput">  {{aForm1.PALX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >破案单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.PADW}}</span>
-                              </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text">督办编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.DBBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="管辖分工">管辖分工：</span>
+                        <span class="input-input detailinput">  {{aForm1.GXFG}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="犯罪主体类型">犯罪主体类型：</span>
+                        <span class="input-input detailinput">  {{aForm1.FZZTLX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案日期">破案日期：</span>
+                        <span class="input-input detailinput"> {{aForm1.PARQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案方式">破案方式：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAFS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案类型">破案类型：</span>
+                        <span class="input-input detailinput">  {{aForm1.PALX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >破案单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.PADW}}</span>
+                      </el-col>
 
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案单位名称">破案单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.PADWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >协破单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.XPDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >破案简况：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAJK}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >案情综述：</span>
-                                <span class="input-input detailinput">  {{aForm1.AQZS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >结案日期：</span>
-                                <span class="input-input detailinput">  {{aForm1.JARQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >撤销日期：</span>
-                                <span class="input-input detailinput">  {{aForm1.CXRQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >撤销原因：</span>
-                                <span class="input-input detailinput">  {{aForm1.CXYY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >归档状态：</span>
-                                <span class="input-input detailinput">  {{aForm1.GDZT}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >归档时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.GDSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >接收单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.JSDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >移送时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >移送单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >移送人：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSR}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="移送单位联系电话">移送单位联系电话：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSDWLXDH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >移送原因：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSYY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >涉案总价值：</span>
-                                <span class="input-input detailinput">  {{aForm1.SAZJZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" >经济损失：</span>
-                                <span class="input-input detailinput">  {{aForm1.JJSS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="挽回总价值">挽回总价值：</span>
-                                <span class="input-input detailinput">  {{aForm1.WHZJZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="缴获总价值">缴获总价值：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAZJZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="作案人数">作案人数：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZARS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="解救儿童数">解救儿童数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJJJETS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="解救妇女数">解救妇女数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJJJFNS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="解救人质数">解救人质数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJJJRZS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="人员受伤数">人员受伤数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJRYSSS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="人员死亡数">人员死亡数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJRYSWS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="是否有现场">是否有现场：</span>
-                                <span class="input-input detailinput">  {{aForm1.SFYXC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="是否勘查现场">是否勘查现场：</span>
-                                <span class="input-input detailinput">  {{aForm1.SFKCXC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="分局串案编号">分局串案编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.FJCABH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="市局串案编号">市局串案编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.SJCABH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="线索编号">线索编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.XSBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="转案件编号">转案件编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZAJBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="登记时间">登记时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.DJSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="登记人">登记人：</span>
-                                <span class="input-input detailinput">  {{aForm1.DJRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="登记单位">登记单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.DJDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="登记单位名称">登记单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.DJDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="修改时间">修改时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.XGSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="修改人姓名">修改人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.XGRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="修改单位">修改单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.XGDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="修改单位名称">修改单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.XGDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="接收时间">接收时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.JSSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="分类案件编号">分类案件编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.FLAJBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="省厅串案编号">省厅串案编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.STCABH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="撤销单位">撤销单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.CXDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="撤销单位名称">撤销单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.CXDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="撤销批准人姓名">撤销批准人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.CXPZRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案批准时间">破案批准时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAPZSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案批准人">破案批准人：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAPZR}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案批准单位">破案批准单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.PAPZDW}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="受理单位联系电话">受理单位联系电话：</span>
-                                <span class="input-input detailinput">  {{aForm1.SLDWDH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="主办人电话">主办人电话：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZBRDH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="其他受害人数">其他受害人数：</span>
-                                <span class="input-input detailinput">  {{aForm1.AJQTSHRS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="接收单位名称">接收单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.JSDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="移送单位名称">移送单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="移送人姓名">移送人姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="接收姓名">接收姓名：</span>
-                                <span class="input-input detailinput">  {{aForm1.JSRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件移送接收单位联系电话">案件移送接收单位联系电话：</span>
-                                <span class="input-input detailinput">  {{aForm1.YSJSDWLXDH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="直属分局案件－是否">直属分局案件－是否：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZSAJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="关联编号">关联编号：</span>
-                                <span class="input-input detailinput">  {{aForm1.GLBH}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="外部接收单位">外部接收单位：</span>
-                                <span class="input-input detailinput">  {{aForm1.WBJSDWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="外部接收人">外部接收人：</span>
-                                <span class="input-input detailinput">  {{aForm1.WBJSRXM}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="发案时间段">发案时间段：</span>
-                                <span class="input-input detailinput">  {{aForm1.FASJD}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="涉及国家地区">涉及国家地区：</span>
-                                <span class="input-input detailinput">  {{aForm1.SJGJDQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件内外勾结">案件内外勾结：</span>
-                                <span class="input-input detailinput">  {{aForm1.NWGJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="内外勾结对象">内外勾结对象：</span>
-                                <span class="input-input detailinput">  {{aForm1.NWGJDX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="立案审查到期时间">立案审查到期时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.SCDQSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="审查时间">审查时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.SCSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="经侦案件属性">经侦案件属性：</span>
-                                <span class="input-input detailinput">  {{aForm1.JZAJSX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件报案单位名称">案件报案单位名称：</span>
-                                <span class="input-input detailinput">  {{aForm1.BADWMC}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件报案单位地址">案件报案单位地址：</span>
-                                <span class="input-input detailinput">  {{aForm1.BADWDZ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件报案单位联系人">案件报案单位联系人：</span>
-                                <span class="input-input detailinput">  {{aForm1.BADWLXR}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案件报案单位联系方式">案件报案单位联系方式：</span>
-                                <span class="input-input detailinput">  {{aForm1.BADWLXFS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="破案时间段">破案时间段：</span>
-                                <span class="input-input detailinput">  {{aForm1.PASJD}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="大要案标识">大要案标识：</span>
-                                <span class="input-input detailinput">  {{aForm1.DYABS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="典型案例标识">典型案例标识：</span>
-                                <span class="input-input detailinput">  {{aForm1.DXALBS}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="结案报告的文件类型">结案报告的文件类型：</span>
-                                <span class="input-input detailinput">  {{aForm1.JABGDWJLX}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="结案报告的文件内容">结案报告的文件内容：</span>
-                                <span class="input-input detailinput">  {{aForm1.JABGDWJNR}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="更新时间">更新时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.GXSJ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="数据来源">数据来源：</span>
-                                <span class="input-input detailinput">  {{aForm1.SJLY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="数据状态">数据状态：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZT}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="注销原因">注销原因：</span>
-                                <span class="input-input detailinput">  {{aForm1.ZXYY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="恢复原因">恢复原因：</span>
-                                <span class="input-input detailinput">  {{aForm1.HFYY}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="案事件种类">案事件种类：</span>
-                                <span class="input-input detailinput">  {{aForm1.ASJZL=="01"?"案件":aForm1.ASJZL=="04"?"事件":""}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="是否单位案事件">是否单位案事件：</span>
-                                <span class="input-input detailinput">  {{aForm1.SFDWASJ=="0"?"人员":aForm1.SFDWASJ=="0"?"企业单位":""}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="报案人国家地区">报案人国家地区：</span>
-                                <span class="input-input detailinput">  {{aForm1.BARGJDQ}}</span>
-                              </el-col>
-                              <el-col :span="8" class="input-item">
-                                <span class="input-text" title="入库时间">入库时间：</span>
-                                <span class="input-input detailinput">  {{aForm1.RKSJ}}</span>
-                              </el-col>
-                          </el-row>
-                        </el-form>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案单位名称">破案单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.PADWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >协破单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.XPDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >破案简况：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAJK}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >案情综述：</span>
+                        <span class="input-input detailinput">  {{aForm1.AQZS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >结案日期：</span>
+                        <span class="input-input detailinput">  {{aForm1.JARQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >撤销日期：</span>
+                        <span class="input-input detailinput">  {{aForm1.CXRQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >撤销原因：</span>
+                        <span class="input-input detailinput">  {{aForm1.CXYY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >归档状态：</span>
+                        <span class="input-input detailinput">  {{aForm1.GDZT}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >归档时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.GDSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >接收单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.JSDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >移送时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >移送单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >移送人：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSR}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="移送单位联系电话">移送单位联系电话：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSDWLXDH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >移送原因：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSYY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >涉案总价值：</span>
+                        <span class="input-input detailinput">  {{aForm1.SAZJZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" >经济损失：</span>
+                        <span class="input-input detailinput">  {{aForm1.JJSS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="挽回总价值">挽回总价值：</span>
+                        <span class="input-input detailinput">  {{aForm1.WHZJZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="缴获总价值">缴获总价值：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAZJZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="作案人数">作案人数：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZARS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="解救儿童数">解救儿童数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJJJETS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="解救妇女数">解救妇女数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJJJFNS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="解救人质数">解救人质数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJJJRZS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="人员受伤数">人员受伤数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJRYSSS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="人员死亡数">人员死亡数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJRYSWS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="是否有现场">是否有现场：</span>
+                        <span class="input-input detailinput">  {{aForm1.SFYXC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="是否勘查现场">是否勘查现场：</span>
+                        <span class="input-input detailinput">  {{aForm1.SFKCXC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="分局串案编号">分局串案编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.FJCABH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="市局串案编号">市局串案编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.SJCABH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="线索编号">线索编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.XSBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="转案件编号">转案件编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZAJBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="登记时间">登记时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.DJSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="登记人">登记人：</span>
+                        <span class="input-input detailinput">  {{aForm1.DJRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="登记单位">登记单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.DJDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="登记单位名称">登记单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.DJDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="修改时间">修改时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.XGSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="修改人姓名">修改人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.XGRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="修改单位">修改单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.XGDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="修改单位名称">修改单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.XGDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="接收时间">接收时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.JSSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="分类案件编号">分类案件编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.FLAJBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="省厅串案编号">省厅串案编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.STCABH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="撤销单位">撤销单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.CXDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="撤销单位名称">撤销单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.CXDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="撤销批准人姓名">撤销批准人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.CXPZRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案批准时间">破案批准时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAPZSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案批准人">破案批准人：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAPZR}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案批准单位">破案批准单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.PAPZDW}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="受理单位联系电话">受理单位联系电话：</span>
+                        <span class="input-input detailinput">  {{aForm1.SLDWDH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="主办人电话">主办人电话：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZBRDH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="其他受害人数">其他受害人数：</span>
+                        <span class="input-input detailinput">  {{aForm1.AJQTSHRS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="接收单位名称">接收单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.JSDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="移送单位名称">移送单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="移送人姓名">移送人姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="接收姓名">接收姓名：</span>
+                        <span class="input-input detailinput">  {{aForm1.JSRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件移送接收单位联系电话">案件移送接收单位联系电话：</span>
+                        <span class="input-input detailinput">  {{aForm1.YSJSDWLXDH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="直属分局案件－是否">直属分局案件－是否：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZSAJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="关联编号">关联编号：</span>
+                        <span class="input-input detailinput">  {{aForm1.GLBH}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="外部接收单位">外部接收单位：</span>
+                        <span class="input-input detailinput">  {{aForm1.WBJSDWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="外部接收人">外部接收人：</span>
+                        <span class="input-input detailinput">  {{aForm1.WBJSRXM}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="发案时间段">发案时间段：</span>
+                        <span class="input-input detailinput">  {{aForm1.FASJD}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="涉及国家地区">涉及国家地区：</span>
+                        <span class="input-input detailinput">  {{aForm1.SJGJDQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件内外勾结">案件内外勾结：</span>
+                        <span class="input-input detailinput">  {{aForm1.NWGJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="内外勾结对象">内外勾结对象：</span>
+                        <span class="input-input detailinput">  {{aForm1.NWGJDX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="立案审查到期时间">立案审查到期时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.SCDQSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="审查时间">审查时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.SCSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="经侦案件属性">经侦案件属性：</span>
+                        <span class="input-input detailinput">  {{aForm1.JZAJSX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件报案单位名称">案件报案单位名称：</span>
+                        <span class="input-input detailinput">  {{aForm1.BADWMC}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件报案单位地址">案件报案单位地址：</span>
+                        <span class="input-input detailinput">  {{aForm1.BADWDZ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件报案单位联系人">案件报案单位联系人：</span>
+                        <span class="input-input detailinput">  {{aForm1.BADWLXR}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案件报案单位联系方式">案件报案单位联系方式：</span>
+                        <span class="input-input detailinput">  {{aForm1.BADWLXFS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="破案时间段">破案时间段：</span>
+                        <span class="input-input detailinput">  {{aForm1.PASJD}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="大要案标识">大要案标识：</span>
+                        <span class="input-input detailinput">  {{aForm1.DYABS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="典型案例标识">典型案例标识：</span>
+                        <span class="input-input detailinput">  {{aForm1.DXALBS}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="结案报告的文件类型">结案报告的文件类型：</span>
+                        <span class="input-input detailinput">  {{aForm1.JABGDWJLX}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="结案报告的文件内容">结案报告的文件内容：</span>
+                        <span class="input-input detailinput">  {{aForm1.JABGDWJNR}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="更新时间">更新时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.GXSJ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="数据来源">数据来源：</span>
+                        <span class="input-input detailinput">  {{aForm1.SJLY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="数据状态">数据状态：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZT}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="注销原因">注销原因：</span>
+                        <span class="input-input detailinput">  {{aForm1.ZXYY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="恢复原因">恢复原因：</span>
+                        <span class="input-input detailinput">  {{aForm1.HFYY}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="案事件种类">案事件种类：</span>
+                        <span class="input-input detailinput">  {{aForm1.ASJZL=="01"?"案件":aForm1.ASJZL=="04"?"事件":""}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="是否单位案事件">是否单位案事件：</span>
+                        <span class="input-input detailinput">  {{aForm1.SFDWASJ=="0"?"人员":aForm1.SFDWASJ=="0"?"企业单位":""}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="报案人国家地区">报案人国家地区：</span>
+                        <span class="input-input detailinput">  {{aForm1.BARGJDQ}}</span>
+                      </el-col>
+                      <el-col :span="8" class="input-item">
+                        <span class="input-text" title="入库时间">入库时间：</span>
+                        <span class="input-input detailinput">  {{aForm1.RKSJ}}</span>
+                      </el-col>
+                  </el-row>
+                </el-form>
 
-              </div>
+             </div>
 
               <div v-show="page==1">
                 <el-table
@@ -1334,7 +1334,7 @@
 <script scoped>
 export default {
   name: 'ANSJ',
-  props: ['type', 'xid','dtid'],
+  props: ['type', 'xid','dtid','random'],
   data() {
     return {
       page: 0,
@@ -1359,22 +1359,26 @@ export default {
 
   },
   watch: {
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.getData(this.id);
+    },
     type: function(val) {
       this.pages = val;
     },
-    xid: {
-      handler(val) {
-        this.id = val;
-        this.getData(val);
-      },
-      immediate: true
-    },
-    dtid: {
-      handler(val) {
-        this.did = val;
-      },
-      immediate: true
-    },
+    // xid: {
+    //   handler(val) {
+    //     this.id = val;
+    //     this.getData(val);
+    //   },
+    //   immediate: true
+    // },
+    // dtid: {
+    //   handler(val) {
+    //     this.did = val;
+    //   },
+    //   immediate: true
+    // },
   },
   methods: {
     base() {
@@ -1409,10 +1413,7 @@ export default {
       };
 
       //人员基本信息
-      this.$api.post(this.Global.aport4 + '/eS_AJ_JBXXController/getEntityByRGUID', pp,
-        r => {
-          this.aForm1 = r.data;
-        })
+      this.getData1();
       //涉案人员基本信息
       this.$api.post(this.Global.aport4 + '/eS_AJ_RY_JBXXController/getResultListByParams', p,
         r => {
@@ -1439,6 +1440,16 @@ export default {
             this.aForm6 = r.data;
           })
 
+    },
+
+    getData1(){
+      let p={
+        "pd":{RGUID:this.id}
+      }
+      this.$api.post(this.Global.aport4 + '/eS_AJ_JBXXController/getEntityByRGUID', p,
+        r => {
+          this.aForm1 = r.data;
+        })
     },
 
   },
