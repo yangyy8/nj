@@ -1077,7 +1077,6 @@ export default {
     this.crjDialogVisible=false;
     this.row=this.$route.query.row;
     console.log('===============');
-    console.log(this.row);
     this.pc={};
     this.qdshow=true;
     if(this.row!=undefined && this.row.CLZT=='0'){

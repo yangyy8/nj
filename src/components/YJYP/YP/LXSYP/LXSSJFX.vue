@@ -123,8 +123,15 @@
                  style="width: 100%"
                  >
                  <el-table-column
-                   prop="zp"
                    label="照片">
+                   <template slot-scope="scope">
+                     <div v-if="scope.row.zp">
+                    <el-popover placement="right" title="" trigger="hover">
+                      <img :src="scope.row.zp" style="max-width:200px; max-height:250px;"/>
+                      <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                    </el-popover>
+                    </div>
+                   </template>
                  </el-table-column>
                  <el-table-column
                    prop="sf"
@@ -157,6 +164,9 @@
                  <el-table-column
                    prop="zjhm"
                    label="证件号码">
+                   <template slot-scope="scope">
+                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                   </template>
                  </el-table-column>
              </el-table>
              <div class="middle-foot mt-10">
@@ -222,7 +232,7 @@ export default {
     // this.$store.dispatch('getRzfs');
     this.$store.dispatch('getZflx');
     this.$store.dispatch('getJzztlx');
-    this.getGX();
+    //this.getGX();
     this.getSsfj();
     this.$nextTick(()=>{
         createMapL();
@@ -254,7 +264,7 @@ export default {
     getGX(){
       this.$api.get(this.Global.aport1+'/servicemap/getUniversity',null,
          r=>{
-           console.log(r.data);
+
           this.xxmc=r.data;
          });
     },
@@ -270,7 +280,7 @@ export default {
       })
     },
     doSearch() {
-      console.log(this.pd.ssfj);
+
       if(this.pd.ssfj==undefined || this.pd.ssfj=="")
       {
          this.$message.error("请选择所属分局！");return;
@@ -356,7 +366,7 @@ export default {
 
        this.TotalResult=JSON.parse(dtids).length;
       for (var k = this.num; k < this.num+1; k++) {
-       console.log(JSON.stringify(this.result[k]));
+       // console.log(JSON.stringify(this.result[k]));
        let p={
          "DTIDS":JSON.stringify(this.result[k]),
        };
@@ -372,7 +382,18 @@ export default {
        }
 
        this.bzhDialogVisible=true;
-    }
+    },
+    //后期匹配地址
+    getXY(dz,callback){
+
+      let p={
+        "dz":dz,
+      };
+      this.$api.get(this.Global.xyaddress, p,
+        r => {
+        callback(r.result)
+        });
+    },
   },
 }
 </script>

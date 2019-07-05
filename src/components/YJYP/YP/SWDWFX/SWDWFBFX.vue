@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 涉外单位分布分析 -->
-      <div class="yymain ">
+      <div class="yymain swdw">
         <!-- 地图 -->
 
         <div id="mainMap" class="mapbj"></div>
@@ -135,7 +135,8 @@
 </template>
 
 <script scoped>
-import {createMapL,queryZrqByServer} from '@/assets/js/SuperMap/swdwmap.js'
+import {createMapL,getSearh} from '@/assets/js/SuperMap/swdwmap.js'
+let vmswdm;
 export default {
   data(){
     return{
@@ -144,16 +145,18 @@ export default {
        show: true,
        detailsDialogVisible:false,
        form:{},
+       swdata:'11',
+       tableData:[],
     }
   },
   mounted() {
+    window.vmswdm=this;
     this.$store.dispatch('getDwlb');
     this.$store.dispatch('getDwxz');
-    this.$nextTick(()=>{
-      //this.createMapL();
+
         createMapL();
 
-    })
+
   },
   methods:{
     changtab(){
@@ -165,24 +168,42 @@ export default {
 
     doSearch() {
 
-      var dwxz = $("#query_dwxz").val();
-      var jwrs = $("#query_jwrs").val();
+      // var dwxz = $("#query_dwxz").val();
+      // var jwrs = $("#query_jwrs").val();
+      //
+      // //ES； http://10.33.69.24:9200/es_lz_lzxx/doc
+   //    var searchResult = [
+   //      { dm: '320115560103', mc: '禄口派出所南片责任区', num: 111},
+   //      { dm: '320115730102', mc: '江宁派出所司新责任区', num: 111},
+   //      { dm: '320115610101', mc: '百家湖派出所钱庄责任区', num: 111},
+   //      { dm: '320115690101', mc: '东善桥派出所祖堂责任区', num: 111},
+   //      { dm: '320115600101', mc: '岔路派出所岔路责任区', num: 111},
+   //      { dm: '320115570101', mc: '秣陵派出所双金责任区', num: 111},
+   //      { dm: '320115590102', mc: '高新园派出所共和责任区', num: 111}
+   //      ];
+   //
+   // for (var i = 0; i < searchResult.length; i++) {
+   //   console.log(searchResult[i].mc+"        "+searchResult[i].num);
+   // }
+   //      return ;
+      //
+      // for (var i = 0; i < searchResult.length; i++) {
+      //      queryZrqByServer(searchResult[i]);
+      // }
 
-      //ES； http://10.33.69.24:9200/es_lz_lzxx/doc
-      var searchResult = [
-        { dm: '320115560103', mc: '禄口派出所南片责任区', num: 111},
-        { dm: '320115730102', mc: '江宁派出所司新责任区', num: 111},
-        { dm: '320115610101', mc: '百家湖派出所钱庄责任区', num: 111},
-        { dm: '320115690101', mc: '东善桥派出所祖堂责任区', num: 111},
-        { dm: '320115600101', mc: '岔路派出所岔路责任区', num: 111},
-        { dm: '320115570101', mc: '秣陵派出所双金责任区', num: 111},
-        { dm: '320115590102', mc: '高新园派出所共和责任区', num: 111}
-        ];
-
-      for (var i = 0; i < searchResult.length; i++) {
-           queryZrqByServer(searchResult[i]);
-      }
+      getSearh();
   	},
+    //后期匹配地址
+    getXY(dz,callback){
+
+      let p={
+        "dz":dz,
+      };
+      this.$api.get(this.Global.xyaddress, p,
+        r => {
+        callback(r.result)
+        });
+    },
 }
 
 }
@@ -190,16 +211,6 @@ export default {
 
 <style scoped>
 .yy-input-text{text-align: left!important;}
-.my-div-icon {
-         background: red;
-        border-radius: 50%;
-        /*width: 50 !important;
-        height: 50px !important;*/
-        line-height:50px;
-        text-align: center;
-        vertical-align: middle;
-        font-weight:border;
-    }
 
 
 .leftpanel {
@@ -267,5 +278,17 @@ export default {
 }
 </style>
 <style>
-.mapbj .leaflet-div-icon{border-radius: 50%; border: 0!important;font-weight:border; color: #ffffff;background-color: rgba(0, 167, 91, 0.8);}
+.swdw .my-div-icon {
+         background: red;
+         border-radius: 50%;
+         width: 40px !important;
+        height: 40px !important;
+        background: red;
+        line-height:40px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight:border; color: #ffffff;
+        border: 2px #ffffff solid;
+    }
+
 </style>

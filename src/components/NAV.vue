@@ -51,7 +51,7 @@ export default {
       }
     },
     $route:function(val){
-      console.log("route:",val)
+      // console.log("route:",val)
       this.menuPath=val.name
     }
   },

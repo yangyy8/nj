@@ -4,6 +4,7 @@ const hasEnter=false;
 const org="";
 const xsd=80;
 const type=0;
+const indexstate=0;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="/api-reporter";//大师网关
 // const aport="http://50.32.166.56:9420/";//大师
@@ -22,9 +23,9 @@ const aport4="api-yujing";//李文龙 预警
 
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
-
-const dmall="/data_report/selectDmList" //加载全部代码
-const ssdw="/org/getSelfAndChilds"//所属单位
+const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
+const dmall="/data_report/selectDmList"; //加载全部代码
+const ssdw="/org/getSelfAndChilds";//所属单位
 const gjdq="/service/getRedisDataByDm?tablename=DM_GJDQ";//国家地区
 const zjzl="/service/getRedisDataByDm?tablename=DM_ZJZL";//证件种类
 const qzzl="/service/getRedisDataByDm?tablename=DM_QZZL";//签证种类
@@ -60,12 +61,14 @@ export default
   userName,//用户名
   token,//用户token身份
   hasEnter,//用户登录状态
+  indexstate,
   aport,//首页
   aport1,//大师
   aport2,//左星海
   aport3,//石飞
   aport4,//李文龙
   aport5,//李文龙
+  xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
   dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm
 }

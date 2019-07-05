@@ -166,14 +166,18 @@ export default {
   },
   activated(){
     this.type=this.$route.query.type;
-
     this.pd={BJSJ_DateRange:{begin:'',end:''}};
     this.pd0={};
+
      if(this.type==undefined){
+       console.log('000');
        this.type=this.Global.type;
-     }else {
-       this.Global.type=this.type;
+     }else{
+        console.log('111');
+      this.Global.type=this.type;
      }
+
+     this.Global.indexstate=1;
     switch (this.type) {
     case 0:
         this.pd.MXLX="LXS_SWLZYJ";//留学生市外临住预警

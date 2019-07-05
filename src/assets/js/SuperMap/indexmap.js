@@ -237,9 +237,9 @@ export function renderMarker(point, data) {
 
 //获取派出所
 function renderPCS(data) {
-   console.log(data.dm+'===='+data.mc);
+
   markerLayer.clearLayers();
-console.log();
+
   //数据集SQL查询服务参数
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
@@ -338,14 +338,13 @@ function renderBzhid(data) {
   //   else {
   //     alert("地图库中未录入该地址的坐标。");
   //   }
-   var uurl="JWPTBH='"+data.dm+"'";
-
+   var uurl="DZMC='"+data.dm+"'";
    if(type=="C")
    {
      // var mm=data.dm.split("号");
      uurl="DZMC='"+data.dm+"'";
    }
-    console.log(uurl+"---"+data.count);
+
     mapSqlSearch(uurl, 0, 5, function(features) {
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
@@ -357,6 +356,17 @@ function renderBzhid(data) {
         }
       }
       else {
+        var ss=window.vm.getXY(data.dm,function(datae){
+
+          if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
+           var das=[];
+           das.push(datae.ycoord);
+           das.push(datae.xcoord);
+           //console.log(das,data);
+           renderMarkerbzh(das, data,data.dm);
+         }
+
+        });
         //alert("地图库中未录入该地址的坐标。");
       }
     });

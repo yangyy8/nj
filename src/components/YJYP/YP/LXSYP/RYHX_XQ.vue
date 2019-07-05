@@ -883,6 +883,7 @@ export default{
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
     if(this.zjhm!="" && this.zjhm!=undefined){
+      console.log('  this.zjhm',this.zjhm);
       this.pd.ZJHM=this.zjhm;
     }else if(this.row.RYBH){
       this.pd.RYBH=this.row.RYBH;

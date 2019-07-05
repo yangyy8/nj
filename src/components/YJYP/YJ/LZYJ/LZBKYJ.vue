@@ -9,11 +9,11 @@ export default {
 
 },
 activated(){
-     this.$router.push({name:'ZBKYJ_X',query:{type:5}});
+
+  this.$router.push({name:'ZBKYJ_X',query:{type:5}});
 },
   mounted(){
-
-
+  this.$router.push({name:'ZBKYJ_X',query:{type:5}});
   },
 
 }

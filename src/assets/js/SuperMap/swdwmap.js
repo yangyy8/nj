@@ -30,11 +30,210 @@ export function createMapL() {
   //L.supermap.tiledMapLayer(url).addTo(map);
 }
 
-export function getSearh(obj){
 
+
+
+export function getSearh(){
+
+
+// var data=[
+//   {dm:'江苏南京市江宁区将军大道1号',num:1}
+// ];
+// var mm=data[0].dm.split("号");
+// var  uurl="DZMC='"+mm[0]+"号'";
+// console.log(uurl);
+// mapSqlSearch(uurl, data[0].dm,data[0].num,0, 5, function(features,dm,num) {
+//
+// var datas=[];
+//       // console.log(dm,num,'不能');
+//   if (features.length > 0) {
+//    for (var j = 0; j < features.length; j++) {
+//
+//      datas.push(dm+"  ");
+//      datas.push("  "+num);
+//      datas.push("  "+"可以"+features.length+"  ");
+//    // console.log(dm,num,'能');
+//    renderMarkerbzh(features[j].geometry.coordinates.reverse(), dm,num);
+//     }
+//   }else {
+//     datas.push(dm+"  ");
+//     datas.push("  "+num);
+//     datas.push("  "+"不能"+features.length+"  ");
+//   }
+// console.log(datas.join(''));
+//
+// });
+//
+// return ;
+
+      //以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
+      var parameters = new Array();
+      parameters.push({index: "es_lz_lzxx", type: "doc"});
+      var searchObject = {
+        "query": {
+          "bool": {
+            "must": [
+                      {
+                      "term": {
+                        "DJDWXZQH.keyword": "3201"
+                      }
+                  }
+            ]
+          }
+        },
+        "size": 0,
+        "aggs": {
+          "all_counts": {
+            "terms": {"field": "BZHDZMC.keyword","size":2147483647}
+          }
+        }
+      };
+
+      parameters.push(searchObject);
+      // console.log('parameters',searchObject);
+      esservice.msearch({body: parameters}, function(error, result) {
+        var buckets = result.responses[0].aggregations.all_counts.buckets;
+        var sum=0;var kk="";
+        console.log(buckets.length);
+        for (var i = 4000; i < 4404; i++) {
+          kk=buckets[i].key;
+          sum=buckets[i].doc_count;
+
+          var mm=kk.split("号");
+          var  uurl="DZMC='"+mm[0]+"号'";
+
+          mapSqlSearch(uurl, kk,sum,0, 5, function(features,dm,num) {
+
+
+                // console.log(dm,num,'不能');
+            if (features.length > 0) {
+             for (var j = 0; j < features.length; j++) {
+
+               // data.push(dm+"  ");
+               // data.push("  "+num);
+               // data.push("  "+"可以"+"  ");
+             // console.log(dm,num,'能');
+            // renderMarkerbzh(features[j].geometry.coordinates.reverse(), dm,num);
+              }
+            }else {
+
+              var ss=window.vmswdm.getXY(dm,function(datae){
+
+                if(datae!=undefined && datae.ycoord!="" && datae.xcoord!=""){
+                   var das=[];
+                   das.push(datae.ycoord);
+                   das.push(datae.xcoord);
+
+                  //  renderMarkerbzh(das, dm,num);
+                 }else {
+                   var data=[];
+                   data.push(dm+"  ");
+                   data.push("  "+"不能"+"  ");
+                   console.log(data.join(''));
+                 }
+
+
+              });
+
+
+            }
+
+
+
+
+          });
+
+
+
+        }
+
+// exportRaw("test.txt",dlist.join(''));
+
+      });
 
 
 }
+//保存到TXT
+function exportRaw(name,data) {
+   var urlObject=window.URL || window.webkitURL || window;
+   var export_blob=new Blob([data]);
+   var save_link=document.createElementNS("http://www.w3.org/1999/xhtml","a");
+   save_link.href=urlObject.createObjectURL(export_blob);
+   save_link.download=name;
+   fakeClick(save_link);
+}
+function fakeClick(obj) {
+   var ev=document.createEvent("MouseEvents");
+   ev.initMouseEvent("click",true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+   obj.dispatchEvent(ev);
+}
+export function renderMarkerbzh(point, dm,num) {
+
+  //debugger;
+  // 画圆
+  var myIcon = L.divIcon({
+    html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + num + "</div>",
+    className: 'my-div-icon',
+    iconSize: 40
+  });
+  var tempMarker = L.marker(point, {
+    icon: myIcon,
+    pcsdm: dm,
+    pcsmc: dm,
+    num: num
+  });
+  markerLayer.addLayer(tempMarker);
+
+  markerLayer.on("mousemove", function(e) {
+    e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "总人数：" + e.layer.options.num + "</div>").openPopup();
+  });
+  markerLayer.on("mouseout", function(e) {
+    e.layer.closePopup();
+  });
+
+  tempMarker.on('click', function(e) {
+
+  });
+}
+
+function mapSqlSearch(attributeFilter,dm,num, from, to, callback) {
+  //向服务器发送请求，并对返回的结果进行处理
+  var url = "http://10.33.66.183:2333/iserver/services/data-gt8/rest/data";
+  var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
+                          queryParameter: {
+                              name: "dz_mlp@ORCL_gt8",
+                              attributeFilter: attributeFilter
+                          },
+                          datasetNames: ["ORCL_gt8:dz_mlp"], //数据集名称
+                          fromIndex:0,
+                          toIndex:10
+                      });
+   L.supermap.featureService(url).getFeaturesBySQL(sqlParam, function (serviceResult) {
+          var features = serviceResult.result.features.features;
+    callback(features,dm,num);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function queryZrqByServer(data) {
 

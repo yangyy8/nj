@@ -80,7 +80,7 @@ export function doSearch(className) {
     polygonLayer.addTo(map);
 
     var geometryParam = new SuperMap.GetFeaturesByGeometryParameters({
-      datasetNames: ['ORCL_gt8:dz_mlpxx_3201_pt'],
+      datasetNames: ['ORCL_gt8:dz_mlp'],
       geometry: polygonLayer,
       spatialQueryMode: 'INTERSECT',
       fromIndex: 0,
