@@ -369,10 +369,10 @@ function mapSqlSearch(attributeFilter, from, to, callback) {
   var url = "http://10.33.66.183:2333/iserver/services/data-gt8/rest/data";
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
                           queryParameter: {
-                              name: "dz_mlpxx_3201_pt@ORCL_gt8",
+                              name: "dz_mlp@ORCL_gt8",
                               attributeFilter: attributeFilter
                           },
-                          datasetNames: ["ORCL_gt8:dz_mlpxx_3201_pt"], //数据集名称
+                          datasetNames: ["ORCL_gt8:dz_mlp"], //数据集名称
                           fromIndex:0,
                           toIndex:10
                       });
