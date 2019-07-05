@@ -1076,12 +1076,11 @@ export default {
     this.lzxxDialogVisible=false;
     this.crjDialogVisible=false;
     this.row=this.$route.query.row;
-    console.log('===============');
     this.pc={};
     this.qdshow=true;
     if(this.row!=undefined && this.row.CLZT=='0'){
       this.qdshow=false;
-    }
+     }
     this.pd.YJID=this.row.YJID;
     this.px.RYBH=this.row.RYBH;
     this.xid=this.row.RYBH;
@@ -1095,12 +1094,10 @@ export default {
     this.qzshow=false;
     this.nmshow=false;
     if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
-
        this.crjshow=true;
        this.getCrjxx(this.CurrentPage1,this.pageSize1);
     }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
     {
-
       this.crjshow=true;
       this.lzshow=true;
       this.zjshow=true;
@@ -1111,7 +1108,6 @@ export default {
       this.getCrjxx(this.CurrentPage1,this.pageSize1);
     }
     else {
-
       this.lzshow=true;
       this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
       this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
@@ -1133,14 +1129,12 @@ export default {
         this.getTBRY(this.pm);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
       }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
-
         this.zjshow=true;
         this.qzshow=true;
         this.tbshow=true;
         this.getZJXX(this.CurrentPage4,this.pageSize4);
         this.getQZXX(this.CurrentPage5,this.pageSize5);
         this.getTBRY(this.pm);
-
       }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
         this.crjshow=true;
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
@@ -1149,10 +1143,10 @@ export default {
         this.bkshow=true;
         this.lzshow=false;
         this.getData0(this.asjCurrentPage,this.asjpageSize);
-          this.getData1(this.sjCurrentPage,this.sjpageSize);
+        this.getData1(this.sjCurrentPage,this.sjpageSize);
       }
       this.getLzxx(this.CurrentPage,this.pageSize);
-    }
+     }
   },
   mounted() {
 
@@ -1403,17 +1397,28 @@ export default {
         })
     },
     detailslzxx(n){
-        this.xid=n.DTID;
+      if(this.row.MXLX=="BKYJ"){
+          this.xid=n.ZJHM+","+n.GJDQ;
+      }else{
+          this.xid=n.DTID;
+      }
+
+
         this.type=0;
         console.log('this.xid',n.DTID);
         this.lzxxDialogVisible=true;
     },
     detailscrj(n){
-     this.xid=n.RGUID;
+        if(this.row.MXLX=="BKYJ"){
+          this.xid=n.ZJHM+","+n.GJDQ
+        }else {
+          this.xid=n.RGUID;
+        }
+
      this.crjDialogVisible=true;
     },
     detailstbry(n){
-      this.xid=n.RGUID;
+      this.xid=n.RGUID+n.ZJHM;
       this.tbryDialogVisible=true;
     },
     detailsjz(n){
@@ -1441,39 +1446,48 @@ export default {
    getMX(mm){
 
      switch (mm) {
-     case 'LXS_SWLZYJ':
+     //case 'LXS_SWLZYJ':
+     case '0':
          //留学生市外临住预警
          this.$router.push({name:'LXSSWLZ_X',query:{type:0}});
          break;
-     case 'LXS_SKYJ':
+     // case 'LXS_SKYJ':
+      case '1':
       //留学生涉恐预警
       this.$router.push({name:'LXSSKYJ_X',query:{type:1}});
        break;
-     case 'LXS_CRJTX':
+     // case 'LXS_CRJTX':
+     case '2':
       //留学生出入境提醒
       this.$router.push({name:'LXSCRJYJ_X',query:{type:2}});
        break;
-     case 'LZ_HC':
+     // case 'LZ_HC':
+     case '3':
          //临住核查预警
          this.$router.push({name:'LZHCYJ_X',query:{type:3}});
        break;
-     case 'CZ_NMYJ':
+     // case 'CZ_NMYJ':
+     case '4':
         //难民
          this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
          break;
-     case 'BKYJ':
+     // case 'BKYJ':
+     case '5':
         //布控预警
           this.$router.push({name:'ZBKYJ_X',query:{type:5}});
          break;
-     case 'LXS_WBDYJ':
+     // case 'LXS_WBDYJ':
+     case '6':
          //留学生录取未报到预警
          this.$router.push({name:'LXSWBDYJ_X',query:{type:6}});
          break;
-     case 'QZ_HCYJ':
+     // case 'QZ_HCYJ':
+     case '7':
           //受理、签发信息核查预警
           this.$router.push({name:'SLQFXXYJ',query:{type:7}});
          break;
-     case 'ASJ_SKGJRY':
+     // case 'ASJ_SKGJRY':
+     case '8':
          //涉恐国家人员预警
          this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
          break;

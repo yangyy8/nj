@@ -3,7 +3,7 @@ const userName='';
 const hasEnter=false;
 const org="";
 const xsd=80;
-const type=0;
+const type=99;
 const indexstate=0;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="/api-reporter";//大师网关
@@ -60,10 +60,10 @@ export default
   org,//用户机构代码
   xsd,//相似度
   type,
+  indexstate,
   userName,//用户名
   token,//用户token身份
   hasEnter,//用户登录状态
-  indexstate,
   aport,//首页
   aport1,//大师
   aport2,//左星海

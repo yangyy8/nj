@@ -155,8 +155,13 @@ export default {
       }
     },
     getData1(){
-      this.pp.RGUID=this.id;
-      console.log(this.pp.RGUID);
+      var arr=this.id.split(',');
+      if(arr.length>1){
+         this.pp.CERTIFICATENO=arr[0];// 证件号码
+         this.pp.NATIONALITY=arr[1];//国籍
+      }else {
+        this.pp.RGUID=this.id;
+      }
       let p = {
         "pd": this.pp
       };

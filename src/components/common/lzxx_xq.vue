@@ -256,11 +256,19 @@ export default {
 
     },
     getData0(){
-     this.form={};
-      this.pp.DTID=this.id;
+      this.form={};
+      var arr=this.id.split(',');
+      if(arr.length>1){
+         this.pp.ZJHM=arr[0];
+         this.pp.GJDQ=arr[1];
+      }else {
+         this.pp.DTID=this.id;
+      }
+
       let p = {
         "pd": this.pp
       };
+
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getEntityByDTID', p,
         r => {
           this.form=r.data;
