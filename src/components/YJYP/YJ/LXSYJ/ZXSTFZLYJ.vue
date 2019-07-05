@@ -68,11 +68,11 @@
                label="学号">
              </el-table-column>
              <el-table-column
-               prop="SEX"
+               prop="XB_DESC"
                label="性别">
              </el-table-column>
              <el-table-column
-               prop="COUNTRYID"
+               prop="GJDQ_DESC"
                label="国籍">
              </el-table-column>
              <el-table-column
@@ -92,7 +92,7 @@
                label="到校时间">
              </el-table-column>
              <el-table-column
-               prop="SCHOOLID"
+               prop="SCHOOLID_DESC"
                label="学校名称">
              </el-table-column>
              <el-table-column
@@ -104,7 +104,7 @@
                label="地址">
              </el-table-column>
              <el-table-column
-               prop="STATUS"
+               prop="STATUS_DESC"
                label="学生状态">
              </el-table-column>
              <el-table-column

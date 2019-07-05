@@ -28,8 +28,14 @@
     <div v-show="page==0" style="padding:0 15px;">
       <el-row type="flex">
         <el-col :span="3" style="min-width:150px;">
-          <img src="../../../../assets/img/mrzp.png" v-if="!czinfo.photo" >
-          <img :src="czinfo.photo" v-else>
+          <el-carousel height="160px" style="width:128px" class="photoCar">
+            <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
+              <img  :src="item.ZPNR" style="height:160px;width:128px;">
+            </el-carousel-item>
+            <el-carousel-item v-if="!imgshow1">
+              <img src="../../../../assets/img/mrzp.png">
+            </el-carousel-item>
+          </el-carousel>
         </el-col>
         <el-col :span="21">
           <el-row :gutter="3">
@@ -44,7 +50,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">英文姓名：</span>
-             <span class="input-input lh-ts">  {{czinfo.nameEN}}</span>
+             <span class="input-input">  {{czinfo.nameEN}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">中文姓：</span>
@@ -1236,6 +1242,8 @@ export default {
   props:['type','xid','rid','random'],
   data(){
     return{
+      imagess:[],
+      imgshow1:false,
       czinfo:{},
       jzinfo:{},
       gzinfo:{},
@@ -1407,6 +1415,23 @@ export default {
       this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.xid);
       //同户信息
       this.gettableDatath(this.CurrentPage6,this.pageSize6,this.xid);
+      this.getPhoto()
+
+    },
+    getPhoto(){
+      let p={
+        "pd":{
+          RYBH:this.xid,
+          YWLB:'0004'
+        },
+        "orderType":"DESC",
+	      "orderBy":{value:"CJSJ",dataType:"date"}
+      }
+      this.$api.post(this.Global.aport2+'/ryhx/getrytpxx',p,
+       r =>{
+         this.imagess=r.data.resultList;
+         this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
+       })
     },
     // 居住地信息
     gettableDatajz(currentPage,showCount,pd){

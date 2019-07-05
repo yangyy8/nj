@@ -109,6 +109,71 @@
         </el-row>
       </div>
       <div class="mb-15">
+        <div class="yylbt mb-15">案事件信息</div>
+        <el-table
+
+             :data="asjData"
+             border
+             style="width: 100%" class="stu-table"
+             >
+             <el-table-column
+               prop="ASJBH"
+               label="案事件编号">
+             </el-table-column>
+             <el-table-column
+               prop="AJMC"
+               label="案件名称">
+             </el-table-column>
+             <el-table-column
+               prop="AJLB"
+               label="案件类别">
+             </el-table-column>
+             <el-table-column
+               prop="AJZT"
+               label="案件状态">
+             </el-table-column>
+             <el-table-column
+               prop="FXSJ"
+               label="发现时间">
+             </el-table-column>
+             <el-table-column
+               label="操作" width="80">
+               <template slot-scope="scope">
+               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailsasj(scope.row)"></el-button>
+               </template>
+             </el-table-column>
+         </el-table>
+         <div class="middle-foot mt-10">
+            <div class="page-msg">
+              <div class="">
+            共{{asjTotalResult}}条记录
+              </div>
+              <div class="">
+                每页显示
+                <el-select v-model="asjpageSize" @change="asjpageSizeChange(asjpageSize)" placeholder="10" size="mini" class="page-select">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+                条
+              </div>
+              <div class="">
+                共{{Math.ceil(asjTotalResult/asjpageSize)}}页
+              </div>
+            </div>
+            <el-pagination
+              background
+              @current-change="asjhandleCurrentChange"
+              :page-size="asjpageSize"
+              layout="prev, pager, next"
+              :total="asjTotalResult">
+            </el-pagination>
+          </div>
+      </div>
+      <div class="mb-15">
         <div class="yylbt mb-15">常住居住地信息</div>
         <el-table
           :data="tableData1"
@@ -510,17 +575,24 @@
                   <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
                 </div>
    </el-dialog>
+   <el-dialog title="案事件信息详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+     <ANSJ :type="typec" :xid="xid" :dtid="dtid" :random="(new Date()).getTime()"></ANSJ>
+     <div slot="footer" class="dialog-footer">
+       <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
+     </div>
+   </el-dialog>
   </div>
 </template>
 <script>
 import XQTC from '../../../GYZJ/XQ_TC'
 import LZXX from '../../../common/lzxx_xq'
 import CRJXX from '../../../common/crjxx_xq'
-
+import ANSJ from '../../../common/ansj_xq'
 export default {
-  components:{XQTC,LZXX,CRJXX},
+  components:{XQTC,LZXX,CRJXX,ANSJ},
   data() {
     return {
+      asjDialogVisible:false,
       CurrentPage: 1,
       pageSize: 3,
       TotalResult: 0,
@@ -533,6 +605,9 @@ export default {
       CurrentPage3: 1,
       pageSize3: 3,
       TotalResult3: 0,
+      asjCurrentPage: 1,
+      asjpageSize: 3,
+      asjTotalResult: 0,
       rybh:'',
       yjid:'',
       baseData:{},
@@ -542,6 +617,7 @@ export default {
       tableData4:[],
       tableData5:[],
       tableData6:[],
+      asjData:[],
       pd:{},
       px:{},
       pcl:{},
@@ -551,7 +627,9 @@ export default {
       crjDialogVisible:false,
       detailsDialogVisible:false,
       type:0,
+      typec:1,
       xid:'',
+      dtid:'',
       form:{},
       baseinfo:{},
       options: [{
@@ -585,6 +663,7 @@ export default {
     this.getCRJ(this.CurrentPage1, this.pageSize1);
     this.getSJ(this.CurrentPage2, this.pageSize2);
     this.getLZ(this.CurrentPage3, this.pageSize3);
+    this.getData0(this.asjCurrentPage,this.asjpageSize);
     // this.getList('/refugeesWarningController/getRefugeesPersBasicInfo',0);
     // this.getList('/refugeesWarningController/getPermanentResidenceInfo',1);
     // this.getList('/refugeesWarningController/getMovementRecord',2);
@@ -597,6 +676,14 @@ export default {
 
   },
   methods: {
+    asjpageSizeChange(val) {
+    this.getData0(this.asjCurrentPage,val);
+      console.log(`每页 ${val} 条`);
+    },
+    asjhandleCurrentChange(val) {
+      this.getData0(val,this.asjpageSize);
+      console.log(`当前页: ${val}`);
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getCZXX(this.CurrentPage, this.pageSize);
@@ -636,6 +723,24 @@ export default {
       this.CurrentPage3=val;
       this.getLZ(this.CurrentPage3, this.pageSize3);
       console.log(`当前页: ${val}`);
+    },
+    getData0(currentPage,showCount){
+
+      let p = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "pd": this.px,
+      };
+      this.$api.post(this.Global.aport4+'/eS_AJ_GroupController/getAnJianInfoByRYBH', p,
+        r => {
+          this.asjData=r.data.resultList;
+          this.asjTotalResult=r.data.totalResult;
+      })
+    },
+    detailsasj(n){
+       this.xid=n.RGUID;
+       this.dtid=n.DTID;
+      this.asjDialogVisible=true;
     },
     openTc(n,id){
       this.xid=id;

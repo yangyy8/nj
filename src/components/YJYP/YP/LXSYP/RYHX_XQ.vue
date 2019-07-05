@@ -644,7 +644,7 @@
          </div>
        </el-dialog>
        <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <LZXXRY :type="type" :xid="xid" :random="randomlzxx"></LZXXRY>
+         <LZXXRY :type="type" :xid="xid" :random="randomlzxx" :rybh="rybh"></LZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -988,20 +988,14 @@ export default{
     getZXZP(){
       let p = {
         "pd": {ZJHM:this.$route.query.zjhm},
-        "currentPage":1,
-      	"showCount":1,
-      	"orderBy":"RQRB",
-      	"orderType":"DESC"
       };
-      this.$api.post(this.Global.aport3+'/ryhx/getrytpxx', p,
+      this.$api.post(this.Global.aport3+'/ryhx/getrytpxxpro', p,
         r => {
-          console.log('r.data.resultList.ZPNR',r.data.resultList[0]);
           this.imgdm = imgUrl
-          if(r.data.resultList[0].ZPNR){
-            this.imgdm = r.data.resultList[0].ZPNR;
+          if(r.data.ZPNR){
+            this.imgdm = r.data.ZPNR;
           }
         })
-
     },
     //人员基本信息
     getRYXX(){
