@@ -15,10 +15,10 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font>时间范围：</span>
+                      <span class="yy-input-text"><font color=red>*</font> 时间范围：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                   </el-col>
@@ -26,7 +26,7 @@
                       <span class="yy-input-text"></span>
                         <el-date-picker class="yy-input-input"
                             v-model="pd.endTime" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                   </el-col>
@@ -77,6 +77,25 @@
                  style="width: 100%"
                  >
                  <el-table-column
+                   label="照片">
+                   <template slot-scope="scope">
+                     <div v-if="scope.row.zp">
+                      <el-popover placement="right" title="" trigger="hover">
+                        <img :src="scope.row.zp"  style="max-width:700px; max-height:700px;"/>
+                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                      </el-popover>
+                     </div>
+                   </template>
+                 </el-table-column>
+                 <el-table-column
+                   prop="sf"
+                   label="身份" v-if="czshow">
+                 </el-table-column>
+                 <el-table-column
+                   prop="fwcs"
+                   label="服务处所"  v-if="czshow">
+                 </el-table-column>
+                 <el-table-column
                    prop="ywxm"
                    label="英文姓名">
                  </el-table-column>
@@ -93,6 +112,10 @@
                    label="出生日期">
                  </el-table-column>
                  <el-table-column
+                   prop="djrq"
+                   label="登记日期">
+                 </el-table-column>
+                 <el-table-column
                    prop="gjdq"
                    label="国家地区">
                  </el-table-column>
@@ -103,6 +126,9 @@
                  <el-table-column
                    prop="zjhm"
                    label="证件号码">
+                   <template slot-scope="scope">
+                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                   </template>
                  </el-table-column>
              </el-table>
              <div class="middle-foot mt-10">
@@ -162,6 +188,7 @@ export default {
        show:true,
        bzhshow:false,
        lgshow:false,
+       czshow:false,
        pcs:[],
        xzqh:[],
        radioe:'2',
@@ -224,40 +251,127 @@ export default {
       this.$set(this.pd,"endTime",'');
       this.$set(this.pd,"gjdq",'');
       this.$set(this.pd,"qzzl",'');
+
     },
     getSearch(className) {
-      console.log(this.radioe);
+      if(this.pd.beginTime==undefined && this.pd.endTime==undefined){
+        this.$message.error("请输入开始时间或者结束时间！");return;
+      }
        doSearch(className);
+    },
+
+
+    //获取标准化地址
+    getbzhdz(das,callback){
+      var searchResult = [];
+      var bb=[];
+        for (var i = 0; i < das.length; i++) {
+          let mu=bb.find((n)=>n.dm==das[i].dm);
+        if(!mu){
+            bb.push(das[i]);
+        }
+        }
+     console.log(bb);
+        //this.ssfj=n;
+     let  p={};var url="";
+
+        if(this.radioe=="1"){
+          this.czshow=true;
+           p={
+
+            "rzsjStart":this.pd.beginTime,
+            "rzsjEnd":this.pd.endTime,
+            "gjdq":this.pd.gjdq,
+            "qzzl":this.pd.qzzl,
+            "arrayList":bb,
+          };
+          url=this.Global.aport+"/ywczdt/getZdjkqyBzhdz";
+        }else {
+          p ={
+              "rzsjStart":this.pd.beginTime,
+              "rzsjEnd":this.pd.endTime,
+              "gjdq":this.pd.gjdq,
+              "qzzl":this.pd.qzzl,
+              "arrayList":bb,
+            };
+          this.czshow=false;
+          url=this.Global.aport+"/ywlz/getZdjkqyBzhdz";
+        }
+        this.$api.post(url, p,
+          r => {
+            if (r.success) {
+              let arr=r.data;
+              for (var i = 0; i < arr.length; i++) {
+
+                  searchResult.push(arr[i]);
+             }
+             if(searchResult.length==0){
+               this.$message.error("地图库中未录入该地址的坐标! ");return ;
+             }
+              callback && callback(searchResult)
+            }
+          });
     },
     //人员信息
     getRyxx(currentPage,showCount,bzhid,mc,lrdw)
     {
+
       if(currentPage==1){
         this.CurrentPage=1;
+        this.tableData=[]; this.TotalResult=0;
       }
        this.bzhid=bzhid;
        this.mc=mc;
        this.lrdw=lrdw;
        this.diatext=this.mc;
+       let p={}; var url="";
 
-       let p={
-         "currentPage":currentPage,
-         "showCount":showCount,
-         "dzdtid":this.bzhid,
-         "yf":'Y',
-         "lrdw":this.lrdw,
-       };
-       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+          if(this.radioe=="1"){
+         p={
+           "currentPage":currentPage,
+           "showCount":showCount,
+           "xxdz":this.bzhid,
+           "djrqStart":this.pd.beginTime,
+           "djrqEnd":this.pd.endTime,
+           "gjdq":this.pd.gjdq,
+           "qzzl":this.pd.qzzl,
+         };
+         url=this.Global.aport+"/ywczdt/getCZDJXXRYList";
+       }else {
+         p ={
+           "currentPage":currentPage,
+           "showCount":showCount,
+           "bzhdzMc":this.bzhid,
+           "rzsjStart":this.pd.beginTime,
+           "rzsjEnd":this.pd.endTime,
+           "gjdq":this.pd.gjdq,
+           "qzzl":this.pd.qzzl,
+
+         };
+          url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
+       }
+
        this.$api.post(url, p,
          r => {
            if (r.success) {
-             console.log(r.data);
+
              this.tableData=r.data.resultList;
              this.TotalResult=r.data.totalResult;
            }
          });
        this.bzhDialogVisible=true;
-    }
+    },
+    //后期匹配地址
+    getXY(dz,callback){
+
+      let p={
+        "dz":dz,
+      };
+      this.$api.get(this.Global.xyaddress, p,
+        r => {
+        callback(r.result)
+        });
+    },
 
   },
 
@@ -271,18 +385,17 @@ export default {
 </style>
 <style>
 .lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
         border-radius: 50%;
-
         line-height:20px;
         text-align: center;
         vertical-align: middle;
     }
-.lzxx    .lz {
-			background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+.lzxx  .lz {
+			background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
 		}
 
-.lzxx		.cz {
+.lzxx .cz {
 			background-color: rgba(155, 0, 0, 0.8);
 		}
+.bghome .el-dialog{ width: 70%!important;}
 </style>

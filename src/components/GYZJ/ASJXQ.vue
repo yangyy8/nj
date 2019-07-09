@@ -957,19 +957,19 @@ export default {
 
       if(type==0){
 
-        if(this.row.YJID!=undefined){
-        this.cdt={};
-        this.cdt.YJID=this.row.YJID;
-      }else {
-        return ;
-      }
+                if(this.row.YJID!=undefined){
+                this.cdt={};
+                this.cdt.YJID=this.row.YJID;
+                  }else {
+                    return ;
+                  }
       }else {
         if(this.row.RYBH!=undefined){
         this.cdt={};
         this.cdt.RYBH = this.row.RYBH;
-      }else {
-        return ;
-      }
+          }else {
+            return ;
+          }
       }
 
       let p = {

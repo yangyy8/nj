@@ -53,7 +53,6 @@ const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地
 const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态类型（地图用的）
 const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
 const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
-
 const tablists=[];
 export default
 {

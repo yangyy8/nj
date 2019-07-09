@@ -13,7 +13,10 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font>所属分局：</span>
+                <span style="font-size:12px; color:red">  注：所属分局、服务处所条件二选一</span>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font> 所属分局：</span>
                       <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind1) in ssfj"
@@ -24,7 +27,7 @@
                       </el-select>
                   </el-col>
                 <el-col :span="24">
-                    <span class="yy-input-text">服务处所：</span>
+                    <span class="yy-input-text"><font color=red>*</font> 服务处所：</span>
                      <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
                 </el-col>
                   <el-col :span="24">
@@ -138,9 +141,10 @@
                    label="身份">
                  </el-table-column>
                  <el-table-column
-                   prop="djdw"
-                   label="单位">
+                   prop="fwcs"
+                   label="服务处所">
                  </el-table-column>
+
                  <el-table-column
                    prop="zwxm"
                    label="中文姓名">
@@ -152,6 +156,10 @@
                  <el-table-column
                    prop="csrq"
                    label="出生日期">
+                 </el-table-column>
+                 <el-table-column
+                   prop="djrq"
+                   label="登记日期">
                  </el-table-column>
                  <el-table-column
                    prop="gjdq"
@@ -220,6 +228,7 @@ export default {
        lrdw:'',
        num:0,
        result:[],
+       centers:[],
 
     }
   },
@@ -281,16 +290,53 @@ export default {
     },
     doSearch() {
 
-      if(this.pd.ssfj==undefined || this.pd.ssfj=="")
-      {
-         this.$message.error("请选择所属分局！");return;
-      }
-      // if(this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")
-      // {
-      //    this.$message.error("请输入服务处所！");return;
-      // }
+      if (this.pd.ssfj == undefined && this.pd.fwcs==undefined) {
+        this.$message.error("请选择所属分局或者服务处所! ");
+        return;
+      } else {
+        var ssj = this.pd.ssfj.substr(0, 6);
+        switch (ssj) {
+          case '320116': //六合区
+            this.centers = [32.39215480155289, 118.81641980133281];
+            break;
+          case '320112': //江北新区
+            this.centers = [32.03613281, 118.78211975];
+            break;
+          case '320113': //栖霞区
+            this.centers = [32.137307901838255, 118.9995913711449];
+            break;
+          case '320102': //玄武区
+            this.centers = [32.062475576087024, 118.8436456413333];
+            break;
+          case '320106': //鼓楼区
+            this.centers = [32.08265178165445, 118.75812113098544];
+            break;
+          case '320111': //浦口区
+            this.centers = [31.943626916199264, 118.35524238617728];
+            break;
+          case '320104': //秦淮区
+            this.centers = [32.01143013679143, 118.81736758064937];
+            break;
+          case '320105': //建邺区
+            this.centers = [32.0275950355325, 118.70538415685343];
+            break;
+          case '320114': //雨花台区
+            this.centers = [31.94205101079558, 118.69497417187063];
+            break;
+          case '320115': //江宁区
+            this.centers = [31.865733721334237, 118.79198266097109];
+            break;
+          case '320124 ': //溧水区
+            this.centers = [31.726803147547287, 119.1224894259463];
+            break;
+          case '320125 ': //高淳区
+            this.centers = [31.3703836314495, 119.19202124153713];
+            break;
+          default:
 
-      getSearch();
+        }
+      }
+      getSearch(this.centers);
   	},
     //获取派出所   不用
     getPCS(callback){
@@ -338,6 +384,9 @@ export default {
               for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
               }
+              if(searchResult.length==0){
+                this.$message.error("没有查询到数据信息! ");return ;
+              }
               callback && callback(searchResult,this.pd.ssfj.substr(0,6))
             }
           });
@@ -347,16 +396,18 @@ export default {
     //人员信息
     getRyxx(currentPage,showCount,dtids,mc)
     {
+
       this.mc=mc;
       this.diatext=this.mc;
       this.bzhid=dtids;
       var chunk=5;
       if(currentPage==1){
+        this.tableData=[];
+        this.TotalResult=0;
         this.CurrentPage=1;
-
-
       var ttbal=JSON.parse(dtids);
       var rr=[];
+            console.log(ttbal.length);
       for (var i = 0,j = ttbal.length;i<j;i+=chunk) {
          rr.push(ttbal.slice(i,i+chunk));
       }
@@ -402,7 +453,7 @@ export default {
 </style>
 <style>
 .lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
+
         border-radius: 50%;
         line-height:20px;
         text-align: center;
@@ -413,8 +464,8 @@ export default {
   background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
   }
 
-.lzxx		.cz {
+/* .lzxx		.cz {
 		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-		}
+		} */
 .bghome .el-dialog{ width: 70%!important;}
 </style>

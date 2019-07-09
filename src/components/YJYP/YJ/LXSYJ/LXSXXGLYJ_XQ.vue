@@ -1036,6 +1036,8 @@ export default {
       pm:{},
       pcl:{},
       pc:{},
+      pxcrj:{},
+      pxlz:{},
       crjinfo:{},
       jzinfo:{},
       jlinfo:{},
@@ -1078,9 +1080,11 @@ export default {
     this.row=this.$route.query.row;
     this.pc={};
     this.qdshow=true;
+    console.log(this.row.RYBH);
     if(this.row!=undefined && this.row.CLZT=='0'){
       this.qdshow=false;
      }
+     if(this.row.RYBH!=undefined){
     this.pd.YJID=this.row.YJID;
     this.px.RYBH=this.row.RYBH;
     this.xid=this.row.RYBH;
@@ -1113,6 +1117,7 @@ export default {
       this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
       this.pm.XB=this.row.XB;
       this.pm.CSRQ=this.row.CSRQ;
+      this.pm.ZJHM=this.row.ZJHM;
       if(this.row.MXLX=="LZ_HC"){   //临住核查预警
         this.tbshow=true;
         this.skshow=true;
@@ -1126,6 +1131,10 @@ export default {
       }else if(this.row.MXLX=="BKYJ")  //布控预警
       { this.crjshow=true;
         this.tbshow=true;
+        this.pxcrj.CERTIFICATENO=this.row.ZJHM;
+        this.pxcrj.NATIONALITY=this.row.GJ;
+        this.pxlz.ZJHM=this.row.ZJHM;
+        this.pxlz.GJDQ=this.row.GJ;
         this.getTBRY(this.pm);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
       }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
@@ -1147,6 +1156,7 @@ export default {
       }
       this.getLzxx(this.CurrentPage,this.pageSize);
      }
+   }
   },
   mounted() {
 
@@ -1320,10 +1330,19 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        // "pdNotIn":this.pd,
         "orderBy":{value:"ZSRQ",dataType:"date"},
         "orderType":"DESC"
       };
+      if(this.row.MXLX=="BKYJ"){
+            console.log(this.pxcrj);
+        p = {
+          "currentPage": currentPage,
+          "showCount": showCount,
+          "pd": this.pxlz,
+          "orderBy":{value:"ZSRQ",dataType:"date"},
+          "orderType":"DESC"
+        };
+      }
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', p,
         r => {
           this.tableData1 = r.data.resultList;
@@ -1332,6 +1351,7 @@ export default {
     },
     //出入境信息
     getCrjxx(currentPage,showCount) {
+
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -1339,6 +1359,17 @@ export default {
         "orderBy":{value:"IOSTRING",dataType:"date"},
         "orderType":"DESC"
       };
+      if(this.row.MXLX=="BKYJ"){
+        console.log(this.pxcrj);
+        p = {
+          "currentPage": currentPage,
+          "showCount": showCount,
+          "pd": this.pxcrj,
+          "orderBy":{value:"IOSTRING",dataType:"date"},
+          "orderType":"DESC"
+        };
+      }
+
       this.$api.post(this.Global.aport4+'/eS_CRJJLBController/getResultListByParams', p,
         r => {
           this.tableData2 = r.data.resultList;
@@ -1397,28 +1428,28 @@ export default {
         })
     },
     detailslzxx(n){
-      if(this.row.MXLX=="BKYJ"){
-          this.xid=n.ZJHM+","+n.GJDQ;
-      }else{
-          this.xid=n.DTID;
-      }
+      // if(this.row.MXLX=="BKYJ"){
+      //     this.xid=n.ZJHM+","+n.GJDQ;
+      // }else{
+      //     this.xid=n.DTID;
+      // }
 
-
+        this.xid=n.DTID;
         this.type=0;
         console.log('this.xid',n.DTID);
         this.lzxxDialogVisible=true;
     },
     detailscrj(n){
-        if(this.row.MXLX=="BKYJ"){
-          this.xid=n.ZJHM+","+n.GJDQ
-        }else {
-          this.xid=n.RGUID;
-        }
-
+        // if(this.row.MXLX=="BKYJ"){
+        //   this.xid=n.ZJHM+","+n.GJDQ
+        // }else {
+        //
+        // }
+     this.xid=n.RGUID;
      this.crjDialogVisible=true;
     },
     detailstbry(n){
-      this.xid=n.RGUID+n.ZJHM;
+      this.xid=n.RGUID;
       this.tbryDialogVisible=true;
     },
     detailsjz(n){

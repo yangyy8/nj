@@ -162,12 +162,14 @@ export default {
       options: this.pl.ps,
       tableData: [],
       type:'',
+      tabList:[],
     }
   },
   activated(){
     this.type=this.$route.query.type;
     this.pd={BJSJ_DateRange:{begin:'',end:''}};
     this.pd0={};
+
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
        this.getMXLX(this.type);
@@ -222,7 +224,13 @@ export default {
        }
     },
     getMX(mm){
-
+      console.log('this.Global.tabLists',this.Global.tabLists);
+      this.tabList=this.Global.tabLists;
+      if(this.Global.tabLists==undefined){
+        this.close1(0);
+      }else {
+        this.close1(this.Global.tabLists.length-1);
+      }
       switch (mm) {
       case '0':
           //留学生市外临住预警
@@ -264,6 +272,26 @@ export default {
          break;
        }
 
+    },
+    tabClick(i){
+      console.log(i)
+      this.$router.push({name:i.name})
+    },
+    close1(index) {
+      console.log('index',index);
+      this.tabList.splice(index, 1);
+      if (index > 0) {
+        this.tabClick(this.tabList[index - 1])
+      }
+      if (index == 0) {
+        if (this.tabList.length != 0) {
+          this.tabClick(this.tabList[index])
+        } else {
+          this.$router.push({name:'Home'})
+          this.routeList=[]
+        }
+
+      }
     },
     pageSizeChange(val) {
       this.pageSize=val;

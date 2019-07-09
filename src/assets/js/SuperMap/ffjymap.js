@@ -40,46 +40,70 @@ export	function createDWMap(id, mc) {
 
 		//map.zoomTo(14);
 		markerLayer.clearLayers();
-		mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5,0, function(features) {
-			if (features.length > 0) {
+	//	mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5,0, function(features) {
+ var see=window.ffvm.getinfo(id,function(data) {
+
+
+    mapSqlSearch("dz_mlp", "DZMC='" + data + "'", 0, 5, function(features) {
+     var arr=[];
+      if (features.length > 0) {
 				var x = features[0].properties.SMX;
 				var y = features[0].properties.SMY;
-				var tm = L.marker([y, x]).bindPopup(mc);
-
-				markerLayer.addLayer(tm);
+				// var tm = L.marker([y, x]).bindPopup(mc);
+        //
+				// markerLayer.addLayer(tm);
 				// tm.openPopup();
 				// map.flyTo(L.latLng(y, x), 12);
-        var arr=[];
+
         arr.push(y);
         arr.push(x);
-        var relt=window.ffvm.getXXDZ(id,function(data) {
+        // getStudents(id, parseFloat(x), parseFloat(y));
+      }else {
+          var ss=window.ffvm.getXY(data.dm,function(datae){
+            console.log('datae',datae);
+            if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
 
+             arr.push(datae.ycoord);
+             arr.push(datae.xcoord);
+           }
+
+          });
+      }
+
+
+        var relt=window.ffvm.getXXDZ(id,function(data) {
+   console.log('-----',data);
         for (var i = 0; i < data.length; i++) {
           var num=data[i].count;
-
-              mapSqlSearch("dz_mlp", "JWPTBH='" +data[i].dm + "'", 0, 5,num, function(features,nums) {
-
+          var id=data[i].dm;
+             mapSqlSearch("dz_mlp", "DZMC='" +id + "'", 0, 5, function(features) {
+               if(features.length>0){
                 for (var j = 0; j < features.length; j++) {
-                  var mc=features[j].properties.DZMC;
-                  var dm=features[j].properties.JWPTBH;
-                    renderMarkerbzh(features[j].geometry.coordinates.reverse(),dm,mc,arr,nums);
+                //  var mc=features[j].properties.DZMC;
+                    renderMarkerbzh(features[j].geometry.coordinates.reverse(),id,id,arr,num,mc);
                  }
+               }else {
+                 var ss=window.ffvm.getXY(data.dm,function(datae){
+                   if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
+                    var das=[];
+                    das.push(datae.ycoord);
+                    das.push(datae.xcoord);
+                    //console.log(das,data);
+                    renderMarkerbzh(das,id,id,arr,num,mc);
+                  }
+
+                 });
+               }
               });
             }
     });
-// getStudents(id, parseFloat(x), parseFloat(y));
-  }
-  else {
-  alert("地图库中未录入该地址的坐标。");
-  }
+   });
   });
-
-
 }
 
-  export function renderMarkerbzh(point,dm,mc,arr,num) {
+  export function renderMarkerbzh(point,dm,mc,arr,num,xmc) {
 
-     measureDistance(point[0],point[1],arr[0],arr[1],dm,mc,num);
+     measureDistance(point[0],point[1],arr[0],arr[1],dm,mc,num,xmc);
     //debugger;
     // 画圆
     // var myIcon = L.divIcon({
@@ -111,12 +135,12 @@ export	function createDWMap(id, mc) {
     //
     // });
   }
-  function measureDistance(x1,y1,x2,y2,dm,mc,num) {
+  function measureDistance(x1,y1,x2,y2,dm,mc,num,xmc) {
 
          var polyLine = L.polyline([[x1, y1], [x2, y2]], {color: "red"});
          var marker1 = L.marker([x1, y1]), marker2 = L.marker([x2, y2]);
-
-          // markerLayer.addLayer(marker2);
+         	var tm = marker2.bindPopup(xmc);
+         markerLayer.addLayer(tm);
          var distanceMeasureParam = new SuperMap.MeasureParameters(polyLine);
          L.supermap
              .measureService("http://10.33.66.183:2334/iserver/services/map-world/rest/maps/World")
@@ -142,7 +166,7 @@ export	function createDWMap(id, mc) {
              });
  }
   //dz_mlpxx_3201_pt	DH_PT学校
-export function mapSqlSearch(tableName, attributeFilter, from, to, num,callback) {
+export function mapSqlSearch(tableName, attributeFilter, from, to ,callback) {
   //向服务器发送请求，并对返回的结果进行处理
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
                           queryParameter: {
@@ -156,6 +180,6 @@ export function mapSqlSearch(tableName, attributeFilter, from, to, num,callback)
 
    L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesBySQL(sqlParam, function (serviceResult) {
           var features = serviceResult.result.features.features;
-    callback(features,num);
+    callback(features);
   });
 }

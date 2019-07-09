@@ -103,7 +103,6 @@
            </el-table>
          </el-col>
       </el-row>
-
     </div>
     <div class="stu-footerd">
       <div class="yylbt">案由信息</div>

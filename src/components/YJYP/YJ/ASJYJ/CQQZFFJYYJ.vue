@@ -41,6 +41,25 @@
                  style="width: 100%"
                  >
                  <el-table-column
+                   label="照片">
+                   <template slot-scope="scope">
+                     <div v-if="scope.row.zp">
+                      <el-popover placement="right" title="" trigger="hover">
+                        <img :src="scope.row.zp" style="max-width:700px; max-height:700px;"/>
+                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                      </el-popover>
+                     </div>
+                   </template>
+                 </el-table-column>
+                 <el-table-column
+                   prop="sf"
+                   label="身份">
+                 </el-table-column>
+                 <el-table-column
+                   prop="fwcs"
+                   label="服务处所">
+                 </el-table-column>
+                 <el-table-column
                    prop="ywxm"
                    label="英文姓名">
                  </el-table-column>
@@ -57,6 +76,10 @@
                    label="出生日期">
                  </el-table-column>
                  <el-table-column
+                   prop="djrq"
+                   label="登记日期">
+                 </el-table-column>
+                 <el-table-column
                    prop="gjdq"
                    label="国家地区">
                  </el-table-column>
@@ -67,6 +90,9 @@
                  <el-table-column
                    prop="zjhm"
                    label="证件号码">
+                   <template slot-scope="scope">
+                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                   </template>
                  </el-table-column>
              </el-table>
              <div class="middle-foot mt-10">
@@ -191,8 +217,24 @@ export default {
          });
     },
     getInfo(dm,mc)
-    {  this.show=!this.show;
+    {     this.show=!this.show;
           createDWMap(dm,mc);
+    },
+    //得到学校信息
+    getinfo(dm,callback){
+      let p = {
+        "xxbh": dm,
+      };
+      var url = this.Global.aport + "/zxdt/getXXDZList";
+      this.$api.post(url, p,
+        r => {
+          if(r.success){
+            console.log(r.data[0].DZXQ);
+            var dzxq=r.data[0].DZXQ;
+             callback && callback(dzxq)
+           }
+        })
+
     },
     getXXDZ(dm,callback)
     {
@@ -206,16 +248,18 @@ export default {
       //    });
 
     var searchResult = [
-      {dm:'32010100000001915459',count:11},
-      {dm:'32010100000001917524',count:21},
-      {dm:'32010100000001916677',count:58},
+      {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:11},
+      {dm:'江苏南京市浦口区乌江镇周云村王洼组21号',count:21},
+      {dm:'江苏南京市浦口区乌江镇周云村青健组50号',count:58},
     ];
     callback(searchResult);
     },
     //人员信息
     getRyxx(currentPage,showCount,bzhid,mc,lrdw)
     {
+
       if(currentPage==1){
+        this.tableData=[];this.TotalResult=0;
         this.CurrentPage=1;
       }
        this.bzhid=bzhid;
@@ -240,7 +284,18 @@ export default {
            }
          });
        this.bzhDialogVisible=true;
-    }
+    },
+    //后期匹配地址
+    getXY(dz, callback) {
+
+      let p = {
+        "dz": dz,
+      };
+      this.$api.get(this.Global.xyaddress, p,
+        r => {
+          callback(r.result)
+        });
+    },
   },
 }
 </script>
@@ -268,9 +323,7 @@ export default {
 </style>
 <style>
 .lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
         border-radius: 50%;
-
         line-height:20px;
         text-align: center;
         vertical-align: middle;

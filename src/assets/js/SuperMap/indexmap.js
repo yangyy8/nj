@@ -12,6 +12,7 @@ export function createMapL(id,mc,num,t) {
 type=t;
 
 var ss=getcenter(id,function(centers){
+  console.log(id,mc,centers);
   map = L.map('mainMap', {
     crs: L.CRS.EPSG4326,
     preferCanvas: true,
@@ -198,6 +199,7 @@ export function queryZrqByServer(data) {
   });
 }
 export function renderMarker(point, data) {
+
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
@@ -265,7 +267,7 @@ function renderPCS(data) {
 }
 
 export function renderMarkerpcs(point, data) {
-
+ map.flyTo(point,11);
   //debugger;
   // 画圆
   var myIcon = L.divIcon({

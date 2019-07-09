@@ -31,10 +31,10 @@ export function createMapL() {
   //加载图层
   //L.supermap.tiledMapLayer(url).addTo(map);
 }
-export function getSearh(obj){
+export function getSearh(centers){
   if (layerGroup != null)
     {layerGroup.clearLayers();}
-
+    map.flyTo(centers,11);
 
   // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
 //   var parameters = new Array();
@@ -111,24 +111,24 @@ export function getSearh(obj){
 markerLayer.clearLayers();
 var  searchResult=window.lzvm.getBZHDZ(function(data){
 
-  if(data.length!=0){
+  if(data.length>0){
   for (var i = 0; i < data.length; i++) {
        queryZrqByServer(data[i].dm,data[i].count);
     }
    }else {
-     alert("地图库中未录入该地址的坐标。");
+     //alert("地图库中未录入该地址的坐标。");
   }
 });
 }
 //调用数据集获取坐标
-export function queryZrqByServer(data,num) {
+export function queryZrqByServer(dm,num) {
   markerLayer.clearLayers();
 
   //数据集SQL查询服务参数
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
     queryParameter: {
       name: "dz_mlp@ORCL_gt8",
-      attributeFilter: "JWPTBH='" + data + "'"
+      attributeFilter: "DZMC='" + dm + "'"
     },
     datasetNames: ["ORCL_gt8:dz_mlp"] //数据集名称
   });
@@ -149,22 +149,32 @@ export function queryZrqByServer(data,num) {
           var pp=[];
           pp.push(y);
           pp.push(x);
-         var mc=features[0].properties.DZMC;
-         var dm=features[0].properties.JWPTBH;
-			   	renderMarker(pp,num,dm,mc);
+         // var mc=features[0].properties.DZMC;
+         // var dm=features[0].properties.JWPTBH;
+			   	renderMarker(pp,num,dm,dm);
 			}
 			else {
+        var ss=window.lzvm.getXY(dm,function(datae){
+          if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
+           var das=[];
+           das.push(datae.ycoord);
+           das.push(datae.xcoord);
+           //console.log(das,data);
+           renderMarker(das, num,dm,dm);
+         }
+        });
+
 				//alert("地图库中未录入该地址的坐标。");
 		 	}
     // }
    });
 }
-export function renderMarker(point, data,dm,mc) {
+export function renderMarker(point, num,dm,mc) {
 
       // 画圆
       var myIcon = L.divIcon({
-          html: "<div style='line-height:38px;text-align:center;'>" + data + "</div>",
-          className: 'my-div-icon lz',
+          html: "<div style='line-height:38px;text-align:center;'>" + num + "</div>",
+          className: 'my-div-icon lzgreen',
           iconSize:50
       });
 
@@ -172,7 +182,7 @@ export function renderMarker(point, data,dm,mc) {
         icon: myIcon,
         pcsdm: dm,
         pcsmc: mc,
-        num: data
+        num: num
       });
       markerLayer.addLayer(tempMarker);
 
@@ -187,13 +197,10 @@ export function renderMarker(point, data,dm,mc) {
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
 
-    window.lzvm.getRyxx(1,5,dm,mc,"");
+    window.lzvm.getRyxx(1,5,dm,dm);
 
   });
   }
-
-
-
 
 
 

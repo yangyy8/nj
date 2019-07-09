@@ -12,7 +12,7 @@ export function createMapL() {
     preferCanvas: true,
     center: [32.03613281, 118.78211975],
     maxZoom: 18,
-    minZoom: 13,
+    minZoom: 11,
     zoom: 15,
     zoomControl: true,
     attributionControl: false,
@@ -93,21 +93,33 @@ export function doSearch(className) {
       var markers = [];
       var ids = [];
 
-      var sdata=[
-        {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:320},
-      ];
+      // var sdata=[
+      //   {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:320},
+      // ];
+      console.log('resultdata.length',resultdata.length);
+    var data=[];
       for(var i = 0; i < resultdata.length; i++) {
-        var id=resultdata[i].properties.DZMC;
+        var id=resultdata[i].properties.DZMC.split('号');
+        var zb=resultdata[i].geometry.coordinates.reverse();
 
-         for (var j = 0; j < sdata.length; j++) {
+    var das=new Object();
 
-          if(sdata[j].dm==id) {
-            var mc=resultdata[i].properties.JWPTBH;
-            renderMarkerbzh(resultdata[i].geometry.coordinates.reverse(),sdata[j].dm,sdata[j].count,mc);
-          }
-         }
-
+    das.dm=id[0]+"号";
+    das.zb=zb;
+    data.push(das);
       }
+       // console.log('-----',data);
+      var searchResult=window.zdvm.getbzhdz(data,function(sdata){
+        console.log(sdata);
+       for (var j = 0; j < sdata.length; j++) {
+         var dm=sdata[j].dm.split('号')[0]+'号';
+          renderMarkerbzh(sdata[j].zb,dm,sdata[j].count,dm);
+       }
+      });
+
+
+
+
      // if(ids.length==0){
      //   alert("该选中区域没有人员!");
      //   return;
@@ -128,8 +140,6 @@ export function doSearch(className) {
 
   })
 
-
-
 		//删除
 		if (markerLayer != null) {
 			markerLayer.clearLayers();
@@ -142,7 +152,7 @@ export function doSearch(className) {
 	}
 
   export function renderMarkerbzh(point, dm,num,mc) {
-  console.log('--==',point);
+
     //debugger;
     // 画圆
     var myIcon = L.divIcon({

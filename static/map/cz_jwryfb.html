@@ -8,9 +8,9 @@
         html{width: 100%;height: 100%}
         body{width: 100%;height: 100%}
         #mainMap{float:right;width: 100%;height: 100%;}
-		
+
 		.my-div-icon {
-            background-color: rgba(0, 167, 91, 0.8);
+
             border-radius: 50%;
             /*width: 50 !important;
             height: 50px !important;*/
@@ -23,7 +23,7 @@
 			color: #fff;
 		}
     </style>
-	
+
 	<script type="text/javascript" include="jquery,leaflet,leaflet.draw,moment,bootstrap,bootstrap-datetimepicker" src="../web/libs/include-leaflet.js"></script>
 	<script src="../dist/common.js" type="text/javascript"></script>
 	<script src="../dist/config.js" type="text/javascript"></script>
@@ -60,14 +60,14 @@
 			padding: 6px 12px;
 			border:0;
 		}
-		
+
 		#filttable td, #cztable td {
 			padding: 5px 0 5px 5px;
 		}
 		#cztable {
 			font-size:14px;
 		}
-		
+
 		.bottompanel {
 			width: 100%;
 			height: 530px;
@@ -78,7 +78,7 @@
 			display:none;
 		}
 		.bottompanel .closed{
-			position:absolute; right:10px; top:0; 
+			position:absolute; right:10px; top:0;
 		}
 		.bottompanel .pagepanel {
 			padding-top:5px;
@@ -260,7 +260,7 @@
 	var layerGroup;
 	var MAP_SIZE = [11, 15];
 	var SEARCH_HEIGHT = 100;
-	
+
 	function initDateControl(ids) {
 		var dateOptions = {
 			format: "YYYY-MM-DD",
@@ -278,19 +278,19 @@
 		var clientHeight = $(document).height();
 		//alert(clientHeight);
 		$("#resultpanel").css("height", (clientHeight - $("#filttable").height() - SEARCH_HEIGHT) + "px");
-		
+
         createMapL();
-		
+
 		fillSelect("query_gjdq", CONFIG.DM_URL + "dm_gjdq", true);
 		fillSelect("query_tlyxq", CONFIG.DM_URL + "dm_tlyxq", true);
 		fillSelect("query_xb", CONFIG.DM_URL + "dm_xb", true);
 		fillSelect("query_sf", CONFIG.DM_URL + "dm_sf", true);
 		fillSelect("query_zjzl", CONFIG.DM_URL + "dm_zjzl", true);
 		fillSelect("query_qzzl", CONFIG.DM_URL + "dm_qzzl", true);
-		
+
 		initDateControl(["query_csrq_from", "query_csrq_to", "query_sjxf_from", "query_sjxf_to", "query_sjjs_from", "query_sjjs_to", "query_sujjs_from", "query_sujjs_to"]);
     })
-	
+
 	function getTSY(t) {
 		if (t == "") {
 			$("#lbtsy").parent().hidden();
@@ -305,10 +305,10 @@
 	function doSearch() {
 		if (layerGroup != null)
 			layerGroup.clearLayers();
-	
+
 		var xzqh = $("#query_qx").val();
 		var pcs = $("#query_pcs").val();
-		
+
 		//ES； http://10.33.69.24:9200/es_lz_lzxx/doc
 		var searchResult = [
 			{ dm: '320113640000', mc: '栖霞派出所', num: 111},
@@ -317,14 +317,14 @@
 			{ dm: '320113660000', mc: '	摄山派出所', num: 111},
 			{ dm: '320104680000', mc: '	大光路派出所', num: 111}
 			];
-			
+
 		for (var i = 0; i < searchResult.length; i++) {
 			queryPcsByServer(searchResult[i]);
 		}
 		//renderMarker([32.03613281, 118.78211975], "1111", "xx派出所", 123456);
 	}
-	
-	function queryPcsByServer(data){		
+
+	function queryPcsByServer(data){
 		//数据集SQL查询服务参数
 		var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
 			queryParameter: {
@@ -345,7 +345,7 @@
 			}
 		});
 	}
-	
+
 	function renderMarker(point, data) {
 	//debugger;
         // 画圆
@@ -356,37 +356,37 @@
         });
         var tempMarker = L.marker(point, { icon: myIcon, pcsdm: data.dm, pcsmc: data.mc,  num: data.num });
         markerLayer.addLayer(tempMarker);
-		
+
 		markerLayer.on("mousemove", function(e) {
 			e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "个数：" + e.layer.options.num + "</div>").openPopup();
 		});
 		markerLayer.on("mouseout", function(e) {
 			e.layer.closePopup();
 		});
-		
+
         tempMarker.on('click', function(e) {
           //alert(e.target.options.pcsmc);
 		  requestTableData(e.target.options.pcsdm, 1);
         });
     }
-	
+
 	// 点击派出所marker, 获取常住人员列表
 	function requestTableData(pcsdm, curpage) {
 		//ES 请求
 		var total = 1000;
-		
+
 		var html = new Array();
 		for (var i = 0; i < 15; i++) {
 			html.push("<tr><td>国家地区" + i + "</td><td>111</td><td>111</td><td>111</td><td>男</td><td>111</td><td>111</td></tr>");
 		}
 		$("#cztablebody").html(html.toString());
-		
+
 		createPage(curpage, total, pcsdm);
-		
+
 		$('.bottompanel').show(200);
 	}
-	
-	
+
+
     //处理geometry数据数组中经纬度 与 leaflet.js API中构建polygon(纬，经)矛盾
     var changeLonAndLat = function(arr){
         var arrresult = [];
@@ -433,12 +433,12 @@
                     transparent: true
                 }
         ).addTo(map);
-		
+
 		markerLayer = L.featureGroup().addTo(map);
 	 }
-    
-	
-	
+
+
+
 	function createPage(curPage, total, pcsdm) {
 		var COUNT = 10;
 		var pageHtml = "";
@@ -457,11 +457,11 @@
 				}
 			}
 		}
-		
+
 		if (start + COUNT < total + 1) {
 			pageHtml += "<span onclick=\"requestTableData('" + pcsdm + "'," + (start + COUNT) + ")\">&gt;</span>";
 		}
-		
+
 		$(".pagepanel").html(pageHtml);
 	}
 	//展开事件
