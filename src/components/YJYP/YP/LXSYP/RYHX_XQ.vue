@@ -880,10 +880,20 @@ export default{
     }
   },
   activated(){
+    bqDialogVisible=false;
+    zpDialogVisible=false;
+    lzxxDialogVisible=false;
+    crjDialogVisible=false;
+    asjDialogVisible=false;
+    lxsDialogVisible=false;
+    czDialogVisible=false;
+    dwDialogVisible=false;
+    mhDialogVisible=false;
+    lxsZXDialogVisible=false;
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
     if(this.zjhm!="" && this.zjhm!=undefined){
-      console.log('  this.zjhm',this.zjhm);
+      // console.log('  this.zjhm',this.zjhm);
       this.pd.ZJHM=this.zjhm;
     }else if(this.row.RYBH){
       this.pd.RYBH=this.row.RYBH;
@@ -905,7 +915,16 @@ export default{
     // this.getZJXX(this.pd);
   },
   mounted(){
-
+    bqDialogVisible=false;
+    zpDialogVisible=false;
+    lzxxDialogVisible=false;
+    crjDialogVisible=false;
+    asjDialogVisible=false;
+    lxsDialogVisible=false;
+    czDialogVisible=false;
+    dwDialogVisible=false;
+    mhDialogVisible=false;
+    lxsZXDialogVisible=false;
   },
   methods:{
     toTegional(id){
