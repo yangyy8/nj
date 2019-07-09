@@ -171,8 +171,8 @@ export default {
           RYBH:this.rybh,
           YWLB:'0003'
         },
-        "orderType":"DESC",
-	      "orderBy":{value:"CJSJ",dataType:"date"}
+        // "orderType":"DESC",
+	      // "orderBy":{value:"CJSJ",dataType:"date"}
       }
       this.$api.post(this.Global.aport2+'/ryhx/getrytpxx',p,
        r =>{

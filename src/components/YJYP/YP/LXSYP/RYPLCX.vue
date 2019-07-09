@@ -1,120 +1,200 @@
 <template lang="html">
   <!-- 人员批量查询 -->
   <div class="yymain">
-
     <div class="yycontent">
-      <el-row class="mb-15">
-        <el-button type="primary"  size="small" @click="showUpload">批量导入查询</el-button>
-        </el-row>
-      <el-table
-           ref="multipleTable"
-           :data="tableData"
-           border
-           style="width: 100%"
-           @selection-change="handleSelectionChange">
-           <el-table-column
-             prop="ZWXM"
-             label="中文姓名" v-if="zwshow" key="1">
-           </el-table-column>
-           <el-table-column
-             prop="YWXM"
-             label="英文姓名" v-if="ywshow"  key="2">
-           </el-table-column>
-           <el-table-column
-             prop="XB_DESC"
-             label="性别" v-if="xbshow"  key="3">
-           </el-table-column>
+      <div class="tjsy" v-if="gjshow">
+         <el-row class="t-choose" :gutter="10">
+           <el-col  :sm="24" :md="12" :lg="8"  class="input-item t-tjsr">
+             <span class="input-text t-tj">选择组合查询条件：</span>
+             <el-select v-model="queryTerm" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input t-sr" @change="optionChange">
+               <el-option value="1" label="证件号码+证件种类+国籍"></el-option>
+               <el-option value="2" label="姓名+性别+出生日期+国籍"></el-option>
+             </el-select>
+           </el-col>
+           <el-col :sm="24" :md="12" :lg="8" class="input-item">
+              <label class="file">
+                上传文件
+                <input type="file" name=""  @change="uploadFile">
+              </label>
+              <div class="t-input input-input">
+                <div class="t-input-content" v-for="(x,ind) in fileData" :key="ind">
+                  <span class="mr-30" style="color: #606266;font-size:15px">{{x.name}}</span>
+                  <!-- <span @click="deleteFile" class="hand redx">删除</span> -->
+                </div>
+              </div>
+          </el-col>
+         </el-row>
+         <div class="t-ak-tab-pane">
+           <div class="t-pad" v-if="queryTerm=='1'">
+             <el-checkbox-group v-model="checkList1" class="o-checkbox-g">
+               <el-checkbox v-for="item in checkItem1" :label="item.ITEMNAME" :key="item.ITEMNAME" :disabled="item.disabled">{{item.LABEL}}</el-checkbox>
+             </el-checkbox-group>
+           </div>
 
-           <el-table-column
-             prop="GJDQ_DESC"
-             label="国家地区" v-if="gjshow"  key="4">
-           </el-table-column>
-           <el-table-column
-             prop="ZJHM"
-             label="证件号码" v-if="zjshow"  key="5">
-           </el-table-column>
-           <el-table-column
-             prop="TOTAL"
-             label="匹配人数">
-           </el-table-column>
-           <el-table-column
-             label="操作" width="80">
-             <template slot-scope="scope">
-                 <el-button type="text" v-if="scope.row.TOTAL!=0"  class="a-btn"  title="显示详情"  icon="el-icon-document" @click="$router.push({name:'RYHXGJCX_D',query:{row:scope.row}})"></el-button>
-                 <span v-else>无</span>
-             </template>
-           </el-table-column>
-         </el-table>
-     <!-- <div class="middle-foot">
-        <div class="page-msg">
-          <div class="">
-                  共{{TotalResult}}条记录
-          </div>
-          <div class="">
-            每页显示
-            <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            条
-          </div>
-          <div class="">
-    共{{Math.ceil(TotalResult/pageSize)}}页
-          </div>
-        </div>
-        <el-pagination
-          background
-          @current-change="handleCurrentChange"
-          :current-page.sync ="CurrentPage"
-          :page-size="pageSize"
-          layout="prev, pager, next"
-          :total="TotalResult">
-        </el-pagination>
-      </div> -->
+           <div class="t-pad" v-if="queryTerm=='2'">
+             <el-checkbox-group v-model="checkList2" class="o-checkbox-g">
+               <el-checkbox v-for="item in checkItem2" :label="item.ITEMNAME" :key="item.ITEMNAME">{{item.LABEL}}</el-checkbox>
+             </el-checkbox-group>
+           </div>
+         </div>
+
+        <el-row type="flex" class="t-mt20">
+           <el-col :span="24" style="text-align: center;">
+              <el-button type="primary" size="small"  @click="getList()">&nbsp;&nbsp;查询&nbsp;&nbsp;</el-button>
+           </el-col>
+         </el-row>
+     </div>
     </div>
-    <el-dialog title="上传模板" :visible.sync="uploadDialogVisible"  width="640px">
-    <el-form>
-    <el-row  :gutter="1" class="mb-6">
-      <el-col :span="24" class="input-item">
-        <el-checkbox-group v-model="checkList">
-         <el-checkbox label="ZWXM" value="ZWXM">中文姓名</el-checkbox>
-         <el-checkbox label="YWXM" value="YWXM">英文姓名</el-checkbox>
-         <el-checkbox label="XB" value="XB">性别</el-checkbox>
-         <el-checkbox label="GJDQ" value="GJDQ">国家地区</el-checkbox>
-         <el-checkbox label="ZJHM" value="ZJHM">证件号码</el-checkbox>
-       </el-checkbox-group>
-      </el-col>
-     <el-col :span="24" class="input-item">
-          <el-upload
-            class="input-input"
-            ref="upload"
-            :action='actions+"/ryhx/gettjxx"'
-            :file-list="fileList"
-            multiple
-            :on-success="upSuccess"
-            :data="uploadIconData"
-            :before-upload="beforeAvatarUpload"
-            :limit="1"
-            :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">查询</el-button>
-            <br/>
-            <span slot="tip" class="el-upload__tip">只能上传EXCEL文件</span>
-          </el-upload>
-        </el-col>
-      </el-row>
-    </el-form>
-  </el-dialog>
+    <div class="yycontent" v-if="isShow">
+      <el-table
+         :data="tableData"
+         border
+         style="width: 100%">
+         <el-table-column
+           prop="zwxm"
+           label="中文姓名"
+           v-if="((checkList2.indexOf('zwxm')>-1)&&(queryTerm=='2'))">
+         </el-table-column>
+         <el-table-column
+           prop="ywxm"
+           label="英文姓名"
+           v-if="((checkList2.indexOf('ywxm')>-1)&&(queryTerm=='2'))">
+         </el-table-column>
+         <el-table-column
+           prop="xb_desc"
+           label="性别"
+           v-if="((checkList2.indexOf('xb')>-1)&&(queryTerm=='2'))">
+         </el-table-column>
+         <el-table-column
+           prop="csrq"
+           label="出生日期"
+           v-if="((checkList2.indexOf('csrq')>-1)&&(queryTerm=='2'))">
+         </el-table-column>
+         <el-table-column
+           prop="gjdq_desc"
+           label="国家地区"
+           v-if="((checkList2.indexOf('gjdq')>-1)&&(queryTerm=='2'))||((checkList1.indexOf('gjdq')>-1)&&(queryTerm=='1'))">
+         </el-table-column>
+         <el-table-column
+           prop="zjzl_desc"
+           label="证件种类"
+           v-if="((checkList1.indexOf('zjzl')>-1)&&(queryTerm=='1'))">
+         </el-table-column>
+         <el-table-column
+           prop="zjhm"
+           label="证件号码"
+           v-if="((checkList1.indexOf('zjhm')>-1)&&(queryTerm=='1'))">
+         </el-table-column>
+         <el-table-column
+           prop="total"
+           label="匹配人数">
+         </el-table-column>
+         <el-table-column
+           label="操作">
+           <template slot-scope="scope">
+             <el-button type="text"  class="a-btn" title="详情" size="mini" icon="el-icon-tickets" @click="details(scope.row)"></el-button>
+           </template>
+         </el-table-column>
+       </el-table>
+    </div>
+    <el-dialog title="列表" :visible.sync="listDialogVisible"  width="900px">
+      <el-table
+         :data="tableDataDetail"
+         border
+         style="width: 100%">
+         <el-table-column
+           prop="zwxm"
+           label="中文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="ywxm"
+           label="英文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="xb_desc"
+           label="性别">
+         </el-table-column>
+         <el-table-column
+           prop="csrq"
+           label="出生日期">
+         </el-table-column>
+         <el-table-column
+           prop="gjdq_desc"
+           label="国家地区">
+         </el-table-column>
+         <el-table-column
+           prop="zjzl_desc"
+           label="证件种类">
+         </el-table-column>
+         <el-table-column
+           prop="zjhm"
+           label="证件号码">
+           <template slot-scope="scope">
+              <span class="tc-b hand" @click="moreFn(scope.row)">{{scope.row.zjhm}}</span>
+            </template>
+         </el-table-column>
+         <el-table-column
+           prop="zjyxq"
+           label="证件有效期">
+         </el-table-column>
+       </el-table>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      gjshow:false,
+      queryTerm:'1',//组合查询条件
+      checkItem2:[
+        {
+          LABEL:'中文姓名',
+          ITEMNAME:'zwxm',
+        },
+        {
+          LABEL:'英文姓名',
+          ITEMNAME:'ywxm',
+        },
+        {
+          LABEL:'性别',
+          ITEMNAME:'xb',
+        },
+        {
+          LABEL:'国家地区',
+          ITEMNAME:'gjdq',
+        },
+        {
+          LABEL:'出生日期',
+          ITEMNAME:'csrq',
+        }
+      ],
+      checkList2:[],
+      checkItem1:[
+        {
+          LABEL:'证件号码',
+          ITEMNAME:'zjhm',
+          disabled:true,
+        },
+        {
+          LABEL:'证件种类',
+          ITEMNAME:'zjzl',
+          disabled:true,
+        },
+        {
+          LABEL:'国家地区',
+          ITEMNAME:'gjdq',
+          disabled:false,
+        },
+      ],
+      checkList1:['zjhm','zjzl'],
+      fileData:null,
+      tableData: [],
+      isShow:false,
+      listDialogVisible:false,
+      tableDataDetail:[],
+
+
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -133,125 +213,111 @@ export default {
       uploadIconData:{},
       mapForm:{},
       options:this.pl.options,
-      tableData: [],
+
     }
   },
   mounted() {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getXB');
-    // this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    pageSizeChange(val) {
-      this.getList(this.CurrentPage, val, this.pd);
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.getList(val, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
-    },
-    getList(currentPage, showCount, pd) {
-      let p = {
-        "currentPage": currentPage,
-        "showCount": showCount,
-        "pd": pd,
-      };
-      this.$api.post(this.Global.aport3+'/ryhx/gettjxx', p,
-        r => {
-          this.tableData = r.data.resultList;
-          this.TotalResult = r.data.totalResult;
-        })
-    },
-    upSuccess(r) {
-      if (r.success) {
-       this.zwshow=false;
-       this.ywshow=false;
-       this.xbshow=false;
-       this.gjshow=false;
-       this.zjshow=false;
-        console.log(this.checkList);
-        var  arr=this.checkList;
-          for (var i = 0; i < arr.length; i++) {
-          switch (arr[i]) {
-            case "ZWXM":
-               this.zwshow=true;
-              break;
-            case "YWXM":
-              this.ywshow=true;
-              break;
-            case "XB":
-               this.xbshow=true;
-               break;
-            case "GJDQ":
-                this.gjshow=true;
-                break;
-            case "ZJHM":
-                this.zjshow=true;
-                break;
-            default:
+    uploadFile(event){//获取上传的文件
+       this.fileData=event.target.files;
+     },
+     upload(){//上传文件
+       var formData = new FormData();
+       let arr=this.fileData;
+       for(var i=0;i<arr.length;i++){
+         formData.append("file",arr[i]);
+       }
+       if(this.queryTerm=='1'){
+         formData.append("type",this.checkList1);
+       }else if(this.queryTerm=='2'){
+         formData.append("type",this.checkList2);
+       }
+       let p=formData;
+       console.log('formData',formData)
+       this.$api.post(this.Global.aport2+'/ryhxhx/gettjxx',p,
+        r =>{
+          if(r.success){
+            this.tableData=r.data
+          }else {
 
-           }
           }
-
-        this.tableData = r.data;
-
-      } else {
-        this.$message.error(r.message);
-      }
-      this.uploadDialogVisible = false;
-      // this.getList(this.CurrentPage, this.pageSize, this.pd);
-    },
-    beforeAvatarUpload(file) {
-      console.log(file.type)
-      const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-      const isExls=file.type==='application/vnd.ms-excel';
-      if (!isEXL && !isExls) {
-        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
-      }
-      return isEXL?isEXL:isExls;
-    },
-    showUpload() {
-      this.uploadDialogVisible = true;
-      this.typemd = "";
-      this.actions = window.IPConfig.IP+this.Global.aport3;
-      console.log(this.$refs.upload)
-      if (this.$refs.upload) {
-        this.$refs.upload.clearFiles();
-      }
-    },
-    submitUpload() {
-
-        console.log('this.uploadIconData',this.uploadIconData);
-        if(this.checkList.length==0){
-          this.$message({
-            message: '请先选择类型！',
-            type: 'warning'
-          });
-          return
-        }
-      if (this.$refs.upload.uploadFiles.length == 0) {
-        this.$message({
-          message: '请先选择文件！',
+        },e => {
+        },{'Content-Type': 'multipart/form-data'})
+     },
+     getList(){
+       if(this.fileData==null){
+         this.$message({
+          message: '上传文件不能为空！',
           type: 'warning'
-        });
-        return
-      }
-      this.uploadIconData.type=this.checkList;
-
-      this.$refs.upload.submit();
-    },
-    download() {
-       window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/临住布控导入模板.xlsx'
-    },
+         });
+         return
+       }
+       if(this.queryTerm=='2'){
+         if((this.checkList2.indexOf('zwxm')==-1)&&(this.checkList2.indexOf('ywxm')==-1)){
+           this.$message({
+            message: '中文姓名和英文姓名二者必选其一！',
+            type: 'warning'
+           });
+           return
+         }
+       }
+       this.isShow=true;
+       this.upload();
+     },
+     details(i){
+       this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',i,
+        r =>{
+          if(r.success){
+            this.listDialogVisible=true;
+            this.tableDataDetail=r.data
+          }
+        })
+     },
+     moreFn(i){
+       this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i}});
+       this.listDialogVisible=false;
+     },
+     optionChange(){
+       this.isShow=false;
+       this.checkList1=['zjhm','zjzl'];
+       this.checkList2=[];
+     },
   }
 }
 </script>
 
 <style scoped>
-
+.file {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  background-color: #409EFF;
+  border:1px solid #409EFF;
+  border-radius: 3px;
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+  padding: 9px 15px;;
+  overflow: hidden;
+  text-decoration: none;
+  text-indent: 0;
+  /* line-height: 20px; */
+  font-size: 12px;
+}
+.file input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+.file:hover {
+  background: #66b1ff;
+  border-color: #66b1ff;
+  color: #fff;
+}
 </style>
 <style>
 
