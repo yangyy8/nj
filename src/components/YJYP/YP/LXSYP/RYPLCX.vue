@@ -281,7 +281,9 @@ export default {
        this.listDialogVisible=false;
      },
      optionChange(){
-
+       this.isShow=false;
+       this.checkList1=['zjhm','zjzl'];
+       this.checkList2=[];
      },
   }
 }
