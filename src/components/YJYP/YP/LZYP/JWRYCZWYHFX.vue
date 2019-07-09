@@ -51,7 +51,7 @@
                       <span class="yy-input-text"><font color=red>*</font>入住时间：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                   </el-col>
@@ -59,7 +59,7 @@
                       <span class="yy-input-text"></span>
                         <el-date-picker class="yy-input-input"
                             v-model="pd.endTime" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                   </el-col>
@@ -192,13 +192,16 @@
                              <el-table-column
                                prop="zjhm"
                                label="证件号码">
+                               <template slot-scope="scope">
+                                <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                               </template>
                              </el-table-column>
-                             <el-table-column
+                             <!-- <el-table-column
                                label="操作">
                                <template slot-scope="scope">
                                  <el-button type="text" icon="el-icon-view" @click="details(scope.row)"></el-button>
                                </template>
-                             </el-table-column>
+                             </el-table-column> -->
                          </el-table>
                          <div class="middle-foot mt-10">
                             <div class="page-msg">
@@ -584,7 +587,7 @@ export default {
       var searchResult = [];
         let p={
 
-          "ssfj":this.pd.ssfj,
+          "ssfj":this.pd.ssfj.substr(0,6),
           "pcs":this.pd.pcs,
           "zrq":this.pd.zrq,
           "rzsjStart":this.pd.beginTime,
@@ -630,6 +633,11 @@ export default {
         "currentPage":currentPage,
         "showCount":showCount,
         "dzdtid":this.bzhid,
+        "ssfj":this.pd.ssfj.substr(0,6),
+        "pcs":this.pd.pcs,
+        "zrq":this.pd.zrq,
+        "rzsjStart":this.pd.beginTime,
+        "rzsjEnd":this.pd.endTime,
       };
       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
       this.$api.post(url, p,
@@ -673,6 +681,17 @@ export default {
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
+
+
+      if(this.pd.ssfj==undefined || this.pd.ssfj=="")
+      {
+         this.$message.error("请选择所属分局！");return;
+      }
+      if(this.pd.beginTime==undefined || this.pd.beginTime.trim()==""  || this.pd.endTime==undefined || this.pd.endTime.trim()=="" )
+      {
+         this.$message.error("请选择入住时间");return;
+      }
+
       getSearch();
 
     },

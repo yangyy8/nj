@@ -32,15 +32,15 @@ export function getSearch() {
   markerLayer.clearLayers();
   var searchResult=window.lxsvm.getBZHDZ(function(data,center){
 
-var ss=getcenter(center,function(centers){
-console.log('----',centers);
+// var ss=getcenter(center,function(centers){
 
+console.log("数量",data.length);
     for (var i = 0; i < data.length; i++) {
          renderBzhid(data[i]);
     }
 });
 
-  });
+  // });
 }
 function getcenter(id,callback) {
   var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
@@ -72,28 +72,36 @@ callback(centers);
 //获取标准化地址
 function renderBzhid(data) {
     markerLayer.clearLayers();
-   var mm=data.dm.split("号");
+   // var mm=data.dm.split("号");
    var  uurl="DZMC='"+data.dm+"'";
 
-    mapSqlSearch(uurl, 0, 5, function(features) {
+    mapSqlSearch(uurl,0, 5, function(features) {
 
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
         // var y = features[0].properties.SMY;
        for (var i = 0; i < features.length; i++) {
-         console.log('-+++--',features[i]);
-         var mc=features[i].properties.DZMC;
+        var mc=features[i].properties.DZMC;
         renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
       }
       else {
+        var ss=window.lxsvm.getXY(data.dm,function(datae){
+
+          if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
+           var das=[];
+           das.push(datae.ycoord);
+           das.push(datae.xcoord);
+           //console.log(das,data);
+           renderMarkerbzh(das, data,data.dm);
+         }
+
+        });
         //alert("地图库中未录入该地址的坐标。");
       }
     });
-
   // });
 }
-
 function mapSqlSearch(attributeFilter, from, to, callback) {
   //向服务器发送请求，并对返回的结果进行处理
   var url = "http://10.33.66.183:2333/iserver/services/data-gt8/rest/data";
@@ -111,6 +119,8 @@ function mapSqlSearch(attributeFilter, from, to, callback) {
     callback(features);
   });
 }
+
+
 
 export function renderMarkerbzh(point, data,mc) {
 

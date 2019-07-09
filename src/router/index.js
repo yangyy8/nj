@@ -376,6 +376,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX'], resolve),
         },
         {
+          path: 'RYHX_NX',
+          name: 'RYHX_NX',
+          meta:{title:['预警研判','研判','人员画像','人员画像']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX_XQ'], resolve),
+        },
+        {
           path: 'RYHX_XQ',
           name: 'RYHX_XQ',
           meta:{title:['预警研判','研判','人员画像','人员画像'],father:'RYHX'},

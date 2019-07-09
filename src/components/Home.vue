@@ -65,7 +65,7 @@ export default {
       }
     },
     $route:function(val){
-      console.log("val====",val)
+      // console.log("val====",val)
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
@@ -78,7 +78,7 @@ export default {
         }
         this.tabList.push(val);
         this.Global.tabLists=this.tabList;
-        console.log("tabList",this.tabList)
+        // console.log("tabList",this.tabList)
       }
     }
   },
@@ -98,12 +98,12 @@ export default {
   },
   methods: {
     tabClick(i){
-      console.log(i)
+      // console.log(i)
       this.$router.push({name:i.name})
     },
     // 关闭tab页面==========================
     close1(index, item) {
-console.log(index);
+// console.log(index);
       this.tabList.splice(index, 1);
       if (index > 0) {
         this.tabClick(this.tabList[index - 1])

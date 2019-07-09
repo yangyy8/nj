@@ -174,7 +174,9 @@ export default {
 
   methods:{
     getData0(xid){
-      this.pp.RGUID=xid;
+      var arr=xid.split(',');
+      this.pp.RGUID=arr[0];
+      this.pp.ZJHM=arr[1];
       let p = {
         "pd": this.pp
       };

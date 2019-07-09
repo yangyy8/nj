@@ -7,8 +7,15 @@
                 style="width: 100%"
                 >
                 <el-table-column
-                  prop="zp"
-                  label="照片" v-if="czshow">
+                  label="照片">
+                  <template slot-scope="scope">
+                    <div v-if="scope.row.zp">
+                     <el-popover placement="right" title="" trigger="hover">
+                       <img :src="scope.row.zp"/>
+                       <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                     </el-popover>
+                    </div>
+                  </template>
                 </el-table-column>
                 <el-table-column
                   prop="sf"
@@ -45,6 +52,9 @@
                 <el-table-column
                   prop="zjhm"
                   label="证件号码">
+                  <template slot-scope="scope">
+                     <span style="color:yellow; cursor:pointer"  @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
+                  </template>
                 </el-table-column>
             </el-table>
             <div class="middle-foot mt-10">
@@ -102,11 +112,11 @@ export default {
         tableData:[],
         options:this.pl.options,
         bzhDialogVisible:false,
-        lrdw:'320104',
+        lrdw:'320115',
         lrdwmc:'秦淮区',//320113   320112江北
         rs:'11523',
-        type:'L',
-        yf:'M',
+        type:'C',
+        yf:'Y',
         sevalue:[],
         bzhid:'',
         czshow:false,
@@ -115,11 +125,11 @@ export default {
     },
     mounted(){
       window.vm=this;
-      // this.lrdw=this.$route.query.dqdm;
-      // this.type=this.$route.query.type;
-      // this.rs=this.$route.query.rs;
-      // this.lrdwmc=this.$route.query.mc;
-      // this.yf=this.$route.query.yf;
+      this.lrdw=this.$route.query.dqdm;
+      this.type=this.$route.query.type;
+      this.rs=this.$route.query.rs;
+      this.lrdwmc=this.$route.query.mc;
+      this.yf=this.$route.query.yf;
       createMapL(this.lrdw,this.lrdwmc,this.rs,this.type);
       if(this.type=="C")
       {
@@ -127,7 +137,6 @@ export default {
       }else {
         this.czshow=false;
       }
-
     },
     methods:{
       pageSizeChange(val) {
@@ -174,7 +183,6 @@ export default {
           };
           var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
           if(this.type=="C"){
-
             p={
               "ssfj":n,
             };
@@ -187,7 +195,6 @@ export default {
                 for (var i = 0; i < arr.length; i++) {
                 searchResult.push(arr[i]);
                 }
-
                 callback && callback(searchResult)
               }
             });
@@ -206,7 +213,7 @@ export default {
          let p={
            "currentPage":currentPage,
            "showCount":showCount,
-           "dzdtid":this.bzhid,
+           "dzdtMc":this.bzhid,
            "yf":this.yf,
            "lrdw":this.ssfj,
 
@@ -231,7 +238,22 @@ export default {
              }
            });
          this.bzhDialogVisible=true;
-      }
+      },
+      gotos(zjhms){
+       let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+       window.open(routeData.href,'_blank')
+      },
+      //后期匹配地址
+      getXY(dz,callback){
+
+        let p={
+          "dz":dz,
+        };
+        this.$api.get(this.Global.xyaddress, p,
+          r => {
+          callback(r.result)
+          });
+      },
 
     }
 }

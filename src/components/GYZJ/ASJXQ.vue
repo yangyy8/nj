@@ -951,17 +951,25 @@ export default {
       this.xtype = type;
       this.xid = id;
       this.detailsDialogVisible = true;
-      console.log(title, type)
+
     },
     getList(currentPage,showCount, url, type) {
 
       if(type==0){
-        console.log(this.row.YJID);
+
+        if(this.row.YJID!=undefined){
         this.cdt={};
         this.cdt.YJID=this.row.YJID;
       }else {
+        return ;
+      }
+      }else {
+        if(this.row.RYBH!=undefined){
         this.cdt={};
         this.cdt.RYBH = this.row.RYBH;
+      }else {
+        return ;
+      }
       }
 
       let p = {
@@ -1035,6 +1043,7 @@ export default {
            this.tableData63=r.data.resultList;
           }
         })
+
     },
     getDetails(n, t) {
       switch (t) {
@@ -1061,7 +1070,7 @@ export default {
       }
     },
     chuli() {
-      console.log(this.pd.CLJG);
+
       if(this.pd.CLJG=="" || this.pd.CLJG==undefined)
       {
         this.$alert('甄别结果不能为空！', '提示', {

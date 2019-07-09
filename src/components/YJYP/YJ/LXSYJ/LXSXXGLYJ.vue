@@ -166,48 +166,15 @@ export default {
   },
   activated(){
     this.type=this.$route.query.type;
-
     this.pd={BJSJ_DateRange:{begin:'',end:''}};
     this.pd0={};
-     if(this.type==undefined){
-       this.type=this.Global.type;
+     if(this.type!=undefined){
+       this.$store.commit('getType',this.type)
+       this.getMXLX(this.type);
      }else {
-       this.Global.type=this.type;
+       this.getMX(this.$store.state.type);
      }
-    switch (this.type) {
-    case 0:
-        this.pd.MXLX="LXS_SWLZYJ";//留学生市外临住预警
-        break;
-    case 1:
-      this.pd.MXLX="LXS_SKYJ";//留学生涉恐预警
-      break;
-    case 2:
-     this.pd.MXLX="LXS_CRJTX";//留学生出入境提醒
-      break;
-    case 3:
-      this.pd.MXLX="LZ_HC";//临住核查预警
-      break;
-    case 4:
-        this.pd.MXLX="CZ_NMYJ";//难民
-        break;
-    case 5:
-        this.pd.MXLX="BKYJ";//布控预警
-        break;
-    case 6:
-        this.pd.MXLX="LXS_WBDYJ";//留学生录取未报到预警
-        break;
-    case 7:
-        this.pd.MXLX="QZ_HCYJ";//受理、签发信息核查预警
-        break;
-    case 8:
-        this.pd.MXLX="ASJ_SKGJRY";//涉恐国家人员预警
-        break;
-    default:
-       break;
-     }
-
-
-     this.getList(this.CurrentPage, this.pageSize, this.pd);
+     this.Global.indexstate=1;
   },
   mounted() {
 
@@ -215,6 +182,89 @@ export default {
     this.$store.dispatch('getClzt');
   },
   methods: {
+    getMXLX(type){
+
+      switch (parseInt(type)) {
+      case 0:
+          this.pd.MXLX="LXS_SWLZYJ";//留学生市外临住预警
+          break;
+      case 1:
+        this.pd.MXLX="LXS_SKYJ";//留学生涉恐预警
+        break;
+      case 2:
+       this.pd.MXLX="LXS_CRJTX";//留学生出入境提醒
+        break;
+      case 3:
+        this.pd.MXLX="LZ_HC";//临住核查预警
+        break;
+      case 4:
+          this.pd.MXLX="CZ_NMYJ";//难民
+          break;
+      case 5:
+          this.pd.MXLX="BKYJ";//布控预警
+          break;
+      case 6:
+          this.pd.MXLX="LXS_WBDYJ";//留学生录取未报到预警
+          break;
+      case 7:
+          this.pd.MXLX="QZ_HCYJ";//受理、签发信息核查预警
+          break;
+      case 8:
+          this.pd.MXLX="ASJ_SKGJRY";//涉恐国家人员预警
+          break;
+      default:
+         break;
+       }
+
+       console.log('this.pd.MXLX',this.pd.MXLX);
+      if(this.pd.MXLX!=undefined){
+       this.getList(this.CurrentPage, this.pageSize, this.pd);
+       }
+    },
+    getMX(mm){
+
+      switch (mm) {
+      case '0':
+          //留学生市外临住预警
+          this.$router.push({name:'LXSSWLZ'});
+          break;
+       case '1':
+       //留学生涉恐预警
+       this.$router.push({name:'LXSSKYJ'});
+        break;
+      case '2':
+       //留学生出入境提醒
+       this.$router.push({name:'LXSCRJYJ'});
+        break;
+      case '3':
+          //临住核查预警
+          this.$router.push({name:'LZHCYJ'});
+        break;
+      case '4':
+         //难民
+          this.$router.push({name:'NMXQPHZYJ'});
+          break;
+      case '5':
+         //布控预警
+           this.$router.push({name:'ZBKYJ'});
+          break;
+      case '6':
+          //留学生录取未报到预警
+          this.$router.push({name:'LXSWBDYJ'});
+          break;
+      case '7':
+           //受理、签发信息核查预警
+           this.$router.push({name:'SLQFXXYJ'});
+          break;
+      case '8':
+          //涉恐国家人员预警
+          this.$router.push({name:'SKGJRYXXYJ'});
+          break;
+      default:
+         break;
+       }
+
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);

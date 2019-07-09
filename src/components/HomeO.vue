@@ -102,7 +102,7 @@ export default {
         this.tabList.push(val);
 
       }
-      console.log("val==========================================", val)
+      // console.log("val==========================================", val)
     },
 
   },

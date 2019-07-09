@@ -152,6 +152,9 @@
                <el-table-column
                  prop="zjhm"
                  label="证件号码">
+                 <template slot-scope="scope">
+                  <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                 </template>
                </el-table-column>
            </el-table>
            <div class="middle-foot mt-10">

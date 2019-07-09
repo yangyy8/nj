@@ -21,7 +21,7 @@
         .sr-only{
             display: none;
         }
-		
+
 		.leftpanel {
 			position:absolute; top:0; left:0; background-color:#fff; width:300px; height:100%; z-index:555;
 		}
@@ -52,16 +52,16 @@
 			padding: 6px 12px;
 			border:0;
 		}
-		
+
 		#filttable td {
 			padding: 5px 0 5px 5px;
 		}
-		
+
 		.leaflet-control-container { /*隐藏地图的工具栏*/
 			display: none;
 		}
     </style>
-	
+
 	<script type="text/javascript" include="jquery,leaflet,leaflet.draw,moment,bootstrap,bootstrap-datetimepicker" src="../web/libs/include-leaflet.js"></script>
 	<script src="../dist/common.js" type="text/javascript"></script>
 	<script src="../dist/config.js" type="text/javascript"></script>
@@ -126,14 +126,14 @@
     $(document).ready(function (){
 
         createMapL();
-		
+
 		fillSelect("query_qzzl", CONFIG.DM_URL + "dm_qzzl", true);
 		fillSelect("query_gjdq", CONFIG.DM_URL + "dm_gjdq", true);
-		
+
 		initDateControl(["query_data_from", "query_data_to"]);
 
     })
-	
+
 	function initDateControl(ids) {
 		var dateOptions = {
 			format: "YYYY-MM-DD",
@@ -168,7 +168,7 @@
                     transparent: true
                 }
         ).addTo(map);
-		
+
 		markerLayer = L.featureGroup().addTo(map);
 
         //var editableLayers = new L.FeatureGroup();
@@ -188,7 +188,7 @@
         map.addControl(drawControl);
         map.on(L.Draw.Event.CREATED, function (e) {
 			var arr=[];
-			
+
 			if (e.layerType=="circle") {
 				var latLng = e.layer.getLatLng();
 				var radius = e.layer.getRadius();
@@ -209,27 +209,27 @@
 					arr.push(arr1);
 				}
 			}
-			
+
 
             polygonLayer = L.polygon(arr);
 			polygonLayer.addTo(map);
-			
+
             var geometryParam = new SuperMap.GetFeaturesByGeometryParameters({
-                datasetNames: ['ORCL_gt8:dz_mlpxx_3201_pt'],
+                datasetNames: ['ORCL_gt8:dz_mlp'],
                 geometry: polygonLayer,
                 spatialQueryMode: 'INTERSECT',
 				fromIndex:0,
 				toIndex:999
             });
             L.supermap.featureService(CONFIG.DATA_GT8_URL).getFeaturesByGeometry(geometryParam,function(serviceResult){
-                
+
 				var resultdata = serviceResult.result.features.features;
                 //var markers = [];
 				//var ids = [];
 				//for(var i = 0; i < resultdata.length; i++) {
 				//	ids.push(resultdata[i].properties.JWPTBH);
                 //}
-				
+
 				// 获取所有的范围的点。输出到页面
 				// 代码写在这，从ES中获取数据的标准化地址ID，然后筛选。
 				for (var i=0;i<resultdata.length;i++) {
@@ -240,10 +240,10 @@
                 }
 				console.log(resultdata);
             });
-			
+
         })
     }
-	
+
 	function doSearch(className) {
 		//删除
 		if (markerLayer != null) {
@@ -252,18 +252,18 @@
 		if (polygonLayer != null) {
 			polygonLayer.remove();
 		}
-			
+
 		$("." + className)[0].click();
 	}
-	
+
 	function doReset() {
 		$("#query_data_from").val("");
 		$("#query_data_to").val("");
 		$("#query_gjdq").val("");
 		$("#query_qzzl").val("");
 	}
-	
-	
+
+
 	//展开事件
 	function doExpand() {
 		var left = "-300px";

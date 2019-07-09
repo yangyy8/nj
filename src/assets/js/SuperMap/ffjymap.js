@@ -57,7 +57,7 @@ export	function createDWMap(id, mc) {
         for (var i = 0; i < data.length; i++) {
           var num=data[i].count;
 
-              mapSqlSearch("dz_mlpxx_3201_pt", "JWPTBH='" +data[i].dm + "'", 0, 5,num, function(features,nums) {
+              mapSqlSearch("dz_mlp", "JWPTBH='" +data[i].dm + "'", 0, 5,num, function(features,nums) {
 
                 for (var j = 0; j < features.length; j++) {
                   var mc=features[j].properties.DZMC;

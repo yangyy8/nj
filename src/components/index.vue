@@ -43,6 +43,12 @@ import NAV from './NAV'
 export default {
   components:{NAV},
   mounted() {
+    console.log(this.Global.indexstate);
+   if(this.Global.indexstate!=0){
+     this.Global.indexstate=0;
+     window.location.reload();
+   }
+
     const oIframe = document.getElementById('index_iframe');
     const deviceWidth = document.documentElement.clientWidth;
     const deviceHeight = document.documentElement.clientHeight;
