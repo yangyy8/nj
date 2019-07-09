@@ -9,7 +9,6 @@
        v-validate-easy="[['required']]">
             <el-input placeholder="请输入证件号码" v-model="zjhm" class="inputs"></el-input>
           </div>
-
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
           <el-button type="primary"  @click="gjshow=!gjshow">高级查询</el-button>
           <el-button type="warning"  @click="$router.push({name:'RYPLCX',query:{}})">模板导入</el-button>

@@ -10,8 +10,6 @@
           <el-button type="success" @click="$router.go(-1)" size="mini">返回</el-button>
         </el-col>
       </el-row>
-
-
       <el-table
            ref="multipleTable"
            :data="tableData"
