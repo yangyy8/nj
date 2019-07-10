@@ -1,206 +1,213 @@
 <template lang="html">
     <el-form :model="form"  class="crcolor" style="padding:10px;line-height:35px;">
               <el-row type="flex">
-                <el-col :span="16">
-                  <el-row :gutter="2">
-                    <el-col :span="12">
+                <el-col :span="22">
+                  <el-row>
+                    <el-col :span="8">
                       <span  class="yy-input-text">英文姓：</span>
-                        <el-input placeholder="" size="small" v-model="form.YWX"  class="yy-input-input"></el-input>
+                       <el-input placeholder="" size="small" v-model="form.YWX"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">英文名：</span>
                       <el-input placeholder="" size="small" v-model="form.YWM"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">英文姓名：</span>
                       <el-input placeholder="" size="small" v-model="form.YWXM"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">中文姓名：</span>
                       <el-input placeholder="" size="small" v-model="form.ZWXM"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">证件种类：</span>
                       <el-input placeholder="" size="small" v-model="form.ZJZL_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">证件号码：</span>
                       <el-input placeholder="" size="small" v-model="form.ZJHM"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">国家地区：</span>
                       <el-input placeholder="" size="small" v-model="form.GJDQ_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">出生日期：</span>
                       <el-input placeholder="" size="small" v-model="form.CSRQ"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">性别：</span>
                       <el-input placeholder="" size="small" v-model="form.XB_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text">身份证号：</span>
                       <el-input placeholder="" size="small" v-model="form.SFZH"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12" >
+                    <el-col :span="8" >
                       <span class="yy-input-text">签证种类：</span>
                       <el-input placeholder="" size="small" v-model="form.QZZL_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12" >
+                    <el-col :span="8" >
                       <span class="yy-input-text" title="签证(注)号码">签证(注)号码：</span>
                         <el-input placeholder="" size="small" v-model="form.QZHM"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12" >
+                    <el-col :span="8" >
                       <span class="yy-input-text">签发机关：</span>
                       <el-input placeholder="" size="small" v-model="form.QFD_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12" >
+                    <el-col :span="8" >
                       <span class="yy-input-text" title="签证(注)有效期至">停留有效期至：</span>
                         <el-input placeholder="" size="small" v-model="form.TLYXQ"  class="yy-input-input"></el-input>
                     </el-col>
 
-                    <el-col :span="12">
+                    <el-col :span="8">
                       <span class="yy-input-text" title="签证签发日期">签证签发日期：</span>
                           <el-input placeholder="" size="small" v-model="form.QFRQ"  class="yy-input-input"></el-input>
                     </el-col>
-                    <el-col :span="12">
-                      <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
-                      <el-input placeholder="" size="small" v-model="form.QSGX_DESC"  class="yy-input-input"></el-input>
-                    </el-col>
                   </el-row>
                 </el-col>
-                <el-col :span="8">
-                  <el-carousel height="280px">
+                <el-col :span="2" style="min-width:138px;">
+                  <el-carousel height="160px" style="width:128px" class="photoCar">
                     <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
-                      <img  :src="item.tp" >
+                      <img  :src="item.ZPNR" style="height:160px;width:128px;">
                     </el-carousel-item>
-                    <el-carousel-item v-if="imgshow2">
-                      <img src="../../assets/img/t1.png">
+                    <el-carousel-item v-if="!imgshow1">
+                      <img src="../../assets/img/mrzp.png">
                     </el-carousel-item>
                   </el-carousel>
                 </el-col>
               </el-row>
 
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">入境日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.RJRQ"  class="yy-input-input"></el-input>
+              <el-row type="flex">
+                <el-col :span="22">
+                  <el-row>
+                    <el-col :span="8">
+                      <span class="yy-input-text">入境日期：</span>
+                      <el-input placeholder="" size="small" v-model="form.RJRQ"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text">入境口岸：</span>
+                      <el-input placeholder="" size="small" v-model="form.RJKA_DESC"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text">入境事由：</span>
+                      <el-input placeholder="" size="small" v-model="form.JLSY_DESC"  class="yy-input-input"></el-input>
+                    </el-col>
+                  <!-- </el-row>
+
+                  <el-row :gutter="3" > -->
+
+                    <el-col :span="8">
+                      <span class="yy-input-text">入住日期：</span>
+                      <el-input placeholder="" size="small" v-model="form.ZSRQ"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
+                      <el-input placeholder="" size="small" v-model="form.NLKRQ"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text">接待单位：</span>
+                      <el-input placeholder="" size="small" v-model="form.JDDW"  class="yy-input-input"></el-input>
+                    </el-col>
+
+                  <!-- </el-row>
+                  <el-row :gutter="3" > -->
+                    <el-col :span="8" class="crcolor">
+                      <span class="yy-input-text">投宿于：</span>
+                      <el-radio v-model="typet" label="1" disabled >社会面</el-radio>
+                      <el-radio v-model="typet" label="2" disabled >旅馆</el-radio>
+                    </el-col>
+                    <el-col :span="16" v-if="shm1"  class="crcolor">
+                      <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
+                       <el-input placeholder="" size="small" v-model="form.BZHDZMC"  class="input-input" style="width:80%!important"></el-input>
+                    </el-col>
+                    <el-col :span="16" v-if="shm2"  class="crcolor">
+                      <span class="yy-input-text" style="width:17.4%">旅馆名称：</span>
+                       <el-input placeholder="" size="small" v-model="form.DJDWMC"   class="input-input" style="width:80%!important"></el-input>
+                    </el-col>
+                    <el-col :span="8"  class="crcolor">
+                      <span class="yy-input-text">房号：</span>
+                      <el-input placeholder="" size="small" v-model="form.FH"  class="yy-input-input"></el-input>
+                    </el-col>
+
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="本人联系电话">本人联系电话：</span>
+                      <el-input placeholder="" size="small" v-model="form.BRLXDH"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="紧急情况联系人">紧急情况联系人：</span>
+                          <el-input placeholder="" size="small" v-model="form.JJLXR"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
+                      <el-input placeholder="" size="small" v-model="form.JJLXDH"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8"   class="crcolor">
+                      <span class="yy-input-text">派出所名称：</span>
+                        <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
+                      <el-input placeholder="" size="small" v-model="form.LSDWDH"  class="yy-input-input"></el-input>
+                    </el-col>
+                     <el-col :span="8">
+                        <span class="yy-input-text">房屋性质：</span>
+                        <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
+                      </el-col>
+                    <el-col :span="16">
+                      <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
+                      <el-input placeholder="" size="small" v-model="form.LSDW"  class="input-input" style="width:80%!important"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
+                        <el-input placeholder="" size="small" v-model="form.FZSFZH"  class="yy-input-input"></el-input>
+                    </el-col>
+                  <!-- </el-row>
+                  <el-row :gutter="3" > -->
+                    <el-col :span="8">
+                      <span class="yy-input-text">录入人：</span>
+                        <el-input placeholder="" size="small" v-model="form.DJ"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text">录入单位：</span>
+                      <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <span class="yy-input-text">录入日期：</span>
+                      <el-input placeholder="" size="small" v-model="form.LRRQ"  class="yy-input-input"></el-input>
+                    </el-col>
+                  <!-- </el-row>
+                  <el-row :gutter="3"> -->
+                    <el-col :span="8">
+                      <span class="yy-input-text">修改人：</span>
+                          <el-input placeholder="" size="small" v-model="form.GXR"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8" >
+                      <span class="yy-input-text">修改单位：</span>
+                          <el-input placeholder="" size="small" v-model="form.GXDW"  class="yy-input-input"></el-input>
+                    </el-col>
+                    <el-col :span="8" >
+                      <span class="yy-input-text">修改日期：</span>
+                          <el-input placeholder="" size="small" v-model="form.GXSJ"  class="yy-input-input"></el-input>
+                    </el-col>
+                  <!-- </el-row>
+                  <el-row :gutter="3"> -->
+                    <el-col :span="8">
+                      <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
+                      <el-input placeholder="" size="small" v-model="form.QSGX_DESC"  class="yy-input-input"></el-input>
+                    </el-col>
+                  </el-row>
                 </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">入境口岸：</span>
-                  <el-input placeholder="" size="small" v-model="form.RJKA_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">入境事由：</span>
-                  <el-input placeholder="" size="small" v-model="form.JLSY_DESC"  class="yy-input-input"></el-input>
+                <el-col :span="2">
                 </el-col>
               </el-row>
-
-              <el-row :gutter="3" >
-
-                <el-col :span="8">
-                  <span class="yy-input-text">入住日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.ZSRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="拟离开日期">拟离开日期：</span>
-                    <el-input placeholder="" size="small" v-model="form.NLKRQ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">接待单位：</span>
-                    <el-input placeholder="" size="small" v-model="form.JDDW"  class="yy-input-input"></el-input>
-                </el-col>
-
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8" class="crcolor">
-                  <span class="yy-input-text">投宿于：</span>
-                  <el-radio v-model="typet" label="1" disabled >社会面</el-radio>
-                  <el-radio v-model="typet" label="2" disabled >旅馆</el-radio>
-                </el-col>
-                <el-col :span="16" v-if="shm1"  class="crcolor">
-                  <span class="yy-input-text" title="标准化地址" style="width:17.4%">标准化地址：</span>
-                   <el-input placeholder="" size="small" v-model="form.BZHDZMC"  class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="16" v-if="shm2"  class="crcolor">
-                  <span class="yy-input-text" style="width:17.4%">旅馆名称：</span>
-                   <el-input placeholder="" size="small" v-model="form.DJDWMC"   class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="8"  class="crcolor">
-                  <span class="yy-input-text">房号：</span>
-                  <el-input placeholder="" size="small" v-model="form.FH"  class="yy-input-input"></el-input>
-                </el-col>
-
-                <el-col :span="8">
-                  <span class="yy-input-text" title="本人联系电话">本人联系电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.BRLXDH"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="紧急情况联系人">紧急情况联系人：</span>
-                      <el-input placeholder="" size="small" v-model="form.JJLXR"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="紧急情况联系电话">紧急情况联系电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.JJLXDH"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8"   class="crcolor">
-                  <span class="yy-input-text">派出所名称：</span>
-                    <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="留宿单位(户主)电话" >留宿单位(户主)电话：</span>
-                  <el-input placeholder="" size="small" v-model="form.LSDWDH"  class="yy-input-input"></el-input>
-                </el-col>
-                 <el-col :span="8">
-                    <span class="yy-input-text">房屋性质：</span>
-                    <el-input placeholder="" size="small" v-model="form.ZFZL_DES"  class="yy-input-input"></el-input>
-                  </el-col>
-                <el-col :span="16">
-                  <span class="yy-input-text" title="留宿单位(户主)" style="width:17.4%">留宿单位(户主)：</span>
-                  <el-input placeholder="" size="small" v-model="form.LSDW"  class="input-input" style="width:80%!important"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
-                    <el-input placeholder="" size="small" v-model="form.FZSFZH"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3" >
-                <el-col :span="8">
-                  <span class="yy-input-text">录入人：</span>
-                    <el-input placeholder="" size="small" v-model="form.DJ"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">录入单位：</span>
-                  <el-input placeholder="" size="small" v-model="form.LRDW_DESC"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8">
-                  <span class="yy-input-text">录入日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.LRRQ"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-              <el-row :gutter="3">
-                <el-col :span="8">
-                  <span class="yy-input-text">修改人：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXR"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8" >
-                  <span class="yy-input-text">修改单位：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXDW"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="8" >
-                  <span class="yy-input-text">修改日期：</span>
-                      <el-input placeholder="" size="small" v-model="form.GXSJ"  class="yy-input-input"></el-input>
-                </el-col>
-              </el-row>
-
 </el-form>
 
 </template>
 <script>
 export default {
   name:'LZXX',
-  props:['type','xid'],
+  props:['type','xid','rybh','random'],
   data(){
     return{
       form:{},
@@ -217,10 +224,13 @@ export default {
   },
 
   mounted(){
-    console.log('======--------'+this.id);
     this.initData();
   },
   watch:{
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.initData()
+    },
     type:{
       handler(val){
       this.page=val;
@@ -239,7 +249,7 @@ export default {
   },
   methods:{
     initData(){
-
+      this.getPhoto();
       switch (this.page) {
         case 0://出租屋和重点出租屋/重点国家
           this.getData0();
@@ -251,9 +261,25 @@ export default {
             this.getData2();
             break;
         default:
-
       }
 
+    },
+    getPhoto(){
+      let p={
+        "pd":{
+          RYBH:this.rybh,
+          YWLB:'0003'
+        },
+        // "orderType":"DESC",
+	      // "orderBy":{value:"CJSJ",dataType:"date"}
+      }
+      this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
+       r =>{
+         if(r.success){
+           this.imagess=r.data.resultList;
+           this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
+         }
+       })
     },
     getData0(){
       this.form={};

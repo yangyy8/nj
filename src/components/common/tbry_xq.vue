@@ -1,59 +1,55 @@
 <template>
   <el-form :model="form">
     <el-row type="flex" class="crcolor">
-      <el-col :span="16">
+      <el-col :span="22">
         <el-row :gutter="2">
-          <el-col :span="12">
+          <el-col :span="8">
             <span  class="yy-input-text">英文姓：</span>
               <el-input placeholder="" size="small" v-model="form.YWX"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">英文名：</span>
             <el-input placeholder="" size="small" v-model="form.YWM"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">通报编号：</span>
             <el-input placeholder="" size="small" v-model="form.TBBH"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">性别：</span>
             <el-input placeholder="" size="small" v-model="form.XB_DESC"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">出生日期：</span>
             <el-input placeholder="" size="small" v-model="form.CSRQ"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">入库时间：</span>
             <el-input placeholder="" size="small" v-model="form.RKSJ"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">发布时间：</span>
             <el-input placeholder="" size="small" v-model="form.FBSJ"  class="yy-input-input"></el-input>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="8">
             <span class="yy-input-text">通报类型：</span>
             <el-input placeholder="" size="small" v-model="form.TBRYZL"  class="yy-input-input"></el-input>
           </el-col>
-
-
+          <el-col :span="24">
+            <span class="yy-input-text" style="width:11.7%!important">备注：</span>
+            <el-input placeholder="" size="small" v-model="form.BZ"  class="input-input" style="width:87.8%!important"></el-input>
+          </el-col>
         </el-row>
       </el-col>
-      <el-col :span="8">
-        <el-carousel height="150px">
+      <el-col :span="2" style="min-width:138px;">
+        <el-carousel height="160px" style="width:128px" class="photoCar">
           <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
-            <img  :src="item.tp" >
+            <img  :src="item.ZPNR" style="height:160px;width:128px;">
           </el-carousel-item>
-          <el-carousel-item v-if="imgshow2">
-            <img src="../../assets/img/t1.png">
+          <el-carousel-item v-if="!imgshow1">
+            <img src="../../assets/img/mrzp.png">
           </el-carousel-item>
         </el-carousel>
-      </el-col>
-    </el-row>
-    <el-row type="flex" class="crcolor">
-      <el-col :span="24">
-        <span class="yy-input-text" style="width:11.7%!important">备注：</span>
-        <el-input placeholder="" size="small" v-model="form.BZ"  class="input-input" style="width:87.8%!important"></el-input>
       </el-col>
     </el-row>
     <div class="stu-footerd">
@@ -127,7 +123,7 @@
          <el-table-column
            label="操作" width="80">
            <template slot-scope='scope'>
-            <el-button type="text"  class="a-btn"  title="下载"  icon="el-icon-download" @click=""></el-button>
+            <a @click="downLoad"><el-button type="text"  class="a-btn"  title="下载"  icon="el-icon-download"></el-button></a>
           </template>
          </el-table-column>
        </el-table>
@@ -137,7 +133,7 @@
 <script>
 export default {
   name:'TBRY',
-  props:['type','xid'],
+  props:['type','xid','rybh'],
   data(){
     return{
       form:{},
@@ -157,9 +153,9 @@ export default {
     }
   },
   mounted(){
-  console.log('=====',this.id);
    this.$nextTick(()=>{
     this.getData0(this.id);
+    this.getPhoto()
   });
 
   },
@@ -170,7 +166,8 @@ export default {
       xid:{
         handler(val){
         this.id=val;
-        this.getData0(val)
+        this.getData0(val);
+        this.getPhoto()
       },
       immediate: true
       },
@@ -178,7 +175,6 @@ export default {
 
   methods:{
     getData0(xid){
-
       this.pp.RGUID=xid;
       let p = {
         "pd": this.pp
@@ -191,6 +187,41 @@ export default {
           this.tableData3=r.data.eS_TBRY_GJDQ_QQGList;
           this.tableData4=r.data.eS_TBRY_PAPER_QTList;
       })
+    },
+    getPhoto(){
+      let p={
+        RYBH:this.rybh,
+        YWLB:"0005"
+      }
+      this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
+        r =>{
+          if(r.success){
+            this.imagess=r.data.resultList;
+            this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
+          }
+        })
+    },
+    downLoad(){
+      let p={
+        "pd":{RGUID:this.id}
+      }
+      this.$api.post(this.Global.aport4+'/eS_Tbry_GroupController/getTongBaoPAPERInfoByRGUID',p,
+       r =>{
+          this.downloadM(r)
+       },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/pdf"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        console.log(url)
+        link.setAttribute('download', '通报人员.pdf')
+        document.body.appendChild(link)
+        link.click()
     },
   },
 }

@@ -880,16 +880,16 @@ export default{
     }
   },
   activated(){
-    bqDialogVisible=false;
-    zpDialogVisible=false;
-    lzxxDialogVisible=false;
-    crjDialogVisible=false;
-    asjDialogVisible=false;
-    lxsDialogVisible=false;
-    czDialogVisible=false;
-    dwDialogVisible=false;
-    mhDialogVisible=false;
-    lxsZXDialogVisible=false;
+    this.bqDialogVisible=false;
+    this.zpDialogVisible=false;
+    this.lzxxDialogVisible=false;
+    this.crjDialogVisible=false;
+    this.asjDialogVisible=false;
+    this.lxsDialogVisible=false;
+    this.czDialogVisible=false;
+    this.dwDialogVisible=false;
+    this.mhDialogVisible=false;
+    this.lxsZXDialogVisible=false;
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
     if(this.zjhm!="" && this.zjhm!=undefined){
@@ -915,16 +915,16 @@ export default{
     // this.getZJXX(this.pd);
   },
   mounted(){
-    bqDialogVisible=false;
-    zpDialogVisible=false;
-    lzxxDialogVisible=false;
-    crjDialogVisible=false;
-    asjDialogVisible=false;
-    lxsDialogVisible=false;
-    czDialogVisible=false;
-    dwDialogVisible=false;
-    mhDialogVisible=false;
-    lxsZXDialogVisible=false;
+    this.bqDialogVisible=false;
+    this.zpDialogVisible=false;
+    this.lzxxDialogVisible=false;
+    this.crjDialogVisible=false;
+    this.asjDialogVisible=false;
+    this.lxsDialogVisible=false;
+    this.czDialogVisible=false;
+    this.dwDialogVisible=false;
+    this.mhDialogVisible=false;
+    this.lxsZXDialogVisible=false;
   },
   methods:{
     toTegional(id){

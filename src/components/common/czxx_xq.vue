@@ -28,62 +28,70 @@
     <div v-show="page==0" style="padding:0 15px;">
       <el-row type="flex">
         <el-col :span="3" style="min-width:150px;">
+          <el-carousel height="160px" style="width:128px" class="photoCar">
+            <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
+              <img  :src="item.ZPNR" style="height:160px;width:128px;">
+            </el-carousel-item>
+            <el-carousel-item v-if="!imgshow1">
+              <img src="../../assets/img/mrzp.png">
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+
+        <!-- <el-col :span="3" style="min-width:150px;">
           <img src="../../assets/img/mrzp.png" v-if="imgshow" >
           <img :src="imgdm" v-else>
-        </el-col>
+        </el-col> -->
         <el-col :span="21">
-          <el-row :gutter="3">
+          <el-row :gutter="3" class="lh-ts">
             <el-col :span="8" class="input-item">
               <span class="input-text">英文姓：</span>
-              <span class="input-input">  {{czinfo.YWX}}</span>
+              <span class="input-input">{{czinfo.YWX}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">英文名：</span>
-              <span class="input-input">  {{czinfo.YWM}}</span>
+              <span class="input-input">{{czinfo.YWM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">英文姓名：</span>
-             <span class="input-input">  {{czinfo.YWXM}}</span>
+             <span class="input-input">{{czinfo.YWXM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">中文姓名：</span>
-             <span class="input-input">  {{czinfo.ZWXM}}</span>
+             <span class="input-input">{{czinfo.ZWXM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">性别：</span>
-             <span class="input-input">  {{czinfo.XB}}</span>
+             <span class="input-input">{{czinfo.XB}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生日期：</span>
-              <span class="input-input">  {{czinfo.CSRQ}}</span>
+              <span class="input-input">{{czinfo.CSRQ}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生地：</span>
-              <span class="input-input">  {{czinfo.CSD}}</span>
+              <span class="input-input">{{czinfo.CSD}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">国家地区：</span>
-              <span class="input-input">  {{czinfo.GJDQ}}</span>
+              <span class="input-input">{{czinfo.GJDQ}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">身份：</span>
-              <span class="input-input">  {{czinfo.SFDM}}</span>
+              <span class="input-input">{{czinfo.SFDM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件号码：</span>
-              <span class="input-input">  {{czinfo.ZJHM}}</span>
+              <span class="input-input">{{czinfo.ZJHM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件种类：</span>
-              <span class="input-input">  {{czinfo.ZJZL}}</span>
+              <span class="input-input">{{czinfo.ZJZL}}</span>
             </el-col>
-
             <el-col :span="8" class="input-item">
               <span class="input-text">证件有效期：</span>
-              <span class="input-input">  {{czinfo.ZJYXQ}}</span>
+              <span class="input-input">{{czinfo.ZJYXQ}}</span>
             </el-col>
-
-
           </el-row>
         </el-col>
       </el-row>
@@ -1163,9 +1171,11 @@
 <script>
 export default {
   name:'CZXX',
-  props:['type','xid','rid'],
+  props:['type','xid','rid','rybh','random'],
   data(){
     return{
+      imagess:[],
+      imgshow1:false,
       czinfo:{},
       jzinfo:{},
       gzinfo:{},
@@ -1193,7 +1203,6 @@ export default {
       tableDatazf:[],
       tableDatagz:[],
       tableDatajz:[],
-      rid:this.rid,
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,
@@ -1228,11 +1237,13 @@ export default {
     }
   },
   mounted(){
-    console.log('this.rid-------',this.rid);
-    console.log('this.types-------',this.types);
       this.initData();
    },
   watch:{
+      random:function(newVal,oldVal){
+        this.random=newVal;
+        this.initData();
+      },
       type: function(val){
         this.types=val;
       },
@@ -1324,6 +1335,23 @@ export default {
         default:
       }
     },
+    getPhoto(){
+      let p={
+        "pd":{
+          RYBH:this.rybh,
+          YWLB:'0004'
+        },
+        "orderType":"DESC",
+	      "orderBy":{value:"CJSJ",dataType:"date"}
+      }
+      this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
+       r =>{
+         if(r.success){
+           this.imagess=r.data.resultList;
+           this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
+         }
+       })
+    },
     getData2(){
       this.pp.RGUID=this.id;
       this.pd.RYBH=this.rid;
@@ -1345,6 +1373,7 @@ export default {
       this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pd);
       this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pd);
       this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pd);
+      this.getPhoto();
     },
     // 居住地信息
    gettableDatajz(currentPage,showCount,pd)
