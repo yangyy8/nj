@@ -13,11 +13,15 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                <span style="font-size:12px; color:red">  注：所属分局、服务处所条件二选一</span>
+                <span style="font-size:12px; color:red">  注：服务处所、所属分局条件二选一</span>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font> 服务处所：</span>
+                       <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
                   </el-col>
                   <el-col :span="24">
                       <span class="yy-input-text"><font color=red>*</font> 所属分局：</span>
-                      <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind1) in ssfj"
                           :key="ind1"
@@ -26,10 +30,18 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                <el-col :span="24">
-                    <span class="yy-input-text"><font color=red>*</font> 服务处所：</span>
-                     <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
-                </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text">派出所：</span>
+                        <el-select v-model="pd.sspcs" filterable clearable default-first-option placeholder="请输入关键字"  size="small" class="yy-input-input">
+                       <el-option
+                         v-for="(item,ind1) in sspcs"
+                         :key="ind1"
+                         :label="item.mc"
+                         :value="item.dm">
+                       </el-option>
+                     </el-select>
+                  </el-col>
+
                   <el-col :span="24">
                       <span class="yy-input-text">国家地区：</span>
                       <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -224,11 +236,13 @@ export default {
        tableData:[],
        diatext:'标准化地址',
        bzhid:[],
+       sspcs:[],
        mc:'',
        lrdw:'',
        num:0,
        result:[],
        centers:[],
+       ssfjsub:'',
 
     }
   },
@@ -237,7 +251,6 @@ export default {
     this.$store.dispatch('getRjqzzl');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getGjdq');
-
     // this.$store.dispatch('getRzfs');
     this.$store.dispatch('getZflx');
     this.$store.dispatch('getJzztlx');
@@ -262,11 +275,11 @@ export default {
     doset(){
        this.$set(this.pd,"gjdq",'');
        // this.$set(this.pd,"rzfs",'');
-       this.$set(this.pd,"fwcs",'');
+        this.$set(this.pd,"fwcs",'');
         this.$set(this.pd,"zjzl",'');
         this.$set(this.pd,"qzzl",'');
         this.$set(this.pd,"zflx",'');
-        // this.$set(this.pd,"rjsy",'');
+        this.$set(this.pd,"sspcs",'');
         this.$set(this.pd,"jzztlx",'');
         this.$set(this.pd,"ssfj",'');
     },
@@ -288,13 +301,30 @@ export default {
         this.ssfj=r.data.SSFJ;
       })
     },
-    doSearch() {
+    getSSPCS(arr) {
+      this.$set(this.pd, "sspcs", '');
+      var srr = [];
+      srr.push(arr);
 
-      if (this.pd.ssfj == undefined && this.pd.fwcs==undefined) {
-        this.$message.error("请选择所属分局或者服务处所! ");
+      let p = {
+        "fjdmList": srr
+      }
+      this.$api.post(this.Global.aport2 + '/data_report/selectPcsDm', p,
+        r => {
+          if (r.success) {
+            this.sspcs = r.data.PCS;
+          }
+        })
+    },
+    doSearch() {
+this.ssfjsub='';
+      if ((this.pd.ssfj == undefined || this.pd.ssfj == "") && (this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")) {
+          this.$message.error("请选择所属分局或者服务处所! ");
         return;
       } else {
+        if(this.pd.ssfj != undefined && this.pd.ssfj != ""){
         var ssj = this.pd.ssfj.substr(0, 6);
+        this.ssfjsub=ssj;
         switch (ssj) {
           case '320116': //六合区
             this.centers = [32.39215480155289, 118.81641980133281];
@@ -333,7 +363,7 @@ export default {
             this.centers = [31.3703836314495, 119.19202124153713];
             break;
           default:
-
+}
         }
       }
       getSearch(this.centers);
@@ -345,8 +375,10 @@ export default {
           "gjdq":this.pd.gjdq,
           "rzfs":this.pd.rzfs,
           "zjzl":this.pd.zjzl,
-          "ssfj":this.pd.ssfj,
+          "ssfj":this.ssfjsub,
           "fwcs":this.pd.fwcs,
+          "jzzt":this.pd.jzztlx,
+          "pcs":this.sspcs
         };
         var url=this.Global.aport+"/ywczdt/getCZDJXXPCSList";
         this.$api.post(url, p,
@@ -365,6 +397,15 @@ export default {
     },
     //地址
     getBZHDZ(callback){
+
+      if(this.pd.sspcs!="" && this.pd.sspcs!=undefined){
+        this.ssfjsub=this.pd.sspcs;
+      }else {
+        if(this.pd.ssfj!=undefined && this.pd.ssfj!=""){
+        this.ssfjsub=this.pd.ssfj.substr(0,6);
+      }
+      }
+      console.log(this.ssfjsub);
       var searchResult = [];
         let p={
           "gjdq":this.pd.gjdq,
@@ -372,8 +413,9 @@ export default {
           "zjzl":this.pd.zjzl,
           "qzzl":this.pd.qzzl,
           "zflx":this.pd.zflx,
-          "jzzt":this.pd.jzztlx,
-          "ssfj":this.pd.ssfj.substr(0,6),
+          "jzztlx":this.pd.jzztlx,
+          "ssfj":this.ssfjsub,
+
 
         };
         var url=this.Global.aport+"/ywlz/getLxsSjshmByBzhdzList";
@@ -387,11 +429,11 @@ export default {
               if(searchResult.length==0){
                 this.$message.error("没有查询到数据信息! ");return ;
               }
-              callback && callback(searchResult,this.pd.ssfj.substr(0,6))
+              callback && callback(searchResult,this.ssfjsub)
             }
           });
 
-          callback(searchResult,this.pd.ssfj.substr(0,6))
+          callback(searchResult,this.ssfjsub)
     },
     //人员信息
     getRyxx(currentPage,showCount,dtids,mc)
@@ -460,7 +502,7 @@ export default {
         vertical-align: middle;
     }
 
-.lzxx    .lz {
+.lzxx    .lzg {
   background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
   }
 

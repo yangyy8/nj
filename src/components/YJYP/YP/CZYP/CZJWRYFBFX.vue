@@ -14,6 +14,68 @@
              <el-collapse-transition>
              <div class="fxcont" v-if="show">
                 <el-row :gutter="2">
+                  <el-col :span="12">
+                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-option
+                          v-for="(item,ind) in ssfj"
+                          :key="ind"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                   </el-col>
+                   <el-col :span="12">
+                       <span class="yy-input-text">所属派出所：</span>
+                       <el-select v-model="pd.sspcs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                         <el-option
+                           v-for="(item,ind) in sspcs"
+                           :key="ind"
+                           :label="item.mc"
+                           :value="item.dm">
+                         </el-option>
+                       </el-select>
+                    </el-col>
+
+                 <el-col :span="12">
+                     <span class="yy-input-text">性别：</span>
+                     <el-select v-model="pd.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                       <el-option
+                         v-for="(item,ind1) in $store.state.xb"
+                         :key="ind1"
+                         :label="item.mc"
+                         :value="item.dm">
+                       </el-option>
+                     </el-select>
+                 </el-col>
+                 <el-col :span="12">
+                     <span class="yy-input-text">服务处所：</span>
+                     <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
+                 </el-col>
+
+               <el-col :span="12">
+                   <span class="yy-input-text">证件种类：</span>
+                   <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                     <el-option
+                       v-for="(item,ind) in $store.state.zjzl"
+                       :key="ind"
+                       :label="item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
+               </el-col>
+               <el-col :span="12">
+                   <span class="yy-input-text">居住状态类型：</span>
+                   <el-select v-model="pd.jzztlx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                     <el-option
+                       v-for="(item,indj) in $store.state.jzztlx"
+                       :key="indj"
+                       :label="item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
+               </el-col>
+
                     <el-col :span="12">
                         <span class="yy-input-text">国家地区：</span>
                         <el-select v-model="pd.gjdqArray" multiple   filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -66,33 +128,7 @@
                           </el-option>
                         </el-select>
                     </el-col> -->
-                    <el-col :span="12">
-                        <span class="yy-input-text">性别：</span>
-                        <el-select v-model="pd.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                          <el-option
-                            v-for="(item,ind1) in $store.state.xb"
-                            :key="ind1"
-                            :label="item.mc"
-                            :value="item.dm">
-                          </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="12">
-                        <span class="yy-input-text">服务处所：</span>
-                        <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
-                    </el-col>
 
-                  <el-col :span="12">
-                      <span class="yy-input-text">证件种类：</span>
-                      <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind) in $store.state.zjzl"
-                          :key="ind"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                  </el-col>
                   <!-- <el-col :span="12">
                       <span class="yy-input-text">签证种类：</span>
                       <el-select v-model="pd.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -134,41 +170,8 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="12">
-                      <span class="yy-input-text">居住状态类型：</span>
-                      <el-select v-model="pd.jzztlx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,indj) in $store.state.jzztlx"
-                          :key="indj"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                  </el-col>
 
-                  <el-col :span="12">
-                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
-                      <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind) in ssfj"
-                          :key="ind"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                   </el-col>
-                   <el-col :span="12">
-                       <span class="yy-input-text">所属派出所：</span>
-                       <el-select v-model="pd.sspcs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                         <el-option
-                           v-for="(item,ind) in sspcs"
-                           :key="ind"
-                           :label="item.mc"
-                           :value="item.dm">
-                         </el-option>
-                       </el-select>
-                    </el-col>
-                 </el-row>
+                   </el-row>
 
                  <el-row :gutter="1" style="border:1px solid #cccccc;margin-top:10px;margin-right:10px; padding-top: 10px;  background: #EFF3F6;">
                    <el-col :span="24" class="input-item">
@@ -381,7 +384,7 @@ export default {
       pageSize: 5,
       TotalResult: 0,
       tableData: [],
-      pd: {},
+      pd: {jzztlx:'1'},
       swdw: [],
       show: true,
       bzhshow: false,
@@ -490,7 +493,7 @@ export default {
     },
     getSearch() {
 
-      if (this.pd.ssfj == undefined || this.pd.ssfj == null) {
+      if (this.pd.ssfj == undefined || this.pd.ssfj == null || this.pd.ssfj == "") {
         this.$message.error("请选择所属分局!");
         return;
       } else {

@@ -1004,7 +1004,6 @@ export default {
           };
           break;
         default:
-
       }
 
       this.$api.post(url, p,

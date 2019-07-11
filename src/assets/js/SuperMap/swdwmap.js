@@ -31,11 +31,41 @@ export function createMapL() {
 }
 
 
+export function mapSqlSearchnew(tableName, attributeFilter, from, to, callback) {
+  //向服务器发送请求，并对返回的结果进行处理
+  var sqlParam = new SuperMap.GetFeaturesBySQLParameters({
+    queryParameter: {
+      name: tableName + "@ORCL_gt8",
+      attributeFilter: attributeFilter
+    },
+    datasetNames: ["ORCL_gt8:" + tableName], //数据集名称
+    fromIndex: 0,
+    toIndex: 10
+  });
 
+  L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesBySQL(sqlParam, function(serviceResult) {
+    var features = serviceResult.result.features.features;
+     console.log(features);
+    callback && callback(features);
+  });
+
+}
 
 export function getSearh(){
+  var id="东南大学";
+  console.log(id);
+   mapSqlSearchnew("DH_PT学校", "ID='" + 48580600119 + "'", 0, 5,0, function(features) {
+
+      if(features.length>0)
+      {
+        for (var i = 0; i < features.length; i++) {
+              console.log(features[i]);
+        }
+      }
+   });
 
 
+return ;
 // var data=[
 //   {dm:'江苏南京市江宁区将军大道1号',num:1}
 // ];

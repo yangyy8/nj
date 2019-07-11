@@ -88,9 +88,9 @@
                   <el-col :span="24">
                       <span class="yy-input-text">投宿于：</span>
                       <el-select v-model="pd.tsj" @change="changeTSY(pd.tsj)" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option label="旅馆" value="1">
+                        <el-option label="旅馆" value="2">
                         </el-option>
-                        <el-option label="社会面" value="2">
+                        <el-option label="社会面" value="1">
                         </el-option>
                       </el-select>
                   </el-col>
@@ -300,10 +300,10 @@ export default {
         this.show=!this.show;
       },
       changeTSY(t){
-        if(t=="1"){
+        if(t=="2"){
           this.lgshow=true;
           this.bzhshow=false;
-        }else if(t=="2"){
+        }else if(t=="1"){
           this.lgshow=false;
           this.bzhshow=true;
         }else {
@@ -400,8 +400,9 @@ export default {
           "rzsjStart":this.pd.beginTime,
           "rzsjEnd":this.pd.endTime,
           "zsbg":this.pd.zsbg,
-          "bzhdzMc":this.pd.bzhdz,
+          "likeBzhdzMc":this.pd.bzhdz,
           "ssfj":this.pd.ssfj.substr(0,6),
+          "tsy":this.pd.tsj
         };
         var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
         this.$api.post(url, p,
@@ -445,6 +446,7 @@ export default {
          "rzsjEnd":this.pd.endTime,
          "zsbg":this.pd.zsbg,
          "ssfj":this.pd.ssfj.substr(0,6),
+         "tsy":this.pd.tsj
 
        };
        var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";

@@ -36,7 +36,9 @@ export function doSearch(className) {
     markerLayer.clearLayers();
   }
   if (polygonLayer != null) {
+
     polygonLayer.remove();
+    map.removeLayer(polygonLayer);
   }
   var options = {
     position: 'topleft',
@@ -83,23 +85,28 @@ export function doSearch(className) {
       datasetNames: ['ORCL_gt8:dz_mlp'],
       geometry: polygonLayer,
       spatialQueryMode: 'INTERSECT',
+      maxFeatures:300000,
       fromIndex: 0,
-      toIndex: 999
+      toIndex: 300000
     });
     L.supermap.featureService("http://10.33.66.183:2333/iserver/services/data-gt8/rest/data").getFeaturesByGeometry(geometryParam, function(serviceResult) {
 
       var resultdata = serviceResult.result.features.features;
-      // console.log(resultdata);
+      console.log('resultdata.length',resultdata.length);
       var markers = [];
       var ids = [];
 
       // var sdata=[
       //   {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:320},
       // ];
-      console.log('resultdata.length',resultdata.length);
+
     var data=[];
+    var datapcs=[];
+
       for(var i = 0; i < resultdata.length; i++) {
+
         var id=resultdata[i].properties.DZMC.split('号');
+        var pcsid=resultdata[i].properties.PCS;
         var zb=resultdata[i].geometry.coordinates.reverse();
 
     var das=new Object();
@@ -107,17 +114,21 @@ export function doSearch(className) {
     das.dm=id[0]+"号";
     das.zb=zb;
     data.push(das);
-      }
+    // console.log(pcsid);
+    // console.log(datapcs.indexOf(pcsid));
+        if(datapcs.indexOf(pcsid)==-1){
+          datapcs.push(pcsid);
+        }
+
+    }
        // console.log('-----',data);
-      var searchResult=window.zdvm.getbzhdz(data,function(sdata){
-        console.log(sdata);
+      var searchResult=window.zdvm.getbzhdz(data,datapcs,function(sdata){
+        // console.log(sdata);
        for (var j = 0; j < sdata.length; j++) {
          var dm=sdata[j].dm.split('号')[0]+'号';
           renderMarkerbzh(sdata[j].zb,dm,sdata[j].count,dm);
        }
       });
-
-
 
 
      // if(ids.length==0){
@@ -141,12 +152,13 @@ export function doSearch(className) {
   })
 
 		//删除
-		if (markerLayer != null) {
-			markerLayer.clearLayers();
-		}
-		if (polygonLayer != null) {
-			polygonLayer.remove();
-		}
+		// if (markerLayer != null) {
+		// 	markerLayer.clearLayers();
+		// }
+		// if (polygonLayer != null) {
+    //   console.log('++++');
+		// 	polygonLayer.remove();
+		// }
 
 		$("." + className)[0].click();
 	}
