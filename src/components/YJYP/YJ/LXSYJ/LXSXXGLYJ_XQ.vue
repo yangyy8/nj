@@ -680,7 +680,7 @@
      </div>
    </el-dialog>
    <el-dialog title="通报人员详情" :visible.sync="tbryDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <TBRY :type="type" :xid="xid"></TBRY>
+     <TBRY :type="type" :xid="xid" :rybh="rybh"></TBRY>
      <div slot="footer" class="dialog-footer">
        <el-button @click="tbryDialogVisible = false" size="small">取 消</el-button>
      </div>
@@ -975,6 +975,7 @@ export default {
   components:{LZXX,TBRY,ANSJ,CRJXX,JZSJ,QZ},
   data() {
     return {
+      rybh:'',
       CurrentPage: 1,
       pageSize: 3,
       TotalResult: 0,
@@ -1085,77 +1086,77 @@ export default {
       this.qdshow=false;
      }
      if(this.row.RYBH!=undefined){
-    this.pd.YJID=this.row.YJID;
-    this.px.RYBH=this.row.RYBH;
-    this.xid=this.row.RYBH;
-    this.getBase();
-    this.crjshow=false;
-    this.lzshow=false;
-    this.tbshow=false;
-    this.skshow=false;
-    this.bkshow=false;
-    this.zjshow=false;
-    this.qzshow=false;
-    this.nmshow=false;
-    if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
-       this.crjshow=true;
-       this.getCrjxx(this.CurrentPage1,this.pageSize1);
-    }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
-    {
-      this.crjshow=true;
-      this.lzshow=true;
-      this.zjshow=true;
-      this.qzshow=true;
-      this.getZJXX(this.CurrentPage4,this.pageSize4);
-      this.getQZXX(this.CurrentPage5,this.pageSize5);
-      this.getLzxx(this.CurrentPage,this.pageSize);
-      this.getCrjxx(this.CurrentPage1,this.pageSize1);
-    }
-    else {
-      this.lzshow=true;
-      this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
-      this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
-      this.pm.XB=this.row.XB;
-      this.pm.CSRQ=this.row.CSRQ;
-      this.pm.ZJHM=this.row.ZJHM;
-      if(this.row.MXLX=="LZ_HC"){   //临住核查预警
-        this.tbshow=true;
-        this.skshow=true;
-        this.nmshow=true;
-        this.pp={};
-        this.getTBRY(this.pm);
-        this.pp.RYBH=this.row.RYBH;
-        this.getFFJY(this.CurrentPage2,this.pageSize2,this.pp);
-        this.getJZ(this.CurrentPage3,this.pageSize3,this.pp);
-        this.getNMXX(this.CurrentPage6,this.pageSize6);
-      }else if(this.row.MXLX=="BKYJ")  //布控预警
-      { this.crjshow=true;
-        this.tbshow=true;
-        this.pxcrj.CERTIFICATENO=this.row.ZJHM;
-        this.pxcrj.NATIONALITY=this.row.GJ;
-        this.pxlz.ZJHM=this.row.ZJHM;
-        this.pxlz.GJDQ=this.row.GJ;
-        this.getTBRY(this.pm);
-        this.getCrjxx(this.CurrentPage1,this.pageSize1);
-      }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
-        this.zjshow=true;
-        this.qzshow=true;
-        this.tbshow=true;
-        this.getZJXX(this.CurrentPage4,this.pageSize4);
-        this.getQZXX(this.CurrentPage5,this.pageSize5);
-        this.getTBRY(this.pm);
-      }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
-        this.crjshow=true;
-        this.getCrjxx(this.CurrentPage1,this.pageSize1);
-      }
-      else if(this.row.MXLX=="LXS_ZSYJ") { //教育厅
-        this.bkshow=true;
+        this.pd.YJID=this.row.YJID;
+        this.px.RYBH=this.row.RYBH;
+        this.xid=this.row.RYBH;
+        this.getBase();
+        this.crjshow=false;
         this.lzshow=false;
-        this.getData0(this.asjCurrentPage,this.asjpageSize);
-        this.getData1(this.sjCurrentPage,this.sjpageSize);
-      }
-      this.getLzxx(this.CurrentPage,this.pageSize);
-     }
+        this.tbshow=false;
+        this.skshow=false;
+        this.bkshow=false;
+        this.zjshow=false;
+        this.qzshow=false;
+        this.nmshow=false;
+        if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
+           this.crjshow=true;
+           this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
+        {
+          this.crjshow=true;
+          this.lzshow=true;
+          this.zjshow=true;
+          this.qzshow=true;
+          this.getZJXX(this.CurrentPage4,this.pageSize4);
+          this.getQZXX(this.CurrentPage5,this.pageSize5);
+          this.getLzxx(this.CurrentPage,this.pageSize);
+          this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        }
+        else {
+          this.lzshow=true;
+          this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
+          this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
+          this.pm.XB=this.row.XB;
+          this.pm.CSRQ=this.row.CSRQ;
+          this.pm.ZJHM=this.row.ZJHM;
+          if(this.row.MXLX=="LZ_HC"){   //临住核查预警
+            this.tbshow=true;
+            this.skshow=true;
+            this.nmshow=true;
+            this.pp={};
+            this.getTBRY(this.pm);
+            this.pp.RYBH=this.row.RYBH;
+            this.getFFJY(this.CurrentPage2,this.pageSize2,this.pp);
+            this.getJZ(this.CurrentPage3,this.pageSize3,this.pp);
+            this.getNMXX(this.CurrentPage6,this.pageSize6);
+          }else if(this.row.MXLX=="BKYJ")  //布控预警
+          { this.crjshow=true;
+            this.tbshow=true;
+            this.pxcrj.CERTIFICATENO=this.row.ZJHM;
+            this.pxcrj.NATIONALITY=this.row.GJ;
+            this.pxlz.ZJHM=this.row.ZJHM;
+            this.pxlz.GJDQ=this.row.GJ;
+            this.getTBRY(this.pm);
+            this.getCrjxx(this.CurrentPage1,this.pageSize1);
+          }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
+            this.zjshow=true;
+            this.qzshow=true;
+            this.tbshow=true;
+            this.getZJXX(this.CurrentPage4,this.pageSize4);
+            this.getQZXX(this.CurrentPage5,this.pageSize5);
+            this.getTBRY(this.pm);
+          }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
+            this.crjshow=true;
+            this.getCrjxx(this.CurrentPage1,this.pageSize1);
+          }
+          else if(this.row.MXLX=="LXS_ZSYJ") { //教育厅
+            this.bkshow=true;
+            this.lzshow=false;
+            this.getData0(this.asjCurrentPage,this.asjpageSize);
+            this.getData1(this.sjCurrentPage,this.sjpageSize);
+          }
+          this.getLzxx(this.CurrentPage,this.pageSize);
+         }
    }
   },
   mounted() {
@@ -1450,6 +1451,7 @@ export default {
     },
     detailstbry(n){
       this.xid=n.RGUID;
+      this.rybh=n.RYBH;
       this.tbryDialogVisible=true;
     },
     detailsjz(n){

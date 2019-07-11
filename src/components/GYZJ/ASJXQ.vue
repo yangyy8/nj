@@ -606,7 +606,7 @@
     <!-- 临住信息详情 -->
 
       <el-dialog title="临住信息详情" :visible.sync="LZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LZXX :type="type" :xid="xid"></LZXX>
+        <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
         <div slot="footer" class="dialog-footer">
           <el-button @click="LZDialogVisible = false" size="small">取 消</el-button>
         </div>
@@ -758,7 +758,7 @@
                 </div>
         </el-dialog> -->
         <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-          <CZXX :type="type" :xid="xid"></CZXX>
+          <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></CZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -775,6 +775,7 @@ export default {
   components:{LZXX,CZXX,CRJXX,QZ},
   data() {
     return {
+      rybh:'',
       yjType: 0,
       baseData: {},
       baseDatazj: {},
@@ -1057,11 +1058,13 @@ export default {
           break;
         case 3:
           this.xid=n.DTID;
+          this.rybh=n.RYBH;
           this.type=0;
           this.LZDialogVisible = true;
           break;
         case 4:
           this.xid=n.RGUID;
+          this.rybh=n.RYBH;
           this.CZDialogVisible = true;
           this.czinfo = n;
           break;

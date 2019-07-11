@@ -41,7 +41,7 @@ function filterNull (o) {
     }
     return o
 }
-function apiAxios (method, url, params, success, failure) {
+function apiAxios (method, url, params, success, failure,header,responseType) {
   let loadingInstance1=null;
   loadingInstance1 = Loading.service({ fullscreen: true, spinner: 'el-icon-loading',text:'正在加载中',background:'rgba(0,0,0,0.6)',customClass:'loadingClass'});
 
@@ -58,7 +58,9 @@ function apiAxios (method, url, params, success, failure) {
         data: method === 'POST' || method === 'PUT' ? params : null,
         params: method === 'GET' || method === 'DELETE' ? params : null,
         baseURL: root,
-        withCredentials: false
+        withCredentials: false,
+        headers: header||{'X-Requested-With': 'XMLHttpRequest'},
+        responseType: responseType||'json',
     })
     .then(function (res) {
 
@@ -111,8 +113,8 @@ export default {
     get: function (url, params, success, failure) {
         return apiAxios('GET', url, params, success, failure)
     },
-    post: function (url, params, success, failure) {
-        return apiAxios('POST', url, params, success, failure)
+    post: function (url, params, success, failure,header,responseType) {
+        return apiAxios('POST', url, params, success, failure,header,responseType)
     },
     put: function (url, params, success, failure) {
         return apiAxios('PUT', url, params, success, failure)
