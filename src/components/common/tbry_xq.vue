@@ -157,21 +157,14 @@ export default {
     this.getData0(this.id);
     this.getPhoto()
   });
-
   },
   watch:{
-      type: function(val){
-        this.page=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.getData0(val);
-        this.getPhoto()
-      },
-      immediate: true
-      },
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.getData0(this.id);
+      this.getPhoto()
     },
+  },
 
   methods:{
     getData0(xid){
@@ -190,8 +183,10 @@ export default {
     },
     getPhoto(){
       let p={
-        RYBH:this.rybh,
-        YWLB:"0005"
+        pd:{
+          RYBH:this.rybh,
+          YWLB:"0005"
+        }
       }
       this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
         r =>{

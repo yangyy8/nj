@@ -149,7 +149,7 @@
                label="中文姓名">
              </el-table-column>
              <el-table-column
-               prop="XB"
+               prop="XB_DESC"
                label="性别">
              </el-table-column>
              <el-table-column
@@ -360,8 +360,8 @@ import LZXX from '../../../common/lzxx_xq'
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getLzListByParams',p,
         r =>{
           if(r.success){
-            that.tableData=r.data.resultList;
-            that.TotalResult=r.data.totalResult;
+            this.tableData=r.data.resultList;
+            this.TotalResult=r.data.totalResult;
           }
         })
     },

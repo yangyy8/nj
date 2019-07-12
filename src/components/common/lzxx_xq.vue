@@ -64,23 +64,7 @@
                       <span class="yy-input-text" title="签证签发日期">签证签发日期：</span>
                           <el-input placeholder="" size="small" v-model="form.QFRQ"  class="yy-input-input"></el-input>
                     </el-col>
-                  </el-row>
-                </el-col>
-                <el-col :span="2" style="min-width:138px;">
-                  <el-carousel height="160px" style="width:128px" class="photoCar">
-                    <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
-                      <img  :src="item.ZPNR" style="height:160px;width:128px;">
-                    </el-carousel-item>
-                    <el-carousel-item v-if="!imgshow1">
-                      <img src="../../assets/img/mrzp.png">
-                    </el-carousel-item>
-                  </el-carousel>
-                </el-col>
-              </el-row>
 
-              <el-row type="flex">
-                <el-col :span="22">
-                  <el-row>
                     <el-col :span="8">
                       <span class="yy-input-text">入境日期：</span>
                       <el-input placeholder="" size="small" v-model="form.RJRQ"  class="yy-input-input"></el-input>
@@ -93,9 +77,6 @@
                       <span class="yy-input-text">入境事由：</span>
                       <el-input placeholder="" size="small" v-model="form.JLSY_DESC"  class="yy-input-input"></el-input>
                     </el-col>
-                  <!-- </el-row>
-
-                  <el-row :gutter="3" > -->
 
                     <el-col :span="8">
                       <span class="yy-input-text">入住日期：</span>
@@ -110,8 +91,6 @@
                       <el-input placeholder="" size="small" v-model="form.JDDW"  class="yy-input-input"></el-input>
                     </el-col>
 
-                  <!-- </el-row>
-                  <el-row :gutter="3" > -->
                     <el-col :span="8" class="crcolor">
                       <span class="yy-input-text">投宿于：</span>
                       <el-radio v-model="typet" label="1" disabled >社会面</el-radio>
@@ -162,8 +141,7 @@
                       <span class="yy-input-text" title="房主身份证号">房主身份证号：</span>
                         <el-input placeholder="" size="small" v-model="form.FZSFZH"  class="yy-input-input"></el-input>
                     </el-col>
-                  <!-- </el-row>
-                  <el-row :gutter="3" > -->
+
                     <el-col :span="8">
                       <span class="yy-input-text">录入人：</span>
                         <el-input placeholder="" size="small" v-model="form.DJ"  class="yy-input-input"></el-input>
@@ -176,8 +154,7 @@
                       <span class="yy-input-text">录入日期：</span>
                       <el-input placeholder="" size="small" v-model="form.LRRQ"  class="yy-input-input"></el-input>
                     </el-col>
-                  <!-- </el-row>
-                  <el-row :gutter="3"> -->
+
                     <el-col :span="8">
                       <span class="yy-input-text">修改人：</span>
                           <el-input placeholder="" size="small" v-model="form.GXR"  class="yy-input-input"></el-input>
@@ -190,17 +167,34 @@
                       <span class="yy-input-text">修改日期：</span>
                           <el-input placeholder="" size="small" v-model="form.GXSJ"  class="yy-input-input"></el-input>
                     </el-col>
-                  <!-- </el-row>
-                  <el-row :gutter="3"> -->
+
                     <el-col :span="8">
                       <span class="yy-input-text" title="与境外联系人员">与境外联系人员：</span>
                       <el-input placeholder="" size="small" v-model="form.QSGX_DESC"  class="yy-input-input"></el-input>
                     </el-col>
                   </el-row>
                 </el-col>
-                <el-col :span="2">
+                <el-col :span="2" style="min-width:138px;">
+                  <el-carousel height="160px" style="width:128px" class="photoCar">
+                    <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
+                      <img  :src="item.ZPNR" style="height:160px;width:128px;">
+                    </el-carousel-item>
+                    <el-carousel-item v-if="!imgshow1">
+                      <img src="../../assets/img/mrzp.png">
+                    </el-carousel-item>
+                  </el-carousel>
                 </el-col>
               </el-row>
+
+              <!-- <el-row type="flex">
+                <el-col :span="22">
+                  <el-row>
+
+                  </el-row>
+                </el-col>
+                <el-col :span="2">
+                </el-col>
+              </el-row> -->
 </el-form>
 
 </template>
@@ -229,23 +223,9 @@ export default {
   watch:{
     random:function(newVal,oldVal){
       this.random=newVal;
-      this.initData()
+      this.initData();
+      console.log('this.page',this.page);
     },
-    type:{
-      handler(val){
-      this.page=val;
-      this.initData()
-    },
-    immediate: true
-    },
-    xid:{
-      handler(val){
-      this.id=val;
-      this.initData()
-    },
-    immediate: true
-    },
-
   },
   methods:{
     initData(){

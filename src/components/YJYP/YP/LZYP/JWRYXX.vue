@@ -70,7 +70,7 @@
              label="证件有效期">
            </el-table-column> -->
            <el-table-column
-             prop="QZZL"
+             prop="QZZL_DESC"
              label="签证种类">
            </el-table-column>
            <el-table-column
@@ -116,7 +116,7 @@
       </div>
     </div>
       <div class="bj">
-         <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+         <!-- <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
            <el-form :model="form"  class="crcolor" style="padding:10px">
              <el-row type="flex">
                <el-col :span="16">
@@ -323,14 +323,25 @@
            <div slot="footer" class="dialog-footer">
              <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
            </div>
+         </el-dialog> -->
+         <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+             <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
+           <div slot="footer" class="dialog-footer">
+             <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
+           </div>
          </el-dialog>
      </div>
     </div>
 </template>
 <script>
+import LZXX from '../../../common/lzxx_xq'
 export default {
+  components:{LZXX},
   data() {
     return {
+      type:1,
+      rybh:'',
+      xid:'',
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -403,27 +414,29 @@ export default {
     },
     details(i) {
 
-                if(i.LB_LYD==undefined){
-                  this.radio1='0';
-                }
-                if(i.LB_QWD==undefined){
-                  this.radio2='0';
-                }
-                if(i.LB_DJDW==undefined){
-                  this.typet='1';
-                  this.shm=true;
-                  this.lg=false;
-                }else if(i.LB_DJDW=='1'){
-                   this.typet='2';
-                   this.shm=false;
-                   this.lg=true;
-                }else {
-                  this.typet='1';
-                  this.shm=true;
-                  this.lg=false;
-                }
+                // if(i.LB_LYD==undefined){
+                //   this.radio1='0';
+                // }
+                // if(i.LB_QWD==undefined){
+                //   this.radio2='0';
+                // }
+                // if(i.LB_DJDW==undefined){
+                //   this.typet='1';
+                //   this.shm=true;
+                //   this.lg=false;
+                // }else if(i.LB_DJDW=='1'){
+                //    this.typet='2';
+                //    this.shm=false;
+                //    this.lg=true;
+                // }else {
+                //   this.typet='1';
+                //   this.shm=true;
+                //   this.lg=false;
+                // }
+      this.xid=i.DTID;
+      this.rybh=i.RYBH;
       this.detailsDialogVisible = true;
-      this.form=i;
+      // this.form=i;
     },
   }
 }

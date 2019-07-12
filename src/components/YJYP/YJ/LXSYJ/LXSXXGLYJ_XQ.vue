@@ -674,13 +674,13 @@
        </div>
    </el-dialog>
    <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <LZXX :type="type" :xid="xid"></LZXX>
+     <LZXX :type="type" :xid="xid" :rybh="rybh" :random="(new Date()).getTime()"></LZXX>
      <div slot="footer" class="dialog-footer">
        <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
      </div>
    </el-dialog>
    <el-dialog title="通报人员详情" :visible.sync="tbryDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <TBRY :type="type" :xid="xid" :rybh="rybh"></TBRY>
+     <TBRY :type="type" :xid="xid" :rybh="rybh" :random="(new Date()).getTime()"></TBRY>
      <div slot="footer" class="dialog-footer">
        <el-button @click="tbryDialogVisible = false" size="small">取 消</el-button>
      </div>
@@ -699,10 +699,10 @@
    </el-dialog>
    <!-- 出入境信息 -->
   <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-              <CRJXX :type="type" :xid="xid"></CRJXX>
-               <div slot="footer" class="dialog-footer">
-                 <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
-               </div>
+        <CRJXX :type="type" :xid="xid" :random="(new Date()).getTime()"></CRJXX>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
+         </div>
   </el-dialog>
   </div>
 <!-- 非法居留 -->
@@ -1436,8 +1436,8 @@ export default {
       // }
 
         this.xid=n.DTID;
+        this.rybh=n.RYBH;
         this.type=0;
-        console.log('this.xid',n.DTID);
         this.lzxxDialogVisible=true;
     },
     detailscrj(n){
