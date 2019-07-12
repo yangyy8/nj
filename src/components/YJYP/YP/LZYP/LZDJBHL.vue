@@ -449,7 +449,7 @@ import LZXX from '../../../common/lzxx_xq'
         that.CurrentPage=1;
         that.getListTu(that.CurrentPage,that.pageSize,that.pdTu);
       })
-      that.liangChart.resize();
+      that.lineChart.resize();
     },
   }
 }
