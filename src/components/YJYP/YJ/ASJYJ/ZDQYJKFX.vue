@@ -15,7 +15,12 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font> 时间范围：</span>
+                      <span class="yy-input-text">类别：</span>
+                      <el-radio value="1" label="1" v-model="radioe" @change="getBX(1)">常住</el-radio>
+                      <el-radio value="2" label="2" v-model="radioe" @change="getBX(2)">临住</el-radio>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red v-if='sjshow'>*</font> 时间范围：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyy/MM/dd"
@@ -53,11 +58,7 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="24">
-                      <span class="yy-input-text">类别：</span>
-                      <el-radio value="1" label="1" v-model="radioe">常住</el-radio>
-                      <el-radio value="2" label="2" v-model="radioe">临住</el-radio>
-                  </el-col>
+
                 </el-row>
                 <el-row type="flex">
                   <el-col :span="24" style="text-align:center;">
@@ -189,6 +190,7 @@ export default {
        bzhshow:false,
        lgshow:false,
        czshow:false,
+       sjshow:true,
        pcs:[],
        xzqh:[],
        radioe:'2',
@@ -206,7 +208,6 @@ export default {
    this.$store.dispatch("getGjdq");
    this.$store.dispatch("getQzzl");
     createMapL();
-
   },
   methods:{
     pageSizeChange(val) {
@@ -251,27 +252,29 @@ export default {
       this.$set(this.pd,"endTime",'');
       this.$set(this.pd,"gjdq",'');
       this.$set(this.pd,"qzzl",'');
-
     },
     getSearch(className) {
-      if(this.pd.beginTime==undefined && this.pd.endTime==undefined){
-        this.$message.error("请输入开始时间或者结束时间！");return;
-      }
+        if(this.radioe=="2"){
+              if(this.pd.beginTime==undefined && this.pd.endTime==undefined){
+                this.$message.error("请输入开始时间或者结束时间！");return;
+              }
+        }
        doSearch(className);
     },
 
 
     //获取标准化地址
-    getbzhdz(das,callback){
+    getbzhdz(das,pp,callback){
       var searchResult = [];
       var bb=[];
         for (var i = 0; i < das.length; i++) {
           let mu=bb.find((n)=>n.dm==das[i].dm);
-        if(!mu){
-            bb.push(das[i]);
+          if(!mu){
+              bb.push(das[i]);
+          }
         }
-        }
-     console.log(bb);
+     console.log('bb',bb.length);
+      console.log('pp',pp);
         //this.ssfj=n;
      let  p={};var url="";
 
@@ -284,6 +287,7 @@ export default {
             "gjdq":this.pd.gjdq,
             "qzzl":this.pd.qzzl,
             "arrayList":bb,
+            "pcsList":pp,
           };
           url=this.Global.aport+"/ywczdt/getZdjkqyBzhdz";
         }else {
@@ -293,6 +297,7 @@ export default {
               "gjdq":this.pd.gjdq,
               "qzzl":this.pd.qzzl,
               "arrayList":bb,
+              "pcsList":pp,
             };
           this.czshow=false;
           url=this.Global.aport+"/ywlz/getZdjkqyBzhdz";
@@ -360,6 +365,14 @@ export default {
            }
          });
        this.bzhDialogVisible=true;
+    },
+    getBX(n){
+      console.log(n);
+      if(n==1){
+        this.sjshow=false;
+      }else {
+          this.sjshow=true;
+      }
     },
     //后期匹配地址
     getXY(dz,callback){

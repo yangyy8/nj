@@ -119,8 +119,8 @@ export default {
         lrdw:'320115',
         lrdwmc:'秦淮区',//320113   320112江北
         rs:'11523',
-        type:'C',
-        yf:'Y',
+        type:'L',
+        yf:'M',
         sevalue:[],
         bzhid:'',
         czshow:false,

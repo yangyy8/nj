@@ -146,19 +146,19 @@
                           <div class="input-input t-flex t-date">
                             <el-date-picker
                                v-model="pm.begincsrq" format="yyyy-MM-dd"
-                               type="date" size="small" value-format="yyyy-MM-dd"
+                               type="date" size="small" value-format="yyyy/MM/dd"
                                placeholder="开始时间" >
                             </el-date-picker>
                             <span class="septum">-</span>
                             <el-date-picker
                                 v-model="pm.endcsrq" format="yyyy-MM-dd"
-                                type="date" size="small" value-format="yyyy-MM-dd"
+                                type="date" size="small" value-format="yyyy/MM/dd"
                                 placeholder="结束时间" >
                             </el-date-picker>
                          </div>
                         </el-col>
                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="CurrentPage=1;getRyxx(CurrentPage,pageSize)" class="mb-15">查询</el-button>
+                &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="getRyxx(CurrentPage,pageSize,bzhid,mc)" class="mb-15">查询</el-button>
                </el-col>
                   </el-row>
                         <el-table
@@ -625,9 +625,8 @@ export default {
     },
     getRyxx(currentPage, showCount, bzhid, mc) {
       if (currentPage == 1) {
-         this.CurrentPage = 1;
+        this.CurrentPage = 1;
         this.tableData=[];this.TotalResult=0;
-        this.pm = [];
         this.bzhid = bzhid;
         this.mc = mc;
       }

@@ -74,9 +74,12 @@ function apiAxios (method, url, params, success, failure,header,responseType) {
 
           }
           if(res.data.code=='1000001'){
-            console.log('1111',res.data.code);
-            window.location.href ="#/";
-
+            if($store.state.wtoken!='' && $store.state.wtoken!=undefined && $store.state.serverip!='' && $store.state.serverip!=undefined)
+            {
+             window.location.href='http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin';return ;
+            }else {
+                window.location.href ="#/";
+            }
           }else if(!res.data.success&&res.data.success!=0){
             // console.log(",,,,")
             Message.error(res.data.message);

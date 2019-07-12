@@ -97,7 +97,7 @@ function renderBzhid(data) {
            var das=[];
            das.push(datae.ycoord);
            das.push(datae.xcoord);
-           console.log('-----',data);
+
            renderMarkerbzh(das, data,data.dm);
          }
 
@@ -135,7 +135,7 @@ export function renderMarkerbzh(point, data,mc) {
   // 画圆
   var myIcon = L.divIcon({
     html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
-    className: 'my-div-icon lz',
+    className: 'my-div-icon lzg',
     iconSize: 50
   });
   var tempMarker = L.marker(point, {

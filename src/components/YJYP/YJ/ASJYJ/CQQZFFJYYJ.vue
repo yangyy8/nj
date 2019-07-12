@@ -23,12 +23,14 @@
                     <span style="font-size:12px; color:red">* 距离设置区间5-10</span>
                   </el-col>
                 </el-row>
-                <div class="resultpaneltitle" @click="getGX()">点击获取南京高校列表</div>
+                <div class="resultpaneltitle">南京高校列表</div>
+                <div  style="max-height:500px;  overflow-y: scroll;">
                 <div id="resultpanel" v-for="item in datastr">
                     <div class="fflist" @click="getInfo(item.jgid,item.mc)">
                       {{item.mc}}
                      </div>
                 </div>
+              </div>
              </div>
             </el-collapse-transition>
         </div>
@@ -161,11 +163,13 @@ export default {
        bzhid:'',
        mc:'',
        lrdw:'',
+       iid:'',
     }
   },
   mounted() {
     window.ffvm=this;
     createMapL();
+    this.getGX();
   },
   methods:{
     pageSizeChange(val) {
@@ -212,16 +216,17 @@ export default {
     getGX(){
       this.$api.get(this.Global.aport1+'/servicemap/getUniversity',null,
          r=>{
-           console.log(r.data);
+           // console.log(r.data);
           this.datastr=r.data;
          });
     },
     getInfo(dm,mc)
     {     this.show=!this.show;
+          this.iid=dm;
           createDWMap(dm,mc);
     },
     //得到学校信息
-    getinfo(dm,callback){
+    getxxinfo(dm,callback){
       let p = {
         "xxbh": dm,
       };
@@ -229,9 +234,8 @@ export default {
       this.$api.post(url, p,
         r => {
           if(r.success){
-            console.log(r.data[0].DZXQ);
-            var dzxq=r.data[0].DZXQ;
-             callback && callback(dzxq)
+
+             callback && callback(r.data)
            }
         })
 
@@ -255,24 +259,23 @@ export default {
     callback(searchResult);
     },
     //人员信息
-    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    getRyxx(currentPage,showCount,bzhid,mc)
     {
-
+       this.iid;
       if(currentPage==1){
         this.tableData=[];this.TotalResult=0;
         this.CurrentPage=1;
       }
        this.bzhid=bzhid;
        this.mc=mc;
-       this.lrdw=lrdw;
+
        this.diatext=this.mc;
 
        let p={
          "currentPage":currentPage,
          "showCount":showCount,
          "dzdtid":this.bzhid,
-         "yf":'Y',
-         "lrdw":this.lrdw,
+
        };
        var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
        this.$api.post(url, p,
@@ -286,14 +289,25 @@ export default {
        this.bzhDialogVisible=true;
     },
     //后期匹配地址
-    getXY(dz, callback) {
+    getXY(data, callback) {
 
       let p = {
-        "dz": dz,
+        "dz": data,
       };
       this.$api.get(this.Global.xyaddress, p,
         r => {
-          callback(r.result)
+        callback && callback(r.result)
+        });
+    },
+
+    getXY2(data, callback) {
+
+      let p = {
+        "dz": data.dm,
+      };
+      this.$api.get(this.Global.xyaddress, p,
+        r => {
+          callback(r.result,data.dm,data.count)
         });
     },
   },
@@ -309,6 +323,7 @@ export default {
     text-align:center;
     font-size:15px;
     margin-right: 10px;cursor: pointer;
+
   }
 #resultpanel{line-height: 25px; font-size: 12px;}
 .fflist{color: #333333; cursor: pointer;}
@@ -328,12 +343,13 @@ export default {
         text-align: center;
         vertical-align: middle;
     }
-.lzxx  .lz {
-		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-		}
+.lzxx  .cqgreen {
+		background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+	}
 
-.lzxx	.cz {
-			background-color: rgba(155, 0, 0, 0.8);
-		}
-  .bghome .el-dialog{ width: 70%!important;}
+.lzxx	.cqred {
+    background:url(../../../../assets/img/tb/location_red.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
+  }
+
+.bghome .el-dialog{ width: 70%!important;}
 </style>
