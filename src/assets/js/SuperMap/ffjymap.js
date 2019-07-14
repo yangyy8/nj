@@ -6,6 +6,8 @@ var MAP_SIZE = [11, 15];
 var SEARCH_HEIGHT = 100;
 var esservice;
 var resultLayer;
+var sdas=[];
+var sdanum=0;
 //地图加载
 export function createMapL() {
   map = L.map('mainMap', {
@@ -42,51 +44,52 @@ export function createDWMap(id, mc) {
   //map.zoomTo(14);
   markerLayer.clearLayers();
   markerLayer1.clearLayers();
-
   //	mapSqlSearch("DH_PT学校", "ID='" + id + "'", 0, 5,0, function(features) {
   var see = window.ffvm.getxxinfo(id, function(data) {
 
     if (data.length > 0) {
+      sdas=[];
+      sdanum=data.length;
       for (var i = 0; i < data.length; i++) {
         var dzdm = data[i].DZXQ;
 
-        var arr = [];
-        mapSqlSearch("dz_mlp", "DZMC='" + dzdm + "'", dzdm, 0, 5, function(features, dm) {
+        // mapSqlSearch("dz_mlp", "DZMC='" + dzdm + "'", dzdm, 0, 5, function(features, dm) {
+        //   if (features.length > 0) {
+        //     var x = features[0].properties.SMX;
+        //     var y = features[0].properties.SMY;
+        //
+        //     var tmmc = "<div style='line-height:25px;'>学校：" + mc + " <br/>地址：" + dm + "</div>";
+        //     var tm = L.marker([y, x]).bindPopup(tmmc);
+        //
+        //     markerLayer1.addLayer(tm);
+        //     // tm.openPopup();
+        //     // map.flyTo(L.latLng(y, x), 12);
+        //
+        //     arr.push(y);
+        //     arr.push(x);
+        //
+        //     //getXXDZInfo(id, arr, mc, dm);
+        //     // getStudents(id, parseFloat(x), parseFloat(y));
+        //   } else {
 
-          var arr = [];
-          if (features.length > 0) {
-            var x = features[0].properties.SMX;
-            var y = features[0].properties.SMY;
+            var ss = window.ffvm.getXY(dzdm, function(datae) {
 
-            var tmmc = "<div style='line-height:25px;'>学校：" + mc + " <br/>地址：" + dm + "</div>";
-            var tm = L.marker([y, x]).bindPopup(tmmc);
-
-            markerLayer1.addLayer(tm);
-            // tm.openPopup();
-            // map.flyTo(L.latLng(y, x), 12);
-
-            arr.push(y);
-            arr.push(x);
-
-            getXXDZInfo(id, arr, mc, dm);
-            // getStudents(id, parseFloat(x), parseFloat(y));
-          } else {
-
-            var ss = window.ffvm.getXY(dm, function(datae) {
-
+              var arr = [];
               if (datae != undefined && datae.ycoord > 0 && datae.xcoord > 0) {
-                arr.push(datae.ycoord);
-                arr.push(datae.xcoord);
+                arr.push(datae.ycoord+'');
+                arr.push(datae.xcoord+'');
 
                 var tmmc = "<div style='line-height:25px;'>学校：" + mc + " <br/>地址：" + datae.src_addr + "</div>";
 
                 var tm = L.marker([arr[0], arr[1]]).bindPopup(tmmc);
                 markerLayer1.addLayer(tm);
+
                 getXXDZInfo(id, arr, mc, datae.src_addr);
               }
             });
-          }
-        });
+
+        //   }
+        // });
       }
     }
   });
@@ -94,39 +97,46 @@ export function createDWMap(id, mc) {
 }
 
 function getXXDZInfo(id, arr, mc, dm) {
+sdas.push(arr);
+// console.log(sdas.length,sdas.length==sdanum);
+if(sdas.length==sdanum){
 
   var relt = window.ffvm.getXXDZ(id, function(data) {
     for (var i = 0; i < data.length; i++) {
-      // var num = data[i].count;
+      //var num = data[i].count;
       // var id = data[i].dm;
-      // mapSqlSearch("dz_mlp", "DZMC='" + id + "'", dm,0, 5, function(features) {
-      //   if (features.length > 0) {
-      //     for (var j = 0; j < features.length; j++) {
-      //       //  var mc=features[j].properties.DZMC;
-      //       renderMarkerbzh(features[j].geometry.coordinates.reverse(), id, id, arr, num, mc,dm);
-      //     }
-      //   } else {
-      var ss = window.ffvm.getXY2(data[i], function(datae, ids, num) {
+      mapSqlSearch("dz_mlp", "DZMC='" + id + "'", data[i], 0, 5, function(features, data) {
 
-        if (datae != undefined && datae.ycoord > 0 && datae.xcoord > 0) {
-          var das = [];
-          das.push(datae.ycoord);
-          das.push(datae.xcoord);
+        if (features.length > 0) {
+          for (var j = 0; j < features.length; j++) {
+            //  var mc=features[j].properties.DZMC;
+            renderMarkerbzh(features[j].geometry.coordinates.reverse(), data.dm, data.dm, arr, data.count, mc);
+          }
+        } else {
+          var ss = window.ffvm.getXY2(data, function(datae, ids, num) {
 
-          renderMarkerbzh(das, ids, ids, arr, num, mc);
+            if (datae != undefined && datae.ycoord > 0 && datae.xcoord > 0) {
+              var das = [];
+              das.push(datae.ycoord);
+              das.push(datae.xcoord);
+
+              renderMarkerbzh(das, ids, ids, sdas, num, mc);
+            }
+
+          });
         }
-
       });
-      // }
-      // });
     }
   });
+}else {
 
 }
 
-export function renderMarkerbzh(point, dm, mc, arr, num, xmc) {
+}
 
-  measureDistance(point[0], point[1], arr[0], arr[1], dm, mc, num, xmc);
+export function renderMarkerbzh(point, dm, mc, sdas, num, xmc) {
+
+  measureDistance(point[0], point[1], sdas, dm, mc, num, xmc);
   //debugger;
   // 画圆
   // var myIcon = L.divIcon({
@@ -159,32 +169,36 @@ export function renderMarkerbzh(point, dm, mc, arr, num, xmc) {
   // });
 }
 
-function measureDistance(x1, y1, x2, y2, dm, mc, num, xmc) {
-
+function measureDistance(x1, y1, sdas, dm, mc, num, xmc) {
+ var gg=0; var ii=0;
+for (var i = 0; i < sdas.length; i++) {
+    var x2=sdas[i][0];
+    var y2=sdas[i][1];
+ii=i+1;
   var polyLine = L.polyline([
     [x1, y1],
     [x2, y2]
   ]);
-  var marker1 = L.marker([x1, y1]),
-    marker2 = L.marker([x2, y2]);
+
+  // var marker1 = L.marker([x1, y1]),
+  //     marker2 = L.marker([x2, y2]);
   // var tmmc = "<div style='line-height:25px;'>学校：" + xmc +" <br/>地址：" + xdm + "</div>";
-  //
   // var tm = marker2.bindPopup(tmmc);
-
-  //markerLayer.addLayer(tm);
-
+  // markerLayer.addLayer(tm);
   var distanceMeasureParam = new SuperMap.MeasureParameters(polyLine);
   L.supermap
     .measureService("http://10.33.66.183:2334/iserver/services/map-world/rest/maps/World")
     .measureDistance(distanceMeasureParam, function(serviceResult) {
       var gl = parseInt(serviceResult.result.distance / 1000);
-
       if (gl > window.ffvm.jlsz) {
         //markerLayer1.addLayer(polyLine);
+        gg=gg+1;
 
-        var content = "<div style='line-height:25px;'>距离<font color=blue>"+xmc+"</font>： 大约 <font style='color:red;font-weight:bold;font-size:16px;'>" + gl + "</font>  公里<br/>" + mc + " <br/>总人数：" + num + "</div>";
+        if(gg==sdas.length){
+          // console.log(gg,sdas.length,gl);
+          redergls([x1, y1], num, dm, xmc,mc,gl);
+        }
 
-        renderMarkercontent([x1, y1], num, dm, content);
 
         // markerLayer.addLayer(marker1);
         // marker1.bindPopup(content).openPopup(marker1.getLatLng());
@@ -200,7 +214,15 @@ function measureDistance(x1, y1, x2, y2, dm, mc, num, xmc) {
       }
 
     });
+  }
 }
+
+function redergls(arr,num,dm,xmc,mc,gl) {
+
+  var content = "<div style='line-height:25px;'>距离<font color=blue>" + xmc + "</font>： 大约 <font style='color:red;font-weight:bold;font-size:16px;'>" + gl + "</font>  公里<br/>" + mc + " <br/>总人数：" + num + "</div>";
+  renderMarkercontent(arr, num, dm, content);
+}
+
 export function renderMarkercontent(point, num, dm, mc) {
 
   // 画圆

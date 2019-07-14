@@ -31,7 +31,7 @@
                     <span class="input-text">责任区：</span>
                     <el-select v-model="pd.JWZRQ" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.gjdq"
+                        v-for="item in zrq"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
@@ -101,10 +101,6 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-<<<<<<< HEAD
-             prop="XZQHMC"
-=======
->>>>>>> bb706e1c11caf5b8391b9d29315e0e602d78470b
              prop="XZQH_DESC"
              label="行政区划">
            </el-table-column>
@@ -185,6 +181,7 @@ export default {
       pd0: {},
       options: this.pl.ps,
       tableData: [],
+        zrq: [],
       pd:{ZSRQ_DateRange:{},BJSJ_DateRange:{}}
     }
   },
@@ -195,10 +192,22 @@ export default {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
+    this.getZrq();
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
 
   methods: {
+    getZrq() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      var url = this.Global.aport2 + "/data_report/selectZrqDm";
+      this.$api.post(url, p,
+        r => {
+          this.zrq = r.data.ZRQ;
+        })
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);

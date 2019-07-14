@@ -57,6 +57,16 @@
                   </el-select>
                 </el-col>
 
+                                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                                  <span class="input-text">审核状态：</span>
+                                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                                    <el-option value="1" label="1 - 已审核">
+                                    </el-option>
+                                    <el-option value="0" label="0 - 未审核">
+                                    </el-option>
+                                  </el-select>
+                                </el-col>
+
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
@@ -169,7 +179,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getGjdq');
-
+    this.$store.dispatch('getClzt');
   },
   methods: {
     pageSizeChange(val) {

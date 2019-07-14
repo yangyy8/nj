@@ -4,10 +4,11 @@ const hasEnter=false;
 const org="";
 const xsd=80;
 const type=99;
+
 const indexstate=0;
 // const aport="http://10.33.72.144:9420";//正式环境
-const aport="/api-reporter";//大师网关
-// const aport="http://50.32.166.56:9420/";//大师
+// const aport="/api-reporter";//大师网关
+const aport="http://50.32.166.56:9420";//大师
 // const aport1="http://10.33.72.144:9435";//正式环境
 const aport1="api-permission";//大师网关
 // const aport1="http://192.168.3.217:9435";//大师

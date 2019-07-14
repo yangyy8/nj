@@ -1,5 +1,5 @@
 <template lang="html">
-   <div class="">
+   <div class="ryhx">
     <div class="tshu" id="target">
       <div class="yycontent">
         <el-row>
@@ -1341,4 +1341,5 @@ detailsMH(n)
 <style scoped>
 .bainfo{font-size: 12px;line-height: 30px; padding-left:15px;}
 .middle-foot{ margin-top: 10px;}
+.v-modal{background: none!important;}
 </style>
