@@ -131,10 +131,10 @@
     </div>
     <div class="yycontent">
 
-      <el-row class="mb-15">
+      <!-- <el-row class="mb-15">
         <el-button type="primary"  size="small" @click="showUpload">批量导入</el-button>
         <el-button type="success" size="small" @click="download">模板下载</el-button>
-        </el-row>
+        </el-row> -->
       <el-table
            ref="multipleTable"
            :data="tableData"
@@ -261,77 +261,9 @@
       </el-row>
     </el-form>
   </el-dialog>
-  <el-dialog title="编辑" :visible.sync="editsDialogVisible">
-    <el-form   ref="editForm">
-      <el-row :gutter="3"  class="mb-6">
-        <el-col :span="12" class="input-item">
-         <span class="input-text">案卷编号：</span>
-        <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TITLE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">登记日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">人数：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
-         <span class="input-text">姓名：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">性别：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">出生日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
-         <span class="input-text">护照号：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">入签证件类型：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">身份：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-         <span class="input-text">电话号码：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">邮箱地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">临住登记：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">省：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">城市：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="24" class="input-item">
-          <span class="input-text" style="width:10%!important;">详细地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"  style="width:87%!important;"></el-input>
-        </el-col>
-
-      </el-row>
-
-    </el-form>
+  <el-dialog title="编辑" :visible.sync="editsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+   <TBRYEDIT :type="type" :xid="xid" :rybh="rybh"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
@@ -347,8 +279,9 @@
 </template>
 <script>
 import LZXX from '../../common/lzxx_xq'
+import TBRYEDIT from '../../common/tbry_edit'
 export default {
-  components:{LZXX},
+  components:{LZXX,TBRYEDIT},
   data() {
     return {
       CurrentPage: 1,
@@ -383,8 +316,9 @@ export default {
         name: '王小虎',
         address: 'XXXXX'
       }],
-      type:'',
+      type:1,
       xid:'',
+      rybh:''
 
     }
   },
@@ -392,7 +326,6 @@ export default {
     this.detailsDialogVisible=false;
   },
   mounted() {
-
      this.xid="111";
   },
   methods: {
@@ -426,7 +359,8 @@ export default {
       this.mapForm=n;
     },
     edits(n){
-      this.xid=n.id;
+      this.xid="7b692a89-4e28-478a-b2be-18bdaeb6838a";
+      this.rybh="RUS09000001096320";
       this.editsDialogVisible=true;
 
     },
@@ -479,7 +413,7 @@ export default {
       this.getList(this.CurrentPage, this.pageSize, this.pd);
     },
     beforeAvatarUpload(file) {
-      console.log(file.type)
+
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       const isExls=file.type==='application/vnd.ms-excel';
 

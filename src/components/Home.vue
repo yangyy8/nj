@@ -133,7 +133,7 @@ export default {
        window.location.href='http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin';return ;
       }else {
 
-
+        console.log('退出成功！');
       var url=this.Global.aport1+'/user/logout';
       var formData = new FormData();
       formData.append("token",this.$store.state.token);
