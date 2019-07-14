@@ -1171,7 +1171,7 @@
 <script>
 export default {
   name:'CZXX',
-  props:['type','xid','rid','rybh','random'],
+  props:['type','xid','rybh','random'],
   data(){
     return{
       imagess:[],
@@ -1330,6 +1330,7 @@ export default {
       switch (this.types) {
         case 1://预警
         case 2://人员画像
+        case 3://数据分析
             this.getData2();
             break;
         default:
@@ -1354,7 +1355,7 @@ export default {
     },
     getData2(){
       this.pp.RGUID=this.id;
-      this.pd.RYBH=this.rid;
+      this.pd.RYBH=this.rybh;
       let p = {
         "pd": this.pp
       };
@@ -1379,7 +1380,9 @@ export default {
    gettableDatajz(currentPage,showCount,pd)
    {
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
      this.$api.post(this.Global.aport3+'/ryhx/getczjzdxx', pp,
       r => {
@@ -1394,7 +1397,9 @@ export default {
    //工作地信息
    gettableDatagz(currentPage,showCount,pd){
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
       this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', pp,
        r => {
@@ -1407,7 +1412,9 @@ export default {
    //走访信息
    gettableDatazf(currentPage,showCount,pd){
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
 
       this.$api.post(this.Global.aport3+'/ryhx/getczzfxx', pp,
@@ -1422,7 +1429,9 @@ export default {
      //安保信息
      gettableDataab(currentPage,showCount,pd){
        let pp = {
-         "pd": pd
+         "pd": pd,
+         "currentPage":currentPage,
+         "showCount":showCount,
        };
         this.$api.post(this.Global.aport3+'/ryhx/getczabxx', pp,
          r => {
@@ -1436,7 +1445,9 @@ export default {
       //重点列管信息
        gettableDatalg(currentPage,showCount,pd){
          let pp = {
-           "pd": pd
+           "pd": pd,
+           "currentPage":currentPage,
+           "showCount":showCount,
          };
 
           this.$api.post(this.Global.aport3+'/ryhx/getczzdlgxx', pp,
@@ -1450,7 +1461,9 @@ export default {
         //同户信息
           gettableDatath(currentPage,showCount,pd){
             let pp = {
-              "pd": pd
+              "pd": pd,
+              "currentPage":currentPage,
+              "showCount":showCount,
             };
              this.$api.post(this.Global.aport3+'/ryhx/getczthrxx',pp,
               r => {

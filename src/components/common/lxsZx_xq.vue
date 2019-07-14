@@ -1,6 +1,10 @@
 <template lang="html">
   <el-form :model="lxsinfo">
     <el-row :gutter="2"  class="mb-6">
+      <el-col :span="8" class="input-item">
+        <span class="input-text">学校名称：</span>
+        <span class="input-input detailinput">  {{lxsinfo.SCHOOLID_DESC}}</span>
+      </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">申请编号：</span>
           <span class="input-input detailinput">  {{lxsinfo.APPLYNO}}</span>
@@ -31,11 +35,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">国籍：</span>
-          <span class="input-input detailinput">  {{lxsinfo.COUNTRYID}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.COUNTRYID_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">婚姻状况：</span>
-          <span class="input-input detailinput">  {{lxsinfo.MARRYSTATUS}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.MARRYSTATUS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生日期：</span>
@@ -59,7 +63,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">护照证件种类：</span>
-          <span class="input-input detailinput">  {{lxsinfo.PASSPORTTYPE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.PASSPORTTYPE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">入境日期：</span>
@@ -67,11 +71,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">学生类别：</span>
-          <span class="input-input detailinput">  {{lxsinfo.APPLYTYPE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.APPLYTYPE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">授课语言：</span>
-          <span class="input-input detailinput">  {{lxsinfo.TEACHLANGUAGE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.TEACHLANGUAGE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">院系名称：</span>
@@ -95,11 +99,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">汉语水平：</span>
-          <span class="input-input detailinput">  {{lxsinfo.LANGUAGESKILL}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.LANGUAGESKILL_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">英语水平：</span>
-          <span class="input-input detailinput">  {{lxsinfo.ENGLISHLANGUAGESKILL}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.ENGLISHLANGUAGESKILL_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">其他语言能力：</span>
@@ -129,7 +133,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">学生状态：</span>
-         <span class="input-input detailinput">  {{lxsinfo.STATUS}}</span>
+         <span class="input-input detailinput">  {{lxsinfo.STATUS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">申请人个人邮箱：</span>
@@ -193,7 +197,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">原来自国家或地区：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RESTRICT}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.RESTRICT_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">何时取得当前国籍：</span>
@@ -213,7 +217,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">宗教信仰：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RELIGIONNAME}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.RELIGIONNAME_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">原就读大学：</span>
@@ -254,7 +258,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">居住区域类型：</span>
-          <span class="input-input detailinput">  {{lxsinfo.ACCOMHOTELTYPE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.ACCOMHOTELTYPE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">收件人联系手机：</span>
@@ -372,7 +376,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">通知书接收方式：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RECEIVERTYPE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.RECEIVERTYPE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">紧急事务联系人电话：</span>
@@ -413,15 +417,15 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">办学类别：</span>
-          <span class="input-input detailinput">  {{lxsinfo.BXLB}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.BXLB_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">学位类别：</span>
-          <span class="input-input detailinput">  {{lxsinfo.DEGREE}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.DEGREE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">经费来源：</span>
-          <span class="input-input detailinput">  {{lxsinfo.JFLY}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.JFLY_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">缴费类别：</span>
@@ -449,7 +453,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">学费支付方式：</span>
-          <span class="input-input detailinput">  {{lxsinfo.JXJSTUDYSCHOLAR}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.JXJSTUDYSCHOLAR_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">是全额奖学金：</span>

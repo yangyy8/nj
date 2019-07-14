@@ -48,6 +48,7 @@ const zsbg="/service/getRedisDataByDm?tablename=JZ_LGBM"//住宿宾馆
 const tlyxq="/service/getRedisDataByDm?tablename=DM_TLYXQ";//停留有效期
 const sf="/service/getRedisDataByDm?tablename=DM_JWRYSF";//身份
 const clzt="/service/getRedisDataByDm?tablename=DM_CLZT";//处理状态
+const shzt="/service/getRedisDataByDm?tablename=DM_SHZT";//审核状态
 const sjly="/service/getRedisDataByDm?tablename=DM_SJLY";//数据来源
 const rzfs="/service/getRedisDataByDm?tablename=DM_RZFS";//入住方式(地图用的)
 const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地图用的）
@@ -72,5 +73,5 @@ export default
   aport5,//李文龙
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt
 }

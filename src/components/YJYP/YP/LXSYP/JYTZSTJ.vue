@@ -32,26 +32,26 @@
                   <div class="yy-input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd.BIRTHDAY_DateRange.begin" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyyMMdd"
+                       type="date" size="small" value-format="yyyy/MM/dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd.BIRTHDAY_DateRange.end" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyyMMdd"
+                        type="date" size="small" value-format="yyyy/MM/dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="yy-input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.IDCARD" class="yy-input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.PASSNO" class="yy-input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="yy-input-text">学习开始时间：</span>
                    <el-date-picker
                       v-model="pd.STASTUDY_Begin.begin" format="yyyy-MM-dd"
-                      type="date" size="small" value-format="yyyyMMdd"
+                      type="date" size="small" value-format="yyyy/MM/dd"
                       placeholder="开始时间" class="yy-input-input">
                    </el-date-picker>
                 </el-col>
@@ -59,7 +59,7 @@
                    <span class="yy-input-text">学习结束时间：</span>
                    <el-date-picker
                       v-model="pd.ENDSTUDY_End.end" format="yyyy-MM-dd"
-                      type="date" size="small" value-format="yyyyMMdd"
+                      type="date" size="small" value-format="yyyy/MM/dd"
                       placeholder="开始时间" class="yy-input-input">
                    </el-date-picker>
                 </el-col>
@@ -167,7 +167,8 @@
              ref="multipleTable"
              :data="tableData"
              border
-             style="width: 100%">
+             style="width: 100%"
+             @header-click="headerClick">
              <el-table-column
                prop="CNAME"
                label="中文姓名">
@@ -181,7 +182,7 @@
                label="英文名">
              </el-table-column>
              <el-table-column
-               prop="SEX"
+               prop="SEX_DESC"
                label="性别">
              </el-table-column>
              <el-table-column
@@ -189,7 +190,7 @@
                label="出生日期">
              </el-table-column>
              <el-table-column
-               prop="IDCARD"
+               prop="PASSNO"
                label="证件号码">
              </el-table-column>
              <el-table-column
@@ -355,6 +356,9 @@
          this.$store.dispatch("getSjly");
       },
       methods: {
+        headerClick(column,event){
+          event.target.title=column.label
+        },
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },

@@ -116,7 +116,7 @@
 <script>
 export default {
   name:'CRJXX',
-  props:['type','xid'],
+  props:['type','xid','random'],
   data(){
     return{
       crjinfo:{},
@@ -127,25 +127,19 @@ export default {
   },
   mounted(){
       this.initData();
-      console.log('this.pp.RGUID',this.type);
    },
   watch:{
-      type: function(val){
-        this.page=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
-      },
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.initData()
     },
+  },
 
   methods:{
     initData(){
       switch (this.page) {
         case 1://预警
+            console.log('this.page',this.page);
             this.getData1();
             break;
         case 2://人员画像

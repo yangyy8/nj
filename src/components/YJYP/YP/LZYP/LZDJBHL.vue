@@ -150,7 +150,7 @@
                label="中文姓名">
              </el-table-column>
              <el-table-column
-               prop="XB"
+               prop="XB_DESC"
                label="性别">
              </el-table-column>
              <el-table-column
@@ -225,7 +225,7 @@
 
     </el-dialog>
     <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LZXX :type="type" :xid="xid"></LZXX>
+        <LZXX :type="type" :xid="xid" :rybh="rybh"></LZXX>
       <div slot="footer" class="dialog-footer">
         <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
       </div>
@@ -241,6 +241,7 @@ import LZXX from '../../../common/lzxx_xq'
   data() {
 
     return {
+      rybh:'',
       detailsDialogVisible:false,
       listDialogVisible:false,
       page:0,
@@ -308,6 +309,7 @@ import LZXX from '../../../common/lzxx_xq'
     },
     details(i){
       this.xid=i.DTID;
+      this.rybh=i.RYBH;
       this.detailsDialogVisible = true;
     },
 
@@ -449,7 +451,7 @@ import LZXX from '../../../common/lzxx_xq'
         that.CurrentPage=1;
         that.getListTu(that.CurrentPage,that.pageSize,that.pdTu);
       })
-      that.liangChart.resize();
+      that.lineChart.resize();
     },
   }
 }

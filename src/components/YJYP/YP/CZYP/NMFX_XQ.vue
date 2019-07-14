@@ -139,7 +139,7 @@
     </div>
       <div class="bj">
          <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-              <LZXX :type="type" :xid="xid"></LZXX>
+              <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
            <div slot="footer" class="dialog-footer">
              <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
            </div>
@@ -153,6 +153,7 @@ export default {
     components:{LZXX},
   data() {
     return {
+      rybh:'',
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -223,7 +224,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.pm,
-        "orderBy":'ZSRQ',
+        "orderBy":{value:"ZSRQ",dataType:"date"},
         "orderType":'DESC'
       };
       this.$api.post(this.Global.aport5+'/eS_LZ_LZXXController/getResultListByParams', p,
@@ -233,8 +234,8 @@ export default {
         })
     },
     details(i) {
-
       this.xid=i.DTID;
+      this.rybh=i.RYBH;
       this.detailsDialogVisible = true;
 
     },

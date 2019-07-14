@@ -168,7 +168,7 @@ export default {
     getPhoto(){
       let p={
         "pd":{
-          RYBH:this.rybh,
+          RYBH:this.rybh||'',
           YWLB:'0003'
         },
         // "orderType":"DESC",

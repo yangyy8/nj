@@ -324,7 +324,7 @@
         </div>
      <div class="bj">
         <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-            <LZXX :type="type" :xid="xid"></LZXX>
+            <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -340,6 +340,7 @@ import LZXX from '../../../common/lzxx_xq'
         components:{LZXX},
       data() {
         return {
+          rybh:'',
           radio1:'0',
           radio2:'0',
           typet:'1',
@@ -618,6 +619,7 @@ import LZXX from '../../../common/lzxx_xq'
           //   this.lg=false;
           // }
           this.xid=i.DTID;
+          this.rybh=i.RYBH;
           this.detailsDialogVisible = true;
           // this.form=i;
         },

@@ -7,15 +7,15 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">人员类别：</span>
-          <span class="input-input detailinput">  {{crjinfo.personType.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.personType.value==undefined?'':crjinfo.personType.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">国家地区：</span>
-         <span class="input-input detailinput">  {{crjinfo.nationality.value}}</span>
+         <span class="input-input detailinput">  {{crjinfo.nationality.value==undefined?'':crjinfo.nationality.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">性别：</span>
-         <span class="input-input detailinput">  {{crjinfo.gender.value}}</span>
+         <span class="input-input detailinput">  {{crjinfo.gender.value==undefined?'':crjinfo.gender.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生日期：</span>
@@ -27,11 +27,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">证件类型：</span>
-          <span class="input-input detailinput">  {{crjinfo.certificateType.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.certificateType.value==undefined?'':crjinfo.certificateType.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">签证类型：</span>
-          <span class="input-input detailinput">  {{crjinfo.visaType.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.visaType.value==undefined?'':crjinfo.visaType.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">职业代码：</span>
@@ -49,7 +49,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出入口岸：</span>
-          <span class="input-input detailinput">  {{crjinfo.ioPort.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.ioPort.value==undefined?'':crjinfo.ioPort.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">检查员号：</span>
@@ -57,7 +57,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">交通方式：</span>
-          <span class="input-input detailinput">  {{crjinfo.trafficMode.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.trafficMode.value==undefined?'':crjinfo.trafficMode.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">交通工具：</span>
@@ -69,7 +69,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">发证机关：</span>
-          <span class="input-input detailinput">  {{crjinfo.grantCertOrg.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.grantCertOrg.value==undefined?'':crjinfo.grantCertOrg.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">发证日期：</span>
@@ -77,7 +77,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出境理由：</span>
-          <span class="input-input detailinput">  {{crjinfo.outReason.value}}</span>
+          <span class="input-input detailinput">  {{crjinfo.outReason.value==undefined?'':crjinfo.outReason.value}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">通道号：</span>
