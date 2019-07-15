@@ -306,24 +306,28 @@
               style="width: 100%" class="stu-table">
               <el-table-column
                 prop="TBRYZL"
-                label="通报人员类别">
+                label="通报人员类别"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="TBBH"
-                label="通报编号">
+                label="通报编号"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="FBSJ"
-                label="发布时间">
+                label="发布时间"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="BZ"
-                label="备注">
+                label="备注"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 label="操作" width="120">
                 <template slot-scope="scope">
-                <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailstbry(scope.row)"></el-button>
+                  <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailstbry(scope.row)"></el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -1429,29 +1433,20 @@ export default {
         })
     },
     detailslzxx(n){
-      // if(this.row.MXLX=="BKYJ"){
-      //     this.xid=n.ZJHM+","+n.GJDQ;
-      // }else{
-      //     this.xid=n.DTID;
-      // }
-
         this.xid=n.DTID;
         this.rybh=n.RYBH;
         this.type=0;
         this.lzxxDialogVisible=true;
     },
     detailscrj(n){
-        // if(this.row.MXLX=="BKYJ"){
-        //   this.xid=n.ZJHM+","+n.GJDQ
-        // }else {
-        //
-        // }
      this.xid=n.RGUID;
+     this.type=1;
      this.crjDialogVisible=true;
     },
     detailstbry(n){
       this.xid=n.RGUID;
       this.rybh=n.RYBH;
+      this.type=1;
       this.tbryDialogVisible=true;
     },
     detailsjz(n){
@@ -1470,11 +1465,13 @@ export default {
     detailsasj(n){
        this.xid=n.RGUID;
        this.dtid=n.DTID;
-      this.asjDialogVisible=true;
+       this.type=1;
+       this.asjDialogVisible=true;
     },
     detailssj(n){
       this.xid=n.RGUID;
-     this.sjDialogVisible=true;
+      this.type=1;
+      this.sjDialogVisible=true;
    },
    getMX(mm){
 

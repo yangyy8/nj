@@ -597,7 +597,7 @@
 
 
     <el-dialog title="出入境信息详情" :visible.sync="CRJDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-                <CRJXX :type="type" :xid="xid"></CRJXX>
+                <CRJXX :type="type" :xid="xid" :random="(new Date()).getTime()"></CRJXX>
                  <div slot="footer" class="dialog-footer">
                    <el-button @click="CRJDialogVisible = false" size="small">取 消</el-button>
                  </div>
@@ -1053,7 +1053,7 @@ export default {
           break;
         case 2:
           this.xid=n.RGUID;
-          console.log("nnn---",this.xid);
+          this.type=1;
           this.CRJDialogVisible = true;
           break;
         case 3:
@@ -1065,6 +1065,7 @@ export default {
         case 4:
           this.xid=n.RGUID;
           this.rybh=n.RYBH;
+          this.type=1;
           this.CZDialogVisible = true;
           this.czinfo = n;
           break;

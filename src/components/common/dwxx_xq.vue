@@ -1,29 +1,29 @@
 <template lang="html">
 <el-form :model="dwinfo">
       <el-row :gutter="3"  class="mb-6">
-        <el-col :span="8" class="input-item">
+        <!-- <el-col :span="8" class="input-item">
           <span class="input-text" title="常住基本信息ID">常住基本信息ID：</span>
           <span class="input-input detailinput">  {{dwinfo.YWDTID}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text" title="警综业务ID">警综业务ID：</span>
           <span class="input-input detailinput">  {{dwinfo.JZYWID}}</span>
-        </el-col>
+        </el-col> -->
         <el-col :span="8" class="input-item">
           <span class="input-text" title="航信业务ID">航信业务ID：</span>
           <span class="input-input detailinput">  {{dwinfo.HXYWID}}</span>
         </el-col>
-        <el-col :span="8" class="input-item">
+        <!-- <el-col :span="8" class="input-item">
           <span class="input-text" title="人员编号">人员编号：</span>
           <span class="input-input detailinput">  {{dwinfo.RYBH}}</span>
-        </el-col>
+        </el-col> -->
         <el-col :span="8" class="input-item">
           <span class="input-text" title="工作单位行政区划">工作单位行政区划：</span>
-          <span class="input-input detailinput">  {{dwinfo.GZD_XZQH}}</span>
+          <span class="input-input detailinput">  {{dwinfo.GZD_XZQH_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text" title="工作单位所属派出所">工作单位所属派出所：</span>
-          <span class="input-input detailinput">  {{dwinfo.GZD_PCS}}</span>
+          <span class="input-input detailinput">  {{dwinfo.GZD_PCS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text" title="工作单位机构代码">工作单位机构代码：</span>
@@ -75,7 +75,7 @@
       </el-col>
       <el-col :span="8" class="input-item">
         <span class="input-text" title="工作状态类型">工作状态类型：</span>
-        <span class="input-input detailinput">  {{dwinfo.ZT_GZZT}}</span>
+        <span class="input-input detailinput">  {{dwinfo.ZT_GZZT_DESC}}</span>
       </el-col>
       <el-col :span="8" class="input-item">
         <span class="input-text" title="处理单位">处理单位：</span>
@@ -103,7 +103,7 @@
       </el-col>
       <el-col :span="8" class="input-item">
         <span class="input-text" title="数据来源">数据来源：</span>
-        <span class="input-input detailinput">  {{dwinfo.SJLY}}</span>
+        <span class="input-input detailinput">  {{dwinfo.SJLY_DESC}}</span>
       </el-col>
       <el-col :span="8" class="input-item">
         <span class="input-text" title="数据状态">数据状态：</span>
