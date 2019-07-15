@@ -56,7 +56,7 @@
       <el-row>
         <el-col :span="12">  <div class="yylbt">证件列表</div></el-col>
         <el-col :span="12" style="text-align:right">
-           <el-button type="primary" size="mini">添加</el-button>
+           <el-button type="primary" size="mini" @click="editdia(0,1)">添加</el-button>
         </el-col>
       </el-row>
 
@@ -113,7 +113,7 @@
         <el-col :span="2"></el-col>
         <el-col :span="11">
           <el-row>
-            <el-col :span="12">  <div class="yylbt">请求国</div></el-col>
+            <el-col :span="12"><div class="yylbt">请求国</div></el-col>
             <el-col :span="12" style="text-align:right">
                <el-button type="primary" size="mini">添加</el-button>
             </el-col>
@@ -176,7 +176,33 @@
          </el-table-column>
        </el-table>
     </div>
-  </el-form>
+
+
+  <el-dialog  :title="dialogtxt" :visible.sync="editDialogVisible" :append-to-body="true">
+    <el-row :gutter="1">
+      <el-col :span="24">
+        <span class="input-text">证件种类：</span>
+        <el-select v-model="pd.ZJZL" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+          <el-option
+            v-for="(item,ind1) in $store.state.zjzl"
+            :key="ind1"
+            :label="item.dm+' - '+item.mc"
+            :value="item.dm">
+          </el-option>
+        </el-select>
+      </el-col>
+      <el-col :span="24">
+       <span class="input-text">证件号码：</span>
+        <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM"  class="input-input"></el-input>
+      </el-col>
+    </el-row>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
+      <el-button @click="editDialogVisible = false" size="small">取 消</el-button>
+    </div>
+  </el-dialog>
+
+ </el-form>
 </template>
 <script>
 export default {
@@ -197,14 +223,18 @@ export default {
       typet:'1',
       shm:true,
       lg:false,
+      pd:{},
+      dialogtxt:'添加',
+      editDialogVisible:false,
       pp:{},
     }
   },
   mounted(){
-   this.$nextTick(()=>{
-    this.getData0(this.id);
-    this.getPhoto()
-  });
+    this.$store.dispatch("getZjzl");
+     this.$nextTick(()=>{
+      this.getData0(this.id);
+      this.getPhoto()
+    });
   },
   watch:{
     random:function(newVal,oldVal){
@@ -265,6 +295,15 @@ export default {
         link.setAttribute('download', '通报人员.pdf')
         document.body.appendChild(link)
         link.click()
+    },
+
+    editdia(t,n,value){
+      if(t==0){
+        this.dialogtxt="添加";
+      }else {
+        this.dialogtxt="编辑";
+      }
+    this.editDialogVisible=true;
     },
   },
 }
