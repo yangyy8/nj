@@ -1330,11 +1330,11 @@ export default{
       target.scrollIntoView();
       this.dwDialogVisible=true;
     },
-detailsMH(n)
-{
-  this.xid=n.RGUID;
-  this.mhDialogVisible==true;
-},
+    detailsMH(n)
+    {
+      this.xid=n.RGUID;
+      this.mhDialogVisible==true;
+    },
   },
 }
 </script>
