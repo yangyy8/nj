@@ -427,7 +427,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">数据来源：</span>
-            <span class="input-input detailinput">  {{jzinfo.SJLY}}</span>
+            <span class="input-input detailinput">  {{jzinfo.SJLY_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">数据状态：</span>
@@ -649,7 +649,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="数据来源">数据来源：</span>
-            <span class="input-input detailinput">  {{gzinfo.SJLY}}</span>
+            <span class="input-input detailinput">  {{gzinfo.SJLY_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="数据状态">数据状态：</span>
@@ -823,7 +823,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="数据来源">数据来源：</span>
-              <span class="input-input detailinput">  {{zfinfo.SJLY}}</span>
+              <span class="input-input detailinput">  {{zfinfo.SJLY_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="状态">状态：</span>
@@ -978,7 +978,7 @@
             label="英文名">
           </el-table-column>
           <el-table-column
-            prop="XB"
+            prop="XB_DESC"
             label="性别">
           </el-table-column>
           <el-table-column
@@ -1035,7 +1035,7 @@
 <el-row :gutter="3">
   <el-col :span="8" class="input-item">
     <span class="input-text">列管状态：</span>
-    <span class="input-input detailinput">  {{lginfo.LGZT}}</span>
+    <span class="input-input detailinput">  {{lginfo.LGZT_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">英文姓：</span>
@@ -1047,7 +1047,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">性别：</span>
-    <span class="input-input detailinput">  {{lginfo.XB}}</span>
+    <span class="input-input detailinput">  {{lginfo.XB_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">国家地区：</span>
@@ -1076,7 +1076,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">所属派出所：</span>
-    <span class="input-input detailinput">  {{lginfo.SSPCS}}</span>
+    <span class="input-input detailinput">  {{lginfo.SSPCS_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">所属责任区：</span>

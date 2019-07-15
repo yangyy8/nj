@@ -204,8 +204,6 @@ export default {
   data(){
     return{
       form:{},
-      page:this.type,
-      id:this.xid,
       imagess: [],
       imgshow1:false,
       imgshow2:true,
@@ -227,13 +225,12 @@ export default {
     random:function(newVal,oldVal){
       this.random=newVal;
       this.initData();
-      console.log('this.page',this.page);
     },
   },
   methods:{
     initData(){
       this.getPhoto();
-      switch (this.page) {
+      switch (this.type) {
         case 0://出租屋和重点出租屋/重点国家
           this.getData0();
           break;
@@ -276,14 +273,13 @@ export default {
     },
     getData0(){
       this.form={};
-      var arr=this.id.split(',');
+      var arr=this.xid.split(',');
       if(arr.length>1){
          this.pp.ZJHM=arr[0];
          this.pp.GJDQ=arr[1];
       }else {
-         this.pp.DTID=this.id;
+         this.pp.DTID=this.xid;
       }
-
       let p = {
         "pd": this.pp
       };
@@ -291,11 +287,7 @@ export default {
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getEntityByDTID', p,
         r => {
           this.form=r.data;
-
-
           if(r.data.LB_SFBG=="2"){
-            console.log('-----',r.data.LB_SFBG);
-
             this.shm1=false;
             this.shm2=true;
           }else if(r.data.LB_SFBG=="1"){
@@ -310,8 +302,7 @@ export default {
     },
     getData1(){
       this.form={};
-      this.pp.DTID=this.id;
-      console.log('---',this.id);
+      this.pp.DTID=this.xid;
       let p = {
         "pd": this.pp
       };
@@ -333,8 +324,7 @@ export default {
     },
     getData2(){
       this.form={};
-      this.pp.RGUID=this.id;
-      console.log('---',this.id);
+      this.pp.RGUID=this.xid;
       let p = {
         "pd": this.pp
       };

@@ -59,7 +59,7 @@
                     </el-col>
                     <el-col :span="12" >
                       <span class="yy-input-text" title="数据来源">数据来源：</span>
-                        <el-input placeholder="" size="small" v-model="form.dataSource"  class="yy-input-input"></el-input>
+                        <el-input placeholder="" size="small" v-model="form.dataSource_desc"  class="yy-input-input"></el-input>
                     </el-col>
                   </el-row>
                 </el-col>

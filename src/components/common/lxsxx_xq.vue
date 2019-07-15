@@ -43,7 +43,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">国籍：</span>
-          <span class="input-input detailinput">  {{lxsinfo.GJDQ_DESC}}</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.NATIONALITY_DESC:lxsinfo.GJDQ_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生国籍：</span>
@@ -71,11 +71,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">宗教信仰：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RELIGIOUS}}</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.RELIGIOUS_DESC:lxsinfo.RELIGIOUS}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text" title="宗教信仰（其他）">宗教信仰（其他）：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RELIGIOUS_DESC}}</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.OTHERRELIGIOUS_DESC:lxsinfo.RELIGIOUS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">母语：</span>
