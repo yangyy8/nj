@@ -28,12 +28,12 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="U - 未知">
-                    </el-option>
-                    <el-option value="M" label="M - 男">
-                    </el-option>
-                    <el-option value="F" label="F - 女">
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind0) in $store.state.xb"
+                      :key="ind0"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -55,23 +55,23 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">请求国：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.QQG" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
@@ -93,11 +93,13 @@
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">证件类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 身份证">
-                    </el-option>
-                    <el-option value="1" label="1 - 回乡证白卡">
+                  <span class="input-text">证件种类：</span>
+                  <el-select v-model="pd.ZJZL" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind1) in $store.state.zjzl"
+                      :key="ind1"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -268,7 +270,7 @@
     </div>
   </el-dialog>
   <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <LZXX :xid="xid"></LZXX>
+    <TBRY :xid="xid" :type="type"></TBRY>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
@@ -278,10 +280,10 @@
 
 </template>
 <script>
-import LZXX from '../../common/lzxx_xq'
+import TBRY from '../../common/tbry_xq'
 import TBRYEDIT from '../../common/tbry_edit'
 export default {
-  components:{LZXX,TBRYEDIT},
+  components:{TBRY,TBRYEDIT},
   data() {
     return {
       CurrentPage: 1,
@@ -326,10 +328,11 @@ export default {
     this.detailsDialogVisible=false;
   },
   mounted() {
-     this.xid="111";
+     this.$store.dispatch('getXB');
+     this.$store.dispatch('getGjdq');
+     this.$store.dispatch('getZjzl');
   },
   methods: {
-
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
