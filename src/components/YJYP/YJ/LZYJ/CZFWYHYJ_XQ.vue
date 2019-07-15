@@ -8,7 +8,7 @@
            <el-row  class="stu-row2">
              <el-col :span="8" class="stu-col-row2">
                <span>行政区划：</span>
-                  {{baseData.XZQHMC}}
+                  {{baseData.XZQH_DESC}}
              </el-col>
              <el-col :span="8" class="stu-col-row2">
                <span>派出所：</span>

@@ -249,14 +249,15 @@ export default {
        window.open(routeData.href,'_blank')
       },
       //后期匹配地址
-      getXY(dz,callback){
 
-        let p={
-          "dz":dz,
+      getXY(data, callback) {
+        var url = this.Global.xyaddress + "?dz=" + data;
+        let p = {
+          "url": url,
         };
-        this.$api.get(this.Global.xyaddress, p,
+        this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
           r => {
-          callback(r.result)
+            callback && callback(r.data.result)
           });
       },
 

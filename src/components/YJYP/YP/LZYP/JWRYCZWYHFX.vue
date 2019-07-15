@@ -368,9 +368,12 @@ import {
   createMapL,
   getSearch
 } from '@/assets/js/SuperMap/czwyhmap.js'
-
+import {
+  format
+} from '@/assets/js/date.js'
 let czwvm;
 export default {
+  inject: ['reload'],
   data() {
     return {
       CurrentPage: 1,
@@ -412,13 +415,16 @@ export default {
       rybh: '',
       ssfj: [],
       centers: [],
-      sspcs:[],
+      sspcs: [],
+
 
     }
   },
 
   mounted() {
     window.czwvm = this;
+
+
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getXB');
     this.$store.dispatch('getRjsy');
@@ -437,7 +443,7 @@ export default {
 
     },
     handleCurrentChange(val) {
-      this.CurrentPage=val;
+      this.CurrentPage = val;
       this.getRyxx(this.CurrentPage, this.pageSize, this.bzhid, this.mc);
       console.log(`当前页: ${val}`);
     },
@@ -590,19 +596,20 @@ export default {
         })
     },
     doset() {
+      this.reload();
       // this.$set(this.pd,"xzqh",[]);
-      this.$set(this.pd, "ssfj", []);
-      this.$set(this.pd, "sspcs", []);
-      this.$set(this.pd, "zrq", []);
-      this.$set(this.pd, "beginTime", '');
-      this.$set(this.pd, "endTime", '');
+      // this.$set(this.pd, "ssfj", []);
+      // this.$set(this.pd, "sspcs", []);
+      // this.$set(this.pd, "zrq", []);
+      // this.$set(this.pd, "beginTime", '');
+      // this.$set(this.pd, "endTime", '');
     },
     //得到标准化地址
     getBZHDZ(callback) {
       var searchResult = [];
       let p = {
         "ssfj": this.pd.ssfj.substr(0, 6),
-        "pcs": this.pd.sspcs.substr(0,12),
+        "pcs": this.pd.sspcs.substr(0, 12),
         "zrq": this.pd.zrq,
         "rzsjStart": this.pd.beginTime,
         "rzsjEnd": this.pd.endTime,
@@ -615,8 +622,9 @@ export default {
             for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
             }
-            if(searchResult.length==0){
-              this.$message.error("没有查询到数据信息! ");return ;
+            if (searchResult.length == 0) {
+              this.$message.error("没有查询到数据信息! ");
+              return;
             }
             callback && callback(searchResult)
           }
@@ -626,7 +634,8 @@ export default {
     getRyxx(currentPage, showCount, bzhid, mc) {
       if (currentPage == 1) {
         this.CurrentPage = 1;
-        this.tableData=[];this.TotalResult=0;
+        this.tableData = [];
+        this.TotalResult = 0;
         this.bzhid = bzhid;
         this.mc = mc;
       }
@@ -646,7 +655,7 @@ export default {
         "showCount": showCount,
         "bzhdzMc": this.bzhid,
         "ssfj": this.pd.ssfj.substr(0, 6),
-        "pcs": this.pd.sspcs.substr(0,12),
+        "pcs": this.pd.sspcs.substr(0, 12),
         "zrq": this.pd.zrq,
         "rzsjStart": this.pd.beginTime,
         "rzsjEnd": this.pd.endTime,
@@ -743,20 +752,48 @@ export default {
       if (this.pd.beginTime == undefined && this.pd.endTime == undefined) {
         this.$message.error("请选择入住开始时间或结束时间");
         return;
+      } else {
+        var date = parseInt(format(new Date(), 'yyyyMMdd') + '');
+        var bb = 0;
+        var ee = 0;
+        if (this.pd.beginTime != undefined) {
+          bb = parseInt(this.pd.beginTime.replace('/', '').replace('/', ''));
+          if (bb > date) {
+            this.$message.error("入住开始时间不能大于当前时间！");
+            return;
+          }
+        }
+        if (this.pd.endTime != undefined) {
+          ee = parseInt(this.pd.endTime.replace('/', '').replace('/', ''));
+          if (ee > date) {
+            this.$message.error("入住结束时间不能大于当前时间！");
+            return;
+          }
+        }
+        if(this.pd.beginTime != undefined && this.pd.endTime != undefined){
+            bb = parseInt(this.pd.beginTime.replace('/', '').replace('/', ''));
+            ee = parseInt(this.pd.endTime.replace('/', '').replace('/', ''));
+          if (bb > ee) {
+            this.$message.error("开始时间不能大于当前时间！");
+            return;
+          }
+        }
+
       }
+
       getSearch(this.centers);
 
 
     },
     //后期匹配地址
-    getXY(dz, callback) {
-
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
       let p = {
-        "dz": dz,
+        "url": url,
       };
-      this.$api.get(this.Global.xyaddress, p,
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
         r => {
-          callback(r.result)
+          callback && callback(r.data.result)
         });
     },
 

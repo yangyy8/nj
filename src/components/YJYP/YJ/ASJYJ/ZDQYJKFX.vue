@@ -179,6 +179,7 @@ import {ToArray} from '@/assets/js/ToArray.js'
 import {createMapL,doSearch} from '@/assets/js/SuperMap/zdjkmap.js'
 let zdvm;
 export default {
+    inject:['reload'],
   data(){
     return{
       CurrentPage: 1,
@@ -248,10 +249,11 @@ export default {
         })
       },
     doset(){
-      this.$set(this.pd,"beginTime",'');
-      this.$set(this.pd,"endTime",'');
-      this.$set(this.pd,"gjdq",'');
-      this.$set(this.pd,"qzzl",'');
+      this.reload();
+      // this.$set(this.pd,"beginTime",'');
+      // this.$set(this.pd,"endTime",'');
+      // this.$set(this.pd,"gjdq",'');
+      // this.$set(this.pd,"qzzl",'');
     },
     getSearch(className) {
         if(this.radioe=="2"){
@@ -375,14 +377,14 @@ export default {
       }
     },
     //后期匹配地址
-    getXY(dz,callback){
-
-      let p={
-        "dz":dz,
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
       };
-      this.$api.get(this.Global.xyaddress, p,
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
         r => {
-        callback(r.result)
+          callback && callback(r.data.result)
         });
     },
 

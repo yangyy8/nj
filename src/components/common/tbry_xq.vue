@@ -168,6 +168,8 @@ export default {
 
   methods:{
     getData0(xid){
+      console.log('xid',xid);
+      console.log('rybh',this.rybh);
       this.pp.RGUID=xid;
       let p = {
         "pd": this.pp

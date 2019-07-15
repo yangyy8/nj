@@ -55,7 +55,7 @@ export default {
     oIframe.style.width = deviceWidth + 'px';
     oIframe.style.height = deviceHeight + 'px';
     this.getNavmune();
-    this.iURL=window.IPConfig.INDEX+'/api-reporter/home/index?token='+this.$store.state.token;
+    this.iURL=window.IPConfig.IP+'/api-reporter/home/index?token='+this.$store.state.token;
     console.log('this.iURL',this.iURL);
   },
   data(){

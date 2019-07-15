@@ -139,175 +139,218 @@
       </div>
 </template>
 <script scoped>
-import {ToArray} from '@/assets/js/ToArray.js'
-import {createMapL,createDWMap} from '@/assets/js/SuperMap/ffjymap.js'
+import {
+  ToArray
+} from '@/assets/js/ToArray.js'
+import {
+  createMapL,
+  createDWMap
+} from '@/assets/js/SuperMap/ffjymap.js'
 let ffvm;
 export default {
-  data(){
-    return{
+  data() {
+    return {
       CurrentPage: 1,
       pageSize: 5,
       TotalResult: 0,
-       pd:{},
-       swdw:[],
-       show:true,
-       bzhshow:false,
-       lgshow:false,
-       jlsz:10,
-       pcs:[],
-       xzqh:[],
-       tableData:[],
-       datastr:[],
-       bzhDialogVisible:false,
-       diatext:'标准化地址',
-       bzhid:'',
-       mc:'',
-       lrdw:'',
-       iid:'',
+      pd: {},
+      swdw: [],
+      show: true,
+      bzhshow: false,
+      lgshow: false,
+      jlsz: 10,
+      pcs: [],
+      xzqh: [],
+      tableData: [],
+      datastr: [],
+      bzhDialogVisible: false,
+      diatext: '标准化地址',
+      bzhid: '',
+      mc: '',
+      lrdw: '',
+      iid: '',
+      xydata: [],
+      cuint: 0,
     }
   },
   mounted() {
-    window.ffvm=this;
+    window.ffvm = this;
     createMapL();
     this.getGX();
   },
-  methods:{
+  methods: {
     pageSizeChange(val) {
-        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+      this.getRyxx(this.CurrentPage, val, this.bzhid, this.mc, this.lrdw);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+      this.getRyxx(val, this.pageSize, this.bzhid, this.mc, this.lrdw);
       console.log(`当前页: ${val}`);
     },
-      changtab(){
-        this.show=!this.show;
-      },
-      changeTSY(t){
-        if(t=="1"){
-          this.lgshow=true;
-          this.bzhshow=false;
-        }else if(t=="2"){
-          this.lgshow=false;
-          this.bzhshow=true;
-        }else {
-          this.lgshow=false;
-          this.bzhshow=false;
-        }
-      },
-      getPcs(){
-        var url=this.Global.aport1+this.Global.pcs;
-        this.$api.get(url,null,
-        r=>{
-          this.pcs=ToArray(r.data);
+    changtab() {
+      this.show = !this.show;
+    },
+    changeTSY(t) {
+      if (t == "1") {
+        this.lgshow = true;
+        this.bzhshow = false;
+      } else if (t == "2") {
+        this.lgshow = false;
+        this.bzhshow = true;
+      } else {
+        this.lgshow = false;
+        this.bzhshow = false;
+      }
+    },
+    getPcs() {
+      var url = this.Global.aport1 + this.Global.pcs;
+      this.$api.get(url, null,
+        r => {
+          this.pcs = ToArray(r.data);
         })
-      },
-      getXzqh(){
-        var url=this.Global.aport1+this.Global.xzqh;
-        this.$api.get(url,null,
-        r=>{
-          this.xzqh=ToArray(r.data);
+    },
+    getXzqh() {
+      var url = this.Global.aport1 + this.Global.xzqh;
+      this.$api.get(url, null,
+        r => {
+          this.xzqh = ToArray(r.data);
         })
-      },
-    doset(){
-       this.$set(this.pd,"dwlb",'');
+    },
+    doset() {
+      this.$set(this.pd, "dwlb", '');
 
     },
-    getGX(){
-      this.$api.get(this.Global.aport1+'/servicemap/getUniversity',null,
-         r=>{
-           // console.log(r.data);
-          this.datastr=r.data;
-         });
+    getGX() {
+
+
+      this.$api.get(this.Global.aport1 + '/servicemap/getUniversity', null,
+        r => {
+          // console.log(r.data);
+          this.datastr = r.data;
+        });
     },
-    getInfo(dm,mc)
-    {     this.show=!this.show;
-          this.iid=dm;
-          createDWMap(dm,mc);
+    getInfo(dm, mc) {
+
+      if (this.jlsz == undefined) {
+        this.$message.error("距离设置不能为空！");
+        return;
+      }
+      this.show = !this.show;
+      this.iid = mc;
+      createDWMap(dm, mc);
     },
     //得到学校信息
-    getxxinfo(dm,callback){
+    getxxinfo(dm, callback) {
       let p = {
         "xxbh": dm,
       };
       var url = this.Global.aport + "/zxdt/getXXDZList";
       this.$api.post(url, p,
         r => {
-          if(r.success){
-
-             callback && callback(r.data)
-           }
+          if (r.success) {
+            callback && callback(r.data);
+          }
         })
 
     },
-    getXXDZ(dm,callback)
-    {
-      // let p={
-      //     "xxbh":dm,
-      // };
-      // this.$api.post(this.Global.aport+'/zxdt/getXXDZList',p,
-      //    r=>{
-      //      console.log(r.data[0].DZXQ);
-      //      callback(r.data[0].DZXQ);
-      //    });
-
-    var searchResult = [
-      {dm:'江苏南京市浦口区乌江镇林山村南埂组17号',count:11},
-      {dm:'江苏南京市浦口区乌江镇周云村王洼组21号',count:21},
-      {dm:'江苏南京市浦口区乌江镇周云村青健组50号',count:58},
-    ];
-    callback(searchResult);
-    },
-    //人员信息
-    getRyxx(currentPage,showCount,bzhid,mc)
-    {
-       this.iid;
-      if(currentPage==1){
-        this.tableData=[];this.TotalResult=0;
-        this.CurrentPage=1;
-      }
-       this.bzhid=bzhid;
-       this.mc=mc;
-
-       this.diatext=this.mc;
-
-       let p={
-         "currentPage":currentPage,
-         "showCount":showCount,
-         "dzdtid":this.bzhid,
-
-       };
-       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
-       this.$api.post(url, p,
-         r => {
-           if (r.success) {
-             console.log(r.data);
-             this.tableData=r.data.resultList;
-             this.TotalResult=r.data.totalResult;
-           }
-         });
-       this.bzhDialogVisible=true;
-    },
     //后期匹配地址
-    getXY(data, callback) {
+    getXY1(data,callback) {
 
+      let _this=this;
+      let nextfun=function(dz){
+        return new Promise(function(resolve,reject){
+          var url = _this.Global.xyaddress + "?dz=" + dz;
+          let p = {
+            "url": url,
+          };
+          _this.$api.post(_this.Global.aport + "/zxdt/getCtUrl", p,
+            r => {
+               var arr=[];
+               arr.push(r.data.result.ycoord);
+               arr.push(r.data.result.xcoord);
+               var obj={};
+               obj.dm=dz;
+               obj.zb=arr;
+               resolve(obj);
+            });
+        });
+      }
+
+var srr=[];
+for (var i = 0; i < data.length; i++) {
+  srr.push(nextfun(data[i].DZXQ))
+  console.log(nextfun(data[i].DZXQ));
+}
+
+    callback && callback(srr);
+
+    },
+    //得到学校详细地址
+    getXXDZ(dm, callback) {
+      var searchResult = [];
       let p = {
-        "dz": data,
+        "xxdm": dm,
+        "xxmc": this.iid,
+        "sf":"61",
       };
-      this.$api.get(this.Global.xyaddress, p,
+      this.$api.post(this.Global.aport + '/ywczdt/getFfjlBzhdz', p,
         r => {
-        callback && callback(r.result)
+          callback && callback(r.data);
         });
     },
 
-    getXY2(data, callback) {
+    //后期匹配地址
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
+      };
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
+        r => {
+          callback && callback(r.data.result)
+        });
+    },
+    //人员信息
+    getRyxx(currentPage, showCount, bzhid, mc) {
+
+      if (currentPage == 1) {
+        this.tableData = [];
+        this.TotalResult = 0;
+        this.CurrentPage = 1;
+      }
+      this.bzhid = bzhid;
+      this.mc = mc;
+
+      this.diatext = this.mc;
 
       let p = {
-        "dz": data.dm,
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "xxdz": this.bzhid,
+        "fwcs": this.iid,
+        "sf":"61",
+
       };
-      this.$api.get(this.Global.xyaddress, p,
+      var url = this.Global.aport + "/ywczdt/getCZDJXXRYList";
+      this.$api.post(url, p,
         r => {
-          callback(r.result,data.dm,data.count)
+          if (r.success) {
+
+            this.tableData = r.data.resultList;
+            this.TotalResult = r.data.totalResult;
+          }
+        });
+      this.bzhDialogVisible = true;
+    },
+
+    getXY2(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data.dm;
+      let p = {
+        "url": url,
+      };
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
+        r => {
+          callback && callback(r.data.result, data.dm, data.count)
         });
     },
   },
@@ -315,41 +358,68 @@ export default {
 </script>
 
 <style scoped>
-.yy-input-text{text-align: left!important; width: 25%!important;}
-.yy-input-input{width: 70%!important;}
-.resultpaneltitle {
-    color: #fff;
-    background-color: #3992d0;
-    text-align:center;
-    font-size:15px;
-    margin-right: 10px;cursor: pointer;
-
-  }
-#resultpanel{line-height: 25px; font-size: 12px;}
-.fflist{color: #333333; cursor: pointer;}
-.fflist:hover{color: #0E93DA}
-.arrow_line {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border: 2px solid #06B4FB;
+.yy-input-text {
+  text-align: left !important;
+  width: 25% !important;
 }
 
+.yy-input-input {
+  width: 70% !important;
+}
+
+.resultpaneltitle {
+  color: #fff;
+  background-color: #3992d0;
+  text-align: center;
+  font-size: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#resultpanel {
+  line-height: 25px;
+  font-size: 12px;
+}
+
+.fflist {
+  color: #333333;
+  cursor: pointer;
+}
+
+.fflist:hover {
+  color: #0E93DA
+}
+
+.arrow_line {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #06B4FB;
+}
 </style>
 <style>
-.lzxx  .my-div-icon {
-        border-radius: 50%;
-        line-height:20px;
-        text-align: center;
-        vertical-align: middle;
-    }
-.lzxx  .cqgreen {
-		background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-	}
+.lzxx .my-div-icon {
+  border-radius: 50%;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
 
-.lzxx	.cqred {
-    background:url(../../../../assets/img/tb/location_red.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-  }
+.lzxx .cqgreen {
+  background: url(../../../../assets/img/tb/location_green.png) no-repeat;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+}
 
-.bghome .el-dialog{ width: 70%!important;}
+.lzxx .cqred {
+  background: url(../../../../assets/img/tb/location_red.png) no-repeat;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.bghome .el-dialog {
+  width: 70% !important;
+}
 </style>

@@ -34,6 +34,7 @@ export function createMapL() {
 }
 export function getSearch(centers) {
   markerLayer.clearLayers();
+  console.log(centers);
   map.flyTo(centers,10);
   var  searchResult=window.czwvm.getBZHDZ(function(data){
 

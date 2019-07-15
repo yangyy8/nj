@@ -157,6 +157,8 @@ export default {
                     this.$router.push({name: 'Index'});
 
                   }
+              }else {
+                  this.$message.error("用户名或者密码输入错误！");return;
               }
           })
       // });
@@ -201,7 +203,7 @@ export default {
             this.Global.hasEnter="1";
             this.$router.push({name: 'Index',params:{ id:'1'}});
           }else {
-              this.$message.error("登录失败！");
+              this.$message.error("用户名或者密码输入错误！");return;
           }
         })
       });

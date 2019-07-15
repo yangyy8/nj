@@ -62,24 +62,18 @@ function apiAxios (method, url, params, success, failure,header,responseType) {
         headers: header||{'X-Requested-With': 'XMLHttpRequest'},
         responseType: responseType||'json',
     })
-    .then(function (res) {
 
+    .then(function (res) {
       if (res.status === 200) {
+
           if(loadingInstance1){
             loadingInstance1.close();
           }
           if (success) {
-
             success(res.data)
-
           }
           if(res.data.code=='1000001'){
-            if($store.state.wtoken!='' && $store.state.wtoken!=undefined && $store.state.serverip!='' && $store.state.serverip!=undefined)
-            {
-             window.location.href='http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin';return ;
-            }else {
-                window.location.href ="#/";
-            }
+            window.location.href ="#/";
           }else if(!res.data.success&&res.data.success!=0){
             // console.log(",,,,")
             Message.error(res.data.message);

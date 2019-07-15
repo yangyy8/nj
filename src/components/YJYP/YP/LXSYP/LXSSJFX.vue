@@ -221,6 +221,7 @@
 import {createMapL,getSearch} from '@/assets/js/SuperMap/lxssmmap.js'
 let lxsvm;
 export default {
+  inject:['reload'],
   data(){
     return{
       CurrentPage: 1,
@@ -266,15 +267,19 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+
         this.getRyxx(val,this.pageSize,this.bzhid,this.mc);
       console.log(`当前页: ${val}`);
     },
     changtab(){
       this.show=!this.show;
     },
+    doset1(){
+        this.reload();
+    },
     doset(){
+
        this.$set(this.pd,"gjdq",'');
-       // this.$set(this.pd,"rzfs",'');
         this.$set(this.pd,"fwcs",'');
         this.$set(this.pd,"zjzl",'');
         this.$set(this.pd,"qzzl",'');
@@ -317,7 +322,8 @@ export default {
         })
     },
     doSearch() {
-this.ssfjsub='';
+      this.show=!this.show;
+      this.ssfjsub='';
       if ((this.pd.ssfj == undefined || this.pd.ssfj == "") && (this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")) {
           this.$message.error("请选择所属分局或者服务处所! ");
         return;
@@ -442,12 +448,13 @@ this.ssfjsub='';
       this.mc=mc;
       this.diatext=this.mc;
       this.bzhid=dtids;
+
       var chunk=5;
       if(currentPage==1){
         this.tableData=[];
         this.TotalResult=0;
         this.CurrentPage=1;
-      var ttbal=JSON.parse(dtids);
+      var ttbal=dtids;
       var rr=[];
             console.log(ttbal.length);
       for (var i = 0,j = ttbal.length;i<j;i+=chunk) {
@@ -457,7 +464,7 @@ this.ssfjsub='';
      }
        this.num=currentPage-1;
 
-       this.TotalResult=JSON.parse(dtids).length;
+       this.TotalResult=dtids.length;
       for (var k = this.num; k < this.num+1; k++) {
        // console.log(JSON.stringify(this.result[k]));
        let p={
@@ -477,14 +484,14 @@ this.ssfjsub='';
        this.bzhDialogVisible=true;
     },
     //后期匹配地址
-    getXY(dz,callback){
-
-      let p={
-        "dz":dz,
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
       };
-      this.$api.get(this.Global.xyaddress, p,
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
         r => {
-        callback(r.result)
+          callback && callback(r.data.result)
         });
     },
   },
