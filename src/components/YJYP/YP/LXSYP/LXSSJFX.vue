@@ -322,7 +322,8 @@ export default {
         })
     },
     doSearch() {
-this.ssfjsub='';
+      this.show=!this.show;
+      this.ssfjsub='';
       if ((this.pd.ssfj == undefined || this.pd.ssfj == "") && (this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")) {
           this.$message.error("请选择所属分局或者服务处所! ");
         return;

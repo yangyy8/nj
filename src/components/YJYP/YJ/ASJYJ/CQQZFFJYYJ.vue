@@ -291,6 +291,7 @@ for (var i = 0; i < data.length; i++) {
       let p = {
         "xxdm": dm,
         "xxmc": this.iid,
+        "sf":"61",
       };
       this.$api.post(this.Global.aport + '/ywczdt/getFfjlBzhdz', p,
         r => {
@@ -327,6 +328,7 @@ for (var i = 0; i < data.length; i++) {
         "showCount": showCount,
         "xxdz": this.bzhid,
         "fwcs": this.iid,
+        "sf":"61",
 
       };
       var url = this.Global.aport + "/ywczdt/getCZDJXXRYList";
