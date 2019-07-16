@@ -128,7 +128,7 @@
                    prop="zjhm"
                    label="证件号码">
                    <template slot-scope="scope">
-                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                    <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
                    </template>
                  </el-table-column>
              </el-table>
@@ -386,6 +386,10 @@ export default {
         r => {
           callback && callback(r.data.result)
         });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
     },
 
   },

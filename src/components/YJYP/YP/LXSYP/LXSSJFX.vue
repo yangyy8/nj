@@ -185,7 +185,7 @@
                    prop="zjhm"
                    label="证件号码">
                    <template slot-scope="scope">
-                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                    <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
                    </template>
                  </el-table-column>
              </el-table>
@@ -322,7 +322,7 @@ export default {
         })
     },
     doSearch() {
-      this.show=!this.show;
+
       this.ssfjsub='';
       if ((this.pd.ssfj == undefined || this.pd.ssfj == "") && (this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")) {
           this.$message.error("请选择所属分局或者服务处所! ");
@@ -372,6 +372,7 @@ export default {
 }
         }
       }
+      this.show=false;
       getSearch(this.centers);
   	},
     //获取派出所   不用
@@ -493,6 +494,10 @@ export default {
         r => {
           callback && callback(r.data.result)
         });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
     },
   },
 }

@@ -1,309 +1,581 @@
 <template>
-  <el-form :model="form">
-    <el-row type="flex" class="crcolor">
-      <el-col :span="22">
-        <el-row :gutter="2">
-          <el-col :span="8">
-            <span  class="yy-input-text">英文姓：</span>
-              <el-input placeholder="" size="small" v-model="form.YWX"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">英文名：</span>
-            <el-input placeholder="" size="small" v-model="form.YWM"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">通报编号：</span>
-            <el-input placeholder="" size="small" v-model="form.TBBH"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">性别：</span>
-            <el-input placeholder="" size="small" v-model="form.XB_DESC"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">出生日期：</span>
-            <el-input placeholder="" size="small" v-model="form.CSRQ"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">入库时间：</span>
-            <el-input placeholder="" size="small" v-model="form.RKSJ"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">发布时间：</span>
-            <el-input placeholder="" size="small" v-model="form.FBSJ"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="8">
-            <span class="yy-input-text">通报类型：</span>
-            <el-input placeholder="" size="small" v-model="form.TBRYZL"  class="yy-input-input"></el-input>
-          </el-col>
-          <el-col :span="24">
-            <span class="yy-input-text" style="width:11.7%!important">备注：</span>
-            <el-input placeholder="" size="small" v-model="form.BZ"  class="input-input" style="width:87.8%!important"></el-input>
-          </el-col>
-        </el-row>
+<el-form :model="form">
+  <el-row type="flex" class="crcolor">
+    <el-col :span="18">
+      <el-row :gutter="2">
+        <el-col :span="8">
+          <span class="yy-input-text">英文姓：</span>
+          <el-input placeholder="" size="small" v-model="form.YWX" class="yy-input-input"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">英文名：</span>
+          <el-input placeholder="" size="small" v-model="form.YWM" class="yy-input-input"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">通报编号：</span>
+          <el-input placeholder="" size="small" v-model="form.TBBH" class="yy-input-input"></el-input>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">性别：</span>
+          <el-select v-model="form.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
+            <el-option
+              v-for="(item,ind) in $store.state.xb"
+              :key="ind"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">出生日期：</span>
+          <el-date-picker class="yy-input-input"
+             v-model="form.CSRQ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择日期" >
+          </el-date-picker>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">入库时间：</span>
+          <el-date-picker class="yy-input-input"
+             v-model="form.RKSJ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择时间" >
+          </el-date-picker>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">发布时间：</span>
+          <el-date-picker class="yy-input-input"
+             v-model="form.FBSJ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择时间" >
+          </el-date-picker>
+        </el-col>
+        <el-col :span="8">
+          <span class="yy-input-text">通报类型：</span>
+          <el-select v-model="form.TBRYZLDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
+            <el-option
+              v-for="(item,ind) in $store.state.tbry"
+              :key="ind"
+              :label="item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
       </el-col>
-      <el-col :span="2" style="min-width:138px;">
-        <el-carousel height="160px" style="width:128px" class="photoCar">
-          <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
-            <img  :src="item.ZPNR" style="height:160px;width:128px;">
-          </el-carousel-item>
-          <el-carousel-item v-if="!imgshow1">
-            <img src="../../assets/img/mrzp.png">
-          </el-carousel-item>
-        </el-carousel>
+        <el-col :span="24">
+          <span class="yy-input-text" style="width:11.7%!important">备注：</span>
+          <el-input placeholder="" size="small" v-model="form.BZ" class="input-input" style="width:86.8%!important"></el-input>
+        </el-col>
+        <el-col :span="24" style="text-align:center" v-if="allshow">
+          <el-button type="primary" @click="basesave()" size="small">保存基本信息</el-button>
+        </el-col>
+      </el-row>
+    </el-col>
+    <el-col :span="6" style="margin-left:10px;">
+      <el-carousel height="160px" class="photoCar">
+        <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1" style="text-align:center">
+          <img :src="item" @click="opentp(item)">
+        </el-carousel-item>
+        <el-carousel-item v-if="!imgshow1" style="text-align:center">
+          <img :src="imgURL" @click="opentp(imgURL)">
+        </el-carousel-item>
+      </el-carousel>
+    </el-col>
+  </el-row>
+  <div class="stu-footerd">
+    <el-row>
+      <el-col :span="12">
+        <div class="yylbt">证件列表</div>
+      </el-col>
+      <el-col :span="12" style="text-align:right" v-if="allshow">
+        <el-button type="primary" size="mini" @click="editdia(0,1)">添加</el-button>
       </el-col>
     </el-row>
-    <div class="stu-footerd">
-      <el-row>
-        <el-col :span="12">  <div class="yylbt">证件列表</div></el-col>
-        <el-col :span="12" style="text-align:right">
-           <el-button type="primary" size="mini" @click="editdia(0,1)">添加</el-button>
-        </el-col>
-      </el-row>
 
-      <el-table
-         :data="tableData1"
-         border
-         style="width: 100%" class="stu-table"
-         >
-         <el-table-column
-           prop="ZJZL_DESC"
-           label="证件种类">
-         </el-table-column>
-         <el-table-column
-           prop="ZJHM"
-           label="证件号码">
-         </el-table-column>
-         <el-table-column
-           label="操作" width="80">
-           <template slot-scope='scope'>
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-                <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="delete(scope.row)"></el-button>
-           </template>
-         </el-table-column>
-       </el-table>
-    </div>
-    <div class="stu-footerd">
-      <el-row type="flex">
-        <el-col :span="11">
+    <el-table :data="tableData1" border style="width: 100%" class="stu-table">
+      <el-table-column prop="ZJZL_DESC" label="证件种类">
+      </el-table-column>
+      <el-table-column prop="ZJHM" label="证件号码">
+      </el-table-column>
+      <el-table-column label="操作" width="80" v-if="allshow">
+        <template slot-scope='scope'>
+          <el-button type="text" class="a-btn" title="编辑" icon="el-icon-edit" @click="editdia(1,1,scope.row)"></el-button>
+          <el-button type="text" class="a-btn" title="删除" icon="el-icon-delete" @click="deletes(scope.row.DTID,1)"></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+  <div class="stu-footerd">
+    <el-row type="flex">
+      <el-col :span="12">
 
-          <el-row>
-            <el-col :span="12">  <div class="yylbt">国家地区</div></el-col>
-            <el-col :span="12" style="text-align:right">
-               <el-button type="primary" size="mini">添加</el-button>
-            </el-col>
-          </el-row>
-          <el-table
-             :data="tableData2"
-             border
-             style="width: 100%" class="stu-table"
-             >
-             <el-table-column
-               prop="GJDQ_DESC"
-               label="国家地区">
-             </el-table-column>
-             <el-table-column
-               label="操作" width="80">
-               <template slot-scope='scope'>
-                 <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-                    <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="delete(scope.row)"></el-button>
-               </template>
-             </el-table-column>
-           </el-table>
-        </el-col>
-        <el-col :span="2"></el-col>
-        <el-col :span="11">
-          <el-row>
-            <el-col :span="12"><div class="yylbt">请求国</div></el-col>
-            <el-col :span="12" style="text-align:right">
-               <el-button type="primary" size="mini">添加</el-button>
-            </el-col>
-          </el-row>
+        <el-row>
+          <el-col :span="12">
+            <div class="yylbt">国家地区</div>
+          </el-col>
+          <el-col :span="12" style="text-align:right" v-if="allshow">
+            <el-button type="primary" size="mini" @click="editdia(0,2)">添加</el-button>
+          </el-col>
+        </el-row>
+        <el-table :data="tableData2" border style="width: 100%" class="stu-table">
+          <el-table-column prop="GJDQ_DESC" label="国家地区">
+          </el-table-column>
+          <el-table-column label="操作" width="80" v-if="allshow">
+            <template slot-scope='scope'>
+              <el-button type="text" class="a-btn" title="编辑" icon="el-icon-edit" @click="editdia(1,2,scope.row)"></el-button>
+              <el-button type="text" class="a-btn" title="删除" icon="el-icon-delete" @click="deletes(scope.row.DTID,2)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
 
-          <el-table
-             :data="tableData3"
-             border
-             style="width: 100%" class="stu-table"
-             >
-             <el-table-column
-               prop="GJDQ_DESC"
-               label="请求国">
-             </el-table-column>
-             <el-table-column
-               label="操作" width="80">
-               <template slot-scope='scope'>
-                 <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-                    <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="delete(scope.row)"></el-button>
+      <el-col :span="12" style="padding-left:10px;">
+        <el-row>
+          <el-col :span="12">
+            <div class="yylbt">请求国</div>
+          </el-col>
+          <el-col :span="12" style="text-align:right" v-if="allshow">
+            <el-button type="primary" size="mini" @click="editdia(0,3)">添加</el-button>
+          </el-col>
+        </el-row>
 
-               </template>
-             </el-table-column>
+        <el-table :data="tableData3" border style="width: 100%" class="stu-table">
+          <el-table-column prop="GJDQ_DESC" label="请求国">
+          </el-table-column>
+          <el-table-column label="操作" width="80" v-if="allshow">
+            <template slot-scope='scope'>
+              <el-button type="text" class="a-btn" title="编辑" icon="el-icon-edit" @click="editdia(1,3,scope.row)"></el-button>
+              <el-button type="text" class="a-btn" title="删除" icon="el-icon-delete" @click="deletes(scope.row.DTID,3)"></el-button>
 
-           </el-table>
-         </el-col>
-      </el-row>
+            </template>
+          </el-table-column>
 
-    </div>
-    <div class="stu-footerd">
-      <el-row>
-        <el-col :span="12">  <div class="yylbt">案由信息</div></el-col>
-        <el-col :span="12" style="text-align:right">
-           <el-button type="primary" size="mini">添加</el-button>
-        </el-col>
-      </el-row>
-      <el-table
-         :data="tableData4"
-         border
-         style="width: 100%" class="stu-table"
-         >
-         <el-table-column
-           prop="SJNAME"
-           label="附件名称">
-         </el-table-column>
-         <el-table-column
-          prop="SJPAPERTYPE"
-          label="附件类型">
-         </el-table-column>
-         <el-table-column
-           prop="CREATETIME"
-           label="上传时间">
-         </el-table-column>
-         <el-table-column
-           label="操作" width="120">
-           <template slot-scope='scope'>
-            <a @click="downLoad"><el-button type="text"  class="a-btn"  title="下载"  icon="el-icon-download"></el-button></a>
-            <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-               <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="delete(scope.row)"></el-button>
-          </template>
-         </el-table-column>
-       </el-table>
-    </div>
+        </el-table>
+      </el-col>
+    </el-row>
 
-
-  <el-dialog  :title="dialogtxt" :visible.sync="editDialogVisible" :append-to-body="true">
-    <el-row :gutter="1">
+  </div>
+  <div class="stu-footerd">
+    <el-row>
+      <el-col :span="12">
+        <div class="yylbt">案由信息</div>
+      </el-col>
+      <el-col :span="12" style="text-align:right" v-if="allshow">
+        <el-button type="primary" size="mini"  @click="anadd()">添加</el-button>
+      </el-col>
+    </el-row>
+    <el-table :data="tableData4" border style="width: 100%" class="stu-table">
+      <el-table-column prop="SJNAME" label="附件名称">
+      </el-table-column>
+      <el-table-column prop="SJPAPERTYPE" label="附件类型">
+      </el-table-column>
+      <el-table-column prop="CREATETIME" label="上传时间">
+      </el-table-column>
+      <el-table-column label="操作" width="120">
+        <template slot-scope='scope'>
+          <a @click="downloadM(scope.row.NR,scope.row.SJPAPERTYPE)">
+            <el-button type="text" class="a-btn" title="下载" icon="el-icon-download"></el-button>
+          </a>
+          <el-button type="text" v-if="allshow" class="a-btn" title="删除" icon="el-icon-delete" @click="deletes(scope.row.DTID,4)"></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+  <el-dialog :title="dialogtxt" :visible.sync="editDialogVisible" :append-to-body="true">
+    <el-row :gutter="1" v-if="zjshow">
       <el-col :span="24">
         <span class="input-text">证件种类：</span>
-        <el-select v-model="pd.ZJZL" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
-          <el-option
-            v-for="(item,ind1) in $store.state.zjzl"
-            :key="ind1"
-            :label="item.dm+' - '+item.mc"
-            :value="item.dm">
+        <el-select v-model="pd.ZJZL" filterable clearable default-first-option placeholder="请选择" size="small" class="input-input">
+          <el-option v-for="(item,ind1) in $store.state.zjzl" :key="ind1" :label="item.dm+' - '+item.mc" :value="item.dm">
           </el-option>
         </el-select>
       </el-col>
       <el-col :span="24">
-       <span class="input-text">证件号码：</span>
-        <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM"  class="input-input"></el-input>
+        <span class="input-text">证件号码：</span>
+        <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
+      </el-col>
+    </el-row>
+    <el-row :gutter="1" v-if="gjshow">
+      <el-col :span="24">
+        <span class="input-text">国家地区：</span>
+        <el-select v-model="pd.GJDQ" filterable clearable default-first-option placeholder="请选择" size="small" class="input-input">
+          <el-option v-for="(item,ind1) in $store.state.gjdq" :key="ind1" :label="item.dm+' - '+item.mc" :value="item.dm">
+          </el-option>
+        </el-select>
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
+      <el-button type="primary" @click="addsave()" size="small">确 定</el-button>
       <el-button @click="editDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
+  <el-dialog title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false">
+    <div style="text-align:right;">
+      <el-button size="small" type="primary" @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
+    </div>
+    <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+  </el-dialog>
+  <el-dialog title="上传文件" :visible.sync="fileDialogVisible" :append-to-body="true">
+    <el-row type="flex">
+      <el-col :span="24">
+        <el-upload
+         class="input-input"
+         ref="upload"
+         :action='actions+"/drtbry/addReadAy"'
+         :file-list="fileList"
+         multiple
+         :on-success="upSuccess"
+         :data="uploadIconData"
+         :before-upload="beforeAvatarUpload"
+         :limit="1"
+         :auto-upload="false">
+          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          <br />
+          <span slot="tip" class="el-upload__tip">上传pdf文件或者png,jpg图片格式</span>
+        </el-upload>
+      </el-col>
+    </el-row>
+  </el-dialog>
 
- </el-form>
+</el-form>
 </template>
 <script>
+import imgUrl from "../../assets/img/mrzp.png"
 export default {
-  name:'TBRYEDIT',
-  props:['type','xid','rybh'],
-  data(){
-    return{
-      form:{},
-      page:this.type,
-      id:this.xid,
-      tableData1:[],
-      tableData2:[],
-      tableData3:[],
-      tableData4:[],
+  name: 'TBRYEDIT',
+  props: ['type', 'xid', 'random'],
+  data() {
+    return {
+      form: {},
+      imgURL: imgUrl,
+      page: this.type,
+      id: this.xid,
+      tableData1: [],
+      tableData2: [],
+      tableData3: [],
+      tableData4: [],
       imagess: [],
-      imgshow1:false,
-      imgshow2:true,
-      typet:'1',
-      shm:true,
-      lg:false,
-      pd:{},
-      dialogtxt:'添加',
-      editDialogVisible:false,
-      pp:{},
+      fileList: [],
+      actions: '',
+      imgshow1: false,
+      imgshow2: true,
+      uploadIconData: {
+        token: this.$store.state.token,
+      },
+      typet: '1',
+      shm: true,
+      lg: false,
+      pd: {},
+      dialogtxt: '添加',
+      editDialogVisible: false,
+      tcDialogVisible: false,
+      fileDialogVisible: false,
+      allshow:true,
+      gjshow: false,
+      zjshow: false,
+      pp: {},
+      imgs: '',
+      deg: 0,
+      datatype: 0,
+      savetype:0,
+      savadtid:'',
     }
   },
-  mounted(){
+  mounted() {
     this.$store.dispatch("getZjzl");
-     this.$nextTick(()=>{
+    this.$store.dispatch("getXB");
+    this.$store.dispatch("getTbry");
+    this.$nextTick(() => {
       this.getData0(this.id);
-      this.getPhoto()
     });
   },
-  watch:{
-    random:function(newVal,oldVal){
-      this.random=newVal;
+  watch: {
+    random: function(newVal, oldVal) {
+      this.random = newVal;
       this.getData0(this.id);
-      this.getPhoto()
     },
   },
 
-  methods:{
-    getData0(xid){
-      this.pp.RGUID=xid;
-      let p = {
-        "pd": this.pp
-      };
-      this.$api.post(this.Global.aport4+'/eS_Tbry_GroupController/getTongBaoGroupInfoByRGUID', p,
-        r => {
-          this.form=r.data.eS_TBRY_JBXXEntity;
-          this.tableData1=r.data.eS_TBRY_ZJXXList;
-          this.tableData2=r.data.eS_TBRY_GJDQ_GJList;;
-          this.tableData3=r.data.eS_TBRY_GJDQ_QQGList;
-          this.tableData4=r.data.eS_TBRY_PAPER_QTList;
-      })
-    },
-    getPhoto(){
-      let p={
-        pd:{
-          RYBH:this.rybh,
-          YWLB:"0005"
-        }
+  methods: {
+    getData0(xid) {
+
+      if(this.type==1)
+      {
+        this.allshow=true;
+      }else {
+        this.allshow=false;
       }
-      this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
-        r =>{
-          if(r.success){
-            this.imagess=r.data.resultList;
-            this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
-          }
+      let p = {
+        "DTID": xid,
+        "token": this.$store.state.token
+      };
+      this.$api.post(this.Global.aport3 + '/drtbry/getTBRYInfor', p,
+        r => {
+          this.form = r.data.JBXX;
+          this.tableData1 = r.data.ZJXX;
+          this.tableData2 = r.data.GJDQ;
+          this.tableData3 = r.data.QQGJDQ;
+          this.tableData4 = r.data.SJNAME;
+          this.imagess = r.data.tp;
+          this.imagess.length != 0 ? this.imgshow1 = true : this.imgshow1 = false;
         })
     },
-    downLoad(){
-      let p={
-        "pd":{RGUID:this.id}
-      }
-      this.$api.post(this.Global.aport4+'/eS_Tbry_GroupController/getTongBaoPAPERInfoByRGUID',p,
-       r =>{
-          this.downloadM(r)
-       },e=>{},{},'blob')
+    //上传文件
+    anadd(){
+        this.fileDialogVisible = true;
     },
-    downloadM (data) {
-        if (!data) {
-            return
+    upSuccess(r) {
+      if (r.success) {
+        this.$message({
+          message: r.data,
+          type: 'success'
+        });
+
+      } else {
+        this.$message.error(r.message);
+      }
+      this.fileDialogVisible = false;
+      this.getData0(this.id);
+    },
+    beforeAvatarUpload(file) {
+
+      var filextension = file.name.substring(file.name.lastIndexOf("."), file.name.length);
+      filextension = filextension.toLowerCase();
+
+      if ((filextension != '.jpg') && (filextension != '.png') && (filextension != '.pdf')) {
+        this.$message.error('上传文件只能是pdf文件或者png,jpg图片格式!');return ;
+      }
+      return true;
+    },
+    showUpload() {
+      this.fileDialogVisible = true;
+      this.typemd = "";
+      this.actions = window.IPConfig.IP + this.Global.aport3;
+      console.log(this.$refs.upload)
+      if (this.$refs.upload) {
+        this.$refs.upload.clearFiles();
+      }
+    },
+    submitUpload() {
+      if (this.$refs.upload.uploadFiles.length == 0) {
+        this.$message({
+          message: '请先选择文件！',
+          type: 'warning'
+        });
+        return
+      }
+      this.$refs.upload.submit();
+    },
+    downloadM(data,tt) {
+      if (!data) {
+        return
+      }
+      if(tt=="pdf"){
+      let URL = this.dataURLtoBlob(data);
+
+      var reader = new FileReader();
+      reader.readAsDataURL(URL);
+      reader.onload = function(e) {
+        // 兼容IE
+        console.log(window.navigator.msSaveOrOpenBlob);
+        if (window.navigator.msSaveOrOpenBlob) {
+          var bstr = atob(e.target.result.split(",")[1]);
+          var n = bstr.length;
+          var u8arr = new Uint8Array(n);
+          while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+          }
+          var blob = new Blob([u8arr]);
+          window.navigator.msSaveOrOpenBlob(blob, '通报人员数据.pdf');
+        } else {
+          // 转换完成，创建一个a标签用于下载
+          var a = document.createElement('a');
+          a.download = '通报人员数据.pdf';
+          a.href = e.target.result;
+          a.setAttribute("id", "export")
+          a.click();
         }
-        let url = window.URL.createObjectURL(new Blob([data],{type:"application/pdf"}))
-        let link = document.createElement('a')
-        link.style.display = 'none'
-        link.href = url
-        console.log(url)
-        link.setAttribute('download', '通报人员.pdf')
-        document.body.appendChild(link)
-        link.click()
+      }
+    }else {
+      //下载图片
+        var imgUrl=data;
+        let timestamp = new Date().getTime()
+        let name = imgUrl.substring(22, 30) + timestamp + '.png'
+        this.downloadUrl = imgUrl
+        this.downloadfilename = name
+        setTimeout(() => {
+         this.$refs.download.click()
+        }, 200)
+        }
+    },
+    dataURLtoBlob(dataurl) {
+      var bstr = atob(dataurl)
+      var n = bstr.length;
+      var u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], {
+        type: 'pdf'
+      });
     },
 
-    editdia(t,n,value){
-      if(t==0){
-        this.dialogtxt="添加";
-      }else {
-        this.dialogtxt="编辑";
+    editdia(t, n, i) {
+
+      this.gjshow = false
+      this.zjshow = false
+      this.datatype = t;
+      this.savetype= n;
+      if (t == 0) {
+        console.log(this.id);
+        this.savadtid=this.id;
+        if (n == 1) { //证件信息
+          this.zjshow = true;
+        } else if (n == 2 || n == 3) { //国家地区//请求图
+
+          this.gjshow = true
+        }
+        this.dialogtxt = "添加";
+      } else {
+        if (n == 1) { //证件信息
+          this.pd.ZJZL=i.ZJZLDM;
+          this.pd.ZJHM=i.ZJHM;
+          this.savadtid=i.DTID;
+          this.zjshow = true;
+        } else if (n == 2) { //国家地区
+          this.pd.GJDQ=i.GJDQDM;
+          this.savadtid=i.DTID;
+          this.gjshow = true
+        } else if (n == 3) { //请求图
+          this.pd.GJDQ=i.GJDQDM;
+          this.savadtid=i.DTID;
+          this.gjshow = true
+        }
+        this.dialogtxt = "编辑";
       }
-    this.editDialogVisible=true;
+
+      this.editDialogVisible = true;
+    },
+    basesave(){
+      let p = {
+        "CSRQ": this.form.CSRQ,
+        "YWX": this.form.YWX,
+        "YWM": this.form.YWM,
+        "TBBH": this.form.TBBH,
+        "FBSJ": this.form.FBSJ,
+        "TBRYZL": this.form.TBRYZLDM,
+        "XB_DESC": this.form.XBDM,
+        "DTID": this.id,
+        "token": this.$store.state.token,
+      };
+      this.$api.post(this.Global.aport3 + '/drtbry/updateTBRY', p,
+        r => {
+          if (r.success) {
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
+
+          } else {
+            this.$message.error("保存失败");
+            return;
+          }
+        });
+    },
+    addsave() {
+
+  if(this.savetype==1){
+    if(this.pd.ZJZLDM==undefined || this.pd.ZJZLDM==""){
+      this.$message.error="请选择证件种类！";return ;
+    }
+    if(this.pd.ZJHM==undefined || this.pd.ZJHM==""){
+      this.$message.error="请输入证件号码！";return ;
+    }
+  }else if(this.savetype==2 || this.savetype==3){
+
+    if(this.pd.GJDQDM==undefined || this.pd.GJDQDM==""){
+      this.$message.error="请选择国家地区！";return ;
+    }
+  }
+      if (this.datatype == 1) {
+
+        let p = {
+          "TYPE": this.savetype+'',
+          "ZJZL": this.pd.ZJZLDM,
+          "GJDQ": this.pd.GJDQDM,
+          "ZJHM": this.pd.ZJHM,
+          "DTID": this.savadtid,
+          "token": this.$store.state.token,
+        };
+        this.$api.post(this.Global.aport3 + '/drtbry/updateTbryAndZjxxOrGjdqOrQqg', p,
+          r => {
+            if (r.success) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+              this.editDialogVisible=false;
+              this.getData0(this.id);
+            } else {
+              this.$message.error("保存失败");
+              return;
+            }
+          });
+      } else if (this.datatype == 0) {
+
+
+        let p = {
+          "TYPE": this.savetype+'',
+          "ZJZL": this.pd.ZJZLDM,
+          "GJDQ": this.pd.GJDQDM,
+          "ZJHM": this.pd.ZJHM,
+          "DTID": this.savadtid,
+          "token": this.$store.state.token,
+        };
+        this.$api.post(this.Global.aport3 + '/drtbry/addTbryAndZjxxOrGjdqOrQqg', p,
+          r => {
+            if (r.success) {
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+              this.editDialogVisible=false;
+              this.getData0(this.id);
+            } else {
+              this.$message.error("保存失败");
+              return;
+            }
+          });
+      }
+    },
+    deletes(dtid,n) {
+      let p = {
+        "DTID": dtid,
+        "token": this.$store.state.token,
+        "TYPE": n
+      };
+      this.$api.post(this.Global.aport3 + '/drtbry/deleteTbryAndZjxxOrGjdqOrQqgOrAy', p,
+        r => {
+          if (r.success) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+          } else {
+            this.$message.error("删除失败");
+            return;
+          }
+        });
+    },
+    rotate() {
+      this.deg += 90;
+      if (this.deg >= 360) {
+        this.deg = 0
+      }
+    },
+    opentp(item) {
+      this.imgs = item;
+      this.tcDialogVisible = true;
     },
   },
 }
@@ -333,18 +605,30 @@ export default {
 }
 
 .crcolor {
-  background: #EFF3F6;padding:0 10px;
+  background: #EFF3F6;
+  padding: 0 10px;
 }
+
 .yy-input-text {
   text-align: left !important;
 }
 </style>
 <style>
-  .el-button+.el-button{margin-left: 0!important;}
-  .yycontent .el-checkbox{margin-left: 20px!important; line-height: 30px;}
-  .yycontent .el-checkbox+.el-checkbox{margin-left: 20px!important;}
-  .bj .el-dialog__wrapper {
-    background: #000;
-    background: rgba(0, 0, 0, 0.3);
-  }
+.el-button+.el-button {
+  margin-left: 0 !important;
+}
+
+.yycontent .el-checkbox {
+  margin-left: 20px !important;
+  line-height: 30px;
+}
+
+.yycontent .el-checkbox+.el-checkbox {
+  margin-left: 20px !important;
+}
+
+.bj .el-dialog__wrapper {
+  background: #000;
+  background: rgba(0, 0, 0, 0.3);
+}
 </style>

@@ -223,6 +223,7 @@ export default {
       }
       this.$api.post(this.Global.aport4+'/eS_Tbry_GroupController/getTongBaoPAPERInfoByRGUID',p,
        r =>{
+         
           this.downloadM(r)
        },e=>{},{},'blob')
     },

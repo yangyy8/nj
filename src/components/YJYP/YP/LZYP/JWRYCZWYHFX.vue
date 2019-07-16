@@ -208,7 +208,7 @@
                                prop="zjhm"
                                label="证件号码">
                                <template slot-scope="scope">
-                                <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                                <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
                                </template>
                              </el-table-column>
 
@@ -702,7 +702,7 @@ export default {
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
-      if (this.pd.ssfj == undefined || this.pd.ssfj == null) {
+      if (this.pd.ssfj == undefined || this.pd.ssfj == "") {
         this.$message.error("请选择所属分局!");
         return;
       } else {
@@ -795,6 +795,10 @@ export default {
         r => {
           callback && callback(r.data.result)
         });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
     },
 
 

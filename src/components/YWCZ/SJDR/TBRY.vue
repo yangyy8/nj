@@ -7,28 +7,30 @@
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文姓：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWX" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">通报类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="红色通道">
-                    </el-option>
-                    <el-option value="M" label="黄色通道">
+                  <el-select v-model="pd.TBRYZL" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind) in $store.state.tbry"
+                      :key="ind"
+                      :label="item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">通报编号：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.TBBH" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                  <el-select v-model="pd.XB" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option
                       v-for="(item,ind0) in $store.state.xb"
                       :key="ind0"
@@ -41,13 +43,13 @@
                   <span class="input-text">出生日期：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.CSRQKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.CSRQJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -66,7 +68,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">请求国：</span>
-                    <el-select v-model="pd.QQG" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.QQGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="(item,ind1) in $store.state.gjdq"
                         :key="ind1"
@@ -80,13 +82,13 @@
                   <span class="input-text">发布时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.FBSJKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.FBSJJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -105,19 +107,19 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">入库时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.RKSJKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.RKSJJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -148,47 +150,47 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-             prop="address"
+             prop="TBRYZL"
              label="通报类型">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="TBBH"
              label="通报编号">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="YWX"
              label="英文姓">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="YWM"
              label="英文名">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="XB_DESC"
              label="性别">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="CSRQ"
              label="出生日期">
            </el-table-column>
-           <el-table-column
+           <!-- <el-table-column
              prop="address"
              label="证件类型">
            </el-table-column>
            <el-table-column
              prop="address"
              label="证件号码">
-           </el-table-column>
-           <el-table-column
+           </el-table-column> -->
+           <!-- <el-table-column
              prop="address"
              label="国家地区">
-           </el-table-column>
-           <el-table-column
+           </el-table-column> -->
+           <!-- <el-table-column
              prop="address"
              label="请求国">
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
-             prop="address"
+             prop="FBSJ"
              label="发布时间">
            </el-table-column>
            <el-table-column
@@ -264,13 +266,13 @@
     </el-form>
   </el-dialog>
   <el-dialog title="编辑" :visible.sync="editsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-   <TBRYEDIT :type="type" :xid="xid" :rybh="rybh"></TBRYEDIT>
+   <TBRYEDIT :type="type" :xid="xid" :random="randomtb"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
   <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-    <TBRY :xid="xid" :type="type"></TBRY>
+    <TBRYEDIT :xid="xid" :type="type" :random="randomtb"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
@@ -300,6 +302,7 @@ export default {
       mapForm:{},
       form:{},
       uploadIconData:{token:this.$store.state.token},
+      randomtb:'',
       options: [{
           value: 10,
           label: "10"
@@ -313,12 +316,8 @@ export default {
           label: "30"
         }
       ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      type:1,
+      tableData: [],
+      type:0,
       xid:'',
       rybh:''
 
@@ -331,6 +330,7 @@ export default {
      this.$store.dispatch('getXB');
      this.$store.dispatch('getGjdq');
      this.$store.dispatch('getZjzl');
+     this.$store.dispatch('getTbry');
   },
   methods: {
     handleSelectionChange(val) {
@@ -348,9 +348,10 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3+'/drtbry/getTBRYPage', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -358,12 +359,16 @@ export default {
     },
     details(n)
     {
+      this.randomtb=new Date().getTime();
+      this.xid=n.DTID;
+      this.type=0;
       this.detailsDialogVisible=true;
       this.mapForm=n;
     },
     edits(n){
-      this.xid="7b692a89-4e28-478a-b2be-18bdaeb6838a";
-      this.rybh="RUS09000001096320";
+      this.type=1;
+      this.randomtb=new Date().getTime();
+      this.xid=n.DTID;
       this.editsDialogVisible=true;
 
     },
@@ -372,17 +377,17 @@ export default {
 
     },
     deletes(i) {
-    let p = {
-      "id": i.SERIAL
-    };
+      let p={
+        "DTID":i.dtid,
+        "token":this.$store.state.token
+      };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$api.post('/manage-platform/riskNameList/updateRiskNameListById', p,
+      this.$api.post(this.Global.aport3+'/drtbry/deleteTBRYById', p,
         r => {
-          console.log("===" + r);
           if (r.success) {
             this.$message({
               message: '删除成功！',
