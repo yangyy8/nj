@@ -142,7 +142,7 @@
 import imgUrl from "../../assets/img/mrzp.png"
 export default {
   name:'TBRY',
-  props:['type','xid','rybh'],
+  props:['type','xid','rybh','random'],
   data(){
     return{
       imgURL:imgUrl,
@@ -164,10 +164,10 @@ export default {
     }
   },
   mounted(){
-   this.$nextTick(()=>{
+   // this.$nextTick(()=>{
     this.getData0(this.xid);
     this.getPhoto()
-  });
+  // });
   },
   watch:{
     random:function(newVal,oldVal){
