@@ -36,7 +36,7 @@
                     <span class="input-text">签证种类：</span>
                     <el-select v-model="pd.QZZl" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.qzzl"
+                        v-for="item in $store.state.rjqzzl"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">

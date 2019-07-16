@@ -116,22 +116,23 @@
                    <el-input placeholder="" size="small" v-model="form.tmpResideRegOrgName"   class="input-input" style="width:80%!important"></el-input>
                 </el-col>
 
-                <el-col :span="8">
+                <!-- <el-col :span="8">
                   <span class="yy-input-text" title="原始文件名">原始文件名：</span>
                   <el-input placeholder="" size="small" v-model="form.origFileName"  class="yy-input-input"></el-input>
+                </el-col> -->
+                <el-col :span="8" class="crcolor">
+                  <span class="yy-input-text">住宿日期：</span>
+                  <el-input placeholder="" size="small" v-model="form.resideTime"  class="yy-input-input"></el-input>
                 </el-col>
                 <el-col :span="16"  class="crcolor">
                   <span class="yy-input-text" style="width:17.4%">备注：</span>
                   <el-input placeholder="" size="small" v-model="form.remarks"  class="yy-input-input" style="width:80%!important"></el-input>
                 </el-col>
-                <el-col :span="8" class="crcolor">
-                  <span class="yy-input-text">住宿日期：</span>
-                  <el-input placeholder="" size="small" v-model="form.resideTime"  class="yy-input-input"></el-input>
-                </el-col>
-                <el-col :span="16">
+
+                <!-- <el-col :span="16">
                   <span class="yy-input-text" title="核查条件" style="width:17.4%">核查条件：</span>
                   <el-input placeholder="" size="small" v-model="form.queryStr"  class="input-input" style="width:80%!important"></el-input>
-                </el-col>
+                </el-col> -->
               </el-row>
          </el-form>
          <el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >

@@ -24,7 +24,7 @@
               </el-col>
               <el-col :span="6" class="stu-col-row t-bb">
                 <span>证件种类：</span>
-                   {{baseDatazj.ZJZL_DESC}}
+                   {{baseData.ZJZL_DESC}}
               </el-col>
               <el-col :span="6" class="stu-col-row t-bb">
                 <span >证件有效期：</span>
@@ -863,11 +863,12 @@ export default {
     this.yjType = this.$route.query.yjType;
     this.row = this.$route.query.row;
     this.sshow=true;
-     this.pd={};
+    this.pd={};
     if(this.row.CLZT==0){
       this.sshow=false;
+      this.pd.CLJG=this.row.CLJG;
     }
-        this.getList(1,10,this.url0, 0); //人员基本信息
+      this.getList(1,10,this.url0, 0); //人员基本信息
       if(this.yjType=="1" || this.yjType=="2" || this.yjType=="5"){
         this.getList(this.CurrentPage1,this.pageSize1,this.url1, 1); //签证信息
       }

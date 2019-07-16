@@ -140,7 +140,7 @@
 <script>
 export default {
   name:'QZSQ',
-  props:['xid','random','type'],
+  props:['xid','random','type','random'],
   data(){
     return{
       qzinfo:{},
