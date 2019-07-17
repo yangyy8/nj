@@ -1,7 +1,7 @@
 <template>
 <el-form :model="form">
   <el-row type="flex" class="crcolor">
-    <el-col :span="18">
+    <el-col :span="19">
       <el-row :gutter="2">
         <el-col :span="8">
           <span class="yy-input-text">英文姓：</span>
@@ -70,7 +70,7 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="6" style="margin-left:10px;">
+    <el-col :span="4" style="margin-left:20px;">
       <el-carousel height="160px" class="photoCar">
         <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1" style="text-align:center">
           <img :src="item" @click="opentp(item)">
@@ -128,7 +128,7 @@
         </el-table>
       </el-col>
 
-      <el-col :span="12" style="padding-left:10px;">
+      <el-col :span="12" style="padding-left:20px;">
         <el-row>
           <el-col :span="12">
             <div class="yylbt">请求国</div>
@@ -172,7 +172,7 @@
       </el-table-column>
       <el-table-column label="操作" width="120">
         <template slot-scope='scope'>
-          <a @click="downloadM(scope.row.NR,scope.row.SJPAPERTYPE)">
+          <a @click="downloadM(scope.row.AY,scope.row.SJPAPERTYPE,scope.row.SJNAME)">
             <el-button type="text" class="a-btn" title="下载" icon="el-icon-download"></el-button>
           </a>
           <el-button type="text" v-if="allshow" class="a-btn" title="删除" icon="el-icon-delete" @click="deletes(scope.row.DTID,4)"></el-button>
@@ -183,22 +183,22 @@
   <el-dialog :title="dialogtxt" :visible.sync="editDialogVisible" :append-to-body="true">
     <el-row :gutter="1" v-if="zjshow">
       <el-col :span="24">
-        <span class="input-text">证件种类：</span>
-        <el-select v-model="pd.ZJZL" filterable clearable default-first-option placeholder="请选择" size="small" class="input-input">
+        <span class="yy-input-text" style="width:26%!important;text-align:right!important;">证件种类：</span>
+        <el-select v-model="pd.ZJZLDM" filterable clearable default-first-option placeholder="请选择" size="small" class="yy-input-input" style="width:55%!important;">
           <el-option v-for="(item,ind1) in $store.state.zjzl" :key="ind1" :label="item.dm+' - '+item.mc" :value="item.dm">
           </el-option>
         </el-select>
       </el-col>
       <el-col :span="24">
-        <span class="input-text">证件号码：</span>
-        <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
+        <span class="yy-input-text" style="width:26%!important;text-align:right!important;">证件号码：</span>
+        <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="yy-input-input" style="width:55%!important;"></el-input>
       </el-col>
     </el-row>
     <el-row :gutter="1" v-if="gjshow">
       <el-col :span="24">
-        <span class="input-text">国家地区：</span>
-        <el-select v-model="pd.GJDQ" filterable clearable default-first-option placeholder="请选择" size="small" class="input-input">
-          <el-option v-for="(item,ind1) in $store.state.gjdq" :key="ind1" :label="item.dm+' - '+item.mc" :value="item.dm">
+        <span class="yy-input-text" style=" width:26%!important;text-align:right!important;">国家地区：</span>
+        <el-select v-model="pd.GJDQDM" filterable clearable default-first-option placeholder="请选择" size="small" class="yy-input-input" style="width:55%!important;">
+          <el-option v-for="(item,ind2) in $store.state.gjdq" :key="ind2" :label="item.dm+' - '+item.mc" :value="item.dm">
           </el-option>
         </el-select>
       </el-col>
@@ -208,7 +208,7 @@
       <el-button @click="editDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-  <el-dialog title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false">
+  <el-dialog title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" :append-to-body="true">
     <div style="text-align:right;">
       <el-button size="small" type="primary" @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
     </div>
@@ -236,7 +236,6 @@
       </el-col>
     </el-row>
   </el-dialog>
-
 </el-form>
 </template>
 <script>
@@ -261,6 +260,7 @@ export default {
       imgshow2: true,
       uploadIconData: {
         token: this.$store.state.token,
+        DTID:  this.xid,
       },
       typet: '1',
       shm: true,
@@ -285,20 +285,36 @@ export default {
     this.$store.dispatch("getZjzl");
     this.$store.dispatch("getXB");
     this.$store.dispatch("getTbry");
-    this.$nextTick(() => {
-      this.getData0(this.id);
-    });
+    this.actions = window.IPConfig.IP + this.Global.aport3;
+    this.getData0(this.id);
   },
   watch: {
-    random: function(newVal, oldVal) {
-      this.random = newVal;
+
+    random:{
+     handler(newVal, oldVa){
+     this.page=newVal;
       this.getData0(this.id);
-    },
+   },
+   immediate: true
+   },
+    type:{
+     handler(val){
+     this.page=val;
+      this.getData0(this.id);
+   },
+   immediate: true
+   },
+   xid:{
+     handler(val){
+     this.id=val;
+     this.getData0(this.id);
+   },
+   immediate: true
+   },
   },
 
   methods: {
     getData0(xid) {
-
       if(this.type==1)
       {
         this.allshow=true;
@@ -322,6 +338,9 @@ export default {
     },
     //上传文件
     anadd(){
+      if (this.$refs.upload) {
+        this.$refs.upload.clearFiles();
+      }
         this.fileDialogVisible = true;
     },
     upSuccess(r) {
@@ -343,14 +362,20 @@ export default {
       filextension = filextension.toLowerCase();
 
       if ((filextension != '.jpg') && (filextension != '.png') && (filextension != '.pdf')) {
-        this.$message.error('上传文件只能是pdf文件或者png,jpg图片格式!');return ;
+
+        this.$message({
+          message: '上传文件只能是pdf文件或者png,jpg图片格式!',
+          type: 'warning'
+        });
+        return ;
       }
       return true;
     },
     showUpload() {
+      console.log(this.xid);
       this.fileDialogVisible = true;
       this.typemd = "";
-      this.actions = window.IPConfig.IP + this.Global.aport3;
+
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
@@ -366,7 +391,7 @@ export default {
       }
       this.$refs.upload.submit();
     },
-    downloadM(data,tt) {
+    downloadM(data,tt,fname) {
       if (!data) {
         return
       }
@@ -386,11 +411,11 @@ export default {
             u8arr[n] = bstr.charCodeAt(n);
           }
           var blob = new Blob([u8arr]);
-          window.navigator.msSaveOrOpenBlob(blob, '通报人员数据.pdf');
+          window.navigator.msSaveOrOpenBlob(blob, fname+'.pdf');
         } else {
           // 转换完成，创建一个a标签用于下载
           var a = document.createElement('a');
-          a.download = '通报人员数据.pdf';
+          a.download = fname+'.pdf';
           a.href = e.target.result;
           a.setAttribute("id", "export")
           a.click();
@@ -399,13 +424,20 @@ export default {
     }else {
       //下载图片
         var imgUrl=data;
-        let timestamp = new Date().getTime()
-        let name = imgUrl.substring(22, 30) + timestamp + '.png'
-        this.downloadUrl = imgUrl
-        this.downloadfilename = name
-        setTimeout(() => {
-         this.$refs.download.click()
-        }, 200)
+
+         // let timestamp = new Date().getTime()
+        // let name = imgUrl.substring(22, 30) + timestamp + '.png'
+        //
+        // this.downloadUrl = imgUrl
+        // this.downloadfilename = name
+        // setTimeout(() => {
+        //  this.$refs.download.click()
+        // }, 200)
+
+        var a = document.createElement('a');
+        a.href = imgUrl;
+        a.setAttribute("download", fname)
+        a.click();
         }
     },
     dataURLtoBlob(dataurl) {
@@ -421,7 +453,9 @@ export default {
     },
 
     editdia(t, n, i) {
-
+      this.$set(this.pd, "ZJHM", '');
+      this.$set(this.pd, "ZJZLDM", '');
+      this.$set(this.pd, "GJDQDM", '');
       this.gjshow = false
       this.zjshow = false
       this.datatype = t;
@@ -431,29 +465,30 @@ export default {
         this.savadtid=this.id;
         if (n == 1) { //证件信息
           this.zjshow = true;
-        } else if (n == 2 || n == 3) { //国家地区//请求图
+        } else if (n == 2) { //国家地区//请求图
 
+          this.gjshow = true
+        }else if (n == 3) {
           this.gjshow = true
         }
         this.dialogtxt = "添加";
       } else {
         if (n == 1) { //证件信息
-          this.pd.ZJZL=i.ZJZLDM;
+          this.pd.ZJZLDM=i.ZJZLDM;
           this.pd.ZJHM=i.ZJHM;
           this.savadtid=i.DTID;
           this.zjshow = true;
         } else if (n == 2) { //国家地区
-          this.pd.GJDQ=i.GJDQDM;
+          this.pd.GJDQDM=i.GJDQDM;
           this.savadtid=i.DTID;
           this.gjshow = true
         } else if (n == 3) { //请求图
-          this.pd.GJDQ=i.GJDQDM;
+          this.pd.GJDQDM=i.GJDQDM;
           this.savadtid=i.DTID;
           this.gjshow = true
         }
         this.dialogtxt = "编辑";
       }
-
       this.editDialogVisible = true;
     },
     basesave(){
@@ -464,7 +499,7 @@ export default {
         "TBBH": this.form.TBBH,
         "FBSJ": this.form.FBSJ,
         "TBRYZL": this.form.TBRYZLDM,
-        "XB_DESC": this.form.XBDM,
+        "XB": this.form.XBDM,
         "DTID": this.id,
         "token": this.$store.state.token,
       };
@@ -484,21 +519,43 @@ export default {
     },
     addsave() {
 
-  if(this.savetype==1){
+  if(this.savetype=='1')
+  {
+    console.log(this.pd.ZJZLDM+'1111');
     if(this.pd.ZJZLDM==undefined || this.pd.ZJZLDM==""){
-      this.$message.error="请选择证件种类！";return ;
+      this.$message({
+        message: '请选择证件种类!',
+        type: 'warning'
+      });
+      return ;
     }
     if(this.pd.ZJHM==undefined || this.pd.ZJHM==""){
-      this.$message.error="请输入证件号码！";return ;
+      this.$message({
+        message: '请输入证件号码！!',
+        type: 'warning'
+      });
+      return ;
+
     }
-  }else if(this.savetype==2 || this.savetype==3){
+  }else if(this.savetype=='2'){
 
     if(this.pd.GJDQDM==undefined || this.pd.GJDQDM==""){
-      this.$message.error="请选择国家地区！";return ;
+      this.$message({
+        message: '请选择国家地区！!',
+        type: 'warning'
+      });
+      return ;
+    }
+  }else if(this.savetype=='3'){
+    if(this.pd.GJDQDM==undefined || this.pd.GJDQDM==""){
+      this.$message({
+        message: '请选择国家地区！!',
+        type: 'warning'
+      });
+      return ;
     }
   }
       if (this.datatype == 1) {
-
         let p = {
           "TYPE": this.savetype+'',
           "ZJZL": this.pd.ZJZLDM,
@@ -522,8 +579,6 @@ export default {
             }
           });
       } else if (this.datatype == 0) {
-
-
         let p = {
           "TYPE": this.savetype+'',
           "ZJZL": this.pd.ZJZLDM,
@@ -552,7 +607,7 @@ export default {
       let p = {
         "DTID": dtid,
         "token": this.$store.state.token,
-        "TYPE": n
+        "TYPE": n+''
       };
       this.$api.post(this.Global.aport3 + '/drtbry/deleteTbryAndZjxxOrGjdqOrQqgOrAy', p,
         r => {
@@ -561,6 +616,7 @@ export default {
               message: '删除成功',
               type: 'success'
             });
+          this.getData0(this.id);
           } else {
             this.$message.error("删除失败");
             return;
@@ -617,16 +673,13 @@ export default {
 .el-button+.el-button {
   margin-left: 0 !important;
 }
-
 .yycontent .el-checkbox {
   margin-left: 20px !important;
   line-height: 30px;
 }
-
 .yycontent .el-checkbox+.el-checkbox {
   margin-left: 20px !important;
 }
-
 .bj .el-dialog__wrapper {
   background: #000;
   background: rgba(0, 0, 0, 0.3);

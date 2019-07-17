@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 247数据导入(通报人员) -->
-  <div class="yymain tshu">
+  <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
@@ -134,7 +134,6 @@
           </el-row>
     </div>
     <div class="yycontent">
-
       <!-- <el-row class="mb-15">
         <el-button type="primary"  size="small" @click="showUpload">批量导入</el-button>
         <el-button type="success" size="small" @click="download">模板下载</el-button>
@@ -265,27 +264,24 @@
       </el-row>
     </el-form>
   </el-dialog>
-  <el-dialog title="编辑" :visible.sync="editsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+  <el-dialog title="编辑" :visible.sync="editsDialogVisible" >
    <TBRYEDIT :type="type" :xid="xid" :random="randomtb"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-  <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-    <TBRYEDIT :xid="xid" :type="type" :random="randomtb"></TBRYEDIT>
+  <el-dialog title="详情" :visible.sync="detailsDialogVisible">
+    <TBRYEDIT :xid="xid" :type="type" :random="randomxq"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-
   </div>
-
 </template>
 <script>
-import TBRY from '../../common/tbry_xq'
 import TBRYEDIT from '../../common/tbry_edit'
 export default {
-  components:{TBRY,TBRYEDIT},
+  components:{TBRYEDIT},
   data() {
     return {
       CurrentPage: 1,
@@ -303,6 +299,7 @@ export default {
       form:{},
       uploadIconData:{token:this.$store.state.token},
       randomtb:'',
+      randomxq:'',
       options: [{
           value: 10,
           label: "10"
@@ -359,16 +356,17 @@ export default {
     },
     details(n)
     {
-      this.randomtb=new Date().getTime();
-      this.xid=n.DTID;
       this.type=0;
+      this.xid=n.DTID;
+      this.randomxq=new Date().getTime();
       this.detailsDialogVisible=true;
       this.mapForm=n;
     },
     edits(n){
       this.type=1;
-      this.randomtb=new Date().getTime();
       this.xid=n.DTID;
+      this.randomtb=new Date().getTime();
+
       this.editsDialogVisible=true;
 
     },
@@ -456,9 +454,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.el-dialog{
-  width: 60%!important;
+<style>
+.yymain .el-dialog{
+  width: 65%!important;
 }
 </style>
 <style>
