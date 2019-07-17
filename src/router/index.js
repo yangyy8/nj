@@ -382,6 +382,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX_XQ'], resolve),
         },
         {
+          path: 'QWJS',
+          name: 'QWJS',
+          meta:{title:['数据分析','人员画像','全文检索']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/QWJS'], resolve),
+        },
+        {
           path: 'RYHX_XQ',
           name: 'RYHX_XQ',
           meta:{title:['数据分析','人员画像','人员画像'],father:'RYHX'},
@@ -562,7 +568,7 @@ export default new Router({
         {
           path: 'TBRY',
           name: 'TBRY',
-          meta:{title:['日常管理','数据导入','247数据导入']},
+          meta:{title:['日常管理','数据导入','通报人员管理']},
           component: resolve => require(['@/components/YWCZ/SJDR/TBRY'], resolve),
         },
         {

@@ -5,9 +5,18 @@
       <div class="yycontent ryhm">
         <div class="title"><img src="../../../../assets/img/js.png" border='0'></div>
         <div>
-          <div class="my-form-group" style="display:inline-block" data-scope="demo2" data-name="zjhm" data-type="input"
+
+          <div class="my-form-group" style="display:inline-block; margin-left:-10px;" data-scope="demo2" data-name="zjhm" data-type="input"
        v-validate-easy="[['required']]">
-            <el-input placeholder="请输入证件号码" v-model="zjhm" class="inputs"></el-input>
+            <el-input placeholder="+包含 -为不包含 +(a b)为in -(a b)为notIn" v-model="zjhm" class="inputs" max="500">
+              <el-select v-model="selecttype" slot="prepend" placeholder="请选择" style="width:100px;">
+                 <el-option label="综合" value="all"></el-option>
+                 <el-option label="组织" value="org"></el-option>
+                 <el-option label="人员" value="user"></el-option>
+                 <el-option label="案件" value="aj"></el-option>
+                 <el-option label="地址" value="addr"></el-option>
+            </el-select>
+            </el-input>
           </div>
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
           <el-button type="primary"  @click="gjshow=!gjshow">高级查询</el-button>
@@ -175,6 +184,7 @@ export default {
       pd0:{},
       listDialogVisible:false,
       tableData:[],
+      selecttype:'',
     }
   },
   mounted() {
@@ -190,9 +200,9 @@ export default {
     getList(){
       this.V.$submit('demo2', (canSumit,data) => {
         if(!canSumit) return
-        this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})
+       this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})   //人员画像
+      // this.$router.push({name:'QWJS',query:{zjhm:this.zjhm,stype:this.selecttype}})    //全文检索
       })
-
     },
     conditionChange(){
       this.V.$reset('demo1')
@@ -271,7 +281,7 @@ export default {
   background: none;
 }
 .inputs{
-width:352px;
+width:400px;
 height: 40px;
 }
 .gjcx{
@@ -286,7 +296,7 @@ height: 40px;vertical-align:bottom;margin-left: 10px;cursor:pointer; padding-rig
 background:rgba(255,255,255,0.2);
 border:1px solid rgba(255,255,255,1);
 }
-
+.input-text{width: 30%!important;}
 </style>
 <style>
 .ryhm .el-input__inner {
@@ -296,5 +306,8 @@ border:1px solid rgba(255,255,255,1);
 .ryhm .el-button+.el-button {
     margin-left: 5px;
 }
-.input-text{width: 30%!important;}
+
+.my-form-group  .el-input-group__prepend {
+    background-color: #fff;
+  }
 </style>

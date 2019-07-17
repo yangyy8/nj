@@ -9,9 +9,9 @@
                 <span class="input-text">所属分局：</span>
                 <el-select v-model="pd.XZQHDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                   <el-option
-                    v-for="item in $store.state.xzqh"
-                    :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
+                    v-for="(item,ind) in ssfj"
+                    :key="ind"
+                    :label="item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -22,7 +22,7 @@
                   <el-option
                     v-for="item in $store.state.pcs"
                     :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
+                    :label="item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -33,7 +33,7 @@
                       <el-option
                         v-for="item in zrq"
                         :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
+                        :label="item.mc"
                         :value="item.dm">
                       </el-option>
                     </el-select>
@@ -76,10 +76,13 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">审核状态：</span>
-                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 已通过">
-                    </el-option>
-                    <el-option value="1" label="1 - 未通过">
+
+                  <el-select v-model="pd.SHZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="item in $store.state.shzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -213,6 +216,16 @@ export default {
   },
 
   methods: {
+    getFJ() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+        r => {
+          this.ssfj = r.data.SSFJ;
+        })
+    },
     getZrq() {
       let p = {
         "operatorId": this.$store.state.uid,

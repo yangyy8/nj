@@ -631,12 +631,11 @@
         <div style="text-align:right;">
           <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
         </div>
-          <img style="" src="../../../assets/img/t1.png" v-if="imgshow2" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
-          <img style="" :src="imgs" v-if="imgshow1" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+          <img style="" src="../../../assets/img/t1.png" v-if="imgshow2" :style="{transform:'rotateZ('+deg+'deg)'}" style="max-height:700px;max-width:700px;" v-drag>
+          <img style="" :src="imgs" v-if="imgshow1" :style="{transform:'rotateZ('+deg+'deg)'}" style="max-height:700px;max-width:700px;" v-drag>
       </el-dialog>
     </div>
   </div>
-
 </template>
 <script>
 import {
@@ -767,6 +766,8 @@ export default {
 
   },
   mounted() {
+    this.eidtsDialogVisible=false;
+    this.tcDialogVisible=false;
     this.getAll();
   },
   methods: {
