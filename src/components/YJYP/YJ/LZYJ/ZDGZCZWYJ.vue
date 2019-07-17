@@ -6,7 +6,7 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                <span class="input-text">行政区划：</span>
+                <span class="input-text">所属分局：</span>
                 <el-select v-model="pd.XZQHDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                   <el-option
                     v-for="item in $store.state.xzqh"
@@ -47,13 +47,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginZSRQ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy/MM/dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endZSRQ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyy/MM/dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -63,13 +63,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间">
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endBJSJ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间">
                     </el-date-picker>
                  </div>
@@ -82,6 +82,17 @@
                     <el-option value="1" label="1 - 未通过">
                     </el-option>
                   </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">处理状态：</span>
+                    <el-select v-model="pd.CLZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.clzt"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
                 </el-col>
           </el-row>
          </el-col>
@@ -126,10 +137,14 @@
            </el-table-column>
            <el-table-column
              prop="SHZT"
-             label="当前状态">
+             label="审核状态">
              <template slot-scope="scope">
                 <span>{{scope.row.SHZT=="0"?"已通过":scope.row.SHZT=="1"?"未通过":""}}</span>
               </template>
+           </el-table-column>
+           <el-table-column
+             prop="CLZT_DESC"
+             label="处理状态">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -182,18 +197,19 @@ export default {
       options: this.pl.ps,
       tableData: [],
         zrq: [],
-      pd:{ZSRQ_DateRange:{},BJSJ_DateRange:{}}
+      pd:{ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}}
     }
   },
   activated(){
-
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
+    this.$store.dispatch('getClzt');
     this.getZrq();
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
+
   },
 
   methods: {

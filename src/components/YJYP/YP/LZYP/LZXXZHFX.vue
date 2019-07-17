@@ -348,9 +348,9 @@ import LZXX from '../../../common/lzxx_xq'
           pageSize: 10,
           TotalResult: 0,
           pd: {
-              CSRQ_DateRange:{},
-              TLYXQZ_DateRange:{},
-              ZSRQ_DateRange:{},
+              CSRQ_DateRange:{dataType:'date'},
+              TLYXQZ_DateRange:{dataType:'date'},
+              ZSRQ_DateRange:{dataType:'date'},
             },
           pm:{},
           imagess:[],

@@ -153,11 +153,11 @@
              :autosize="{ minRows: 3, maxRows: 4}"
              placeholder="甄别说明必须填写原因(不超过100个字符)"
              v-model="pm.CHANGE_RESON"
-             :disabled="$route.query.row.SHZT=='0'">
+             :disabled="$route.query.row.CLZT=='0'">
            </el-input>
          </el-col>
          <el-col :span="4"  class="down-btn-area">
-           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" v-if="$route.query.row.SHZT!='0'">确定</el-button>
+           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" v-if="$route.query.row.CLZT!='0'">确定</el-button>
            <el-button type="warning"  class="m0" size="small" @click="$router.go(-1)">返回</el-button>
          </el-col>
        </el-row>
@@ -244,12 +244,15 @@ export default {
     }
   },
   activated(){
+    this.pm={};
     this.row=this.$route.query.row;
     this.baseData=this.row;
     this.getcwzxx(this.row.BZHDZID);
     this.getList(this.CurrentPage, this.pageSize, this.pd);
     this.type=this.$route.query.type;
-
+    if(this.row.CLZT=='0'){
+      this.pm.CHANGE_RESON=this.row.CLJG
+    }
     if(this.type==1){
       this.flag=true;
     }else {
@@ -318,9 +321,9 @@ export default {
                message: '保存成功',
                type: 'success'
              });
-
+            this.$router.go(-1)
            }
-           this.$router.go(-1)
+
         })
     },
     details(n)
