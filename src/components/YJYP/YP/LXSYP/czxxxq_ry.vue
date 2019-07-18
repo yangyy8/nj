@@ -26,18 +26,18 @@
 
   <div class="ak-tab-pane">
     <div v-show="page==0" style="padding:0 15px;">
-      <el-row type="flex">
-        <el-col :span="3" style="min-width:150px;">
-          <el-carousel height="160px" style="width:128px" class="photoCar">
-            <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1">
-              <img  :src="item.ZPNR" style="height:160px;width:128px;">
+      <el-row type="flex" :gutter="10">
+        <el-col :span="5">
+          <el-carousel height="220px" class="photoCar">
+            <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1" style="text-align:center">
+              <img  :src="item.ZPNR" @click="opentp(item.ZPNR)">
             </el-carousel-item>
-            <el-carousel-item v-if="!imgshow1">
-              <img src="../../../../assets/img/mrzp.png">
+            <el-carousel-item v-if="!imgshow1" style="text-align:center">
+              <img :src="imgURL" @click="opentp(imgURL)">
             </el-carousel-item>
           </el-carousel>
         </el-col>
-        <el-col :span="21">
+        <el-col :span="19">
           <el-row :gutter="3">
 
             <el-col :span="8" class="input-item">
@@ -427,7 +427,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">数据来源：</span>
-            <span class="input-input detailinput">  {{jzinfo.SJLY}}</span>
+            <span class="input-input detailinput">  {{jzinfo.SJLY_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">数据状态：</span>
@@ -649,7 +649,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="数据来源">数据来源：</span>
-            <span class="input-input detailinput">  {{gzinfo.SJLY}}</span>
+            <span class="input-input detailinput">  {{gzinfo.SJLY_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text" title="数据状态">数据状态：</span>
@@ -823,7 +823,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="数据来源">数据来源：</span>
-              <span class="input-input detailinput">  {{zfinfo.SJLY}}</span>
+              <span class="input-input detailinput">  {{zfinfo.SJLY_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="状态">状态：</span>
@@ -978,7 +978,7 @@
             label="英文名">
           </el-table-column>
           <el-table-column
-            prop="XB"
+            prop="XB_DESC"
             label="性别">
           </el-table-column>
           <el-table-column
@@ -1035,7 +1035,7 @@
 <el-row :gutter="3">
   <el-col :span="8" class="input-item">
     <span class="input-text">列管状态：</span>
-    <span class="input-input detailinput">  {{lginfo.LGZT}}</span>
+    <span class="input-input detailinput">  {{lginfo.LGZT_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">英文姓：</span>
@@ -1047,7 +1047,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">性别：</span>
-    <span class="input-input detailinput">  {{lginfo.XB}}</span>
+    <span class="input-input detailinput">  {{lginfo.XB_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">国家地区：</span>
@@ -1076,7 +1076,7 @@
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">所属派出所：</span>
-    <span class="input-input detailinput">  {{lginfo.SSPCS}}</span>
+    <span class="input-input detailinput">  {{lginfo.SSPCS_DESC}}</span>
   </el-col>
   <el-col :span="8" class="input-item">
     <span class="input-text">所属责任区：</span>
@@ -1232,16 +1232,26 @@
         </div>
     </div>
 </div>
-
+<el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
+  <div style="text-align:right;">
+    <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
+  </div>
+  <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+</el-dialog>
 
 </div>
 </template>
 <script>
+import imgUrl from "../../../../assets/img/t1.png"
 export default {
   name:'CZXXRY',
   props:['type','xid','rid','random'],
   data(){
     return{
+      imgURL:imgUrl,
+      imgs:'',
+      deg:0,
+      tcDialogVisible:false,
       imagess:[],
       imgshow1:false,
       czinfo:{},
@@ -1320,6 +1330,16 @@ export default {
     },
 
   methods:{
+    rotate(){
+      this.deg += 90;
+      if(this.deg >= 360){
+          this.deg = 0
+      }
+    },
+    opentp(item){
+      this.imgs=item;
+      this.tcDialogVisible=true;
+    },
     pageSizeChange1(val) {
       this.gettableDatajz(this.CurrentPage1,val,this.xid);
     },
@@ -1421,7 +1441,7 @@ export default {
     getPhoto(){
       let p={
         "pd":{
-          RYBH:this.xid,
+          RYBH:this.xid||'',
           YWLB:'0004'
         },
         // "orderType":"DESC",
@@ -1576,7 +1596,7 @@ export default {
 }
 
 .el-carousel__item img {
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   cursor: pointer;
 }
@@ -1587,11 +1607,7 @@ export default {
 }
 
 .el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
-}
-
-.crcolor {
-  background: #EFF3F6;padding:0 10px;
+  background-color: #fff;
 }
 .input-text {
   text-align: left !important; width: 32%!important;

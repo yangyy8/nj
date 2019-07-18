@@ -6,12 +6,12 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                <span class="input-text">行政区划：</span>
+                <span class="input-text">所属分局：</span>
                 <el-select v-model="pd.XZQHDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                   <el-option
-                    v-for="item in $store.state.xzqh"
-                    :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
+                    v-for="(item,ind) in ssfj"
+                    :key="ind"
+                    :label="item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -22,7 +22,7 @@
                   <el-option
                     v-for="item in $store.state.pcs"
                     :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
+                    :label="item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -31,9 +31,9 @@
                     <span class="input-text">责任区：</span>
                     <el-select v-model="pd.JWZRQ" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.gjdq"
+                        v-for="item in zrq"
                         :key="item.dm"
-                        :label="item.dm+' - '+item.mc"
+                        :label="item.mc"
                         :value="item.dm">
                       </el-option>
                     </el-select>
@@ -47,13 +47,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginZSRQ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy/MM/dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endZSRQ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyy/MM/dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -63,25 +63,39 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间">
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endBJSJ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间">
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">审核状态：</span>
-                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 已通过">
-                    </el-option>
-                    <el-option value="1" label="1 - 未通过">
+
+                  <el-select v-model="pd.SHZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="item in $store.state.shzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">处理状态：</span>
+                    <el-select v-model="pd.CLZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.clzt"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
                 </el-col>
           </el-row>
          </el-col>
@@ -101,10 +115,6 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-<<<<<<< HEAD
-             prop="XZQHMC"
-=======
->>>>>>> bb706e1c11caf5b8391b9d29315e0e602d78470b
              prop="XZQH_DESC"
              label="行政区划">
            </el-table-column>
@@ -130,10 +140,14 @@
            </el-table-column>
            <el-table-column
              prop="SHZT"
-             label="当前状态">
+             label="审核状态">
              <template slot-scope="scope">
                 <span>{{scope.row.SHZT=="0"?"已通过":scope.row.SHZT=="1"?"未通过":""}}</span>
               </template>
+           </el-table-column>
+           <el-table-column
+             prop="CLZT_DESC"
+             label="处理状态">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -185,20 +199,44 @@ export default {
       pd0: {},
       options: this.pl.ps,
       tableData: [],
-      pd:{ZSRQ_DateRange:{},BJSJ_DateRange:{}}
+        zrq: [],
+      pd:{ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}}
     }
   },
   activated(){
-
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
+    this.$store.dispatch('getClzt');
+    this.getZrq();
+
   },
 
   methods: {
+    getFJ() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+        r => {
+          this.ssfj = r.data.SSFJ;
+        })
+    },
+    getZrq() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      var url = this.Global.aport2 + "/data_report/selectZrqDm";
+      this.$api.post(url, p,
+        r => {
+          this.zrq = r.data.ZRQ;
+        })
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);

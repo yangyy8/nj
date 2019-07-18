@@ -90,7 +90,7 @@
 </template>
 <script>
 export default {
-  name:'CRJXX',
+  name:'JZSJ',
   props:['type','xid'],
   data(){
     return{

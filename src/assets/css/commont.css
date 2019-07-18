@@ -184,7 +184,7 @@
   margin-bottom: -1px;
 }
 .lh-ts{
-  line-height: 20px!important;
+  line-height: 32px!important;
 }
 .el-tag + .el-tag {
     margin-left: 10px;
@@ -198,7 +198,7 @@
   margin: 5px 5px
 }
 .photoCar .el-carousel__button{
-  width: 15px!important
+  width: 10px!important
 }
 .t-pad{
   padding: 0px 3%;

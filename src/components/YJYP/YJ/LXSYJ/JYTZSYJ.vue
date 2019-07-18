@@ -57,6 +57,20 @@
                   </el-select>
                 </el-col>
 
+
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                  <span class="input-text">审核状态：</span>
+                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="item in $store.state.shzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
+                    </el-option>
+                  </el-select>
+                </el-col>
+
+
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
@@ -106,6 +120,10 @@
            <el-table-column
              prop="BJSJ"
              label="预警时间">
+           </el-table-column>
+           <el-table-column
+             prop="SHZT_DESC"
+             label="审核状态">
            </el-table-column>
            <el-table-column
              prop="CLZT_DESC"
@@ -169,7 +187,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getGjdq');
-
+    this.$store.dispatch('getClzt');
+    this.$store.dispatch('getShzt');
   },
   methods: {
     pageSizeChange(val) {

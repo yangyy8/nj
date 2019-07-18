@@ -1,5 +1,5 @@
 <template lang="html">
-   <div class="">
+   <div class="ryhx">
     <div class="tshu" id="target">
       <div class="yycontent">
         <el-row>
@@ -54,7 +54,7 @@
 
                  </el-col>
                  <el-col :span="2">
-                   <el-button type="primary" size="small" @click="$router.go(-1)" style="margin-left:15px;">返 回</el-button>
+                   <el-button type="primary" size="small" @click="$router.push({name:'RYHX'})" style="margin-left:15px;">返 回</el-button>
                  </el-col>
                </el-row>
            </el-col>
@@ -880,16 +880,16 @@ export default{
     }
   },
   activated(){
-    bqDialogVisible=false;
-    zpDialogVisible=false;
-    lzxxDialogVisible=false;
-    crjDialogVisible=false;
-    asjDialogVisible=false;
-    lxsDialogVisible=false;
-    czDialogVisible=false;
-    dwDialogVisible=false;
-    mhDialogVisible=false;
-    lxsZXDialogVisible=false;
+    this.bqDialogVisible=false;
+    this.zpDialogVisible=false;
+    this.lzxxDialogVisible=false;
+    this.crjDialogVisible=false;
+    this.asjDialogVisible=false;
+    this.lxsDialogVisible=false;
+    this.czDialogVisible=false;
+    this.dwDialogVisible=false;
+    this.mhDialogVisible=false;
+    this.lxsZXDialogVisible=false;
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
     if(this.zjhm!="" && this.zjhm!=undefined){
@@ -915,16 +915,16 @@ export default{
     // this.getZJXX(this.pd);
   },
   mounted(){
-    bqDialogVisible=false;
-    zpDialogVisible=false;
-    lzxxDialogVisible=false;
-    crjDialogVisible=false;
-    asjDialogVisible=false;
-    lxsDialogVisible=false;
-    czDialogVisible=false;
-    dwDialogVisible=false;
-    mhDialogVisible=false;
-    lxsZXDialogVisible=false;
+    this.bqDialogVisible=false;
+    this.zpDialogVisible=false;
+    this.lzxxDialogVisible=false;
+    this.crjDialogVisible=false;
+    this.asjDialogVisible=false;
+    this.lxsDialogVisible=false;
+    this.czDialogVisible=false;
+    this.dwDialogVisible=false;
+    this.mhDialogVisible=false;
+    this.lxsZXDialogVisible=false;
   },
   methods:{
     toTegional(id){
@@ -1330,15 +1330,16 @@ export default{
       target.scrollIntoView();
       this.dwDialogVisible=true;
     },
-detailsMH(n)
-{
-  this.xid=n.RGUID;
-  this.mhDialogVisible==true;
-},
+    detailsMH(n)
+    {
+      this.xid=n.RGUID;
+      this.mhDialogVisible==true;
+    },
   },
 }
 </script>
 <style scoped>
 .bainfo{font-size: 12px;line-height: 30px; padding-left:15px;}
 .middle-foot{ margin-top: 10px;}
+.v-modal{background: none!important;}
 </style>

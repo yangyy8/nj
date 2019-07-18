@@ -68,7 +68,7 @@
            <el-table-column
              label="操作" width="260">
              <template slot-scope="scope">
-               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row);"></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="停用"  v-if='scope.row.sfyx=="1"'  icon="iconfont el-icon-yy-tingyong3" @click="stop(scope.row,false)"></el-button>

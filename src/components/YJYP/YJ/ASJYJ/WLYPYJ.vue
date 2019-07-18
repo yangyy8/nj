@@ -59,7 +59,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -113,7 +113,7 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WLYPYJ_XQ',query:{yjType:4,row:scope.row}})"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WLYPYJ_XQ',query:{yjType:4,row:scope.row,pd:pd}})"></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -141,6 +141,7 @@
         <el-pagination
           background
           @current-change="handleCurrentChange"
+          :current-page.sync ="CurrentPage"
           :page-size="pageSize"
           layout="prev, pager, next"
           :total="TotalResult">
@@ -163,9 +164,10 @@ export default {
       tableData: [],
     }
   },
+
   activated(){
 
-      this.pd={BJSJ_DateRange:{begin:'',end:''}};
+      // this.pd={BJSJ_DateRange:{begin:'',end:''}};
       this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {

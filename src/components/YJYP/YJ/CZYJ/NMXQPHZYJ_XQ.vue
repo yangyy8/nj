@@ -576,7 +576,7 @@
                 </div>
    </el-dialog>
    <el-dialog title="案事件信息详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <ANSJ :type="typec" :xid="xid" :dtid="dtid" :random="(new Date()).getTime()"></ANSJ>
+     <ANSJ :type="type" :xid="xid"></ANSJ>
      <div slot="footer" class="dialog-footer">
        <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
      </div>
@@ -627,9 +627,7 @@ export default {
       crjDialogVisible:false,
       detailsDialogVisible:false,
       type:0,
-      typec:1,
       xid:'',
-      dtid:'',
       form:{},
       baseinfo:{},
       options: [{
@@ -738,8 +736,7 @@ export default {
       })
     },
     detailsasj(n){
-       this.xid=n.RGUID;
-       this.dtid=n.DTID;
+       this.xid=n.RGUID+","+n.DTID;
       this.asjDialogVisible=true;
     },
     openTc(n,id){

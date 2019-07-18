@@ -47,13 +47,13 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginZSRQ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyy/MM/dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endZSRQ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyy/MM/dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
@@ -63,25 +63,36 @@
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
+                       type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间">
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.endBJSJ" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
+                        type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间">
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">当前状态：</span>
+                  <span class="input-text">审核状态：</span>
                   <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option value="0" label="0 - 已通过">
                     </el-option>
                     <el-option value="1" label="1 - 未通过">
                     </el-option>
                   </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">处理状态：</span>
+                    <el-select v-model="pd.CLZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.clzt"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
                 </el-col>
           </el-row>
          </el-col>
@@ -126,10 +137,14 @@
            </el-table-column>
            <el-table-column
              prop="SHZT"
-             label="当前状态">
+             label="审核状态">
              <template slot-scope="scope">
                  <span>{{scope.row.SHZT=="0"?"已通过":scope.row.SHZT=="1"?"未通过":""}}</span>
              </template>
+           </el-table-column>
+           <el-table-column
+             prop="CLZT_DESC"
+             label="处理状态">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -178,7 +193,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {ZSRQ_DateRange:{},BJSJ_DateRange:{}},
+      pd: {ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}},
       options: this.pl.ps,
       tableData: [],
       pd0:{}
@@ -191,6 +206,7 @@ export default {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
+    this.$store.dispatch('getClzt');
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
 

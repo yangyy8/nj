@@ -1,39 +1,41 @@
 <template lang="html">
     <!-- 247数据导入(通报人员) -->
-  <div class="yymain tshu">
+  <div class="yymain tbry">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文姓：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWX" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">通报类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="红色通道">
-                    </el-option>
-                    <el-option value="M" label="黄色通道">
+                  <el-select v-model="pd.TBRYZL" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind) in $store.state.tbry"
+                      :key="ind"
+                      :label="item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">通报编号：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.TBBH" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="U - 未知">
-                    </el-option>
-                    <el-option value="M" label="M - 男">
-                    </el-option>
-                    <el-option value="F" label="F - 女">
+                  <el-select v-model="pd.XB" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind0) in $store.state.xb"
+                      :key="ind0"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -41,13 +43,13 @@
                   <span class="input-text">出生日期：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.CSRQKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.CSRQJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -55,23 +57,23 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">请求国：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.QQGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
@@ -80,42 +82,44 @@
                   <span class="input-text">发布时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.FBSJKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.FBSJJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">证件类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 身份证">
-                    </el-option>
-                    <el-option value="1" label="1 - 回乡证白卡">
+                  <span class="input-text">证件种类：</span>
+                  <el-select v-model="pd.ZJZL" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind1) in $store.state.zjzl"
+                      :key="ind1"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">入库时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.RKSJKSSJ" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.RKSJJSSJ" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -130,11 +134,10 @@
           </el-row>
     </div>
     <div class="yycontent">
-
-      <el-row class="mb-15">
+      <!-- <el-row class="mb-15">
         <el-button type="primary"  size="small" @click="showUpload">批量导入</el-button>
         <el-button type="success" size="small" @click="download">模板下载</el-button>
-        </el-row>
+        </el-row> -->
       <el-table
            ref="multipleTable"
            :data="tableData"
@@ -146,47 +149,47 @@
              width="55">
            </el-table-column> -->
            <el-table-column
-             prop="address"
+             prop="TBRYZL"
              label="通报类型">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="TBBH"
              label="通报编号">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="YWX"
              label="英文姓">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="YWM"
              label="英文名">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="XB_DESC"
              label="性别">
            </el-table-column>
            <el-table-column
-             prop="address"
+             prop="CSRQ"
              label="出生日期">
            </el-table-column>
-           <el-table-column
+           <!-- <el-table-column
              prop="address"
              label="证件类型">
            </el-table-column>
            <el-table-column
              prop="address"
              label="证件号码">
-           </el-table-column>
-           <el-table-column
+           </el-table-column> -->
+           <!-- <el-table-column
              prop="address"
              label="国家地区">
-           </el-table-column>
-           <el-table-column
+           </el-table-column> -->
+           <!-- <el-table-column
              prop="address"
              label="请求国">
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
-             prop="address"
+             prop="FBSJ"
              label="发布时间">
            </el-table-column>
            <el-table-column
@@ -261,94 +264,24 @@
       </el-row>
     </el-form>
   </el-dialog>
-  <el-dialog title="编辑" :visible.sync="editsDialogVisible">
-    <el-form   ref="editForm">
-      <el-row :gutter="3"  class="mb-6">
-        <el-col :span="12" class="input-item">
-         <span class="input-text">案卷编号：</span>
-        <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TITLE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">登记日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">人数：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
-         <span class="input-text">姓名：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">性别：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">出生日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
-         <span class="input-text">护照号：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">入签证件类型：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">身份：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-         <span class="input-text">电话号码：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">邮箱地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">临住登记：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">省：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">城市：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="24" class="input-item">
-          <span class="input-text" style="width:10%!important;">详细地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"  style="width:87%!important;"></el-input>
-        </el-col>
-
-      </el-row>
-
-    </el-form>
+  <el-dialog title="编辑" :visible.sync="editsDialogVisible" >
+   <TBRYEDIT :type="type" :xid="xid" :random="randomtb"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-  <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <LZXX :xid="xid"></LZXX>
+  <el-dialog title="详情" :visible.sync="detailsDialogVisible">
+    <TBRYEDIT :xid="xid" :type="type" :random="randomxq"></TBRYEDIT>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-
   </div>
-
 </template>
 <script>
-import LZXX from '../../common/lzxx_xq'
+import TBRYEDIT from '../../common/tbry_edit'
 export default {
-  components:{LZXX},
+  components:{TBRYEDIT},
   data() {
     return {
       CurrentPage: 1,
@@ -365,6 +298,8 @@ export default {
       mapForm:{},
       form:{},
       uploadIconData:{token:this.$store.state.token},
+      randomtb:'',
+      randomxq:'',
       options: [{
           value: 10,
           label: "10"
@@ -378,13 +313,10 @@ export default {
           label: "30"
         }
       ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      type:'',
+      tableData: [],
+      type:0,
       xid:'',
+      rybh:''
 
     }
   },
@@ -392,11 +324,12 @@ export default {
     this.detailsDialogVisible=false;
   },
   mounted() {
-
-     this.xid="111";
+     this.$store.dispatch('getXB');
+     this.$store.dispatch('getGjdq');
+     this.$store.dispatch('getZjzl');
+     this.$store.dispatch('getTbry');
   },
   methods: {
-
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -412,9 +345,10 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3+'/drtbry/getTBRYPage', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -422,11 +356,17 @@ export default {
     },
     details(n)
     {
+      this.type=0;
+      this.xid=n.DTID;
+      this.randomxq=new Date().getTime();
       this.detailsDialogVisible=true;
       this.mapForm=n;
     },
     edits(n){
-      this.xid=n.id;
+      this.type=1;
+      this.xid=n.DTID;
+      this.randomtb=new Date().getTime();
+
       this.editsDialogVisible=true;
 
     },
@@ -435,17 +375,17 @@ export default {
 
     },
     deletes(i) {
-    let p = {
-      "id": i.SERIAL
-    };
+      let p={
+        "DTID":i.dtid,
+        "token":this.$store.state.token
+      };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$api.post('/manage-platform/riskNameList/updateRiskNameListById', p,
+      this.$api.post(this.Global.aport3+'/drtbry/deleteTBRYById', p,
         r => {
-          console.log("===" + r);
           if (r.success) {
             this.$message({
               message: '删除成功！',
@@ -479,7 +419,7 @@ export default {
       this.getList(this.CurrentPage, this.pageSize, this.pd);
     },
     beforeAvatarUpload(file) {
-      console.log(file.type)
+
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       const isExls=file.type==='application/vnd.ms-excel';
 
@@ -514,9 +454,9 @@ export default {
 }
 </script>
 
-<style scoped>
-.el-dialog{
-  width: 60%!important;
+<style>
+.tbry .el-dialog{
+  width: 65%!important;
 }
 </style>
 <style>

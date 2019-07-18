@@ -327,10 +327,10 @@
             <el-col :span="8">
               <div class="block">
                 <el-carousel height="300px">
-                  <el-carousel-item v-for="(item,ind7) in imagess" :key="ind7" v-if="imgshow1">
+                  <el-carousel-item v-for="(item,ind7) in imagess" :key="ind7" v-if="imgshow1" style="text-align: center;">
                     <img  :src="item.tp" @click="opentp(item,1)">
                   </el-carousel-item>
-                  <el-carousel-item v-if="imgshow2">
+                  <el-carousel-item v-if="imgshow2" style="text-align: center;">
                     <img src="../../../assets/img/t1.png" @click="opentp(null,0)">
                   </el-carousel-item>
                 </el-carousel>
@@ -628,13 +628,14 @@
       </el-dialog>
 
       <el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
-        <div style="text-align:right;">  <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button></div>
-          <img style="" src="../../../assets/img/t1.png" v-if="imgshow2" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
-          <img style="" :src="imgs" v-if="imgshow1" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+        <div style="text-align:right;">
+          <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
+        </div>
+          <img style="" src="../../../assets/img/t1.png" v-if="imgshow2" :style="{transform:'rotateZ('+deg+'deg)'}" style="max-height:700px;max-width:700px;" v-drag>
+          <img style="" :src="imgs" v-if="imgshow1" :style="{transform:'rotateZ('+deg+'deg)'}" style="max-height:700px;max-width:700px;" v-drag>
       </el-dialog>
     </div>
   </div>
-
 </template>
 <script>
 import {
@@ -765,6 +766,8 @@ export default {
 
   },
   mounted() {
+    this.eidtsDialogVisible=false;
+    this.tcDialogVisible=false;
     this.getAll();
   },
   methods: {
@@ -1237,7 +1240,7 @@ export default {
 }
 
 .el-carousel__item img {
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   cursor: pointer;
 }
@@ -1248,7 +1251,7 @@ export default {
 }
 
 .el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
+  background-color: #EFF3F6;
 }
 
 .block {

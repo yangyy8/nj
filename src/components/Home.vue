@@ -127,6 +127,13 @@ export default {
       }
     },
     logOut() {
+
+      if(this.$store.state.wtoken!='' && this.$store.state.wtoken!=undefined && this.$store.state.serverip!='' && this.$store.state.serverip!=undefined)
+      {
+       window.location.href='http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin';return ;
+      }else {
+
+        console.log('退出成功！');
       var url=this.Global.aport1+'/user/logout';
       var formData = new FormData();
       formData.append("token",this.$store.state.token);
@@ -142,6 +149,8 @@ export default {
           localStorage.clear();
           this.$router.push('/')
         })
+
+    }
     },
   }
 }

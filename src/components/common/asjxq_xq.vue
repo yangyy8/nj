@@ -121,14 +121,14 @@
     <div v-if="typec==3">
       <el-form  ref="data3">
         <el-row :gutter="3"  class="mb-6">
-            <el-col :span="8" class="input-item">
+            <!-- <el-col :span="8" class="input-item">
              <span class="input-text">人员编号：</span>
              <span class="input-input detailinput">  {{data3.RYBH}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">DTID：</span>
               <span class="input-input detailinput">  {{data3.DTID}}</span>
-            </el-col>
+            </el-col> -->
             <el-col :span="8" class="input-item">
              <span class="input-text">嫌疑人记录编号：</span>
              <span class="input-input detailinput">  {{data3.JLBH}}</span>
@@ -163,31 +163,32 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">现实状况：</span>
-              <span class="input-input detailinput">  {{data3.XSZK}}</span>
+              <span class="input-input detailinput">  {{data3.XSZK_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">健康状况：</span>
-              <span class="input-input detailinput">  {{data3.JKZK}}</span>
+              <span class="input-input detailinput">  {{data3.JKZK_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">人员标识：</span>
-              <span class="input-input detailinput">  {{data3.RYBS}}</span>
+              <span class="input-input detailinput">  {{data3.RYBS_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">作案原因：</span>
               <span class="input-input detailinput">  {{data3.ZAYY_DESC}}</span>
             </el-col>
+            <el-col :span="24" class="input-item">
+              <span class="input-text" style="width:10%!important">违法事实：</span>
+              <span class="input-input detailinput" style="width:86.6%!important">  {{data3.WFSS}}</span>
+            </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">可疑依据：</span>
-              <span class="input-input detailinput">  {{data3.KYYJ}}</span>
+              <span class="input-input detailinput">  {{data3.KYYJ_DESC}}</span>
             </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="input-text">违法事实：</span>
-              <span class="input-input detailinput">  {{data3.WFSS}}</span>
-            </el-col>
+
             <el-col :span="8" class="input-item">
              <span class="input-text">抓获方式：</span>
-             <span class="input-input detailinput">  {{data3.ZHFS}}</span>
+             <span class="input-input detailinput">  {{data3.ZHFS_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">抓获日期：</span>
@@ -195,7 +196,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">抓获地区：</span>
-             <span class="input-input detailinput">  {{data3.ZHDQ}}</span>
+             <span class="input-input detailinput">  {{data3.ZHDQ_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">抓获地点：</span>
@@ -223,7 +224,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">抓获地域：</span>
-              <span class="input-input detailinput">  {{data3.ZHDY}}</span>
+              <span class="input-input detailinput">  {{data3.ZHDY_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">违法犯罪经历：</span>
@@ -231,7 +232,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">在逃形式：</span>
-              <span class="input-input detailinput">  {{data3.ZTXS}}</span>
+              <span class="input-input detailinput">  {{data3.ZTXS_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">在逃日期：</span>
@@ -322,7 +323,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">本次入境持用证件标识：</span>
-              <span class="input-input detailinput">  {{data4.currentPaper}}</span>
+              <span class="input-input detailinput">  {{data4.currentPaper_desc}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">居留事由：</span>
@@ -330,7 +331,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="居留许可（签证）种类">居留许可（签证）种类：</span>
-              <span class="input-input detailinput">  {{data4.labelType}}</span>
+              <span class="input-input detailinput">  {{data4.labelType_desc}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text" title="居留许可（签证）号码">居留许可（签证）号码：</span>

@@ -24,7 +24,7 @@
           </div>
           <div class="ak-tab-pane" >
               <div v-show="page==0">
-                <el-form   ref="aForm1">
+                <el-form   ref="" :model="aForm1">
                   <el-row :gutter="3"  class="mb-6">
                       <el-col :span="8" class="input-item">
                        <span class="input-text">人员编号：</span>
@@ -1334,7 +1334,7 @@
 <script scoped>
 export default {
   name: 'ANSJ',
-  props: ['type', 'xid','dtid','random'],
+  props: ['type', 'xid'],
   data() {
     return {
       page: 0,
@@ -1349,7 +1349,6 @@ export default {
       px:{},
       pages: this.type,
       id: this.xid,
-      did:this.dtid,
     }
   },
   activated() {
@@ -1358,28 +1357,18 @@ export default {
   mounted() {
 
   },
-  watch: {
-    random:function(newVal,oldVal){
-      this.random=newVal;
-      this.getData(this.id);
+  watch:{
+      type: function(val){
+        this.pages=val;
+      },
+      xid:{
+        handler(val){
+        this.id=val;
+        this.getData(this.id)
+      },
+      immediate: true
+      },
     },
-    type: function(val) {
-      this.pages = val;
-    },
-    // xid: {
-    //   handler(val) {
-    //     this.id = val;
-    //     this.getData(val);
-    //   },
-    //   immediate: true
-    // },
-    // dtid: {
-    //   handler(val) {
-    //     this.did = val;
-    //   },
-    //   immediate: true
-    // },
-  },
   methods: {
     base() {
       this.page = 0;
@@ -1401,40 +1390,37 @@ export default {
     },
 
     getData(xid) {
-        this.pd.RGUID = xid;
-        this.px.DTID=this.did;
 
-
+      var arr=xid.split(',');
+          console.log(arr[0],arr[1]);
+        this.pd.RGUID = arr[0];
+        this.px.DTID=arr[1];
       let p = {
         "pd": this.px
       };
-      let pp={
-        "pd": this.pd
-      };
-
       //人员基本信息
-      this.getData1();
+      this.getData1(this.pd);
       //涉案人员基本信息
       this.$api.post(this.Global.aport4 + '/eS_AJ_RY_JBXXController/getResultListByParams', p,
         r => {
           this.aForm2 = r.data.resultList;
         })
-      //涉案人员嫌疑人信息
+      // //涉案人员嫌疑人信息
       this.$api.post(this.Global.aport4 + '/eS_AJ_RY_XYRXXController/getResultListByParams', p,
         r => {
           this.aForm3 = r.data.resultList;
         })
-      //案件人员证件信息
+      // //案件人员证件信息
       this.$api.post(this.Global.aport4 + '/eS_AJ_RY_ZJXXController/getResultListByParams', p,
         r => {
           this.aForm4 = r.data.resultList;
         })
-      //案件涉案单位
+      // //案件涉案单位
       this.$api.post(this.Global.aport4 + '/eS_AJ_SADWController/getResultListByParams', p,
         r => {
           this.aForm5 = r.data.resultList;
         })
-        //处理结果
+      // 处理结果
         this.$api.post(this.Global.aport4 + '/eS_AJ_CLJGController/getEntityByDTID', p,
           r => {
             this.aForm6 = r.data;
@@ -1442,13 +1428,14 @@ export default {
 
     },
 
-    getData1(){
+    getData1(pp){
       let p={
-        "pd":{RGUID:this.id}
+        "pd":pp
       }
       this.$api.post(this.Global.aport4 + '/eS_AJ_JBXXController/getEntityByRGUID', p,
         r => {
           this.aForm1 = r.data;
+
         })
     },
 

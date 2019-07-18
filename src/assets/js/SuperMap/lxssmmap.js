@@ -4,6 +4,7 @@ var layerGroup;
 var MAP_SIZE = [11, 15];
 var SEARCH_HEIGHT = 100;
 var centers=[32.03613281, 118.78211975];
+var ty=0;
 //地图加载
 export function createMapL() {
   map = L.map('mainMap', {
@@ -28,14 +29,18 @@ export function createMapL() {
 
 }
 
-export function getSearch() {
+export function getSearch(centers) {
   markerLayer.clearLayers();
+  if(centers.length>0){
+  map.flyTo(centers,11);
+}else {
+  ty=1;
+}
   var searchResult=window.lxsvm.getBZHDZ(function(data,center){
 
 // var ss=getcenter(center,function(centers){
-
-console.log("数量",data.length);
     for (var i = 0; i < data.length; i++) {
+
          renderBzhid(data[i]);
     }
 });
@@ -82,7 +87,7 @@ function renderBzhid(data) {
         // var y = features[0].properties.SMY;
        for (var i = 0; i < features.length; i++) {
         var mc=features[i].properties.DZMC;
-        renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
+           renderMarkerbzh(features[i].geometry.coordinates.reverse(), data,mc);
         }
       }
       else {
@@ -92,7 +97,7 @@ function renderBzhid(data) {
            var das=[];
            das.push(datae.ycoord);
            das.push(datae.xcoord);
-           //console.log(das,data);
+
            renderMarkerbzh(das, data,data.dm);
          }
 
@@ -123,12 +128,14 @@ function mapSqlSearch(attributeFilter, from, to, callback) {
 
 
 export function renderMarkerbzh(point, data,mc) {
-
+  if(ty==1){
+   map.flyTo(point,11);
+ }
   //debugger;
   // 画圆
   var myIcon = L.divIcon({
     html: "<div style='line-height:40px;text-align:center;font-weight:bold'>" + data.count + "</div>",
-    className: 'my-div-icon lz',
+    className: 'my-div-icon lzg',
     iconSize: 50
   });
   var tempMarker = L.marker(point, {

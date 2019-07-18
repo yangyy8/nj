@@ -26,64 +26,72 @@
 
   <div class="ak-tab-pane">
     <div v-show="page==0" style="padding:0 15px;">
-      <el-row type="flex">
-        <el-col :span="3" style="min-width:150px;">
+      <el-row type="flex" :gutter="10">
+        <el-col :span="5">
+          <el-carousel height="220px" class="photoCar">
+            <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1" style="text-align:center">
+              <img  :src="item.ZPNR" @click="opentp(item.ZPNR)">
+            </el-carousel-item>
+            <el-carousel-item v-if="!imgshow1" style="text-align:center">
+              <img :src="imgURL" @click="opentp(imgURL)">
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+
+        <!-- <el-col :span="3" style="min-width:150px;">
           <img src="../../assets/img/mrzp.png" v-if="imgshow" >
           <img :src="imgdm" v-else>
-        </el-col>
-        <el-col :span="21">
-          <el-row :gutter="3">
+        </el-col> -->
+        <el-col :span="19">
+          <el-row :gutter="3" class="lh-ts">
             <el-col :span="8" class="input-item">
               <span class="input-text">英文姓：</span>
-              <span class="input-input">  {{czinfo.YWX}}</span>
+              <span class="input-input">{{czinfo.YWX}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">英文名：</span>
-              <span class="input-input">  {{czinfo.YWM}}</span>
+              <span class="input-input">{{czinfo.YWM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">英文姓名：</span>
-             <span class="input-input">  {{czinfo.YWXM}}</span>
+             <span class="input-input">{{czinfo.YWXM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">中文姓名：</span>
-             <span class="input-input">  {{czinfo.ZWXM}}</span>
+             <span class="input-input">{{czinfo.ZWXM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">性别：</span>
-             <span class="input-input">  {{czinfo.XB}}</span>
+             <span class="input-input">{{czinfo.XB}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生日期：</span>
-              <span class="input-input">  {{czinfo.CSRQ}}</span>
+              <span class="input-input">{{czinfo.CSRQ}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生地：</span>
-              <span class="input-input">  {{czinfo.CSD}}</span>
+              <span class="input-input">{{czinfo.CSD}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">国家地区：</span>
-              <span class="input-input">  {{czinfo.GJDQ}}</span>
+              <span class="input-input">{{czinfo.GJDQ}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">身份：</span>
-              <span class="input-input">  {{czinfo.SFDM}}</span>
+              <span class="input-input">{{czinfo.SFDM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件号码：</span>
-              <span class="input-input">  {{czinfo.ZJHM}}</span>
+              <span class="input-input">{{czinfo.ZJHM}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件种类：</span>
-              <span class="input-input">  {{czinfo.ZJZL}}</span>
+              <span class="input-input">{{czinfo.ZJZL}}</span>
             </el-col>
-
             <el-col :span="8" class="input-item">
               <span class="input-text">证件有效期：</span>
-              <span class="input-input">  {{czinfo.ZJYXQ}}</span>
+              <span class="input-input">{{czinfo.ZJYXQ}}</span>
             </el-col>
-
-
           </el-row>
         </el-col>
       </el-row>
@@ -1156,16 +1164,28 @@
         </div>
     </div>
 </div>
-
+<el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
+  <div style="text-align:right;">
+    <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
+  </div>
+  <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+</el-dialog>
 
 </div>
 </template>
 <script>
+import imgUrl from "../../assets/img/t1.png"
 export default {
   name:'CZXX',
-  props:['type','xid','rid'],
+  props:['type','xid','rybh','random'],
   data(){
     return{
+      imgURL:imgUrl,
+      imgs:'',
+      deg:0,
+      tcDialogVisible:false,
+      imagess:[],
+      imgshow1:false,
       czinfo:{},
       jzinfo:{},
       gzinfo:{},
@@ -1193,7 +1213,6 @@ export default {
       tableDatazf:[],
       tableDatagz:[],
       tableDatajz:[],
-      rid:this.rid,
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,
@@ -1228,11 +1247,13 @@ export default {
     }
   },
   mounted(){
-    console.log('this.rid-------',this.rid);
-    console.log('this.types-------',this.types);
       this.initData();
    },
   watch:{
+      random:function(newVal,oldVal){
+        this.random=newVal;
+        this.initData();
+      },
       type: function(val){
         this.types=val;
       },
@@ -1246,6 +1267,16 @@ export default {
     },
 
   methods:{
+    rotate(){
+      this.deg += 90;
+      if(this.deg >= 360){
+          this.deg = 0
+      }
+    },
+    opentp(item){
+      this.imgs=item;
+      this.tcDialogVisible=true;
+    },
     pageSizeChange1(val) {
           this.gettableDatajz(this.CurrentPage1,val,this.pd);
       console.log(`每页 ${val} 条`);
@@ -1319,14 +1350,32 @@ export default {
       switch (this.types) {
         case 1://预警
         case 2://人员画像
+        case 3://数据分析
             this.getData2();
             break;
         default:
       }
     },
+    getPhoto(){
+      let p={
+        "pd":{
+          RYBH:this.rybh,
+          YWLB:'0004'
+        },
+        "orderType":"DESC",
+	      "orderBy":{value:"CJSJ",dataType:"date"}
+      }
+      this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
+       r =>{
+         if(r.success){
+           this.imagess=r.data.resultList;
+           this.imagess.length!=0?this.imgshow1=true:this.imgshow1=false;
+         }
+       })
+    },
     getData2(){
       this.pp.RGUID=this.id;
-      this.pd.RYBH=this.rid;
+      this.pd.RYBH=this.rybh;
       let p = {
         "pd": this.pp
       };
@@ -1345,12 +1394,15 @@ export default {
       this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pd);
       this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pd);
       this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pd);
+      this.getPhoto();
     },
     // 居住地信息
    gettableDatajz(currentPage,showCount,pd)
    {
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
      this.$api.post(this.Global.aport3+'/ryhx/getczjzdxx', pp,
       r => {
@@ -1365,7 +1417,9 @@ export default {
    //工作地信息
    gettableDatagz(currentPage,showCount,pd){
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
       this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', pp,
        r => {
@@ -1378,7 +1432,9 @@ export default {
    //走访信息
    gettableDatazf(currentPage,showCount,pd){
      let pp = {
-       "pd": pd
+       "pd": pd,
+       "currentPage":currentPage,
+       "showCount":showCount,
      };
 
       this.$api.post(this.Global.aport3+'/ryhx/getczzfxx', pp,
@@ -1393,7 +1449,9 @@ export default {
      //安保信息
      gettableDataab(currentPage,showCount,pd){
        let pp = {
-         "pd": pd
+         "pd": pd,
+         "currentPage":currentPage,
+         "showCount":showCount,
        };
         this.$api.post(this.Global.aport3+'/ryhx/getczabxx', pp,
          r => {
@@ -1407,7 +1465,9 @@ export default {
       //重点列管信息
        gettableDatalg(currentPage,showCount,pd){
          let pp = {
-           "pd": pd
+           "pd": pd,
+           "currentPage":currentPage,
+           "showCount":showCount,
          };
 
           this.$api.post(this.Global.aport3+'/ryhx/getczzdlgxx', pp,
@@ -1421,7 +1481,9 @@ export default {
         //同户信息
           gettableDatath(currentPage,showCount,pd){
             let pp = {
-              "pd": pd
+              "pd": pd,
+              "currentPage":currentPage,
+              "showCount":showCount,
             };
              this.$api.post(this.Global.aport3+'/ryhx/getczthrxx',pp,
               r => {
@@ -1482,7 +1544,7 @@ export default {
 }
 
 .el-carousel__item img {
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   cursor: pointer;
 }

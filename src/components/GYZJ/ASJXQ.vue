@@ -24,7 +24,7 @@
               </el-col>
               <el-col :span="6" class="stu-col-row t-bb">
                 <span>证件种类：</span>
-                   {{baseDatazj.ZJZL_DESC}}
+                   {{baseData.ZJZL_DESC}}
               </el-col>
               <el-col :span="6" class="stu-col-row t-bb">
                 <span >证件有效期：</span>
@@ -597,7 +597,7 @@
 
 
     <el-dialog title="出入境信息详情" :visible.sync="CRJDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-                <CRJXX :type="type" :xid="xid"></CRJXX>
+                <CRJXX :type="type" :xid="xid" :random="(new Date()).getTime()"></CRJXX>
                  <div slot="footer" class="dialog-footer">
                    <el-button @click="CRJDialogVisible = false" size="small">取 消</el-button>
                  </div>
@@ -606,7 +606,7 @@
     <!-- 临住信息详情 -->
 
       <el-dialog title="临住信息详情" :visible.sync="LZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LZXX :type="type" :xid="xid"></LZXX>
+        <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
         <div slot="footer" class="dialog-footer">
           <el-button @click="LZDialogVisible = false" size="small">取 消</el-button>
         </div>
@@ -758,7 +758,7 @@
                 </div>
         </el-dialog> -->
         <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-          <CZXX :type="type" :xid="xid"></CZXX>
+          <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></CZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -775,6 +775,7 @@ export default {
   components:{LZXX,CZXX,CRJXX,QZ},
   data() {
     return {
+      rybh:'',
       yjType: 0,
       baseData: {},
       baseDatazj: {},
@@ -862,11 +863,12 @@ export default {
     this.yjType = this.$route.query.yjType;
     this.row = this.$route.query.row;
     this.sshow=true;
-     this.pd={};
+    this.pd={};
     if(this.row.CLZT==0){
       this.sshow=false;
+      this.pd.CLJG=this.row.CLJG;
     }
-        this.getList(1,10,this.url0, 0); //人员基本信息
+      this.getList(1,10,this.url0, 0); //人员基本信息
       if(this.yjType=="1" || this.yjType=="2" || this.yjType=="5"){
         this.getList(this.CurrentPage1,this.pageSize1,this.url1, 1); //签证信息
       }
@@ -957,19 +959,19 @@ export default {
 
       if(type==0){
 
-        if(this.row.YJID!=undefined){
-        this.cdt={};
-        this.cdt.YJID=this.row.YJID;
-      }else {
-        return ;
-      }
+                if(this.row.YJID!=undefined){
+                this.cdt={};
+                this.cdt.YJID=this.row.YJID;
+                  }else {
+                    return ;
+                  }
       }else {
         if(this.row.RYBH!=undefined){
         this.cdt={};
         this.cdt.RYBH = this.row.RYBH;
-      }else {
-        return ;
-      }
+          }else {
+            return ;
+          }
       }
 
       let p = {
@@ -1004,7 +1006,6 @@ export default {
           };
           break;
         default:
-
       }
 
       this.$api.post(url, p,
@@ -1053,16 +1054,19 @@ export default {
           break;
         case 2:
           this.xid=n.RGUID;
-          console.log("nnn---",this.xid);
+          this.type=1;
           this.CRJDialogVisible = true;
           break;
         case 3:
           this.xid=n.DTID;
+          this.rybh=n.RYBH;
           this.type=0;
           this.LZDialogVisible = true;
           break;
         case 4:
           this.xid=n.RGUID;
+          this.rybh=n.RYBH;
+          this.type=1;
           this.CZDialogVisible = true;
           this.czinfo = n;
           break;

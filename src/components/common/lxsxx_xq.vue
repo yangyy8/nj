@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">英文姓名：</span>
-          <span class="input-input detailinput">  {{lxsinfo.YWXM}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.EFAMILY+' '+lxsinfo.ENAME}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">护照姓：</span>
@@ -35,7 +35,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">性别：</span>
-          <span class="input-input detailinput">  {{lxsinfo.SEX}}</span>
+          <span class="input-input detailinput">  {{lxsinfo.SEX_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生日期：</span>
@@ -43,7 +43,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">国籍：</span>
-          <span class="input-input detailinput">  {{lxsinfo.NATIONALITY}}</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.NATIONALITY_DESC:lxsinfo.GJDQ_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生国籍：</span>
@@ -71,11 +71,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">宗教信仰：</span>
-          <span class="input-input detailinput">  {{lxsinfo.RELIGIOUS}}</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.RELIGIOUS_DESC:lxsinfo.RELIGIOUS}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">宗教信仰（其他）：</span>
-          <span class="input-input detailinput">  {{lxsinfo.OTHERRELIGIOUS}}</span>
+          <span class="input-text" title="宗教信仰（其他）">宗教信仰（其他）：</span>
+          <span class="input-input detailinput">  {{type==2?lxsinfo.OTHERRELIGIOUS_DESC:lxsinfo.RELIGIOUS_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">母语：</span>
@@ -98,11 +98,11 @@
           <span class="input-input detailinput">  {{lxsinfo.OCCUPATION}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">工作或学习单位：</span>
+          <span class="input-text" title="工作或学习单位">工作或学习单位：</span>
           <span class="input-input detailinput">  {{lxsinfo.WORK}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">家庭所在国家：</span>
+          <span class="input-text" title="家庭所在国家">家庭所在国家：</span>
           <span class="input-input detailinput">  {{lxsinfo.RECOUNTRY}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -124,23 +124,23 @@
           <span class="input-input detailinput">  {{lxsinfo.ELEVEL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-         <span class="input-text">新旧汉语水平：</span>
+         <span class="input-text" title="新旧汉语水平">新旧汉语水平：</span>
          <span class="input-input detailinput">  {{lxsinfo.CNLEVEL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-         <span class="input-text">汉语水平考试等级：</span>
+         <span class="input-text" title="汉语水平考试等级">汉语水平考试等级：</span>
          <span class="input-input detailinput">  {{lxsinfo.HSKLEVEL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">汉语水平考试听力成绩：</span>
+          <span class="input-text" title="汉语水平考试听力成绩">汉语水平考试听力成绩：</span>
           <span class="input-input detailinput">  {{lxsinfo.HSKLISTENING}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">汉语水平考试阅读成绩：</span>
+          <span class="input-text" title="汉语水平考试阅读成绩">汉语水平考试阅读成绩：</span>
           <span class="input-input detailinput">  {{lxsinfo.HSKREADING}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">汉语水平考试书写成绩：</span>
+          <span class="input-text" title="汉语水平考试书写成绩">汉语水平考试书写成绩：</span>
           <span class="input-input detailinput">  {{lxsinfo.HSKWRITE}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -148,19 +148,19 @@
           <span class="input-input detailinput">  {{lxsinfo.COMPANY}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">推荐单位电话：</span>
+          <span class="input-text" title="推荐单位电话">推荐单位电话：</span>
           <span class="input-input detailinput">  {{lxsinfo.REFTEL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">在华事务担保人：</span>
+          <span class="input-text" title="在华事务担保人">在华事务担保人：</span>
           <span class="input-input detailinput">  {{lxsinfo.LINKNAME}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">在华事务担保人电话：</span>
+          <span class="input-text" title="在华事务担保人电话">在华事务担保人电话：</span>
           <span class="input-input detailinput">  {{lxsinfo.LINKTEL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">经费担保人或机构：</span>
+          <span class="input-text" title="经费担保人或机构">经费担保人或机构：</span>
           <span class="input-input detailinput">  {{lxsinfo.GUNAME}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -204,19 +204,19 @@
           <span class="input-input detailinput">  {{lxsinfo.EFACULTY}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">专业中文名称：</span>
+          <span class="input-text" title="专业中文名称">专业中文名称：</span>
           <span class="input-input detailinput">  {{lxsinfo.CPROFESSIONAL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">专业英文名称：</span>
+          <span class="input-text" title="专业英文名称">专业英文名称：</span>
           <span class="input-input detailinput">  {{lxsinfo.EPROFESSIONAL}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">研究方向中文名称：</span>
+          <span class="input-text" title="研究方向中文名称">研究方向中文名称：</span>
           <span class="input-input detailinput">  {{lxsinfo.DIRECTION}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">研究方向英文名称：</span>
+          <span class="input-text" title="研究方向英文名称">研究方向英文名称：</span>
           <span class="input-input detailinput">  {{lxsinfo.EDIRECTION}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -261,7 +261,7 @@
           <span class="input-input detailinput">  {{lxsinfo.SEMESTER}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">博士生导师姓名：</span>
+          <span class="input-text" title="博士生导师姓名">博士生导师姓名：</span>
           <span class="input-input detailinput">  {{lxsinfo.DOCNAME}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -269,7 +269,7 @@
           <span class="input-input detailinput">  {{lxsinfo.DOCNO}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">学历学籍注册号：</span>
+          <span class="input-text" title="学历学籍注册号">学历学籍注册号：</span>
           <span class="input-input detailinput">  {{lxsinfo.REGISTEREDNO}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
@@ -285,7 +285,7 @@
           <span class="input-input detailinput">  {{lxsinfo.JGFLAG=='1'?"未审核":lxsinfo.JGFLAG=='2'?"审核未通过":lxsinfo.JGFLAG=='3'?"审核通过":""}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
-          <span class="input-text">教育厅审核标识：</span>
+          <span class="input-text" title="教育厅审核标识">教育厅审核标识：</span>
           <span class="input-input detailinput"> {{lxsinfo.JYFLAG=='1'?"未审核":lxsinfo.JYFLAG=='2'?"审核未通过":lxsinfo.JYFLAG=='3'?"审核通过":""}} </span>
         </el-col>
         <el-col :span="8" class="input-item">

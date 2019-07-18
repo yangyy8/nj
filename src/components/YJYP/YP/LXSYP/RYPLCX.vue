@@ -11,7 +11,11 @@
                <el-option value="2" label="姓名+性别+出生日期+国籍"></el-option>
              </el-select>
            </el-col>
+           <el-col :sm="24" :md="12" :lg="2" class="input-item">
+            <el-button type="success" size="small"  @click="download">下载模板</el-button>
+            </el-col>
            <el-col :sm="24" :md="12" :lg="8" class="input-item">
+
               <label class="file">
                 上传文件
                 <input type="file" name=""  @change="uploadFile">
@@ -284,6 +288,9 @@ export default {
        this.isShow=false;
        this.checkList1=['zjhm','zjzl'];
        this.checkList2=[];
+     },
+     download() {
+        window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/人员画像批量查询模板.xlsx'
      },
   }
 }

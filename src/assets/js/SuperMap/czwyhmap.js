@@ -11,7 +11,7 @@ export function createMapL() {
     preferCanvas: true,
     center: [32.03613281, 118.78211975],
     maxZoom: 18,
-    zoom: 11,
+    zoom: 9,
     minZoom: 9,
     zoomControl: false,
     attributionControl: false,
@@ -32,8 +32,10 @@ export function createMapL() {
   //加载图层
   //L.supermap.tiledMapLayer(url).addTo(map);
 }
-export function getSearch() {
+export function getSearch(centers) {
   markerLayer.clearLayers();
+  console.log(centers);
+  map.flyTo(centers,10);
   var  searchResult=window.czwvm.getBZHDZ(function(data){
 
     if(data.length!=0){
@@ -49,7 +51,8 @@ export function getSearch() {
 
 function renderBzhid(data) {
     markerLayer.clearLayers();
-    mapSqlSearch("JWPTBH='"+data.dm+"'", 0, 5, function(features) {
+    mapSqlSearch("DZMC='"+data.dm+"'", 0, 5, function(features) {
+
       if (features.length > 0) {
 
        for (var i = 0; i < features.length; i++) {
@@ -59,6 +62,15 @@ function renderBzhid(data) {
         }
       }
       else {
+        var ss=window.czwvm.getXY(data.dm,function(datae){
+          if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
+           var das=[];
+           das.push(datae.ycoord);
+           das.push(datae.xcoord);
+           //console.log(das,data);
+           renderMarkerbzh(das, data,data.dm);
+         }
+        });
         //alert("地图库中未录入该地址的坐标。");
       }
     });
@@ -70,7 +82,7 @@ export function renderMarkerbzh(point, data,mc) {
   // 画圆
   var myIcon = L.divIcon({
     html: "<div style='line-height:39px;text-align:center'>" + data.count + "</div>",
-    className: 'my-div-icon lz',
+    className: 'my-div-icon jwgg',
     iconSize: 50
   });
   var tempMarker = L.marker(point, {
@@ -93,7 +105,7 @@ export function renderMarkerbzh(point, data,mc) {
    //  requestTableData(e.target.options.pcsdm, 1);
    //从库里得到派出所数据
 
-    window.czwvm.getRyxx(1,5,data.dm,mc,0);
+    window.czwvm.getRyxx(1,5,data.dm,mc);
 
   });
 }

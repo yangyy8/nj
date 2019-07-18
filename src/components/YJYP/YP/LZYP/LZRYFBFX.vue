@@ -15,10 +15,21 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font>住宿时间：</span>
+                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-option
+                          v-for="(item,ind) in ssfj"
+                          :key="ind"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                   </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font> 住宿时间：</span>
                         <el-date-picker class="yy-input-input"
                            v-model="pd.beginTime" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                   </el-col>
@@ -26,12 +37,12 @@
                       <span class="yy-input-text"></span>
                         <el-date-picker class="yy-input-input"
                             v-model="pd.endTime" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                   </el-col>
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font>证件种类：</span>
+                      <span class="yy-input-text">证件种类：</span>
                       <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind4) in $store.state.zjzl"
@@ -77,9 +88,9 @@
                   <el-col :span="24">
                       <span class="yy-input-text">投宿于：</span>
                       <el-select v-model="pd.tsj" @change="changeTSY(pd.tsj)" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option label="旅馆" value="1">
+                        <el-option label="旅馆" value="2">
                         </el-option>
-                        <el-option label="社会面" value="2">
+                        <el-option label="社会面" value="1">
                         </el-option>
                       </el-select>
                   </el-col>
@@ -126,6 +137,17 @@
                style="width: 100%"
                >
                <el-table-column
+                 label="照片">
+                 <template slot-scope="scope">
+                   <div v-if="scope.row.zp">
+                    <el-popover placement="right" title="" trigger="hover">
+                      <img :src="scope.row.zp" style="max-width:700px; max-height:700px;"/>
+                      <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                    </el-popover>
+                   </div>
+                 </template>
+               </el-table-column>
+               <el-table-column
                  prop="ywxm"
                  label="英文姓名">
                </el-table-column>
@@ -142,6 +164,10 @@
                  label="出生日期">
                </el-table-column>
                <el-table-column
+                 prop="djrq"
+                 label="登记日期">
+               </el-table-column>
+               <el-table-column
                  prop="gjdq"
                  label="国家地区">
                </el-table-column>
@@ -153,7 +179,7 @@
                  prop="zjhm"
                  label="证件号码">
                  <template slot-scope="scope">
-                  <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                  <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
                  </template>
                </el-table-column>
            </el-table>
@@ -217,12 +243,14 @@ export default {
        zsbg:[],
        list:[],
        tableData:[],
+       ssfj: [],
        loading:false,
        lzhDialogVisible:false,
        diatext:'标准化地址',
        bzhid:'',
        mc:'',
        lrdw:'',
+       centers:[],
     }
   },
   mounted() {
@@ -232,16 +260,27 @@ export default {
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getRjqzzl');
     createMapL();
+    this.getFJ();
     this.getZsbg();
   },
   methods:{
     pageSizeChange(val) {
-        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+        this.getRyxx(val,this.pageSize,this.bzhid,this.mc);
       console.log(`当前页: ${val}`);
+    },
+    getFJ() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+        r => {
+          this.ssfj = r.data.SSFJ;
+        })
     },
     remoteMethod(query) {
         if (query !== '') {
@@ -261,10 +300,10 @@ export default {
         this.show=!this.show;
       },
       changeTSY(t){
-        if(t=="1"){
+        if(t=="2"){
           this.lgshow=true;
           this.bzhshow=false;
-        }else if(t=="2"){
+        }else if(t=="1"){
           this.lgshow=false;
           this.bzhshow=true;
         }else {
@@ -285,6 +324,7 @@ export default {
        this.$set(this.pd,"qzzl",'');
        this.$set(this.pd,"gjdq",'');
        this.$set(this.pd,"tlsy",'');
+       this.$set(this.pd,"ssfj",'');
        this.$set(this.pd,"beginTime",'');
        this.$set(this.pd,"endTime",'');
        this.$set(this.pd,"tsj",'');
@@ -294,9 +334,57 @@ export default {
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
-      this.loading = true;
-      getSearh(this.pd);
-      // this.loading = false;
+      if (this.pd.ssfj == undefined || this.pd.ssfj == "") {
+        this.$message.error("请选择所属分局!");
+        return;
+      } else {
+        var ssj = this.pd.ssfj.substr(0, 6);
+        switch (ssj) {
+          case '320116': //六合区
+            this.centers = [32.39215480155289, 118.81641980133281];
+            break;
+          case '320112': //江北新区
+            this.centers = [32.03613281, 118.78211975];
+            break;
+          case '320113': //栖霞区
+            this.centers = [32.137307901838255, 118.9995913711449];
+            break;
+          case '320102': //玄武区
+            this.centers = [32.062475576087024, 118.8436456413333];
+            break;
+          case '320106': //鼓楼区
+            this.centers = [32.08265178165445, 118.75812113098544];
+            break;
+          case '320111': //浦口区
+            this.centers = [31.943626916199264, 118.35524238617728];
+            break;
+          case '320104': //秦淮区
+            this.centers = [32.01143013679143, 118.81736758064937];
+            break;
+          case '320105': //建邺区
+            this.centers = [32.0275950355325, 118.70538415685343];
+            break;
+          case '320114': //雨花台区
+            this.centers = [31.94205101079558, 118.69497417187063];
+            break;
+          case '320115': //江宁区
+            this.centers = [31.865733721334237, 118.79198266097109];
+            break;
+          case '320124 ': //溧水区
+            this.centers = [31.726803147547287, 119.1224894259463];
+            break;
+          case '320125 ': //高淳区
+            this.centers = [31.3703836314495, 119.19202124153713];
+            break;
+          default:
+
+        }
+      }
+      if(this.pd.beginTime==undefined  && this.pd.endTime==undefined){
+        this.$message.error("请输入住宿的开始时间或结束时间!");return ;
+      }
+      getSearh(this.centers);
+
     },
 
 
@@ -311,7 +399,9 @@ export default {
           "rzsjStart":this.pd.beginTime,
           "rzsjEnd":this.pd.endTime,
           "zsbg":this.pd.zsbg,
-          "bzhdzMc":this.pd.bzhdz,
+          "likeBzhdzMc":this.pd.bzhdz,
+          "ssfj":this.pd.ssfj.substr(0,6),
+          "tsy":this.pd.tsj
         };
         var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
         this.$api.post(url, p,
@@ -321,6 +411,9 @@ export default {
               for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
               }
+              if(searchResult.length==0){
+                this.$message.error("没有查询到数据信息! ");return ;
+              }
               callback && callback(searchResult)
             }
           });
@@ -328,22 +421,22 @@ export default {
     },
 
     //人员信息
-    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
+    getRyxx(currentPage,showCount,bzhid,mc)
     {
       if(currentPage==1){
         this.CurrentPage=1;
+        this.tableData=[];
+        this.TotalResult=0;
+        this.bzhid=bzhid;
+        this.mc=mc;
       }
-       this.bzhid=bzhid;
-       this.mc=mc;
-       this.lrdw=lrdw;
+
        this.diatext=this.mc;
 
        let p={
          "currentPage":currentPage,
          "showCount":showCount,
-         "dzdtid":this.bzhid,
-         // "yf":'Y',
-         // "lrdw":this.lrdw,
+         "bzhdzMc":this.bzhid,
          "zjzl":this.pd.zjzl,
          "qzzl":this.pd.qzzl,
          "gjdq":this.pd.gjdq,
@@ -351,7 +444,8 @@ export default {
          "rzsjStart":this.pd.beginTime,
          "rzsjEnd":this.pd.endTime,
          "zsbg":this.pd.zsbg,
-         "bzhdzMc":this.pd.bzhdz,
+         "ssfj":this.pd.ssfj.substr(0,6),
+         "tsy":this.pd.tsj
 
        };
        var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
@@ -364,7 +458,22 @@ export default {
            }
          });
        this.lzhDialogVisible=true;
-    }
+    },
+    //后期匹配地址
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
+      };
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
+        r => {
+          callback && callback(r.data.result)
+        });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
+    },
   },
 
 }
@@ -382,7 +491,6 @@ export default {
 </style>
 <style>
 .lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
         border-radius: 50%;
         line-height:20px;
         text-align: center;
@@ -390,8 +498,8 @@ export default {
         color: #ffffff;
         font-size: 16px;
     }
-.lzxx    .lz {
-		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;
+.lzxx   .lzgreen {
+		background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;
 		}
 
 .lzxx		.cz {

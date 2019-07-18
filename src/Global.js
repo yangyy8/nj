@@ -4,10 +4,11 @@ const hasEnter=false;
 const org="";
 const xsd=80;
 const type=99;
+
 const indexstate=0;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="/api-reporter";//大师网关
-// const aport="http://50.32.166.56:9420/";//大师
+// const aport="http://50.32.166.56:9420";//大师
 // const aport1="http://10.33.72.144:9435";//正式环境
 const aport1="api-permission";//大师网关
 // const aport1="http://192.168.3.217:9435";//大师
@@ -16,13 +17,16 @@ const aport2="api-yewu";//左星海网关
 // const aport2="http://192.168.3.217:9439";//左星海
 // const aport3="http://10.33.72.144:9439";//正式环境
 const aport3="api-yewu";//石飞网关
-// const aport3="http://192.168.3.217:9439";//石飞
+// const aport3="http://10.0.8.28:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
 const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙
 
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
+
+const aport6="http://10.0.9.48:8080";//孙振东
+
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
 const ssdw="/org/getSelfAndChilds";//所属单位
@@ -47,13 +51,14 @@ const zsbg="/service/getRedisDataByDm?tablename=JZ_LGBM"//住宿宾馆
 const tlyxq="/service/getRedisDataByDm?tablename=DM_TLYXQ";//停留有效期
 const sf="/service/getRedisDataByDm?tablename=DM_JWRYSF";//身份
 const clzt="/service/getRedisDataByDm?tablename=DM_CLZT";//处理状态
+const shzt="/service/getRedisDataByDm?tablename=DM_SHZT";//审核状态
 const sjly="/service/getRedisDataByDm?tablename=DM_SJLY";//数据来源
+const tbry="/service/getRedisDataByDm?tablename=dm_tbrylb";//数据来源
 const rzfs="/service/getRedisDataByDm?tablename=DM_RZFS";//入住方式(地图用的)
 const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地图用的）
 const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态类型（地图用的）
 const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
 const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
-
 const tablists=[];
 export default
 {
@@ -70,7 +75,8 @@ export default
   aport3,//石飞
   aport4,//李文龙
   aport5,//李文龙
+  aport6,
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,
 }

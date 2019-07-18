@@ -14,9 +14,71 @@
              <el-collapse-transition>
              <div class="fxcont" v-if="show">
                 <el-row :gutter="2">
+                  <el-col :span="12">
+                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-option
+                          v-for="(item,ind) in ssfj"
+                          :key="ind"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
+                   </el-col>
+                   <el-col :span="12">
+                       <span class="yy-input-text">所属派出所：</span>
+                       <el-select v-model="pd.sspcs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                         <el-option
+                           v-for="(item,ind) in sspcs"
+                           :key="ind"
+                           :label="item.mc"
+                           :value="item.dm">
+                         </el-option>
+                       </el-select>
+                    </el-col>
+
+                 <el-col :span="12">
+                     <span class="yy-input-text">性别：</span>
+                     <el-select v-model="pd.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                       <el-option
+                         v-for="(item,ind1) in $store.state.xb"
+                         :key="ind1"
+                         :label="item.mc"
+                         :value="item.dm">
+                       </el-option>
+                     </el-select>
+                 </el-col>
+                 <el-col :span="12">
+                     <span class="yy-input-text">服务处所：</span>
+                     <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
+                 </el-col>
+
+               <el-col :span="12">
+                   <span class="yy-input-text">证件种类：</span>
+                   <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                     <el-option
+                       v-for="(item,ind) in $store.state.zjzl"
+                       :key="ind"
+                       :label="item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
+               </el-col>
+               <el-col :span="12">
+                   <span class="yy-input-text">居住状态类型：</span>
+                   <el-select v-model="pd.jzztlx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                     <el-option
+                       v-for="(item,indj) in $store.state.jzztlx"
+                       :key="indj"
+                       :label="item.mc"
+                       :value="item.dm">
+                     </el-option>
+                   </el-select>
+               </el-col>
+
                     <el-col :span="12">
                         <span class="yy-input-text">国家地区：</span>
-                        <el-select v-model="pd.gjdq" multiple   filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-select v-model="pd.gjdqArray" multiple   filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option
                             v-for="(item,ind1) in $store.state.gjdq"
                             :key="ind1"
@@ -27,7 +89,7 @@
                     </el-col>
                     <el-col :span="12">
                         <span class="yy-input-text">身份：</span>
-                        <el-select v-model="pd.sf" multiple     filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                        <el-select v-model="pd.sfArray" multiple     filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option
                             v-for="(item,ind) in $store.state.sf"
                             :key="ind"
@@ -36,7 +98,7 @@
                           </el-option>
                         </el-select>
                     </el-col>
-                    <el-col :span="12">
+                    <!-- <el-col :span="12">
                         <span class="yy-input-text">停留有效期：</span>
                         <el-select v-model="pd.tlyxq"  filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                           <el-option
@@ -46,7 +108,7 @@
                             :value="item.dm">
                           </el-option>
                         </el-select>
-                    </el-col>
+                    </el-col> -->
                     <!-- <el-col :span="12">
                         <span class="yy-input-text">入住方式：</span>
                         <el-select v-model="pd.rzfs" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -66,33 +128,7 @@
                           </el-option>
                         </el-select>
                     </el-col> -->
-                    <el-col :span="12">
-                        <span class="yy-input-text">性别：</span>
-                        <el-select v-model="pd.xb" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                          <el-option
-                            v-for="(item,ind1) in $store.state.xb"
-                            :key="ind1"
-                            :label="item.mc"
-                            :value="item.dm">
-                          </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="12">
-                        <span class="yy-input-text">服务处所：</span>
-                        <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
-                    </el-col>
 
-                  <el-col :span="12">
-                      <span class="yy-input-text">证件种类：</span>
-                      <el-select v-model="pd.zjzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind) in $store.state.zjzl"
-                          :key="ind"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                  </el-col>
                   <!-- <el-col :span="12">
                       <span class="yy-input-text">签证种类：</span>
                       <el-select v-model="pd.qzzl" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -125,7 +161,7 @@
                   </el-col> -->
                   <el-col :span="12">
                       <span class="yy-input-text">居留事由：</span>
-                      <el-select v-model="pd.rjsy" multiple    filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                      <el-select v-model="pd.jlsyArray" multiple    filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind) in $store.state.rjsy"
                           :key="ind"
@@ -134,65 +170,54 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                  <el-col :span="12">
-                      <span class="yy-input-text">居住状态类型：</span>
-                      <el-select v-model="pd.jzztlx" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option value="1" label="迁入">
-                        </el-option>
-                        <el-option value="2" label="所内变动">
-                        </el-option>
-                        <el-option value="3" label="迁出">
-                        </el-option>
-                        <el-option value="4" label="死亡销户">
-                        </el-option>
-                        <el-option value="5" label="人户分离">
-                        </el-option>
-                        <el-option value="6" label="查无此人">
-                        </el-option>
-                      </el-select>
-                  </el-col>
 
-                  <el-col :span="12">
-                      <span class="yy-input-text"><font color=red>*</font>所属单位：</span>
-                      <el-select v-model="pd.ssdw" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
-                        <el-option
-                          v-for="(item,ind) in $store.state.ssdw"
-                          :key="ind"
-                          :label="item.mc"
-                          :value="item.dm">
-                        </el-option>
-                      </el-select>
-                   </el-col>
-                 </el-row>
+                   </el-row>
+
                  <el-row :gutter="1" style="border:1px solid #cccccc;margin-top:10px;margin-right:10px; padding-top: 10px;  background: #EFF3F6;">
                    <el-col :span="24" class="input-item">
                      <span class="input-text">出生日期：</span>
                      <div class="input-input t-flex">
                        <el-date-picker
-                          v-model="pd.begincsrq" format="yyyy-MM-dd"
-                          type="date" size="small" value-format="yyyyMMdd"
+                          v-model="pd.csrqStart" format="yyyy-MM-dd"
+                          type="date" size="small" value-format="yyyy/MM/dd"
                           placeholder="开始时间" >
                        </el-date-picker>
                        <span class="septum">-</span>
                        <el-date-picker
-                           v-model="pd.endcsrq" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           v-model="pd.csrqEnd" format="yyyy-MM-dd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="结束时间" >
                        </el-date-picker>
                     </div>
                    </el-col>
                    <el-col :span="24" class="input-item" >
-                     <span class="input-text"><font color=red>*</font>市局下发时间：</span>
+                     <span class="input-text">停留有效期：</span>
                      <div class="input-input t-flex">
                        <el-date-picker
-                          v-model="pd.beginsjxf" format="yyyy-MM-dd"
-                          type="date" size="small" value-format="yyyyMMdd"
+                          v-model="pd.tlyxqStart" format="yyyy-MM-dd"
+                          type="date" size="small" value-format="yyyy/MM/dd"
                           placeholder="开始时间" >
                        </el-date-picker>
                        <span class="septum">-</span>
                        <el-date-picker
-                           v-model="pd.endsjxf" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           v-model="pd.tlyxqEnd" format="yyyy-MM-dd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
+                           placeholder="结束时间" >
+                       </el-date-picker>
+                    </div>
+                   </el-col>
+                   <el-col :span="24" class="input-item" >
+                     <span class="input-text">市局下发时间：</span>
+                     <div class="input-input t-flex">
+                       <el-date-picker
+                          v-model="pd.sjxfStart" format="yyyy-MM-dd"
+                          type="date" size="small" value-format="yyyy/MM/dd"
+                          placeholder="开始时间" >
+                       </el-date-picker>
+                       <span class="septum">-</span>
+                       <el-date-picker
+                           v-model="pd.sjxfEnd" format="yyyy-MM-dd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="结束时间" >
                        </el-date-picker>
                     </div>
@@ -247,6 +272,25 @@
                  style="width: 100%"
                  >
                  <el-table-column
+                   label="照片">
+                   <template slot-scope="scope">
+                     <div v-if="scope.row.zp">
+                      <el-popover placement="right" title="" trigger="hover">
+                        <img :src="scope.row.zp" style="max-width:700px; max-height:700px;"/>
+                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
+                      </el-popover>
+                     </div>
+                   </template>
+                 </el-table-column>
+                 <el-table-column
+                   prop="sf"
+                   label="身份">
+                 </el-table-column>
+                 <el-table-column
+                   prop="fwcs"
+                   label="服务处所">
+                 </el-table-column>
+                 <el-table-column
                    prop="ywxm"
                    label="英文姓名">
                  </el-table-column>
@@ -263,6 +307,10 @@
                    label="出生日期">
                  </el-table-column>
                  <el-table-column
+                   prop="djrq"
+                   label="登记日期">
+                 </el-table-column>
+                 <el-table-column
                    prop="gjdq"
                    label="国家地区">
                  </el-table-column>
@@ -273,6 +321,9 @@
                  <el-table-column
                    prop="zjhm"
                    label="证件号码">
+                   <template slot-scope="scope">
+                    <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
+                   </template>
                  </el-table-column>
              </el-table>
              <div class="middle-foot mt-10">
@@ -318,194 +369,369 @@
 </template>
 
 <script scoped>
-import {ToArray} from '@/assets/js/ToArray.js'
-import {createMapL,getSearch} from '@/assets/js/SuperMap/jwrymap.js'
-let czvm;
+import {
+  ToArray
+} from '@/assets/js/ToArray.js'
+import {
+  createMapL,
+  getSearch
+} from '@/assets/js/SuperMap/jwrymap.js'
+let jwczvm;
 export default {
-  data(){
-    return{
+  data() {
+    return {
       CurrentPage: 1,
-      pageSize: 8,
+      pageSize: 5,
       TotalResult: 0,
-      tableData:[],
-       pd:{},
-       swdw:[],
-       show:true,
-       bzhshow:false,
-       lgshow:false,
-       bzhDialogVisible:false,
-       diatext:'标准化地址',
-       pcs:[],
-       xzqh:[],
-       xxmc:[],
-       radio:1,
+      tableData: [],
+      pd: {jzztlx:'1'},
+      swdw: [],
+      show: true,
+      bzhshow: false,
+      lgshow: false,
+      bzhDialogVisible: false,
+      diatext: '标准化地址',
+      pcs: [],
+      xzqh: [],
+      xxmc: [],
+      radio: 1,
+      ssfj: [],
+      sspcs: [],
+      centers: [31.910376, 118.525718],
     }
   },
 
   mounted() {
-    window.vm=this;
-   this.$store.dispatch('getQzzl');
-   this.$store.dispatch('getZjzl');
-   this.$store.dispatch('getGjdq');
-   this.$store.dispatch('getRjsy');
-   this.$store.dispatch('getXB');
-   this.$store.dispatch('getTlyxq');
-   this.$store.dispatch('getSf');
-   this.$store.dispatch('getSsdw');
-   this.getGX();
-    createMapL();
+    window.jwczvm = this;
+    this.$store.dispatch('getQzzl');
+    this.$store.dispatch('getZjzl');
+    this.$store.dispatch('getGjdq');
+    this.$store.dispatch('getRjsy');
+    this.$store.dispatch('getXB');
+    this.$store.dispatch('getJzztlx');
+    this.$store.dispatch('getSf');
+    // this.$store.dispatch('getSsdw');
+    //this.getGX();
+    createMapL(this.centers);
+    this.getFJ();
 
   },
-  methods:{
+  methods: {
     pageSizeChange(val) {
-        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc,this.lrdw);
+      this.getRyxx(this.CurrentPage, val, this.bzhid, this.mc);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        this.getRyxx(val,this.pageSize,this.bzhid,this.mc,this.lrdw);
+      this.getRyxx(val, this.pageSize, this.bzhid, this.mc);
       console.log(`当前页: ${val}`);
     },
-      changtab(){
-        this.show=!this.show;
-      },
-      changeTSY(t){
-        if(t=="1"){
-          this.lgshow=true;
-          this.bzhshow=false;
-        }else if(t=="2"){
-          this.lgshow=false;
-          this.bzhshow=true;
-        }else {
-          this.lgshow=false;
-          this.bzhshow=false;
-        }
-      },
-      getGX(){
-        this.$api.get(this.Global.aport1+'/servicemap/getUniversity',null,
-           r=>{
-             console.log(r.data);
-            this.xxmc=r.data;
-           });
-      },
+    getFJ() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+        r => {
+          this.ssfj = r.data.SSFJ;
+        })
+    },
+    getSSPCS(arr) {
+      this.$set(this.pd, "sspcs", '');
+      var srr = [];
+      srr.push(arr);
+      console.log(srr);
+      let p = {
+        "fjdmList": srr
+      }
+      this.$api.post(this.Global.aport2 + '/data_report/selectPcsDm', p,
+        r => {
+          if (r.success) {
+            this.sspcs = r.data.PCS;
+          }
+        })
+    },
 
-    doset(){
-      this.$set(this.pd,"gjdq",'');
-      this.$set(this.pd,"tlyxq",'');
-      this.$set(this.pd,"rzfs",'');
-      this.$set(this.pd,"xb",'');
-      this.$set(this.pd,"xxmc",'');
-      this.$set(this.pd,"sf",'');
-      this.$set(this.pd,"zjzl",'');
-      this.$set(this.pd,"qzzl",'');
-      this.$set(this.pd,"zflx",'');
-      this.$set(this.pd,"rjsy",'');
-      this.$set(this.pd,"jzztlx",'');
-      this.$set(this.pd,"ssdw",'');
-      this.$set(this.pd,"begincsrq",'');
-      this.$set(this.pd,"endcsrq",'');
-      this.$set(this.pd,"beginsjxf",'');
-      this.$set(this.pd,"endsjxf",'');
-      this.$set(this.pd,"beginfjjs",'');
-      this.$set(this.pd,"endfjjs",'');
-      this.$set(this.pd,"beginsjd",'');
-      this.$set(this.pd,"endsjd",'');
+    changtab() {
+      this.show = !this.show;
+    },
+    changeTSY(t) {
+      if (t == "1") {
+        this.lgshow = true;
+        this.bzhshow = false;
+      } else if (t == "2") {
+        this.lgshow = false;
+        this.bzhshow = true;
+      } else {
+        this.lgshow = false;
+        this.bzhshow = false;
+      }
+    },
+    getGX() {
+      this.$api.get(this.Global.aport1 + '/servicemap/getUniversity', null,
+        r => {
+          console.log(r.data);
+          this.xxmc = r.data;
+        });
+    },
+
+    doset() {
+      this.$set(this.pd, "gjdqArray", []);
+      this.$set(this.pd, "sfArray", []);
+      this.$set(this.pd, "xb", '');
+      this.$set(this.pd, "fwcs", '');
+      this.$set(this.pd, "zjzl", '');
+      this.$set(this.pd, "jlsyArray", []);
+      this.$set(this.pd, "jzztlx", '');
+      this.$set(this.pd, "ssfj", '');
+      this.$set(this.pd, "sspcs", '');
+      this.$set(this.pd, "csrqStart", '');
+      this.$set(this.pd, "csrqEnd", '');
+      this.$set(this.pd, "tlyxqStart", '');
+      this.$set(this.pd, "tlyxqEnd", '');
+      this.$set(this.pd, "sjxfStart", '');
+      this.$set(this.pd, "sjxfEnd", '');
     },
     getSearch() {
-        this.show=!this.show;
-      getSearch();
+
+      if (this.pd.ssfj == undefined || this.pd.ssfj == null || this.pd.ssfj == "") {
+        this.$message.error("请选择所属分局!");
+        return;
+      } else {
+        var ssj = this.pd.ssfj.substr(0, 6);
+        switch (ssj) {
+          case '320116': //六合区
+            this.centers = [32.39215480155289, 118.81641980133281];
+            break;
+          case '320112': //江北新区
+            this.centers = [32.03613281, 118.78211975];
+            break;
+          case '320113': //栖霞区
+            this.centers = [32.137307901838255, 118.9995913711449];
+            break;
+          case '320102': //玄武区
+            this.centers = [32.062475576087024, 118.8436456413333];
+            break;
+          case '320106': //鼓楼区
+            this.centers = [32.08265178165445, 118.75812113098544];
+            break;
+          case '320111': //浦口区
+            this.centers = [31.943626916199264, 118.35524238617728];
+            break;
+          case '320104': //秦淮区
+            this.centers = [32.01143013679143, 118.81736758064937];
+            break;
+          case '320105': //建邺区
+            this.centers = [32.0275950355325, 118.70538415685343];
+            break;
+          case '320114': //雨花台区
+            this.centers = [31.94205101079558, 118.69497417187063];
+            break;
+          case '320115': //江宁区
+            this.centers = [31.865733721334237, 118.79198266097109];
+            break;
+          case '320124 ': //溧水区
+            this.centers = [31.726803147547287, 119.1224894259463];
+            break;
+          case '320125 ': //高淳区
+            this.centers = [31.3703836314495, 119.19202124153713];
+            break;
+          default:
+
+        }
+      }
+
+      getSearch(this.centers);
     },
-    getPCS(callback){
+    //获取派出所
+    getPCS(callback) {
+      this.show!=this.show;
+      var ssdw = "";
+      if (this.pd.sspcs != undefined && this.pd.sspcs != "") {
+        ssdw = this.pd.sspcs.substr(0, 12);
+      } else {
+        ssdw = this.pd.ssfj.substr(0, 6);
+      }
+      console.log(ssdw);
       var searchResult = [];
-        let p={
-          "gjdq":this.pd.gjdq,
-          "zjzl":this.pd.zjzl,
-          "jzzt":this.pd.jzzt,
-          "xxmc":this.pd.fwcs,
-        };
-        var url=this.Global.aport+"/ywczdt/getCZDJXXPCSList";
-        this.$api.post(url, p,
-          r => {
-            if (r.success) {
-              var arr=r.data;
-              for (var i = 0; i < arr.length; i++) {
+      let p = {
+        "gjdqArray": this.pd.gjdqArray,
+        "xb": this.pd.xb,
+        "sfArray": this.pd.sfArray,
+        "fwcs": this.pd.fwcs,
+        "zjzl": this.pd.zjzl,
+        "jlsyArray": this.pd.jlsyArray,
+        "jzztlx": this.pd.jzztlx,
+        "ssfj": ssdw,
+        "csrqStart": this.pd.csrqStart,
+        "csrqEnd": this.pd.csrqEnd,
+        "tlyxqStart": this.pd.tlyxqStart,
+        "tlyxqEnd": this.pd.tlyxqEnd,
+        "sjxfStart": this.pd.sjxfStart,
+        "sjxfEnd": this.pd.sjxfEnd,
+      };
+      var url = this.Global.aport + "/ywczdt/getCZDJXXPCSList";
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            var arr = r.data;
+            for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
-              }
-
-              callback && callback(searchResult)
             }
-          });
+            if(searchResult.length==0){
+              this.$message.error("没有查询到数据信息! ");return ;
+            }
+            callback && callback(searchResult)
+          }
+        });
 
-          callback(searchResult);
+      callback(searchResult);
     },
     //得到标准化地址
-    getBZHDZ(callback){
+    getBZHDZ(n, callback) {
+      var ssdw = "";
+      if (this.pd.sspcs != undefined && this.pd.sspcs != "") {
+        ssdw = this.pd.sspcs.substr(0, 12);
+      } else {
+        ssdw = this.pd.ssfj.substr(0, 6);
+      }
       var searchResult = [];
-        let p={
-          "yf":this.yf,
-          "lrdw":"",
-        };
-        var url=this.Global.aport+"/zxdt/getLSZSDJXXBZHDZList";
-        this.$api.post(url, p,
-          r => {
-            if (r.success) {
-              var arr=r.data;
-              for (var i = 0; i < arr.length; i++) {
+      let p = {
+        "gjdqArray": this.pd.gjdqArray,
+        "xb": this.pd.xb,
+        "sfArray": this.pd.sfArray,
+        "fwcs": this.pd.fwcs,
+        "zjzl": this.pd.zjzl,
+        "jlsyArray": this.pd.jlsyArray,
+        "jzztlx": this.pd.jzztlx,
+        "ssfj": ssdw,
+        "csrqStart": this.pd.csrqStart,
+        "csrqEnd": this.pd.csrqEnd,
+        "tlyxqStart": this.pd.tlyxqStart,
+        "tlyxqEnd": this.pd.tlyxqEnd,
+        "sjxfStart": this.pd.sjxfStart,
+        "sjxfEnd": this.pd.sjxfEnd,
+        'ywpcsdm': n
+      };
+      var url = this.Global.aport + "/ywczdt/getCZDJXXBZHDZList";
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            var arr = r.data;
+            for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
-              }
-
-              callback && callback(searchResult)
             }
-          });
 
-          callback(searchResult);
+            callback && callback(searchResult)
+          }
+        });
+
+      callback(searchResult);
     },
     //人员信息
-    getRyxx(currentPage,showCount,bzhid,mc,lrdw)
-    {
-      if(currentPage==1){
-        this.CurrentPage=1;
-      }
-       this.bzhid=bzhid;
-       this.mc=mc;
-       this.lrdw=lrdw;
-       this.diatext=this.mc;
+    getRyxx(currentPage, showCount, bzhid, mc, ) {
 
-       let p={
-         "currentPage":currentPage,
-         "showCount":showCount,
-         "dzdtid":this.bzhid,
-         "yf":'Y',
-         "lrdw":this.lrdw,
-       };
-       var url=this.Global.aport+"/zxdt/getLSZSDJXXRYList";
-       this.$api.post(url, p,
-         r => {
-           if (r.success) {
-             console.log(r.data);
-             this.tableData=r.data.resultList;
-             this.TotalResult=r.data.totalResult;
-           }
-         });
-       this.bzhDialogVisible=true;
-    }
+      var ssdw = "";
+      if (this.pd.sspcs != undefined && this.pd.sspcs != "") {
+        ssdw = this.pd.sspcs.substr(0, 12);
+      } else {
+        ssdw = this.pd.ssfj.substr(0, 6);
+      }
+      if (currentPage == 1) {
+        this.tableData=[];this.TotalResult=0;
+        this.CurrentPage = 1;
+      }
+      this.bzhid = bzhid;
+      this.mc = mc;
+      this.diatext = this.mc;
+
+      let p = {
+        "currentPage": currentPage,
+        "showCount": showCount,
+        "xxdz": this.bzhid,
+        "gjdqArray": this.pd.gjdqArray,
+        "xb": this.pd.xb,
+        "sfArray": this.pd.sfArray,
+        "fwcs": this.pd.fwcs,
+        "zjzl": this.pd.zjzl,
+        "jlsyArray": this.pd.jlsyArray,
+        "jzztlx": this.pd.jzztlx,
+        "ssfj": ssdw,
+        "csrqStart": this.pd.csrqStart,
+        "csrqEnd": this.pd.csrqEnd,
+        "tlyxqStart": this.pd.tlyxqStart,
+        "tlyxqEnd": this.pd.tlyxqEnd,
+        "sjxfStart": this.pd.sjxfStart,
+        "sjxfEnd": this.pd.sjxfEnd,
+      };
+      var url = this.Global.aport + "/ywczdt/getCZDJXXRYList";
+      this.$api.post(url, p,
+        r => {
+          if (r.success) {
+            console.log(r.data);
+            this.tableData = r.data.resultList;
+            this.TotalResult = r.data.totalResult;
+          }
+        });
+      this.bzhDialogVisible = true;
+    },
+    //后期匹配地址
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
+      };
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
+        r => {
+          callback && callback(r.data.result)
+        });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
+    },
   },
 
 }
 </script>
 
 <style scoped>
-.yy-input-text{text-align:left!important; width: 35%!important; padding-left: 10px;}
-.yy-input-input{width: 55%!important;}
-.fxleft{width: 600px!important;}
+.yy-input-text {
+  text-align: left !important;
+  width: 35% !important;
+  padding-left: 10px;
+}
+
+.arrow_line {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #06B4FB;
+}
+
+.yy-input-input {
+  width: 55% !important;
+}
+
+.fxleft {
+  width: 600px !important;
+}
 </style>
 <style>
+.lzxx .green {
+  background: url(../../../../assets/img/tb/location_green.png) no-repeat;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+}
 
-.lzxx    .lz {
-			background-color: rgba(0, 167, 91, 0.8);
-		}
+.lzxx .blue {
+  background: url(../../../../assets/img/tb/location_blue.png) no-repeat;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff;
+}
 
-.lzxx		.cz {
-		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-		}
-.bghome .el-dialog{ width: 70%!important;}
+.bghome .el-dialog {
+  width: 70% !important;
+}
 </style>

@@ -11,7 +11,7 @@
                   <template slot-scope="scope">
                     <div v-if="scope.row.zp">
                      <el-popover placement="right" title="" trigger="hover">
-                       <img :src="scope.row.zp"/>
+                       <img :src="scope.row.zp"  style="max-width:700px; max-height:700px;"/>
                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
                      </el-popover>
                     </div>
@@ -22,8 +22,8 @@
                   label="身份" v-if="czshow">
                 </el-table-column>
                 <el-table-column
-                  prop="dw"
-                  label="单位" v-if="czshow">
+                  prop="fwcs"
+                  label="服务处所" v-if="czshow">
                 </el-table-column>
                 <el-table-column
                   prop="ywxm"
@@ -40,6 +40,10 @@
                 <el-table-column
                   prop="csrq"
                   label="出生日期">
+                </el-table-column>
+                <el-table-column
+                  prop="djrq"
+                  label="登记日期">
                 </el-table-column>
                 <el-table-column
                   prop="gjdq"
@@ -115,8 +119,8 @@ export default {
         lrdw:'320115',
         lrdwmc:'秦淮区',//320113   320112江北
         rs:'11523',
-        type:'C',
-        yf:'Y',
+        type:'L',
+        yf:'M',
         sevalue:[],
         bzhid:'',
         czshow:false,
@@ -205,6 +209,7 @@ export default {
 
         if(currentPage==1){
           this.CurrentPage=1;
+          this.tableData=[];this.TotalResult=0;
         }
          this.bzhid=bzhid;
          this.mc=mc;
@@ -213,7 +218,7 @@ export default {
          let p={
            "currentPage":currentPage,
            "showCount":showCount,
-           "dzdtMc":this.bzhid,
+           "bzhdzMc":this.bzhid,
            "yf":this.yf,
            "lrdw":this.ssfj,
 
@@ -244,14 +249,15 @@ export default {
        window.open(routeData.href,'_blank')
       },
       //后期匹配地址
-      getXY(dz,callback){
 
-        let p={
-          "dz":dz,
+      getXY(data, callback) {
+        var url = this.Global.xyaddress + "?dz=" + data;
+        let p = {
+          "url": url,
         };
-        this.$api.get(this.Global.xyaddress, p,
+        this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
           r => {
-          callback(r.result)
+            callback && callback(r.data.result)
           });
       },
 

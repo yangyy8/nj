@@ -11,11 +11,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">国家地区：</span>
-         <span class="input-input detailinput">  {{crjinfo.GJHDQMC}}</span>
+         <span class="input-input detailinput">  {{crjinfo.GJDQ_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
          <span class="input-text">性别：</span>
-         <span class="input-input detailinput">  {{crjinfo.XBMC}}</span>
+         <span class="input-input detailinput">  {{crjinfo.XB_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生日期：</span>
@@ -27,7 +27,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">证件种类：</span>
-          <span class="input-input detailinput">  {{crjinfo.ZJZLMC}}</span>
+          <span class="input-input detailinput">  {{crjinfo.ZJZL_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">证件号码：</span>
@@ -47,7 +47,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出入口岸：</span>
-          <span class="input-input detailinput">  {{crjinfo.CRKAMC}}</span>
+          <span class="input-input detailinput">  {{crjinfo.IOPORT_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">检查员号：</span>
@@ -116,35 +116,26 @@
 <script>
 export default {
   name:'CRJXX',
-  props:['type','xid'],
+  props:['type','xid','random'],
   data(){
     return{
       crjinfo:{},
-      page:this.type,
-      id:this.xid,
       pp:{},
     }
   },
   mounted(){
       this.initData();
-      console.log('this.pp.RGUID',this.type);
    },
   watch:{
-      type: function(val){
-        this.page=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
-      },
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.initData()
     },
+  },
 
   methods:{
     initData(){
-      switch (this.page) {
+      switch (this.type) {
         case 1://预警
             this.getData1();
             break;
@@ -155,12 +146,12 @@ export default {
       }
     },
     getData1(){
-      var arr=this.id.split(',');
+      var arr=this.xid.split(',');
       if(arr.length>1){
          this.pp.CERTIFICATENO=arr[0];// 证件号码
          this.pp.NATIONALITY=arr[1];//国籍
       }else {
-        this.pp.RGUID=this.id;
+        this.pp.RGUID=this.xid;
       }
       let p = {
         "pd": this.pp
@@ -171,13 +162,12 @@ export default {
       })
     },
     getData2(){
-      this.pp.RGUID=this.id;
+      this.pp.RGUID=this.xid;
       let p = {
         "pd": this.pp
       };
        this.$api.post(this.Global.aport3+'/ryhx/getcrjjl', p,
         r => {
-
           if(r.data.resultList.length){
           this.crjinfo=r.data.resultList[0];
          }

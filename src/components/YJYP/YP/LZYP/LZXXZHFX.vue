@@ -33,13 +33,13 @@
                       <div class="yy-input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginCSRQ" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                         <span class="septum">-</span>
                         <el-date-picker
                             v-model="pd0.endCSRQ" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                      </div>
@@ -108,13 +108,13 @@
                       <div class="yy-input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginTLYXQZ" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                         <span class="septum">-</span>
                         <el-date-picker
                             v-model="pd0.endTLYXQZ" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                      </div>
@@ -146,13 +146,13 @@
                       <div class="yy-input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginZSRQ" format="yyyy-MM-dd"
-                           type="date" size="small" value-format="yyyyMMdd"
+                           type="date" size="small" value-format="yyyy/MM/dd"
                            placeholder="开始时间" >
                         </el-date-picker>
                         <span class="septum">-</span>
                         <el-date-picker
                             v-model="pd0.endZSRQ" format="yyyy-MM-dd"
-                            type="date" size="small" value-format="yyyyMMdd"
+                            type="date" size="small" value-format="yyyy/MM/dd"
                             placeholder="结束时间" >
                         </el-date-picker>
                      </div>
@@ -324,7 +324,7 @@
         </div>
      <div class="bj">
         <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-            <LZXX :type="type" :xid="xid"></LZXX>
+            <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -340,15 +340,18 @@ import LZXX from '../../../common/lzxx_xq'
         components:{LZXX},
       data() {
         return {
+          rybh:'',
           radio1:'0',
           radio2:'0',
           typet:'1',
           CurrentPage: 1,
           pageSize: 10,
           TotalResult: 0,
-          pd: {CSRQ_DateRange:{},
-              TLYXQZ_DateRange:{},
-              ZSRQ_DateRange:{},},
+          pd: {
+              CSRQ_DateRange:{dataType:'date'},
+              TLYXQZ_DateRange:{dataType:'date'},
+              ZSRQ_DateRange:{dataType:'date'},
+            },
           pm:{},
           imagess:[],
           imgshow1:false,
@@ -409,37 +412,37 @@ import LZXX from '../../../common/lzxx_xq'
         },
         getList(currentPage, showCount, pd) {
 
-       if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
+           if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
 
-         this.falg=false;
-         this.disa=true;
-       }else {
-         this.disa=false;
-       }
+             this.falg=false;
+             this.disa=true;
+           }else {
+             this.disa=false;
+           }
 
-        if(this.pd0.beginCSRQ!=undefined && this.pd0.endCSRQ!=undefined){
+        // if(this.pd0.beginCSRQ!=undefined && this.pd0.endCSRQ!=undefined){
 
           this.pd.CSRQ_DateRange.begin=this.pd0.beginCSRQ;
           this.pd.CSRQ_DateRange.end=this.pd0.endCSRQ;
 
-        }else if(this.pd0.beginCSRQ==undefined && this.pd0.endCSRQ==undefined){
+        // }else if(this.pd0.beginCSRQ==undefined && this.pd0.endCSRQ==undefined){
 
-        }else{
-            this.open("出生日期开始时间和结束时间都不能为空！");return ;
-        }
-        if(this.pd0.beginTLYXQZ!=undefined && this.pd0.endTLYXQZ!=undefined){
+        // }else{
+            // this.open("出生日期开始时间和结束时间都不能为空！");return ;
+        // }
+        // if(this.pd0.beginTLYXQZ!=undefined && this.pd0.endTLYXQZ!=undefined){
           this.pd.TLYXQZ_DateRange.begin=this.pd0.beginTLYXQZ;
           this.pd.TLYXQZ_DateRange.end=this.pd0.endTLYXQZ;
-        }else if(this.pd0.beginTLYXQZ==undefined && this.pd0.endTLYXQZ==undefined){}
-        else {
-            this.open("停留有效期开始时间和结束时间都不能为空！");return ;
-        }
-        if(this.pd0.beginZSRQ!=undefined && this.pd0.endZSRQ!=undefined){
+        // }else if(this.pd0.beginTLYXQZ==undefined && this.pd0.endTLYXQZ==undefined){}
+        // else {
+            // this.open("停留有效期开始时间和结束时间都不能为空！");return ;
+        // }
+        // if(this.pd0.beginZSRQ!=undefined && this.pd0.endZSRQ!=undefined){
           this.pd.ZSRQ_DateRange.begin=this.pd0.beginZSRQ;
           this.pd.ZSRQ_DateRange.end=this.pd0.endZSRQ;
-        }else if(this.pd0.beginZSRQ==undefined && this.pd0.endZSRQ==undefined){}else {
-            this.open("入住日期开始时间和结束时间都不能为空！");return ;
-        }
+        // }else if(this.pd0.beginZSRQ==undefined && this.pd0.endZSRQ==undefined){}else {
+            // this.open("入住日期开始时间和结束时间都不能为空！");return ;
+        // }
             var list=[];
             if(this.pm.GJDQ==true){
               list.push("GJDQ");
@@ -618,6 +621,7 @@ import LZXX from '../../../common/lzxx_xq'
           //   this.lg=false;
           // }
           this.xid=i.DTID;
+          this.rybh=i.RYBH;
           this.detailsDialogVisible = true;
           // this.form=i;
         },

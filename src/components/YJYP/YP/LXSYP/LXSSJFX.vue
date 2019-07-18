@@ -13,8 +13,15 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color=red>*</font>所属分局：</span>
-                      <el-select v-model="pd.ssfj" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
+                <span style="font-size:12px; color:red">  注：服务处所、所属分局条件二选一</span>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font> 服务处所：</span>
+                       <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
+                  </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text"><font color=red>*</font> 所属分局：</span>
+                      <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind1) in ssfj"
                           :key="ind1"
@@ -23,10 +30,18 @@
                         </el-option>
                       </el-select>
                   </el-col>
-                <el-col :span="24">
-                    <span class="yy-input-text">服务处所：</span>
-                     <el-input placeholder="请输入内容" size="small" v-model="pd.fwcs" class="yy-input-input"></el-input>
-                </el-col>
+                  <el-col :span="24">
+                      <span class="yy-input-text">派出所：</span>
+                        <el-select v-model="pd.sspcs" filterable clearable default-first-option placeholder="请输入关键字"  size="small" class="yy-input-input">
+                       <el-option
+                         v-for="(item,ind1) in sspcs"
+                         :key="ind1"
+                         :label="item.mc"
+                         :value="item.dm">
+                       </el-option>
+                     </el-select>
+                  </el-col>
+
                   <el-col :span="24">
                       <span class="yy-input-text">国家地区：</span>
                       <el-select v-model="pd.gjdq" filterable clearable default-first-option placeholder="请选择"  size="small" class="yy-input-input">
@@ -138,9 +153,10 @@
                    label="身份">
                  </el-table-column>
                  <el-table-column
-                   prop="djdw"
-                   label="单位">
+                   prop="fwcs"
+                   label="服务处所">
                  </el-table-column>
+
                  <el-table-column
                    prop="zwxm"
                    label="中文姓名">
@@ -154,6 +170,10 @@
                    label="出生日期">
                  </el-table-column>
                  <el-table-column
+                   prop="djrq"
+                   label="登记日期">
+                 </el-table-column>
+                 <el-table-column
                    prop="gjdq"
                    label="国家地区">
                  </el-table-column>
@@ -165,7 +185,7 @@
                    prop="zjhm"
                    label="证件号码">
                    <template slot-scope="scope">
-                    <span style="color:yellow;cursor:pointer" @click="$router.push({name:'RYHX_NX',query:{zjhm:scope.row.zjhm}})">{{scope.row.zjhm}}</span>
+                    <span style="color:yellow;cursor:pointer" @click="gotos(scope.row.zjhm)">{{scope.row.zjhm}}</span>
                    </template>
                  </el-table-column>
              </el-table>
@@ -201,6 +221,7 @@
 import {createMapL,getSearch} from '@/assets/js/SuperMap/lxssmmap.js'
 let lxsvm;
 export default {
+  inject:['reload'],
   data(){
     return{
       CurrentPage: 1,
@@ -216,10 +237,13 @@ export default {
        tableData:[],
        diatext:'标准化地址',
        bzhid:[],
+       sspcs:[],
        mc:'',
        lrdw:'',
        num:0,
        result:[],
+       centers:[],
+       ssfjsub:'',
 
     }
   },
@@ -228,7 +252,6 @@ export default {
     this.$store.dispatch('getRjqzzl');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getGjdq');
-
     // this.$store.dispatch('getRzfs');
     this.$store.dispatch('getZflx');
     this.$store.dispatch('getJzztlx');
@@ -244,20 +267,24 @@ export default {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+
         this.getRyxx(val,this.pageSize,this.bzhid,this.mc);
       console.log(`当前页: ${val}`);
     },
     changtab(){
       this.show=!this.show;
     },
+    doset1(){
+        this.reload();
+    },
     doset(){
+
        this.$set(this.pd,"gjdq",'');
-       // this.$set(this.pd,"rzfs",'');
-       this.$set(this.pd,"fwcs",'');
+        this.$set(this.pd,"fwcs",'');
         this.$set(this.pd,"zjzl",'');
         this.$set(this.pd,"qzzl",'');
         this.$set(this.pd,"zflx",'');
-        // this.$set(this.pd,"rjsy",'');
+        this.$set(this.pd,"sspcs",'');
         this.$set(this.pd,"jzztlx",'');
         this.$set(this.pd,"ssfj",'');
     },
@@ -279,18 +306,74 @@ export default {
         this.ssfj=r.data.SSFJ;
       })
     },
+    getSSPCS(arr) {
+      this.$set(this.pd, "sspcs", '');
+      var srr = [];
+      srr.push(arr);
+
+      let p = {
+        "fjdmList": srr
+      }
+      this.$api.post(this.Global.aport2 + '/data_report/selectPcsDm', p,
+        r => {
+          if (r.success) {
+            this.sspcs = r.data.PCS;
+          }
+        })
+    },
     doSearch() {
 
-      if(this.pd.ssfj==undefined || this.pd.ssfj=="")
-      {
-         this.$message.error("请选择所属分局！");return;
+      this.ssfjsub='';
+      if ((this.pd.ssfj == undefined || this.pd.ssfj == "") && (this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")) {
+          this.$message.error("请选择所属分局或者服务处所! ");
+        return;
+      } else {
+        if(this.pd.ssfj != undefined && this.pd.ssfj != ""){
+        var ssj = this.pd.ssfj.substr(0, 6);
+        this.ssfjsub=ssj;
+        switch (ssj) {
+          case '320116': //六合区
+            this.centers = [32.39215480155289, 118.81641980133281];
+            break;
+          case '320112': //江北新区
+            this.centers = [32.03613281, 118.78211975];
+            break;
+          case '320113': //栖霞区
+            this.centers = [32.137307901838255, 118.9995913711449];
+            break;
+          case '320102': //玄武区
+            this.centers = [32.062475576087024, 118.8436456413333];
+            break;
+          case '320106': //鼓楼区
+            this.centers = [32.08265178165445, 118.75812113098544];
+            break;
+          case '320111': //浦口区
+            this.centers = [31.943626916199264, 118.35524238617728];
+            break;
+          case '320104': //秦淮区
+            this.centers = [32.01143013679143, 118.81736758064937];
+            break;
+          case '320105': //建邺区
+            this.centers = [32.0275950355325, 118.70538415685343];
+            break;
+          case '320114': //雨花台区
+            this.centers = [31.94205101079558, 118.69497417187063];
+            break;
+          case '320115': //江宁区
+            this.centers = [31.865733721334237, 118.79198266097109];
+            break;
+          case '320124 ': //溧水区
+            this.centers = [31.726803147547287, 119.1224894259463];
+            break;
+          case '320125 ': //高淳区
+            this.centers = [31.3703836314495, 119.19202124153713];
+            break;
+          default:
+}
+        }
       }
-      // if(this.pd.fwcs==undefined || this.pd.fwcs.trim()=="")
-      // {
-      //    this.$message.error("请输入服务处所！");return;
-      // }
-
-      getSearch();
+      this.show=false;
+      getSearch(this.centers);
   	},
     //获取派出所   不用
     getPCS(callback){
@@ -299,8 +382,10 @@ export default {
           "gjdq":this.pd.gjdq,
           "rzfs":this.pd.rzfs,
           "zjzl":this.pd.zjzl,
-          "ssfj":this.pd.ssfj,
+          "ssfj":this.ssfjsub,
           "fwcs":this.pd.fwcs,
+          "jzzt":this.pd.jzztlx,
+          "pcs":this.sspcs
         };
         var url=this.Global.aport+"/ywczdt/getCZDJXXPCSList";
         this.$api.post(url, p,
@@ -319,6 +404,15 @@ export default {
     },
     //地址
     getBZHDZ(callback){
+
+      if(this.pd.sspcs!="" && this.pd.sspcs!=undefined){
+        this.ssfjsub=this.pd.sspcs;
+      }else {
+        if(this.pd.ssfj!=undefined && this.pd.ssfj!=""){
+        this.ssfjsub=this.pd.ssfj.substr(0,6);
+      }
+      }
+      console.log(this.ssfjsub);
       var searchResult = [];
         let p={
           "gjdq":this.pd.gjdq,
@@ -326,8 +420,9 @@ export default {
           "zjzl":this.pd.zjzl,
           "qzzl":this.pd.qzzl,
           "zflx":this.pd.zflx,
-          "jzzt":this.pd.jzztlx,
-          "ssfj":this.pd.ssfj.substr(0,6),
+          "jzztlx":this.pd.jzztlx,
+          "ssfj":this.ssfjsub,
+
 
         };
         var url=this.Global.aport+"/ywlz/getLxsSjshmByBzhdzList";
@@ -338,25 +433,31 @@ export default {
               for (var i = 0; i < arr.length; i++) {
               searchResult.push(arr[i]);
               }
-              callback && callback(searchResult,this.pd.ssfj.substr(0,6))
+              if(searchResult.length==0){
+                this.$message.error("没有查询到数据信息! ");return ;
+              }
+              callback && callback(searchResult,this.ssfjsub)
             }
           });
 
-          callback(searchResult,this.pd.ssfj.substr(0,6))
+          callback(searchResult,this.ssfjsub)
     },
     //人员信息
     getRyxx(currentPage,showCount,dtids,mc)
     {
+
       this.mc=mc;
       this.diatext=this.mc;
       this.bzhid=dtids;
+
       var chunk=5;
       if(currentPage==1){
+        this.tableData=[];
+        this.TotalResult=0;
         this.CurrentPage=1;
-
-
-      var ttbal=JSON.parse(dtids);
+      var ttbal=dtids;
       var rr=[];
+            console.log(ttbal.length);
       for (var i = 0,j = ttbal.length;i<j;i+=chunk) {
          rr.push(ttbal.slice(i,i+chunk));
       }
@@ -364,7 +465,7 @@ export default {
      }
        this.num=currentPage-1;
 
-       this.TotalResult=JSON.parse(dtids).length;
+       this.TotalResult=dtids.length;
       for (var k = this.num; k < this.num+1; k++) {
        // console.log(JSON.stringify(this.result[k]));
        let p={
@@ -384,15 +485,19 @@ export default {
        this.bzhDialogVisible=true;
     },
     //后期匹配地址
-    getXY(dz,callback){
-
-      let p={
-        "dz":dz,
+    getXY(data, callback) {
+      var url = this.Global.xyaddress + "?dz=" + data;
+      let p = {
+        "url": url,
       };
-      this.$api.get(this.Global.xyaddress, p,
+      this.$api.post(this.Global.aport + "/zxdt/getCtUrl", p,
         r => {
-        callback(r.result)
+          callback && callback(r.data.result)
         });
+    },
+    gotos(zjhms){
+     let routeData=this.$router.resolve({path:'/Home/RYHX_NX',query:{zjhm:zjhms}});
+     window.open(routeData.href,'_blank')
     },
   },
 }
@@ -402,19 +507,19 @@ export default {
 </style>
 <style>
 .lzxx  .my-div-icon {
-        background-color: rgba(0, 167, 91, 0.8);
+
         border-radius: 50%;
         line-height:20px;
         text-align: center;
         vertical-align: middle;
     }
 
-.lzxx    .lz {
+.lzxx    .lzg {
   background:url(../../../../assets/img/tb/location_green.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
   }
 
-.lzxx		.cz {
+/* .lzxx		.cz {
 		background:url(../../../../assets/img/tb/location_blue.png) no-repeat;font-size:12px; font-weight: bold;color: #ffffff;
-		}
+		} */
 .bghome .el-dialog{ width: 70%!important;}
 </style>

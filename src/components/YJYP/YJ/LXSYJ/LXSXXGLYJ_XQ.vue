@@ -306,24 +306,28 @@
               style="width: 100%" class="stu-table">
               <el-table-column
                 prop="TBRYZL"
-                label="通报人员类别">
+                label="通报人员类别"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="TBBH"
-                label="通报编号">
+                label="通报编号"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="FBSJ"
-                label="发布时间">
+                label="发布时间"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 prop="BZ"
-                label="备注">
+                label="备注"
+                :key="Math.random()">
               </el-table-column>
               <el-table-column
                 label="操作" width="120">
                 <template slot-scope="scope">
-                <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailstbry(scope.row)"></el-button>
+                  <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailstbry(scope.row)"></el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -674,13 +678,13 @@
        </div>
    </el-dialog>
    <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <LZXX :type="type" :xid="xid"></LZXX>
+     <LZXX :type="type" :xid="xid" :rybh="rybh" :random="(new Date()).getTime()"></LZXX>
      <div slot="footer" class="dialog-footer">
        <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
      </div>
    </el-dialog>
    <el-dialog title="通报人员详情" :visible.sync="tbryDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <TBRY :type="type" :xid="xid"></TBRY>
+     <TBRY :type="type" :xid="xid" :rybh="rybh" :random="(new Date()).getTime()"></TBRY>
      <div slot="footer" class="dialog-footer">
        <el-button @click="tbryDialogVisible = false" size="small">取 消</el-button>
      </div>
@@ -699,10 +703,10 @@
    </el-dialog>
    <!-- 出入境信息 -->
   <el-dialog title="出入境信息详情" :visible.sync="crjDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-              <CRJXX :type="type" :xid="xid"></CRJXX>
-               <div slot="footer" class="dialog-footer">
-                 <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
-               </div>
+        <CRJXX :type="type" :xid="xid" :random="(new Date()).getTime()"></CRJXX>
+         <div slot="footer" class="dialog-footer">
+           <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
+         </div>
   </el-dialog>
   </div>
 <!-- 非法居留 -->
@@ -975,6 +979,7 @@ export default {
   components:{LZXX,TBRY,ANSJ,CRJXX,JZSJ,QZ},
   data() {
     return {
+      rybh:'',
       CurrentPage: 1,
       pageSize: 3,
       TotalResult: 0,
@@ -1036,6 +1041,8 @@ export default {
       pm:{},
       pcl:{},
       pc:{},
+      pxcrj:{},
+      pxlz:{},
       crjinfo:{},
       jzinfo:{},
       jlinfo:{},
@@ -1078,75 +1085,83 @@ export default {
     this.row=this.$route.query.row;
     this.pc={};
     this.qdshow=true;
+    console.log(this.row.RYBH);
     if(this.row!=undefined && this.row.CLZT=='0'){
       this.qdshow=false;
      }
-    this.pd.YJID=this.row.YJID;
-    this.px.RYBH=this.row.RYBH;
-    this.xid=this.row.RYBH;
-    this.getBase();
-    this.crjshow=false;
-    this.lzshow=false;
-    this.tbshow=false;
-    this.skshow=false;
-    this.bkshow=false;
-    this.zjshow=false;
-    this.qzshow=false;
-    this.nmshow=false;
-    if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
-       this.crjshow=true;
-       this.getCrjxx(this.CurrentPage1,this.pageSize1);
-    }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
-    {
-      this.crjshow=true;
-      this.lzshow=true;
-      this.zjshow=true;
-      this.qzshow=true;
-      this.getZJXX(this.CurrentPage4,this.pageSize4);
-      this.getQZXX(this.CurrentPage5,this.pageSize5);
-      this.getLzxx(this.CurrentPage,this.pageSize);
-      this.getCrjxx(this.CurrentPage1,this.pageSize1);
-    }
-    else {
-      this.lzshow=true;
-      this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
-      this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
-      this.pm.XB=this.row.XB;
-      this.pm.CSRQ=this.row.CSRQ;
-      if(this.row.MXLX=="LZ_HC"){   //临住核查预警
-        this.tbshow=true;
-        this.skshow=true;
-        this.nmshow=true;
-        this.pp={};
-        this.getTBRY(this.pm);
-        this.pp.RYBH=this.row.RYBH;
-        this.getFFJY(this.CurrentPage2,this.pageSize2,this.pp);
-        this.getJZ(this.CurrentPage3,this.pageSize3,this.pp);
-        this.getNMXX(this.CurrentPage6,this.pageSize6);
-      }else if(this.row.MXLX=="BKYJ")  //布控预警
-      { this.crjshow=true;
-        this.tbshow=true;
-        this.getTBRY(this.pm);
-        this.getCrjxx(this.CurrentPage1,this.pageSize1);
-      }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
-        this.zjshow=true;
-        this.qzshow=true;
-        this.tbshow=true;
-        this.getZJXX(this.CurrentPage4,this.pageSize4);
-        this.getQZXX(this.CurrentPage5,this.pageSize5);
-        this.getTBRY(this.pm);
-      }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
-        this.crjshow=true;
-        this.getCrjxx(this.CurrentPage1,this.pageSize1);
-      }
-      else if(this.row.MXLX=="LXS_ZSYJ") { //教育厅
-        this.bkshow=true;
+     if(this.row.RYBH!=undefined){
+        this.pd.YJID=this.row.YJID;
+        this.px.RYBH=this.row.RYBH;
+        this.xid=this.row.RYBH;
+        this.getBase();
+        this.crjshow=false;
         this.lzshow=false;
-        this.getData0(this.asjCurrentPage,this.asjpageSize);
-        this.getData1(this.sjCurrentPage,this.sjpageSize);
-      }
-      this.getLzxx(this.CurrentPage,this.pageSize);
-     }
+        this.tbshow=false;
+        this.skshow=false;
+        this.bkshow=false;
+        this.zjshow=false;
+        this.qzshow=false;
+        this.nmshow=false;
+        if(this.row.MXLX=="LXS_CRJTX"){ //出入境提醒
+           this.crjshow=true;
+           this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        }else if(this.row.MXLX=="LXS_WBDYJ")//留学生未报到
+        {
+          this.crjshow=true;
+          this.lzshow=true;
+          this.zjshow=true;
+          this.qzshow=true;
+          this.getZJXX(this.CurrentPage4,this.pageSize4);
+          this.getQZXX(this.CurrentPage5,this.pageSize5);
+          this.getLzxx(this.CurrentPage,this.pageSize);
+          this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        }
+        else {
+          this.lzshow=true;
+          this.pm.YWX=this.row.YWX==null?"":this.row.YWX;
+          this.pm.YWM=this.row.YWM==null?"":this.row.YWM;
+          this.pm.XB=this.row.XB;
+          this.pm.CSRQ=this.row.CSRQ;
+          this.pm.ZJHM=this.row.ZJHM;
+          if(this.row.MXLX=="LZ_HC"){   //临住核查预警
+            this.tbshow=true;
+            this.skshow=true;
+            this.nmshow=true;
+            this.pp={};
+            this.getTBRY(this.pm);
+            this.pp.RYBH=this.row.RYBH;
+            this.getFFJY(this.CurrentPage2,this.pageSize2,this.pp);
+            this.getJZ(this.CurrentPage3,this.pageSize3,this.pp);
+            this.getNMXX(this.CurrentPage6,this.pageSize6);
+          }else if(this.row.MXLX=="BKYJ")  //布控预警
+          { this.crjshow=true;
+            this.tbshow=true;
+            this.pxcrj.CERTIFICATENO=this.row.ZJHM;
+            this.pxcrj.NATIONALITY=this.row.GJ;
+            this.pxlz.ZJHM=this.row.ZJHM;
+            this.pxlz.GJDQ=this.row.GJ;
+            this.getTBRY(this.pm);
+            this.getCrjxx(this.CurrentPage1,this.pageSize1);
+          }else if(this.row.MXLX=="QZ_HCYJ"){//受理、签发信息核查预警
+            this.zjshow=true;
+            this.qzshow=true;
+            this.tbshow=true;
+            this.getZJXX(this.CurrentPage4,this.pageSize4);
+            this.getQZXX(this.CurrentPage5,this.pageSize5);
+            this.getTBRY(this.pm);
+          }else if(this.row.MXLX=="ASJ_SKGJRY") { //涉恐国家人员预警
+            this.crjshow=true;
+            this.getCrjxx(this.CurrentPage1,this.pageSize1);
+          }
+          else if(this.row.MXLX=="LXS_ZSYJ") { //教育厅
+            this.bkshow=true;
+            this.lzshow=false;
+            this.getData0(this.asjCurrentPage,this.asjpageSize);
+            this.getData1(this.sjCurrentPage,this.sjpageSize);
+          }
+          this.getLzxx(this.CurrentPage,this.pageSize);
+         }
+   }
   },
   mounted() {
 
@@ -1320,10 +1335,19 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        // "pdNotIn":this.pd,
         "orderBy":{value:"ZSRQ",dataType:"date"},
         "orderType":"DESC"
       };
+      if(this.row.MXLX=="BKYJ"){
+            console.log(this.pxcrj);
+        p = {
+          "currentPage": currentPage,
+          "showCount": showCount,
+          "pd": this.pxlz,
+          "orderBy":{value:"ZSRQ",dataType:"date"},
+          "orderType":"DESC"
+        };
+      }
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', p,
         r => {
           this.tableData1 = r.data.resultList;
@@ -1332,6 +1356,7 @@ export default {
     },
     //出入境信息
     getCrjxx(currentPage,showCount) {
+
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -1339,6 +1364,17 @@ export default {
         "orderBy":{value:"IOSTRING",dataType:"date"},
         "orderType":"DESC"
       };
+      if(this.row.MXLX=="BKYJ"){
+        console.log(this.pxcrj);
+        p = {
+          "currentPage": currentPage,
+          "showCount": showCount,
+          "pd": this.pxcrj,
+          "orderBy":{value:"IOSTRING",dataType:"date"},
+          "orderType":"DESC"
+        };
+      }
+
       this.$api.post(this.Global.aport4+'/eS_CRJJLBController/getResultListByParams', p,
         r => {
           this.tableData2 = r.data.resultList;
@@ -1397,28 +1433,20 @@ export default {
         })
     },
     detailslzxx(n){
-      if(this.row.MXLX=="BKYJ"){
-          this.xid=n.ZJHM+","+n.GJDQ;
-      }else{
-          this.xid=n.DTID;
-      }
-
-
+        this.xid=n.DTID;
+        this.rybh=n.RYBH;
         this.type=0;
-        console.log('this.xid',n.DTID);
         this.lzxxDialogVisible=true;
     },
     detailscrj(n){
-        if(this.row.MXLX=="BKYJ"){
-          this.xid=n.ZJHM+","+n.GJDQ
-        }else {
-          this.xid=n.RGUID;
-        }
-
+     this.xid=n.RGUID;
+     this.type=1;
      this.crjDialogVisible=true;
     },
     detailstbry(n){
-      this.xid=n.RGUID+n.ZJHM;
+      this.xid=n.RGUID;
+      this.rybh=n.RYBH;
+      this.type=1;
       this.tbryDialogVisible=true;
     },
     detailsjz(n){
@@ -1437,11 +1465,13 @@ export default {
     detailsasj(n){
        this.xid=n.RGUID;
        this.dtid=n.DTID;
-      this.asjDialogVisible=true;
+       this.type=1;
+       this.asjDialogVisible=true;
     },
     detailssj(n){
       this.xid=n.RGUID;
-     this.sjDialogVisible=true;
+      this.type=1;
+      this.sjDialogVisible=true;
    },
    getMX(mm){
 
