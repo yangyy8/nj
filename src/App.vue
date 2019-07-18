@@ -14,4 +14,5 @@ export default {
 @import "assets/css/common.css";
 @import "assets/css/commony.css";
 @import "assets/css/commont.css";
+@import "assets/css/commonhy.css";
 </style>
