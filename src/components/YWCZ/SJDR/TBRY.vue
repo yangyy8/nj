@@ -1,6 +1,6 @@
 <template lang="html">
     <!-- 247数据导入(通报人员) -->
-  <div class="yymain">
+  <div class="yymain tbry">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
@@ -455,7 +455,7 @@ export default {
 </script>
 
 <style>
-.yymain .el-dialog{
+.tbry .el-dialog{
   width: 65%!important;
 }
 </style>
