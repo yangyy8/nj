@@ -17,7 +17,7 @@
 
   </el-card>
     <div class="main">
-       <el-row v-for="item in items">
+       <el-row v-for="(item,index) in items" :key="index">
          <el-col :span="2" style="padding:10px;width:120px;">
            <img :src="item.photo" width="100" height="120">
          </el-col>
