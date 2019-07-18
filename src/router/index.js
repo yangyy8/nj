@@ -657,7 +657,13 @@ export default new Router({
           meta:{title:['数据分析','图帧人像','图帧身份','境外人员轨迹']},
           component: resolve => require(['@/components/XTGL/RZCK/JWRYGJ'], resolve),
         },
-
+        /* shy添加 */
+        {
+        path: 'FLGZGL',
+        name: 'FLGZGL',
+        meta:{title:['系统管理','系统设置','分类规则管理']},
+        component: resolve => require(['@/components/XTGL/XTSZ/FLGZGL'], resolve),
+        }, 
       ]
     },
 
