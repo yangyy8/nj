@@ -36,7 +36,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="page=0;getListTu(pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getListTu(pd)">查询</el-button>
         </el-col>
       </el-row>
     </div>

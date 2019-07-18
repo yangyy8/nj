@@ -180,7 +180,7 @@
          label="案事件编号">
          </el-table-column>
          <el-table-column
-         prop="AJLB"
+         prop="AJLB_DESC"
          label="案件类别">
          </el-table-column>
          <el-table-column
