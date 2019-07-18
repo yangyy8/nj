@@ -70,8 +70,8 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="4" style="margin-left:20px;">
-      <el-carousel height="160px" class="photoCar">
+    <el-col :span="4" style="margin-left:20px;" >
+      <el-carousel height="160px" class="photoCar"  indicator-position="outside">
         <el-carousel-item v-for="(item,ind) in imagess" :key="ind" v-if="imgshow1" style="text-align:center">
           <img :src="item" @click="opentp(item)">
         </el-carousel-item>
@@ -212,7 +212,7 @@
     <div style="text-align:right;">
       <el-button size="small" type="primary" @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
     </div>
-    <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+    <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" style="max-width:400px;max-height:400px;" v-drag>
   </el-dialog>
   <el-dialog title="上传文件" :visible.sync="fileDialogVisible" :append-to-body="true">
     <el-row type="flex">
@@ -282,14 +282,19 @@ export default {
     }
   },
   mounted() {
+    this.tableData1=[];
+    this.tableData2=[];
+    this.tableData3=[];
+    this.tableData4=[];
+    this.imagess=[];
     this.$store.dispatch("getZjzl");
     this.$store.dispatch("getXB");
     this.$store.dispatch("getTbry");
     this.actions = window.IPConfig.IP + this.Global.aport3;
     this.getData0(this.id);
+
   },
   watch: {
-
     random:{
      handler(newVal, oldVa){
      this.page=newVal;
@@ -683,5 +688,16 @@ export default {
 .bj .el-dialog__wrapper {
   background: #000;
   background: rgba(0, 0, 0, 0.3);
+}
+.crcolor .el-carousel__indicators--outside button {
+    background-color: blue !important;
+    opacity: .24;
+}
+.crcolor .el-carousel__button{
+  height: 5px!important;
+  border-radius: 50%;
+}
+.crcolor .el-carousel__indicators{
+  line-height: 8px!important;
 }
 </style>
