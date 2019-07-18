@@ -27,7 +27,7 @@
                     <el-option label="有效" value="1"></el-option>
                     <el-option label="无效" value="0"></el-option>
                   </el-select>
-                </el-col> 
+                </el-col>
           </el-row>
         </el-col>
         <el-col :span="2" class="down-btn-area">
@@ -73,11 +73,11 @@
            <el-table-column
              prop="CREATE_TIME"
              label="创建时间">
-           </el-table-column>          
+           </el-table-column>
            <el-table-column
              label="操作" width="">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>             
+             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row)"></el-button>
              <el-button type="text" class="a-btn"  title="设置" @click="reset(scope.row)">{{scope.row.SFYX=='1'?'设为无效':'设为有效'}}</el-button>
              </template>
@@ -191,7 +191,7 @@ export default {
       mapf:{},
       form:{},
       detailsDialogVisible:false,
-      addsDialogVisible:false, 
+      addsDialogVisible:false,
     }
   },
   mounted() {
@@ -202,7 +202,7 @@ export default {
       this.$api.post(this.Global.aport4+'/warningSortRuleController/selectMXLXList',{},
         r =>{
           if(r.success){
-            this.mxlx=r.data.resultList;   
+            this.mxlx=r.data.resultList;
           }
         })
     },
@@ -225,7 +225,7 @@ export default {
       this.$api.post(this.Global.aport4+'/warningSortRuleController/getResultListByParams', p,
         r => {
           this.tableData = r.data.resultList;
-          this.TotalResult = r.data.totalResult; 
+          this.TotalResult = r.data.totalResult;
         })
     },
      details(i) {
@@ -241,7 +241,7 @@ export default {
         } else {
         this.dialogText="新增";
         this.tp = 0;
-        } 
+        }
         /* this.V.$reset("demo"); */
      },
     mxtypechange(){
@@ -252,12 +252,12 @@ export default {
             _this.form.MXLX_NAME=list[i].MXLX_NAME;
         }
       }
-    }, 
+    },
    /*  提交修改 */
     addItem(addForm){
        this.V.$submit('demo', (canSumit,data) =>{
-         if(!canSumit) return;      
-         this.$api.post(this.Global.aport4+'/warningSortRuleController/saveOrUpdate', this.form,  
+         if(!canSumit) return;
+         this.$api.post(this.Global.aport4+'/warningSortRuleController/saveOrUpdate', this.form,
          r => {
                if(r.success){
                  this.$message({
@@ -274,7 +274,7 @@ export default {
            }
          );
       });
-    }, 
+    },
     reset(pd){
       let p={"pd":pd}
       this.$api.post(this.Global.aport4+'/warningSortRuleController/updateSFYXByID',p,

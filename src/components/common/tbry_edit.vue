@@ -342,6 +342,7 @@ export default {
         })
     },
     //上传文件
+
     anadd(){
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
