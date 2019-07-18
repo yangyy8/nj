@@ -62,7 +62,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
              <span class="input-text">性别：</span>
-             <span class="input-input">{{czinfo.XB}}</span>
+             <span class="input-input">{{czinfo.XB_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生日期：</span>
@@ -70,15 +70,15 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">出生地：</span>
-              <span class="input-input">{{czinfo.CSD}}</span>
+              <span class="input-input">{{czinfo.CSD_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">国家地区：</span>
-              <span class="input-input">{{czinfo.GJDQ}}</span>
+              <span class="input-input">{{czinfo.GJDQ_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">身份：</span>
-              <span class="input-input">{{czinfo.SFDM}}</span>
+              <span class="input-input">{{czinfo.SFDM_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件号码：</span>
@@ -86,7 +86,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件种类：</span>
-              <span class="input-input">{{czinfo.ZJZL}}</span>
+              <span class="input-input">{{czinfo.ZJZL_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text">证件有效期：</span>
@@ -103,7 +103,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">签证种类：</span>
-          <span class="input-input detailinput">  {{czinfo.QZZL}}</span>
+          <span class="input-input detailinput">  {{czinfo.QZZL_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">签证号码：</span>
@@ -151,7 +151,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">数据来源：</span>
-            <span class="input-input detailinput">  {{czinfo.SJLY}}</span>
+            <span class="input-input detailinput">  {{czinfo.SJLY_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">有效次数：</span>
@@ -159,7 +159,7 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">所属派出所：</span>
-            <span class="input-input detailinput">  {{czinfo.SSPCS}}</span>
+            <span class="input-input detailinput">  {{czinfo.SSPCS_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">所属责任区：</span>
@@ -255,20 +255,26 @@
           border
           style="width: 100%">
           <el-table-column
-            prop="JZD_PCS"
+            prop="JZD_PCSMC"
             label="居住地所属派出所">
           </el-table-column>
           <el-table-column
-            prop="ZT_JZZT"
-            label="居住状态类型">
+            prop="XXDZ"
+            label="详细地址">
           </el-table-column>
           <el-table-column
-            prop="JZD_DZTXT"
-            label="标准化地址">
+            prop="ZT_JZZT_DESC"
+            label="居住状态名称">
           </el-table-column>
           <el-table-column
             prop="RQ_RZRQ"
             label="入住日期">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'jz')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -302,167 +308,172 @@
           </el-pagination>
         </div>
       <div v-if="jzshow" class="mt-10">
-      <el-row :gutter="3"  class="mb-6">
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="居住地行政区划">居住地行政区划：</span>
-          <span class="input-input detailinput">  {{jzinfo.JZD_XZQH}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="居住地所属派出所">居住地所属派出所：</span>
-          <span class="input-input detailinput">  {{jzinfo.JZD_PCS}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">派出所中文名称：</span>
-          <span class="input-input detailinput"> {{jzinfo.JZD_PCSMC}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">详细地址：</span>
-          <span class="input-input detailinput">  {{jzinfo.XXDZ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">房主姓名：</span>
-          <span class="input-input detailinput">  {{jzinfo.FZXM}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">房主性别：</span>
-          <span class="input-input detailinput">  {{jzinfo.FZXB}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">房主证件号码：</span>
-          <span class="input-input detailinput">  {{jzinfo.FZZJHM}}</span>
-        </el-col>
+        <hr/>
+        <el-row :gutter="3"  class="mb-6">
           <el-col :span="8" class="input-item">
-            <span class="input-text">房主工作单位：</span>
-            <span class="input-input detailinput">  {{jzinfo.FZGZDW}}</span>
+            <span class="input-text" title="居住地行政区划">居住地行政区划：</span>
+            <span class="input-input detailinput">  {{jzinfo.JZD_XZQH}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
-            <span class="input-text">房主联系电话：</span>
-            <span class="input-input detailinput">  {{jzinfo.FZLXDH}}</span>
+            <span class="input-text" title="居住地所属派出所">居住地所属派出所：</span>
+            <span class="input-input detailinput">  {{jzinfo.JZD_PCS}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
-            <span class="input-text">房屋性质：</span>
-            <span class="input-input detailinput">  {{jzinfo.FWXZ}}</span>
+            <span class="input-text">派出所中文名称：</span>
+            <span class="input-input detailinput"> {{jzinfo.JZD_PCSMC}}</span>
           </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text">详细地址：</span>
+            <span class="input-input detailinput">  {{jzinfo.XXDZ}}</span>
+          </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text">房主姓名：</span>
+            <span class="input-input detailinput">  {{jzinfo.FZXM}}</span>
+          </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text">房主性别：</span>
+            <span class="input-input detailinput">  {{jzinfo.FZXB}}</span>
+          </el-col>
+          <el-col :span="8" class="input-item">
+            <span class="input-text">房主证件号码：</span>
+            <span class="input-input detailinput">  {{jzinfo.FZZJHM}}</span>
+          </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">房主工作单位：</span>
+              <span class="input-input detailinput">  {{jzinfo.FZGZDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">房主联系电话：</span>
+              <span class="input-input detailinput">  {{jzinfo.FZLXDH}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">房屋性质：</span>
+              <span class="input-input detailinput">  {{jzinfo.FWXZ}}</span>
+            </el-col>
 
-          <el-col :span="8" class="input-item">
-            <span class="input-text">入住方式：</span>
-            <span class="input-input detailinput"> {{jzinfo.RZFS}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="居住初始状态产生时间">居住初始状态产生时间：</span>
-            <span class="input-input detailinput">  {{jzinfo.JZZTCSSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">居住状态确认时间：</span>
-            <span class="input-input detailinput">  {{jzinfo.JZZTQRSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">登记单位：</span>
-            <span class="input-input detailinput">  {{jzinfo.DJDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">登记人：</span>
-            <span class="input-input detailinput">  {{jzinfo.DJR}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">登记日期：</span>
-            <span class="input-input detailinput">  {{jzinfo.DJRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="居住状态类型">居住状态类型：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT_JZZT}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">是否核对：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT_SFHD=="0"?"否":jzinfo.ZT_SFHD=="1"?"是":""}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">处理单位：</span>
-            <span class="input-input detailinput">  {{jzinfo.CLDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">处理时间：</span>
-            <span class="input-input detailinput">  {{jzinfo.CLSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">处理责任区：</span>
-            <span class="input-input detailinput">  {{jzinfo.CLZRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">更新时间：</span>
-            <span class="input-input detailinput">  {{jzinfo.GXSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">更新人：</span>
-            <span class="input-input detailinput">  {{jzinfo.GXR}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">更新单位：</span>
-            <span class="input-input detailinput">  {{jzinfo.GXDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">数据来源：</span>
-            <span class="input-input detailinput">  {{jzinfo.SJLY}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">数据状态：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">是否注销：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT_SFZX}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">标准化地址：</span>
-            <span class="input-input detailinput">  {{jzinfo.JZD_DZTXT}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">采集类型：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT_CJLX=="1"?"宾馆":jzinfo.ZT_CJLX=="0"?"社会面":"其他"}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="是否当前居住地信息">是否当前居住地信息：</span>
-            <span class="input-input detailinput">  {{jzinfo.ZT_SFYX}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">居住地责任区：</span>
-            <span class="input-input detailinput">  {{jzinfo.JZD_ZRQ}}</span>
-          </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">入住方式：</span>
+              <span class="input-input detailinput"> {{jzinfo.RZFS}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="居住初始状态产生时间">居住初始状态产生时间：</span>
+              <span class="input-input detailinput">  {{jzinfo.JZZTCSSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">居住状态确认时间：</span>
+              <span class="input-input detailinput">  {{jzinfo.JZZTQRSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记单位：</span>
+              <span class="input-input detailinput">  {{jzinfo.DJDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记人：</span>
+              <span class="input-input detailinput">  {{jzinfo.DJR}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记日期：</span>
+              <span class="input-input detailinput">  {{jzinfo.DJRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="居住状态类型">居住状态类型：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT_JZZT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">是否核对：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT_SFHD=="0"?"否":jzinfo.ZT_SFHD=="1"?"是":""}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">处理单位：</span>
+              <span class="input-input detailinput">  {{jzinfo.CLDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">处理时间：</span>
+              <span class="input-input detailinput">  {{jzinfo.CLSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">处理责任区：</span>
+              <span class="input-input detailinput">  {{jzinfo.CLZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">更新时间：</span>
+              <span class="input-input detailinput">  {{jzinfo.GXSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">更新人：</span>
+              <span class="input-input detailinput">  {{jzinfo.GXR}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">更新单位：</span>
+              <span class="input-input detailinput">  {{jzinfo.GXDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">数据来源：</span>
+              <span class="input-input detailinput">  {{jzinfo.SJLY_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">数据状态：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">是否注销：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT_SFZX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">标准化地址：</span>
+              <span class="input-input detailinput">  {{jzinfo.JZD_DZTXT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">采集类型：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT_CJLX=="1"?"宾馆":jzinfo.ZT_CJLX=="0"?"社会面":"其他"}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="是否当前居住地信息">是否当前居住地信息：</span>
+              <span class="input-input detailinput">  {{jzinfo.ZT_SFYX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">居住地责任区：</span>
+              <span class="input-input detailinput">  {{jzinfo.JZD_ZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">居住地社区：</span>
+              <span class="input-input detailinput">  {{jzinfo.JZD_SQ}}</span>
+            </el-col>
 
-          <el-col :span="8" class="input-item">
-            <span class="input-text">入住日期：</span>
-            <span class="input-input detailinput">  {{jzinfo.RQ_RZRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">入住确认日期：</span>
-            <span class="input-input detailinput">  {{jzinfo.RQ_RZQRRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">离开日期：</span>
-            <span class="input-input detailinput">  {{jzinfo.RQ_LKRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">注销日期：</span>
-            <span class="input-input detailinput">  {{jzinfo.RQ_ZXRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">与业主关系：</span>
-            <span class="input-input detailinput">  {{jzinfo.YYZGX}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">地址X坐标：</span>
-            <span class="input-input detailinput">  {{jzinfo.DZXZB}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">地址Y坐标：</span>
-            <span class="input-input detailinput">  {{jzinfo.DZYZB}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">备注：</span>
-            <span class="input-input detailinput">  {{jzinfo.BZ}}</span>
-          </el-col>
-      </el-row>
-    </div>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">入住日期：</span>
+              <span class="input-input detailinput">  {{jzinfo.RQ_RZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">入住确认日期：</span>
+              <span class="input-input detailinput">  {{jzinfo.RQ_RZQRRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">离开日期：</span>
+              <span class="input-input detailinput">  {{jzinfo.RQ_LKRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">注销日期：</span>
+              <span class="input-input detailinput">  {{jzinfo.RQ_ZXRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">与业主关系：</span>
+              <span class="input-input detailinput">  {{jzinfo.YYZGX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">地址X坐标：</span>
+              <span class="input-input detailinput">  {{jzinfo.DZXZB}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">地址Y坐标：</span>
+              <span class="input-input detailinput">  {{jzinfo.DZYZB}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">备注：</span>
+              <span class="input-input detailinput">  {{jzinfo.BZ}}</span>
+            </el-col>
+        </el-row>
+      </div>
     </div>
     <div v-show="page==2" style="padding:0 15px;">
       <el-table
@@ -475,7 +486,7 @@
             label="工作单位名称">
           </el-table-column>
           <el-table-column
-            prop="GZD_SFDM"
+            prop="GZD_SFDM_DESC"
             label="工作单位人员身份">
           </el-table-column>
           <el-table-column
@@ -493,6 +504,12 @@
           <el-table-column
             prop="XXDZ"
             label="工作单位详细地址">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'gz')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -534,11 +551,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位所属派出所">工作单位所属派出所：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_PCS}}</span>
-            </el-col>
-            <el-col :span="8" class="input-item">
-              <span class="input-text" title="工作单位机构代码">工作单位机构代码：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_ZZJG}}</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_PCSMC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位名称">工作单位名称：</span>
@@ -546,7 +559,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="工作单位人员身份">工作单位人员身份：</span>
-              <span class="input-input detailinput">  {{gzinfo.GZD_SFDM}}</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_SFDM_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="任职日期">任职日期：</span>
@@ -577,95 +590,107 @@
               <span class="input-input detailinput">  {{gzinfo.DJRQ}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
-            <span class="input-text" title="录入单位">录入单位：</span>
-            <span class="input-input detailinput">  {{gzinfo.LRDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="录入日期">录入日期：</span>
-            <span class="input-input detailinput">  {{gzinfo.LRRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="工作状态类型">工作状态类型：</span>
-            <span class="input-input detailinput">  {{gzinfo.ZT_GZZT}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="处理单位">处理单位：</span>
-            <span class="input-input detailinput">  {{gzinfo.CLDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="处理时间">处理时间：</span>
-            <span class="input-input detailinput">  {{gzinfo.CLSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="处理责任区">处理责任区：</span>
-            <span class="input-input detailinput">  {{gzinfo.CLZRQ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="更新时间">更新时间：</span>
-            <span class="input-input detailinput">  {{gzinfo.GXSJ}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="更新人">更新人：</span>
-            <span class="input-input detailinput">  {{gzinfo.GXR}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="更新单位">更新单位：</span>
-            <span class="input-input detailinput">  {{gzinfo.GXDW}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="数据来源">数据来源：</span>
-            <span class="input-input detailinput">  {{gzinfo.SJLY}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="数据状态">数据状态：</span>
-            <span class="input-input detailinput">  {{gzinfo.ZT}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text" title="是否注销">是否注销：</span>
-            <span class="input-input detailinput">  {{gzinfo.ZT_SFZX}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-          <span class="input-text" title="标准化地址名">标准化地址名：</span>
-          <span class="input-input detailinput">  {{gzinfo.GZD_DZTXT}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="当前工作地信息">当前工作地信息：</span>
-          <span class="input-input detailinput">  {{gzinfo.ZT_SFYX}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="工作地责任区">工作地责任区：</span>
-          <span class="input-input detailinput">  {{gzinfo.GZD_ZRQ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="工作地社区">工作地社区：</span>
-          <span class="input-input detailinput">  {{gzinfo.GZD_SQ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="工作电话">工作电话：</span>
-          <span class="input-input detailinput">  {{gzinfo.GZD_GZDH}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="工作单位详细地址">工作单位详细地址：</span>
-          <span class="input-input detailinput">  {{gzinfo.XXDZ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="入驻日志">入驻日志：</span>
-          <span class="input-input detailinput">  {{gzinfo.RQ_RZRQ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="入驻确认日期">入驻确认日期：</span>
-          <span class="input-input detailinput">  {{gzinfo.RQ_RZQRRQ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="注销日期">注销日期：</span>
-          <span class="input-input detailinput">  {{gzinfo.RQ_ZXRQ}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text" title="备注">备注：</span>
-          <span class="input-input detailinput">  {{gzinfo.BZ}}</span>
-        </el-col>
-     </el-row>
-    </div>
+              <span class="input-text" title="录入单位">录入单位：</span>
+              <span class="input-input detailinput">  {{gzinfo.LRDW_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="录入日期">录入日期：</span>
+              <span class="input-input detailinput">  {{gzinfo.LRRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="工作状态类型">工作状态类型：</span>
+              <span class="input-input detailinput">  {{gzinfo.ZT_GZZT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="是否核对">是否核对：</span>
+              <span class="input-input detailinput">  {{gzinfo.ZT_SFHD==0?'否':'是'}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="处理单位">处理单位：</span>
+              <span class="input-input detailinput">  {{gzinfo.CLDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="处理时间">处理时间：</span>
+              <span class="input-input detailinput">  {{gzinfo.CLSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="处理责任区">处理责任区：</span>
+              <span class="input-input detailinput">  {{gzinfo.CLZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="更新时间">更新时间：</span>
+              <span class="input-input detailinput">  {{gzinfo.GXSJ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="更新人">更新人：</span>
+              <span class="input-input detailinput">  {{gzinfo.GXR}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="更新单位">更新单位：</span>
+              <span class="input-input detailinput">  {{gzinfo.GXDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="数据来源">数据来源：</span>
+              <span class="input-input detailinput">  {{gzinfo.SJLY_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="数据状态">数据状态：</span>
+              <span class="input-input detailinput">  {{gzinfo.ZT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="是否注销">是否注销：</span>
+              <span class="input-input detailinput">  {{gzinfo.ZT_SFZX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="标准化地址名">标准化地址名：</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_DZTXT}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="当前工作地信息">当前工作地信息：</span>
+              <span class="input-input detailinput">  {{gzinfo.ZT_SFYX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="工作地责任区">工作地责任区：</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_ZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="工作地社区">工作地社区：</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_SQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="工作电话">工作电话：</span>
+              <span class="input-input detailinput">  {{gzinfo.GZD_GZDH}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="工作单位详细地址">工作单位详细地址：</span>
+              <span class="input-input detailinput">  {{gzinfo.XXDZ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="入驻日志">入驻日志：</span>
+              <span class="input-input detailinput">  {{gzinfo.RQ_RZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="入驻确认日期">入驻确认日期：</span>
+              <span class="input-input detailinput">  {{gzinfo.RQ_RZQRRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="注销日期">注销日期：</span>
+              <span class="input-input detailinput">  {{gzinfo.RQ_ZXRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="备注">备注：</span>
+              <span class="input-input detailinput">  {{gzinfo.BZ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="注销日期">地址X坐标：</span>
+              <span class="input-input detailinput">  {{gzinfo.DZXZB}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="备注">地址Y坐标：</span>
+              <span class="input-input detailinput">  {{gzinfo.DZYZB}}</span>
+            </el-col>
+          </el-row>
+        </div>
     </div>
     <div v-show="page==3">
       <el-table
@@ -692,6 +717,12 @@
           <el-table-column
             prop="ZT"
             label="状态">
+          </el-table-column>
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'zf')"></el-button>
+            </template>
           </el-table-column>
         </el-table>
         <div class="middle-foot">
@@ -774,7 +805,7 @@
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="数据来源">数据来源：</span>
-              <span class="input-input detailinput">  {{zfinfo.SJLY}}</span>
+              <span class="input-input detailinput">  {{zfinfo.SJLY_DESC}}</span>
             </el-col>
             <el-col :span="8" class="input-item">
               <span class="input-text" title="状态">状态：</span>
@@ -806,11 +837,11 @@
           @row-click="getAB"
           style="width: 100%">
           <el-table-column
-            prop="FFBM"
+            prop="FFBM_DESC"
             label="防范部门">
           </el-table-column>
           <el-table-column
-            prop="ZHAQYS"
+            prop="ZHAQYS_DESC"
             label="住户安全意识">
           </el-table-column>
           <el-table-column
@@ -825,7 +856,12 @@
             prop="BCSM"
             label="补充说明">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'ab')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -857,57 +893,56 @@
             :total="TotalResult4">
           </el-pagination>
         </div>
- <div v-if="abshow" class="mt-10">
-<hr/>
-<el-row :gutter="3">
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="防范部门">防范部门：</span>
-    <span class="input-input detailinput">  {{abinfo.FFBM}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="人防手段">人防手段：</span>
-    <span class="input-input detailinput">  {{abinfo.RFSD}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="技防手段">技防手段：</span>
-    <span class="input-input detailinput">  {{abinfo.JFSD}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="设施防范">设施防范：</span>
-    <span class="input-input detailinput">  {{abinfo.SSFF}}</span>
-  </el-col>
+        <div v-if="abshow" class="mt-10">
+          <hr/>
+          <el-row :gutter="3">
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="防范部门">防范部门：</span>
+              <span class="input-input detailinput">  {{abinfo.FFBM_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="人防手段">人防手段：</span>
+              <span class="input-input detailinput">  {{abinfo.RFSD_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="技防手段">技防手段：</span>
+              <span class="input-input detailinput">  {{abinfo.JFSD_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="设施防范">设施防范：</span>
+              <span class="input-input detailinput">  {{abinfo.SSFF_DESC}}</span>
+            </el-col>
 
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="住户安全意识">住户安全意识：</span>
-    <span class="input-input detailinput">  {{abinfo.ZHAQYS}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="检查项目">检查项目：</span>
-    <span class="input-input detailinput">  {{abinfo.JCXM}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="检查情况">检查情况：</span>
-    <span class="input-input detailinput">  {{abinfo.JCQK}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="补充说明">补充说明：</span>
-    <span class="input-input detailinput">  {{abinfo.BCSM}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="登记人">登记人：</span>
-    <span class="input-input detailinput">  {{abinfo.DJR}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="登记单位">登记单位：</span>
-    <span class="input-input detailinput">  {{abinfo.DJDW}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text" title="登记时间">登记时间：</span>
-    <span class="input-input detailinput">  {{abinfo.DJSJ}}</span>
-  </el-col>
-</el-row>
- </div>
-
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="住户安全意识">住户安全意识：</span>
+              <span class="input-input detailinput">  {{abinfo.ZHAQYS_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="检查项目">检查项目：</span>
+              <span class="input-input detailinput">  {{abinfo.JCXM}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="检查情况">检查情况：</span>
+              <span class="input-input detailinput">  {{abinfo.JCQK}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="补充说明">补充说明：</span>
+              <span class="input-input detailinput">  {{abinfo.BCSM}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="登记人">登记人：</span>
+              <span class="input-input detailinput">  {{abinfo.DJR}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="登记单位">登记单位：</span>
+              <span class="input-input detailinput">  {{abinfo.DJDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text" title="登记时间">登记时间：</span>
+              <span class="input-input detailinput">  {{abinfo.DJSJ}}</span>
+            </el-col>
+          </el-row>
+        </div>
     </div>
     <div v-show="page==5">
       <el-table
@@ -924,22 +959,27 @@
             label="英文名">
           </el-table-column>
           <el-table-column
-            prop="XB"
+            prop="XB_DESC"
             label="性别">
           </el-table-column>
           <el-table-column
-            prop="GJDQ"
+            prop="GJDQ_DESC"
             label="国家地区">
           </el-table-column>
           <el-table-column
-            prop="ZJZL"
+            prop="ZJZL_DESC"
             label="证件种类">
           </el-table-column>
           <el-table-column
             prop="ZJHM"
             label="证件号码">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'lg')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -971,72 +1011,72 @@
             :total="TotalResult5">
           </el-pagination>
         </div>
-<div v-if="lgshow" class="mt-10">
-<hr/>
-<el-row :gutter="3">
-  <el-col :span="8" class="input-item">
-    <span class="input-text">列管状态：</span>
-    <span class="input-input detailinput">  {{lginfo.LGZT}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">英文姓：</span>
-    <span class="input-input detailinput">  {{lginfo.YWX}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">英文名：</span>
-    <span class="input-input detailinput">  {{lginfo.YWM}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">性别：</span>
-    <span class="input-input detailinput">  {{lginfo.XB}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">国家地区：</span>
-    <span class="input-input detailinput">  {{lginfo.GJDQ}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">出生日期：</span>
-    <span class="input-input detailinput">  {{lginfo.CSRQ}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">服务处所：</span>
-    <span class="input-input detailinput">  {{lginfo.FWCS}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">证件种类：</span>
-    <span class="input-input detailinput">  {{lginfo.ZJZL}}</span>
-  </el-col>
+        <div v-if="lgshow" class="mt-10">
+          <hr/>
+          <el-row :gutter="3">
+            <el-col :span="8" class="input-item">
+              <span class="input-text">列管状态：</span>
+              <span class="input-input detailinput">  {{lginfo.LGZT_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">英文姓：</span>
+              <span class="input-input detailinput">  {{lginfo.YWX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">英文名：</span>
+              <span class="input-input detailinput">  {{lginfo.YWM}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">性别：</span>
+              <span class="input-input detailinput">  {{lginfo.XB_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">国家地区：</span>
+              <span class="input-input detailinput">  {{lginfo.GJDQ_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">出生日期：</span>
+              <span class="input-input detailinput">  {{lginfo.CSRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">服务处所：</span>
+              <span class="input-input detailinput">  {{lginfo.FWCS}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">证件种类：</span>
+              <span class="input-input detailinput">  {{lginfo.ZJZL_DESC}}</span>
+            </el-col>
 
-  <el-col :span="8" class="input-item">
-    <span class="input-text">证件号码：</span>
-    <span class="input-input detailinput">  {{lginfo.ZJHM}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">管理类型：</span>
-    <span class="input-input detailinput">  {{lginfo.GLLX}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">所属派出所：</span>
-    <span class="input-input detailinput">  {{lginfo.SSPCS}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">所属责任区：</span>
-    <span class="input-input detailinput">  {{lginfo.SSZRQ}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">登记单位：</span>
-    <span class="input-input detailinput">  {{lginfo.DJDW}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">登记人：</span>
-    <span class="input-input detailinput">  {{lginfo.DJR}}</span>
-  </el-col>
-  <el-col :span="8" class="input-item">
-    <span class="input-text">登记时间：</span>
-    <span class="input-input detailinput">  {{lginfo.DJSJ}}</span>
-  </el-col>
-</el-row>
-</div>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">证件号码：</span>
+              <span class="input-input detailinput">  {{lginfo.ZJHM}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">管理类型：</span>
+              <span class="input-input detailinput">  {{lginfo.GLLX}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">所属派出所：</span>
+              <span class="input-input detailinput">  {{lginfo.SSPCS_DESC}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">所属责任区：</span>
+              <span class="input-input detailinput">  {{lginfo.SSZRQ}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记单位：</span>
+              <span class="input-input detailinput">  {{lginfo.DJDW}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记人：</span>
+              <span class="input-input detailinput">  {{lginfo.DJR}}</span>
+            </el-col>
+            <el-col :span="8" class="input-item">
+              <span class="input-text">登记时间：</span>
+              <span class="input-input detailinput">  {{lginfo.DJSJ}}</span>
+            </el-col>
+          </el-row>
+        </div>
     </div>
     <div v-show="page==6">
       <el-table
@@ -1057,22 +1097,31 @@
             label="中文姓名">
           </el-table-column>
           <el-table-column
-            prop="XB"
+            prop="CSRQ"
+            label="出生日期">
+          </el-table-column>
+          <el-table-column
+            prop="XB_DESC"
             label="性别">
           </el-table-column>
           <el-table-column
-            prop="GJDQ"
+            prop="GJDQ_DESC"
             label="国家地区">
           </el-table-column>
           <el-table-column
-            prop="ZJZL"
+            prop="ZJZL_DESC"
             label="证件种类">
           </el-table-column>
           <el-table-column
             prop="ZJHM"
             label="证件号码">
           </el-table-column>
-
+          <el-table-column
+            label="操作" width="80">
+            <template slot-scope="scope">
+              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row,'th')"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="middle-foot">
           <div class="page-msg">
@@ -1123,11 +1172,11 @@
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">性别：</span>
-            <span class="input-input detailinput">  {{thinfo.XB}}</span>
+            <span class="input-input detailinput">  {{thinfo.XB_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">国家地区：</span>
-            <span class="input-input detailinput">  {{thinfo.GJDQ}}</span>
+            <span class="input-input detailinput">  {{thinfo.GJDQ_DESC}}</span>
           </el-col>
           <el-col :span="8" class="input-item">
             <span class="input-text">出生日期：</span>
@@ -1136,7 +1185,7 @@
 
           <el-col :span="8" class="input-item">
             <span class="input-text">证件种类：</span>
-            <span class="input-input detailinput">  {{thinfo.ZJZL}}</span>
+            <span class="input-input detailinput">  {{thinfo.ZJZL_DESC}}</span>
           </el-col>
 
           <el-col :span="8" class="input-item">
@@ -1163,14 +1212,13 @@
         </el-row>
         </div>
     </div>
-</div>
-<el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
-  <div style="text-align:right;">
-    <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
   </div>
-  <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
-</el-dialog>
-
+  <el-dialog  title="放大显示" :visible.sync="tcDialogVisible" style="text-align:center" custom-class="big_dialog" :append-to-body="false" :modal="false" >
+    <div style="text-align:right;">
+      <el-button  size="small" type="primary"  @click="rotate" title="旋转图片" icon="iconfont el-icon-yy-icon_rotate"></el-button>
+    </div>
+    <img :src="imgs" :style="{transform:'rotateZ('+deg+'deg)'}" v-drag>
+  </el-dialog>
 </div>
 </template>
 <script>

@@ -117,7 +117,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="page=0;getList()">查询</el-button>
+          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getList()">查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -222,7 +222,7 @@
     </div>
 
     <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LZXX :type="type" :xid="xid"></LZXX>
+        <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
       <div slot="footer" class="dialog-footer">
         <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
       </div>
@@ -237,6 +237,7 @@ import LZXX from '../../../common/lzxx_xq'
    components:{LZXX},
   data() {
     return {
+      rybh:'',
       detailsDialogVisible:false,
       type:1,
       xid:'',
@@ -289,6 +290,7 @@ import LZXX from '../../../common/lzxx_xq'
   methods:{
     details(i){
       this.xid=i.DTID;
+      this.rybh=i.RYBH;
       this.detailsDialogVisible = true;
     },
     pageSizeChange(val) {

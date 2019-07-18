@@ -186,7 +186,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="page=0;getListTu(pd0,pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getListTu(pd0,pd)">查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -238,7 +238,7 @@
                label="市局下发时间">
              </el-table-column>
              <el-table-column
-               prop="SSPCS"
+               prop="SSPCS_DESC"
                label="所属派出所">
              </el-table-column>
              <el-table-column
@@ -348,6 +348,7 @@ import CZXX from '../../../common/czxx_xq'
     this.$store.dispatch("getPcs");
     this.$store.dispatch("getRjsy");
     this.$store.dispatch("getZsbg");
+    this.$store.dispatch("getRjqzzl");
     this.getFj();
     this.getListTu(this.pd0,this.pd);
   },

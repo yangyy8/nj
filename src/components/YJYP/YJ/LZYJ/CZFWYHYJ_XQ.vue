@@ -190,7 +190,7 @@
          <el-table-column
          label="操作" width="80">
          <template slot-scope="scope">
-         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click=""></el-button>
+         <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="anjDetail(scope.row)"></el-button>
          </template>
          </el-table-column>
        </el-table>
@@ -200,15 +200,23 @@
          <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
        </div>
   </el-dialog>
+  <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+    <ANSJ :type="type" :xid="xid" :random="new Date().getTime()" :rybh="rybh"></ANSJ>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="asjDialogVisible = false" size="small">取 消</el-button>
+    </div>
+  </el-dialog>
   </div>
 
 </template>
 <script>
 import LZXX from '../../../common/lzxx_xq'
+import ANSJ from '../../../common/ansj_xq'
 export default {
-  components:{LZXX},
+  components:{LZXX,ANSJ},
   data() {
     return {
+      asjDialogVisible:false,
       rybh:"",
       CurrentPage: 1,
       pageSize: 10,
@@ -218,6 +226,7 @@ export default {
       lzxxDialogVisible:false,
       row:{},
       type:0,
+      leiType:'',
       xid:'',
       flag:false,
       baseData:{},
@@ -248,16 +257,23 @@ export default {
     this.row=this.$route.query.row;
     this.baseData=this.row;
     this.getcwzxx(this.row.BZHDZID);
+    this.leiType=this.$route.query.leiType;
     this.getList(this.CurrentPage, this.pageSize, this.pd);
-    this.type=this.$route.query.type;
+    // this.type=this.$route.query.type;
     if(this.row.CLZT=='0'){
       this.pm.CHANGE_RESON=this.row.CLJG
     }
-    if(this.type==1){
+    //区分重点和新增的临住案事件
+    if(this.leiType=="zd"){
       this.flag=true;
-    }else {
+    }else if(this.leiType=="xz"){
       this.flag=false;
     }
+    // if(this.type==1){
+    //   this.flag=true;
+    // }else {
+    //   this.flag=false;
+    // }
   },
   mounted() {
      this.withname=this.$store.state.uname;
@@ -273,6 +289,10 @@ export default {
       this.getList(this.CurrentPage, this.pageSize, this.pd);
       console.log(`当前页: ${val}`);
     },
+    anjDetail(n){
+      this.xid=n.RGUID+","+n.DTID;
+      this.asjDialogVisible=true;
+    },
     getcwzxx(n){
     this.pp.BZHDZID=n;
       let p = {
@@ -283,20 +303,34 @@ export default {
               this.baseData.XXDZDESC=r.data.resultList.YW_BZHDZ.XXDZDESC;
         });
     },
+    //临住信息列表
     getList(currentPage, showCount, pd){
-      pd.DZDTID=this.row.BZHDZID;
-      console.log('this.row.YJID',this.row.YJID);
-      pd.ZSRQ=this.row.ZSRQ;
-      let p = {
-        "currentPage":currentPage,
-        "showCount":showCount,
-        "pd":pd,
-      };
-      this.$api.post(this.Global.aport4+'/rentingHouseHiddenDangerWarning/getLinZhuListByDZDTIDAndZSRQ', p,
-        r => {
-            this.tableData1=r.data.resultList;
-            this.TotalResult=r.data.totalResult;
-        });
+      if(this.leiType=='xz'){
+        pd.DZDTID=this.row.BZHDZID;
+        pd.ZSRQ_Nokeyword=this.row.ZSRQ;
+        let p = {
+          "currentPage":currentPage,
+          "showCount":showCount,
+          "pd":pd,
+        };
+        this.$api.post(this.Global.aport4+'/rentingHouseHiddenDangerWarning/getLinZhuListByDZDTIDAndZSRQ', p,
+          r => {
+              this.tableData1=r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+          });
+      }else if(this.leiType=='zd'){
+        pd.DZDTID=this.row.BZHDZID;
+        let p = {
+          "currentPage":currentPage,
+          "showCount":showCount,
+          "pd":pd,
+        };
+        this.$api.post(this.Global.aport4+'/focusRetingHouseWarningController/getLinZhuListByDZDTID', p,
+          r => {
+              this.tableData1=r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+          });
+      }
     },
     chuli(){
 
@@ -326,26 +360,23 @@ export default {
 
         })
     },
-    details(n)
-    {
+    details(n){
       this.xid=n.DTID;
       this.rybh=n.RYBH;
-      console.log('this.xid',n.DTID);
       this.lzxxDialogVisible=true;
-
-      if(this.type==1){//1是重点出租屋
+      if(this.leiType=='zd'){//1是重点出租屋
         let p = {
-          "ZJHM": this.row.ZJHM,
-          "GJDQ": this.pm.CHANGE_RESON,
-          "BZHDZMC": this.baseData.XXDZDESC,
+          pd:{
+            "ZJHM": n.ZJHM,
+            "GJDQ": n.GJDQ,
+            "BZHDZMC":n.BZHDZMC,
+          }
         };
         this.$api.post(this.Global.aport4+'/focusRetingHouseWarningController/getAnJianInfoByDiZhiAndRYXX', p,
           r => {
              if(r.success){
                   this.tableData2=r.data;
-
              }
-
           })
       }
     },
