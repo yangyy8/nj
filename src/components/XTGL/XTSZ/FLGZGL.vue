@@ -256,9 +256,7 @@ export default {
    /*  提交修改 */
     addItem(addForm){
        this.V.$submit('demo', (canSumit,data) =>{
-         if(!canSumit) return;
-           /* if (this.tp == 1) {            
-           }  */        
+         if(!canSumit) return;      
          this.$api.post(this.Global.aport4+'/warningSortRuleController/saveOrUpdate', this.form,  
          r => {
                if(r.success){
