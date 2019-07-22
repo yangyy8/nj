@@ -78,9 +78,11 @@
            <el-table-column
              label="操作" width="">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>             
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row)"></el-button>
-             <el-button type="text" class="a-btn"  title="设置" @click="reset(scope.row)">{{scope.row.SFYX=='1'?'设为无效':'设为有效'}}</el-button>
+                <div>
+                  <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>             
+                  <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="adds(1,scope.row)"></el-button>
+                  <el-button type="text" class="a-btn"  title="设置" @click="reset(scope.row)">{{scope.row.SFYX=='1'?'设为无效':'设为有效'}}</el-button>
+                </div>
              </template>
            </el-table-column>
          </el-table>
@@ -241,7 +243,6 @@ export default {
         this.addsDialogVisible=true;
         if (n != 0) {
           this.form=Object.assign({},i)
-          // this.form=i;
           this.tp = 1;
           this.dialogText="编辑";
         } else {
