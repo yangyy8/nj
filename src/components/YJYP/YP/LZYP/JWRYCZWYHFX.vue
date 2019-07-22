@@ -839,7 +839,6 @@ export default {
   text-align: center;
   vertical-align: middle;
 }
-
 .lzxx .jwgg {
   background: url(../../../../assets/img/tb/location_green.png) no-repeat;
   font-size: 12px;
