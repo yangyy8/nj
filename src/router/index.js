@@ -10,7 +10,6 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
-
     },
     {
     path:'/index',
@@ -669,7 +668,7 @@ export default new Router({
         name: 'FLGZGL',
         meta:{title:['系统管理','系统设置','分类规则管理']},
         component: resolve => require(['@/components/XTGL/XTSZ/FLGZGL'], resolve),
-        }, 
+        },
       ]
     },
 

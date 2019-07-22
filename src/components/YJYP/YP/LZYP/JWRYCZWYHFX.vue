@@ -158,7 +158,7 @@
                          </div>
                         </el-col>
                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="getRyxx(CurrentPage,pageSize,bzhid,mc)" class="mb-15">查询</el-button>
+                &nbsp;&nbsp; <el-button type="primary"  size="mini" @click="getRyxx(CurrentPage,pageSize,bzhid,mc,1)" class="mb-15">查询</el-button>
                </el-col>
                   </el-row>
                         <el-table
@@ -631,13 +631,16 @@ export default {
         });
       // callback(searchResult);
     },
-    getRyxx(currentPage, showCount, bzhid, mc) {
+    getRyxx(currentPage, showCount, bzhid, mc,n) {
       if (currentPage == 1) {
         this.CurrentPage = 1;
         this.tableData = [];
         this.TotalResult = 0;
         this.bzhid = bzhid;
         this.mc = mc;
+      }
+      if(n!=1){
+        this.pm={};
       }
       this.diatext = this.mc;
       // this.tshow1 = true;
@@ -836,15 +839,12 @@ export default {
   text-align: center;
   vertical-align: middle;
 }
-
 .lzxx .jwgg {
   background: url(../../../../assets/img/tb/location_green.png) no-repeat;
   font-size: 12px;
   font-weight: bold;
   color: #ffffff;
 }
-
-
 .bghome .el-dialog {
   width: 70% !important;
 }
