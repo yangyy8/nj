@@ -1243,7 +1243,7 @@
 import imgUrl from "../../../../assets/img/t1.png"
 export default {
   name:'CZXXRY',
-  props:['type','xid','rid','random'],
+  props:['type','xid','rid','random','rybh'],
   data(){
     return{
       imgURL:imgUrl,
@@ -1439,7 +1439,7 @@ export default {
     getPhoto(){
       let p={
         "pd":{
-          RYBH:this.xid||'',
+          RYBH:this.rybh||'',
           YWLB:'0004'
         },
         // "orderType":"DESC",
@@ -1456,7 +1456,7 @@ export default {
       let p = {
         "currentPage":currentPage,
         "showCount":showCount,
-        "pd": {RYBH:pd}
+        "pd": {DTID:pd}
       };
       this.$api.post(this.Global.aport3+'/ryhx/getczjzdxx', p,
        r => {
@@ -1469,7 +1469,7 @@ export default {
    //工作地信息
    gettableDatagz(currentPage,showCount,pd){
      let p = {
-       "pd": {RYBH:pd},
+       "pd": {DTID:pd},
        "currentPage":currentPage,
        "showCount":showCount,
      };
@@ -1484,7 +1484,7 @@ export default {
    //走访信息
    gettableDatazf(currentPage,showCount,pd){
      let p = {
-       "pd": {RYBH:pd},
+       "pd": {DTID:pd},
        "currentPage":currentPage,
        "showCount":showCount,
      };
@@ -1500,7 +1500,7 @@ export default {
      //安保信息
      gettableDataab(currentPage,showCount,pd){
        let p = {
-         "pd": {RYBH:pd},
+         "pd": {DTID:pd},
          "currentPage":currentPage,
          "showCount":showCount,
        };
@@ -1516,7 +1516,7 @@ export default {
       //重点列管信息
        gettableDatalg(currentPage,showCount,pd){
          let p = {
-           "pd": {RYBH:pd},
+           "pd": {DTID:pd},
            "currentPage":currentPage,
            "showCount":showCount,
          };
@@ -1531,7 +1531,7 @@ export default {
         //同户信息
           gettableDatath(currentPage,showCount,pd){
             let p = {
-              "pd": {RYBH:pd},
+              "pd": {DTID:pd},
               "currentPage":currentPage,
               "showCount":showCount,
             };
