@@ -141,7 +141,9 @@
                <el-table-column
                  label="操作" width="80">
                  <template slot-scope="scope">
-                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row)"></el-button>
+                    <div>
+                      <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="getDetails(scope.row)"></el-button>
+                    </div>
                  </template>
                </el-table-column>
            </el-table>

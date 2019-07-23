@@ -190,7 +190,9 @@
              <el-table-column
                label="操作" width="120">
                <template slot-scope="scope">
-               <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscrj(scope.row)"></el-button>
+                 <div>
+                    <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailscrj(scope.row)"></el-button>
+                 </div>
                </template>
              </el-table-column>
            </el-table>
@@ -840,43 +842,30 @@ export default{
        tableData11:[],
        tableDataQ:[],
        CurrentPage1: 1,
-       pageSize1: 3,
+       pageSize1: 10,
        TotalResult1: 0,
        CurrentPage2: 1,
-       pageSize2: 3,
+       pageSize2: 10,
        TotalResult2: 0,
        CurrentPage3: 1,
-       pageSize3: 3,
+       pageSize3: 10,
        TotalResult3: 0,
        CurrentPage4: 1,
-       pageSize4: 3,
+       pageSize4: 10,
        TotalResult4: 0,
        CurrentPage5: 1,
-       pageSize5: 3,
+       pageSize5: 10,
        TotalResult5: 0,
        CurrentPage6: 1,
-       pageSize6: 3,
+       pageSize6: 10,
        TotalResult6: 0,
        CurrentPage7: 1,
-       pageSize7: 3,
+       pageSize7: 10,
        TotalResult7: 0,
        CurrentPage8: 1,
-       pageSize8: 3,
+       pageSize8: 10,
        TotalResult8: 0,
-       options:[{
-         value: 3,
-         label: "3"
-       },
-       {
-         value:5,
-         label: "5"
-       },
-       {
-         value: 7,
-         label: "7"
-       }
-     ],
-
+       options: this.pl.ps,
     }
   },
   activated(){
