@@ -136,6 +136,11 @@
            <el-table-column
              prop="SHMC"
              label="审核状态">
+             <template slot-scope="scope">
+                <span v-if="scope.row.SHMC=='审批不通过'" style="color:red">{{scope.row.SHMC}}</span>
+                <span v-else-if="scope.row.SHMC=='审批通过'" style="color:blue">{{scope.row.SHMC}}</span>
+                <span v-else>{{scope.row.SHMC}}</span>
+             </template>
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -257,7 +262,7 @@
             <span class="input-input detailinput">  {{mapForm.CZSJ}}</span>
           </el-col>
       </el-row>
-      <hr/>
+      
       <el-row :gutter="2">
           <el-col :span="12" class="input-item">
             <span class="input-text">审核结果：</span>
@@ -348,8 +353,8 @@ export default {
     },
     edits(n){
       this.editsDialogVisible=true;
-      this.editform={};
-      this.editform=n;
+      // this.editform={};
+      // this.editform=n;
     },
     editsItem()
     {
