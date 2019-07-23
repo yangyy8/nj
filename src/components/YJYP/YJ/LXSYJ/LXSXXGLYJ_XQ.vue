@@ -236,7 +236,8 @@
              @current-change="handleCurrentChange"
              :page-size="pageSize"
              layout="prev, pager, next"
-             :total="TotalResult">
+             :total="TotalResult"
+             :current-page.sync="CurrentPage">
            </el-pagination>
          </div>
       </div>
@@ -293,7 +294,8 @@
                @current-change="handleCurrentChange1"
                :page-size="pageSize1"
                layout="prev, pager, next"
-               :total="TotalResult1">
+               :total="TotalResult1"
+               :current-page.sync="CurrentPage1">
              </el-pagination>
            </div>
       </div>
@@ -394,7 +396,8 @@
                 @current-change="asjhandleCurrentChange"
                 :page-size="asjpageSize"
                 layout="prev, pager, next"
-                :total="asjTotalResult">
+                :total="asjTotalResult"
+                :current-page.sync="asjCurrentPage">
               </el-pagination>
             </div>
             <div class="stru-lal">警综渉警信息</div>
@@ -460,7 +463,8 @@
                   @current-change="sjhandleCurrentChange"
                   :page-size="sjpageSize"
                   layout="prev, pager, next"
-                  :total="sjTotalResult">
+                  :total="sjTotalResult"
+                  :current-page.sync="sjCurrentPage">
                 </el-pagination>
               </div>
         </div>
@@ -521,7 +525,8 @@
                     @current-change="handleCurrentChange2"
                     :page-size="pageSize2"
                     layout="prev, pager, next"
-                    :total="TotalResult2">
+                    :total="TotalResult2"
+                    :current-page.sync="CurrentPage2">
                   </el-pagination>
                 </div>
 
@@ -579,7 +584,8 @@
                        @current-change="handleCurrentChange3"
                        :page-size="pageSize3"
                        layout="prev, pager, next"
-                       :total="TotalResult3">
+                       :total="TotalResult3"
+                       :current-page.sync="CurrentPage3">
                      </el-pagination>
                    </div>
                  </div>
@@ -643,7 +649,8 @@
                          @current-change="handleCurrentChange6"
                          :page-size="pageSize6"
                          layout="prev, pager, next"
-                         :total="TotalResult6">
+                         :total="TotalResult6"
+                         :current-page.sync="CurrentPage6">
                        </el-pagination>
                      </div>
                    </div>
@@ -981,35 +988,35 @@ export default {
     return {
       rybh:'',
       CurrentPage: 1,
-      pageSize: 3,
+      pageSize: 10,
       TotalResult: 0,
 
       CurrentPage1: 1,
-      pageSize1: 3,
+      pageSize1: 10,
       TotalResult1: 0,
 
       CurrentPage2: 1,
-      pageSize2: 3,
+      pageSize2: 10,
       TotalResult2: 0,
 
       CurrentPage3: 1,
-      pageSize3: 3,
+      pageSize3: 10,
       TotalResult3: 0,
 
       CurrentPage4: 1,
-      pageSize4: 3,
+      pageSize4: 10,
       TotalResult4: 0,
 
       CurrentPage5: 1,
-      pageSize5: 3,
+      pageSize5: 10,
       TotalResult5: 0,
 
       CurrentPage6: 1,
-      pageSize6: 3,
+      pageSize6: 10,
       TotalResult6: 0,
 
       asjCurrentPage: 1,
-      asjpageSize: 3,
+      asjpageSize: 10,
       asjTotalResult: 0,
 
       sjCurrentPage: 1,
@@ -1067,6 +1074,15 @@ export default {
     }
   },
   activated(){
+    this.CurrentPage=1;
+    this.CurrentPage1=1;
+    this.CurrentPage2=1;
+    this.CurrentPage3=1;
+    this.CurrentPage4=1;
+    this.CurrentPage5=1;
+    this.CurrentPage6=1;
+    this.asjCurrentPage=1;
+    this.sjCurrentPage=1;
     this.tbryDialogVisible=false;
     this.lzxxDialogVisible=false;
     this.crjDialogVisible=false;
@@ -1156,76 +1172,94 @@ export default {
   },
   methods: {
     asjpageSizeChange(val) {
-    this.getData0(this.asjCurrentPage,val);
+      this.asjpageSize=val;
+      this.getData0(this.asjCurrentPage,val);
       console.log(`每页 ${val} 条`);
     },
     asjhandleCurrentChange(val) {
+      this.asjCurrentPage=val;
       this.getData0(val,this.asjpageSize);
       console.log(`当前页: ${val}`);
     },
     sjpageSizeChange(val) {
-    this.getData1(this.sjCurrentPage,val);
+      this.sjpageSize=val;
+      this.getData1(this.sjCurrentPage,val);
       console.log(`每页 ${val} 条`);
     },
     sjhandleCurrentChange(val) {
+      this.sjCurrentPage=val;
       this.getData1(val,this.sjpageSize);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange(val) {
-    this.getLzxx(this.CurrentPage,val);
+      this.pageSiz=val;
+      this.getLzxx(this.CurrentPage,val);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.CurrentPage=val;
       this.getLzxx(val,this.pageSize);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
-         this.getCrjxx(this.CurrentPage1,val);
+      this.pageSize1=val;
+      this.getCrjxx(this.CurrentPage1,val);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
+       this.CurrentPage1=val;
        this.getCrjxx(val,this.pageSize1);
-      console.log(`当前页: ${val}`);
+       console.log(`当前页: ${val}`);
     },
     pageSizeChange2(val) {
-         this.getFFJY(this.CurrentPage2,val,this.pp);
+      this.pageSize2=val;
+      this.getFFJY(this.CurrentPage2,val,this.pp);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange2(val) {
+       this.CurrentPage2=val;
        this.getFFJY(val,this.pageSize2,this.pp);
       console.log(`当前页: ${val}`);
     },
     pageSizeChange3(val) {
-        this.getJZ(this.CurrentPage3,val,this.pp);
-        console.log(`每页 ${val} 条`);
+      this.pageSize3=val;
+      this.getJZ(this.CurrentPage3,val,this.pp);
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange3(val) {
+       this.CurrentPage3=val;
        this.getJZ(val,this.pageSize3,this.pp);
        console.log(`当前页: ${val}`);
     },
     pageSizeChange4(val) {
-        this.getZJXX(this.CurrentPage4,val);
-        console.log(`每页 ${val} 条`);
+      this.pageSize4=val;
+      this.getZJXX(this.CurrentPage4,val);
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange4(val) {
-       this.getZJXX(val,this.pageSize4);
-       console.log(`当前页: ${val}`);
+      this.CurrentPage4=val;
+      this.getZJXX(val,this.pageSize4);
+      console.log(`当前页: ${val}`);
     },
     pageSizeChange5(val) {
-        this.getQZXX(this.CurrentPage5,val);
-        console.log(`每页 ${val} 条`);
+      this.pageSize5=val;
+      this.getQZXX(this.CurrentPage5,val);
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange5(val) {
-       this.getQZXX(val,this.pageSize5);
-       console.log(`当前页: ${val}`);
+      this.CurrentPage5=val;
+      this.getQZXX(val,this.pageSize5);
+      console.log(`当前页: ${val}`);
     },
     pageSizeChange6(val) {
-        this.getNMXX(this.CurrentPage6,val);
-        console.log(`每页 ${val} 条`);
+      this.pageSize6=val;
+      this.getNMXX(this.CurrentPage6,val);
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange6(val) {
-       this.getNMXX(val,this.pageSize6);
-       console.log(`当前页: ${val}`);
+      this.CurrentPage6=val;
+      this.getNMXX(val,this.pageSize6);
+      console.log(`当前页: ${val}`);
     },
     getDetails(n){
       this.xid=n.RGUID;
