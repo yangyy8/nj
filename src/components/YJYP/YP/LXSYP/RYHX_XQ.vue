@@ -650,7 +650,7 @@
          </div>
        </el-dialog>
        <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <CZXXRY :type="type" :xid="rybh" :random="randomczxx" :rid="rid"></CZXXRY>
+         <CZXXRY :type="type" :xid="xid" :random="randomczxx" :rid="rid" :rybh="rybh"></CZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -893,7 +893,6 @@ export default{
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
     if(this.zjhm!="" && this.zjhm!=undefined){
-      // console.log('  this.zjhm',this.zjhm);
       this.pd.ZJHM=this.zjhm;
     }else if(this.row.RYBH){
       this.pd.RYBH=this.row.RYBH;
@@ -914,6 +913,11 @@ export default{
     this.getQZXX(this.pd);
     // this.getZJXX(this.pd);
   },
+  // watch:{
+  //   $route:function(val){
+  //     console.log("==============",val)
+  //   }
+  // },
   mounted(){
     this.bqDialogVisible=false;
     this.zpDialogVisible=false;
@@ -1006,7 +1010,7 @@ export default{
     //最新照片
     getZXZP(){
       let p = {
-        "pd": {ZJHM:this.$route.query.zjhm},
+        "pd": {ZJHM:this.zjhm},
       };
       this.$api.post(this.Global.aport3+'/ryhx/getrytpxxpro', p,
         r => {
@@ -1019,7 +1023,7 @@ export default{
     //人员基本信息
     getRYXX(){
       let p = {
-        "certificateNO": this.$route.query.zjhm,
+        "certificateNO": this.zjhm,
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getryryxx', p,
         r => {
@@ -1148,7 +1152,7 @@ export default{
         "currentPage":currentPage,
       	"showCount":showCount,
         // "pd":pd
-        "certificateNO":this.$route.query.zjhm,
+        "certificateNO":this.zjhm,
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getcrjjl', p,
         r => {
@@ -1163,7 +1167,7 @@ export default{
         "currentPage":currentPage,
         "showCount":showCount,
         // "pd":pd
-        "paperNO":this.$route.query.zjhm,
+        "paperNO":this.zjhm,
 
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getlzxx', p,
@@ -1178,7 +1182,7 @@ export default{
         "currentPage":currentPage,
         "showCount":showCount,
         // "pd":pd
-        "paperNO":this.$route.query.zjhm,
+        "paperNO":this.zjhm,
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getczxx', p,
         r => {
@@ -1192,7 +1196,7 @@ export default{
         "currentPage":currentPage,
         "showCount":showCount,
         // "pd":pd
-        "paperNO":this.$route.query.zjhm,
+        "paperNO":this.zjhm,
 
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getajjbxx', p,
@@ -1277,7 +1281,7 @@ export default{
         // "pd":pd,
         // "orderBy":"RJRQ",
         // "orderType":"DESC"
-        "passportNO":this.$route.query.zjhm
+        "passportNO":this.zjhm
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getwgrzjxx', p,
         r => {
@@ -1320,6 +1324,7 @@ export default{
     },
     //常住信息详情
     detailscz(n){
+      this.xid=n.DTID;
       this.rid=n;
       this.randomczxx=new Date().getTime();
       target.scrollIntoView();

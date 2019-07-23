@@ -31,7 +31,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.GJ" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJ" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.gjdq"
                         :key="item.dm"
@@ -44,7 +44,43 @@
                    <span class="input-text">证件号码：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
-
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">证件种类：</span>
+                    <el-select v-model="pd.ZJZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.zjzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">性别：</span>
+                    <el-select v-model="pd.XB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.xb"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">签证种类：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.qzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">签证号码：</span>
+                    <el-input placeholder="请输入内容" size="small" v-model="pd.QZHM" class="input-input"></el-input>
+                </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">处理状态：</span>
                   <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
@@ -55,6 +91,12 @@
                       :value="item.dm">
                     </el-option>
                   </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="24" :lg="24"   class="input-item" v-if="rulesTotal!=0">
+                   <span class="input-text" style="width: 7.3%;">分类标签：</span>
+                   <el-radio-group v-model="ruleType" @change="rulesChange(ruleType)">
+                      <el-radio :label="item.RULE_Map" v-for="(item,ind) in rules" :key="ind">{{item.RULE_NAME}}</el-radio>
+                    </el-radio-group>
                 </el-col>
           </el-row>
          </el-col>
@@ -113,7 +155,10 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="getEdit(scope.row)"></el-button>
+               <div>
+                 <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="getEdit(scope.row)"></el-button>
+                 <el-button type="text"  class="a-btn"  title="人员画像"  icon="el-icon-document" @click="$router.push({name:'RYHX_XQ',query:{zjhm:scope.row.ZJHM,row:scope.row}})"></el-button>
+               </div>
              </template>
            </el-table-column>
          </el-table>
@@ -158,33 +203,62 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{begin:'',end:''}},
+      pd: {BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
       pd0:{},
+      pd1:{},
+      pd2:{},
       options: this.pl.ps,
       tableData: [],
       type:'',
       tabList:[],
+      ruleType:'',
+      rules:[],
+      rulesTotal:0,
     }
   },
   activated(){
+    this.rulesTotal=0,
     this.type=this.$route.query.type;
-    this.pd={BJSJ_DateRange:{begin:'',end:''}};
+    this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
     this.pd0={};
-
+    console.log('this.type',this.type)
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
        this.getMXLX(this.type);
+       this.getRules();
      }else {
        this.getMX(this.$store.state.type);
+       this.getRules();
      }
      this.Global.indexstate=1;
   },
   mounted() {
-
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');
+    this.$store.dispatch('getXB');
+    this.$store.dispatch('getZjzl');
+    this.$store.dispatch('getQzzl');
   },
   methods: {
+    getRules(){
+      if(this.pd.MXLX=="LZ_HC"){
+        this.pd2.MXLX=this.pd.MXLX
+        this.$api.post(this.Global.aport4+'/warningSortRuleController/selectByMXLX',{pd:this.pd2},
+        r =>{
+          if(r.success){
+            this.rules=r.data.resultList;
+            this.rulesTotal=r.data.totalResult;
+          }
+        })
+      }
+    },
+    rulesChange(val){
+      this.pd1=val;
+      this.pd1.MXLX=this.pd.MXLX
+      this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
+      this.pd0={};
+      this.getList(this.CurrentPage, this.pageSize,this.pd1);
+    },
     getMXLX(type){
 
       switch (parseInt(type)) {
