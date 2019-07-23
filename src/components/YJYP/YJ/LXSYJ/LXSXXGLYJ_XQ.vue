@@ -1013,7 +1013,7 @@ export default {
       asjTotalResult: 0,
 
       sjCurrentPage: 1,
-      sjpageSize: 3,
+      sjpageSize: 10,
       sjTotalResult: 0,
 
       tableData1:[],
@@ -1050,19 +1050,7 @@ export default {
       type:1,
       xid:'',
       dtid:'',
-      options: [{
-          value: 3,
-          label: "3"
-        },
-        {
-          value: 5,
-          label: "5"
-        },
-        {
-          value: 7,
-          label: "7"
-        }
-      ],
+      options:this.pl.ps,
       basedata:{},
       qdshow:true,
       lzxxDialogVisible:false,
