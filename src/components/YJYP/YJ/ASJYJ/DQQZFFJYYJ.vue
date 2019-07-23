@@ -44,7 +44,43 @@
                    <span class="input-text">证件号码：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
-
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">证件种类：</span>
+                    <el-select v-model="pd.ZJZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.zjzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                        <span class="input-text">性别：</span>
+                        <el-select v-model="pd.XB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                          <el-option
+                            v-for="item in $store.state.xb"
+                            :key="item.dm"
+                            :label="item.dm+' - '+item.mc"
+                            :value="item.dm">
+                          </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                        <span class="input-text">签证种类：</span>
+                        <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                          <el-option
+                            v-for="item in $store.state.qzzl"
+                            :key="item.dm"
+                            :label="item.dm+' - '+item.mc"
+                            :value="item.dm">
+                          </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                        <span class="input-text">签证号码：</span>
+                        <el-input placeholder="请输入内容" size="small" v-model="pd.QZHM" class="input-input"></el-input>
+                    </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">处理状态：</span>
                   <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
@@ -113,7 +149,10 @@
            <el-table-column
              label="操作" width="120">
              <template slot-scope="scope">
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2,row:scope.row}})"></el-button>
+               <div>
+                  <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2,row:scope.row}})"></el-button>
+                  <el-button type="text"  class="a-btn"  title="人员画像"  icon="el-icon-document" @click="$router.push({name:'RYHX_XQ',query:{zjhm:scope.row.ZJHM,row:scope.row}})"></el-button>
+               </div>
              </template>
            </el-table-column>
          </el-table>
@@ -170,7 +209,10 @@ export default {
   mounted() {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');
-  },
+    this.$store.dispatch('getZjzl');
+    this.$store.dispatch('getXB');
+    this.$store.dispatch('getQzzl');
+   },
   methods: {
     pageSizeChange(val) {
       this.pageSize=val;
