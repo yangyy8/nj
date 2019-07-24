@@ -4,8 +4,13 @@
   <div class="yymain ">
       <div class="tshu">
     <div class="yycontent" style="margin-top: 0px!important;">
-       <div class="yylbt mb-15">基本信息</div>
-       <el-row type="flex" class="yyf">
+      <div>
+       <div class="yylbt mb-15 hyst">基本信息</div>
+          <div class="hybutton">
+          <el-button type="button"  class="el-button el-button--primary el-button--small"  title="人员档案" @click="$router.push({name:'RYHX_XQ',query:{}})">人员档案</el-button>
+          </div>
+      </div>
+       <el-row type="flex" class="yyf hyst_a">
          <el-col :span="24" class="stu-left">
            <el-row type="flex" class="stu-row">
              <el-col :span="6">
@@ -1561,5 +1566,15 @@ export default {
 <style>
 .el-table--border, .el-table--group {
     border: 1px solid #E5ECF1!important;
+}
+.hybutton{
+  display: inline-block;
+  float: right;
+}
+.hyst{
+   display: inline-block;
+}
+.hyst_a{
+  clear: both;
 }
 </style>
