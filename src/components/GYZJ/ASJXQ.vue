@@ -125,7 +125,8 @@
               @current-change="handleCurrentChange1"
               :page-size="pageSize1"
               layout="prev, pager, next"
-              :total="TotalResult1">
+              :total="TotalResult1"
+              :current-page.sync ="CurrentPage1">
             </el-pagination>
           </div>
       </div>
@@ -180,7 +181,8 @@
               @current-change="handleCurrentChange2"
               :page-size="pageSize2"
               layout="prev, pager, next"
-              :total="TotalResult2">
+              :total="TotalResult2"
+              :current-page.sync ="CurrentPage2">
             </el-pagination>
           </div>
       </div>
@@ -243,7 +245,8 @@
               @current-change="handleCurrentChange3"
               :page-size="pageSize3"
               layout="prev, pager, next"
-              :total="TotalResult3">
+              :total="TotalResult3"
+              :current-page.sync ="CurrentPage3">
             </el-pagination>
           </div>
       </div>
@@ -302,7 +305,8 @@
               @current-change="handleCurrentChange4"
               :page-size="pageSize4"
               layout="prev, pager, next"
-              :total="TotalResult4">
+              :total="TotalResult4"
+              :current-page.sync ="CurrentPage4">
             </el-pagination>
           </div>
       </div>
@@ -361,7 +365,8 @@
               @current-change="handleCurrentChange1"
               :page-size="pageSize5"
               layout="prev, pager, next"
-              :total="TotalResult5">
+              :total="TotalResult5"
+              :current-page.sync ="CurrentPage5">
             </el-pagination>
           </div>
       </div>
@@ -810,38 +815,26 @@ export default {
       type:1,
       xid:'',
       CurrentPage1: 1,
-      pageSize1: 3,
+      pageSize1: 10,
       TotalResult1: 0,
 
       CurrentPage2: 1,
-      pageSize2: 3,
+      pageSize2: 10,
       TotalResult2: 0,
 
       CurrentPage3: 1,
-      pageSize3: 3,
+      pageSize3: 10,
       TotalResult3: 0,
 
       CurrentPage4: 1,
-      pageSize4: 3,
+      pageSize4: 10,
       TotalResult4: 0,
 
       CurrentPage5: 1,
-      pageSize5: 3,
+      pageSize5: 10,
       TotalResult5: 0,
 
-      options: [{
-          value: 3,
-          label: "3"
-        },
-        {
-          value: 5,
-          label: "5"
-        },
-        {
-          value: 7,
-          label: "7"
-        }
-      ],
+      options: this.pl.ps,
       url0:this.Global.aport4 + '/warningInfoController/getEntityByYJID',//人员基本信息
       url1:this.Global.aport4 + '/eS_FNVISASController/getResultListByParams',//签证信息
       url2:this.Global.aport4 + '/eS_CRJJLBController/getResultListByParams',//出入境信息
@@ -860,6 +853,11 @@ export default {
     }
   },
   activated() {
+    this.CurrentPage1=1;//临住信息
+    this.CurrentPage2=1;//临住信息
+    this.CurrentPage3=1;//临住信息
+    this.CurrentPage4=1;//临住信息
+    this.CurrentPage5=1;//临住信息
     this.yjType = this.$route.query.yjType;
     this.row = this.$route.query.row;
     this.sshow=true;

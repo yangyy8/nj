@@ -1,13 +1,10 @@
 <template lang="html">
   <!-- 人员画像 -->
-  <div class="yymain">
-    <div class="yytitle t-tsh">
+  <div class="yymain" >
+    <div class="yytitle t-tsh" style="min-height:700px;">
       <div class="yycontent ryhm">
         <div class="title"><img src="../../../../assets/img/js.png" border='0'></div>
-        <div>
-
-          <div class="my-form-group" style="display:inline-block; margin-left:-10px;" data-scope="demo2" data-name="zjhm" data-type="input"
-       v-validate-easy="[['required']]">
+        <div class="zhcx">
             <el-input placeholder="+包含 -为不包含 +(a b)为in -(a b)为notIn" v-model="zjhm" class="inputs" max="500">
               <el-select v-model="selecttype" slot="prepend" placeholder="请选择" style="width:100px;">
                  <el-option label="综合" value="all"></el-option>
@@ -17,7 +14,6 @@
                  <el-option label="地址" value="addr"></el-option>
             </el-select>
             </el-input>
-          </div>
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
           <el-button type="primary"  @click="gjshow=!gjshow">高级查询</el-button>
           <el-button type="warning"  @click="$router.push({name:'RYPLCX',query:{}})">模板导入</el-button>
@@ -198,11 +194,16 @@ export default {
       this.listDialogVisible=false;
     },
     getList(){
-      this.V.$submit('demo2', (canSumit,data) => {
-        if(!canSumit) return
+
+        if(this.selecttype==undefined || this.selecttype==""){
+          this.$message.error("请选择类型！");return ;
+        }
+        if(this.zjhm==undefined || this.zjhm==""){
+          this.$message.error("请输入内容再进行查询！");return ;
+        }
        this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})   //人员画像
       // this.$router.push({name:'QWJS',query:{zjhm:this.zjhm,stype:this.selecttype}})    //全文检索
-      })
+
     },
     conditionChange(){
       this.V.$reset('demo1')
@@ -307,7 +308,7 @@ border:1px solid rgba(255,255,255,1);
     margin-left: 5px;
 }
 
-.my-form-group  .el-input-group__prepend {
+.zhcx  .el-input-group__prepend {
     background-color: #fff;
   }
 </style>
