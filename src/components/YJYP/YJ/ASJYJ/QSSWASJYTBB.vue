@@ -103,31 +103,9 @@
         <div class="page-msg">
           <div class="">
         共{{TotalResult}}条记录
-          </div>
-          <div class="">
-            每页显示
-            <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            条
-          </div>
-          <div class="">
-            共{{Math.ceil(TotalResult/pageSize)}}页
-          </div>
+          </div>         
         </div>
-        <el-pagination
-          background
-          @current-change="handleCurrentChange"
-          :current-page.sync ="CurrentPage"
-          :page-size="pageSize"
-          layout="prev, pager, next"
-          :total="TotalResult">
-        </el-pagination>
+       
       </div>
     </div>
   </div>
@@ -140,44 +118,29 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{}},
+      pd: {BASJ_DateRange:{}},
       pd0:{},
-      options: this.pl.ps,
       tableData: [],
     }
   },
     activated(){
-        this.getList(this.CurrentPage, this.pageSize, this.pd);
     },
   mounted() {
     
    },
   methods: {
-    pageSizeChange(val) {
-      this.pageSize=val;
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.CurrentPage=val;
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
-    },
-    getList(currentPage, showCount, pd) {
-      /* this.pd.MXLX='ASJ_DQQZFFJY';
-
-      this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
-      this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ; */
-
+    getList(currentPage, showCount, pd) {     
+      this.pd.BASJ_DateRange.begin=this.pd0.beginBJSJ==undefined?"":this.pd0.beginBJSJ;
+      this.pd.BASJ_DateRange.end=this.pd0.endBJSJ==undefined?"":this.pd0.endBJSJ; 
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post(this.Global.aport4+'/api_yewu/ajbbController/swajbb', p,
+      this.$api.post(this.Global.aport2+'/ajbbController/swajbb', p,
         r => {
-          this.tableData = r.data.resultList;
-          this.TotalResult = r.data.totalResult;
+          this.tableData = r.data.data;
+          this.TotalResult = r.data.data.length;
         })
     },
   }
