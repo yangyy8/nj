@@ -57,7 +57,7 @@ export default {
       this.type=this.$route.query.stype;
       this.content=this.$route.query.zjhm;
       console.log(this.type,this.content);
-      //this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getList(this.CurrentPage, this.pageSize, this.pd);
     },
   mounted() {
 
@@ -73,14 +73,14 @@ export default {
     },
     getList(currentPage,showCount){
      let p={
-       "Keywords":this.content,
-       "Type":this.type,
+       "keywords":this.content,
+       "type":this.type,
        "pageSize":showCount,
        "page":currentPage
      };
      this.$api.post(this.Global.aport6+"/api/es/search/generalSearch",p,r=>{
        if(r.success){
-         this.items=r.respondData;
+         this.items=r.respondResult.respondData;
          this.TotalResult=r.respondResult.totalSize;
        }
      })
