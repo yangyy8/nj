@@ -193,6 +193,7 @@
 export default {
   data() {
     return {
+      ssfj:[],
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -211,8 +212,9 @@ export default {
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
     this.$store.dispatch('getClzt');
+    this.$store.dispatch('getShzt');
     this.getZrq();
-
+    this.getFJ();
   },
 
   methods: {

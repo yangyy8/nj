@@ -697,7 +697,8 @@
 <!-- 弹出小的窗口 -->
        <el-dialog title="添加标签" :visible.sync="bqDialogVisible" width="600px">
          <el-row :gutter="1">
-           <el-col  :span="24"  class="input-item">
+           <el-col  :span="24"  class="input-item my-form-group" data-scope="demo1" data-name="labmc" data-type="select"
+        v-validate-easy="[['required']]">
               <span class="input-text">标签名称：</span>
               <el-select v-model="labmc" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                 <el-option
@@ -1044,6 +1045,7 @@ export default{
      //获取标签标签
     addLable(){
       this.bqDialogVisible=true;
+      this.labmc='';
       this.$api.post(this.Global.aport3+'/ryhx/getreslab',{},
         r => {
           this.labels = r.data.resultList;
@@ -1052,35 +1054,40 @@ export default{
           // this.colorType = this.suc.slice(rand, 1)[0];
           this.getLable();
         })
+        this.V.$reset('demo1')
     },
     //保存标签
     saveLabls(){
-      var srr=this.labmc.split(',');
-      let p={
-        // "RYBH":this.row.RYBH||this.rybh,
-        "BM":srr[0],
-        "MC":srr[1],
-      };
-      if(this.row){
-        p.RYBH=this.row.RYBH
-      }else if(this.rybh){
-        p.RYBH=this.rybh
-      }else{
-        p.RYBH=''
-      }
-      this.$api.post(this.Global.aport3+'/ryhx/addrybqbyrybh', p,
-        r => {
-          if(r.success){
-            this.$message({
-              message: '保存成功',
-              type: 'success'
-            });
-           this.bqDialogVisible=false;
-           this.getLable();
-          }else {
-            this.$message.error(r.message);return;
-          }
-        })
+      this.V.$submit('demo1', (canSumit,data) => {
+        if(!canSumit) return
+        var srr=this.labmc.split(',');
+        let p={
+          // "RYBH":this.row.RYBH||this.rybh,
+          "BM":srr[0],
+          "MC":srr[1],
+        };
+        if(this.row){
+          p.RYBH=this.row.RYBH
+        }else if(this.rybh){
+          p.RYBH=this.rybh
+        }else{
+          p.RYBH=''
+        }
+        this.$api.post(this.Global.aport3+'/ryhx/addrybqbyrybh', p,
+          r => {
+            if(r.success){
+              this.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+             this.bqDialogVisible=false;
+             this.getLable();
+            }else {
+              this.$message.error(r.message);return;
+            }
+          })
+      })
+
     },
     delid(dm){
 

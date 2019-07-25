@@ -6,12 +6,12 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                <span class="input-text">行政区划：</span>
+                <span class="input-text">所属分局：</span>
                 <el-select v-model="pd.XZQHDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                   <el-option
-                    v-for="item in $store.state.xzqh"
-                    :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
+                    v-for="(item,ind) in ssfj"
+                    :key="ind"
+                    :label="item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -76,10 +76,12 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">审核状态：</span>
-                  <el-select v-model="pd.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 已通过">
-                    </el-option>
-                    <el-option value="1" label="1 - 未通过">
+                  <el-select v-model="pd.SHZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="item in $store.state.shzt"
+                      :key="item.dm"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -190,6 +192,7 @@
 export default {
   data() {
     return {
+      ssfj:[],
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -207,10 +210,22 @@ export default {
     this.$store.dispatch('getPcs');
     this.$store.dispatch('getXzqh');
     this.$store.dispatch('getClzt');
+    this.$store.dispatch('getShzt');
+    this.getFJ();
     this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
 
   methods: {
+    getFJ() {
+      let p = {
+        "operatorId": this.$store.state.uid,
+        "operatorNm": this.$store.state.uname
+      };
+      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+        r => {
+          this.ssfj = r.data.SSFJ;
+        })
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
