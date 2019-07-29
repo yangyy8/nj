@@ -47,6 +47,8 @@ var store = new Vuex.Store({
     erxxdm:[],
     shzt:[],
     tbry:[],
+    lgyj:[],
+    gljb:[]
   },
   mutations: {
     getToken(state, data) {
@@ -170,9 +172,27 @@ var store = new Vuex.Store({
     },
     getTbry(state,data){
       state.tbry=data;
+    },
+    getLgyj(state,data){
+      state.lgyj=data;
+    },
+    getGljb(state,data){
+      state.gljb=data;
     }
   },
   actions: {
+     getLgyj(context) {
+      api.get(global_.aport1 + global_.lgyj, null,
+        r => {
+          context.commit('getLgyj', ToArray(r.data))
+        })
+    },
+    getGljb(context) {
+      api.get(global_.aport1 + global_.gljb, null,
+        r => {
+          context.commit('getGljb', ToArray(r.data))
+        })
+    }, 
     getSsdw(context) {
       var formData = new FormData();
       formData.append("org", global_.org);

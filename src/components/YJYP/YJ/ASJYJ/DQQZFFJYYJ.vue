@@ -151,7 +151,6 @@
              <template slot-scope="scope">
                <div>
                   <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'DQQZFFJYYJ_XQ',query:{yjType:2,row:scope.row}})"></el-button>
-                  <el-button type="text"  class="a-btn"  title="人员画像"  icon="el-icon-document" @click="$router.push({name:'RYHX_XQ',query:{zjhm:scope.row.ZJHM,row:scope.row}})"></el-button>
                </div>
              </template>
            </el-table-column>

@@ -152,7 +152,7 @@
              <template slot-scope="scope">
                <div>
                   <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit-outline" @click="$router.push({name:'WLYPYJ_XQ',query:{yjType:4,row:scope.row,pd:pd}})"></el-button>
-                  <el-button type="text"  class="a-btn"  title="人员画像"  icon="el-icon-document" @click="$router.push({name:'RYHX_XQ',query:{zjhm:scope.row.ZJHM,row:scope.row}})"></el-button>
+                  <el-button type="text"  class="a-btn"  title="设为重点人员"  icon="iconfont el-icon-yy-jiaoseyonghu" @click="adds(scope.row);form={};"></el-button>
                </div>
              </template>
            </el-table-column>
@@ -188,6 +188,39 @@
         </el-pagination>
       </div>
     </div>
+
+    <el-dialog title="设为重点人员" :visible.sync="addsDialogVisible" width="600px" >
+      <el-form :model="form" ref="addForm">
+        <el-row :gutter="1"  class="mb-6">
+            <el-col :span="24" class="input-item" data-scope="demo" data-name="RULE" data-type="input" v-validate-easy="[['required']]">
+              <span class="input-text">列管依据：</span>
+                <el-select v-model="form.LGYJ" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.lgyj"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                 </el-select>
+            </el-col>
+            <el-col :span="24" class="input-item" data-scope="demo" data-name="RULE" data-type="input" v-validate-easy="[['required']]">
+              <span class="input-text">管理级别：</span>
+              <el-select v-model="form.GLJB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.gljb"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                 </el-select>
+            </el-col>
+        </el-row>
+      </el-form> 
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
+        <el-button @click="qxItem('addForm')" size="small">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -202,6 +235,13 @@ export default {
       pd0:{},
       options: this.pl.ps,
       tableData: [],
+      addsDialogVisible :false,
+      userCode:'',
+      userName:'',
+      orgCode:'',
+      orgName:'',
+      form:{},
+      addlg:{},
     }
   },
 
@@ -216,6 +256,12 @@ export default {
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getXB');
     this.$store.dispatch('getRjqzzl');
+    this.$store.dispatch('getLgyj');
+    this.$store.dispatch('getGljb');
+    this.userCode=this.$store.state.uname;
+    this.userName=this.$store.state.uid;
+    this.orgCode=this.$store.state.orgname;
+    this.orgName=this.$store.state.orgid
   },
   methods: {
     pageSizeChange(val) {
@@ -257,6 +303,63 @@ export default {
         }
       }
     },
+    adds(i){
+        this.addlg={};
+        this.addlg={
+          ZJHM:i.ZJHM,
+          GJDQ:i.GJ,
+        }
+         let p={
+           pd:{
+             ZJHM:i.ZJHM,
+             GJDQ:i.GJ,
+           }
+         }
+        this.$api.post(this.Global.aport4+'/zDRYController/isLGRY', p,
+         r => {
+           if(r.data==1){
+             this.addsDialogVisible=true;  
+           } else if(r.data==0){
+              this.$message('该人员已经被列管');
+           } else if(r.data==2){
+              this.$confirm('该人员有常住信息，是否设为常住列管', {
+              confirmButtonText: '是',
+              cancelButtonText: '否',
+              type: 'warning'
+            }).then(() => {
+                this.addsDialogVisible=true;
+            })  
+          }  
+        })     
+     },
+      addItem(addForm){
+        let p={
+          pd:{
+            ZJHM:this.addlg.ZJHM,
+            GJDQ:this.addlg.GJDQ,
+            LGYJ:this.form.LGYJ,
+            GLJB:this.form.GLJB,
+          },  
+           userName:this.userName,
+           userCode:this.userCode,
+           orgCode:this.orgCode,
+           orgName:this.orgName    
+         }
+        this.$api.post(this.Global.aport4+'/zDRYController/setZdry', p,
+         r => {
+           if(r.success){
+                 this.$message({
+                 message: '保存成功！',
+                 type: 'success'
+               });
+                this.addsDialogVisible=false;
+               }
+         })
+     },
+      qxItem(addForm){
+          this.addsDialogVisible = false;
+    },
+
   }
 }
 </script>

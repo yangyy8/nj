@@ -59,6 +59,8 @@ const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地
 const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态类型（地图用的）
 const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
 const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
+const lgyj="/service/getRedisDataByDm?tablename=DM_ZDRY_LGYJ";//重点人员列管依据
+const gljb="/service/getRedisDataByDm?tablename=DM_ZDRY_GLJB";//重点人员管理级别 
 const tablists=[];
 export default
 {
@@ -78,5 +80,5 @@ export default
   aport6,
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb
 }
