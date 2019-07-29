@@ -224,3 +224,18 @@
   font-size: inherit;
   background-color: #fff;
 }
+.t-table{
+  width: 100%;
+  font-size: 14px!important;
+}
+.t-table tr{
+  height: 40px;
+}
+.th1{
+  background: #5D717F!important;
+  font-size: 14px!important;
+  color: #FFFFFF;
+}
+.t-table td{
+  border:1px solid #eee
+}
