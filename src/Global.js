@@ -17,7 +17,7 @@ const aport2="api-yewu";//左星海网关
 // const aport2="http://192.168.3.217:9439";//左星海
 // const aport3="http://10.33.72.144:9439";//正式环境
 const aport3="api-yewu";//石飞网关
-// const aport3="http://10.0.3.84:9439";//石飞
+// const aport3="http://10.0.30.92:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
 const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙
@@ -25,7 +25,7 @@ const aport4="api-yujing";//李文龙 预警
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
 
-const aport6="http://10.0.9.48:8080";//孙振东
+const aport6="http://10.0.44.92:9447";//孙振东
 
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
@@ -59,6 +59,8 @@ const zflx="/service/getRedisDataByDm?tablename=DM_CZ_ZFXZ";//住房类型（地
 const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态类型（地图用的）
 const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
 const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
+const lgyj="/service/getRedisDataByDm?tablename=DM_ZDRY_LGYJ";//重点人员列管依据
+const gljb="/service/getRedisDataByDm?tablename=DM_ZDRY_GLJB";//重点人员管理级别 
 const tablists=[];
 export default
 {
@@ -78,5 +80,5 @@ export default
   aport6,
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb
 }

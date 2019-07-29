@@ -183,12 +183,9 @@
         </el-pagination>
       </div>
     </div>
-
-
   <el-dialog title="审核" :visible.sync="editsDialogVisible">
     <el-form   ref="editform">
       <el-row :gutter="1"  class="mb-6">
-
         <el-col :span="24" class="input-item">
           <span class="input-text">审核结果：</span>
           <el-select v-model="editform.SHBM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
@@ -262,7 +259,7 @@
             <span class="input-input detailinput">  {{mapForm.CZSJ}}</span>
           </el-col>
       </el-row>
-      
+
       <el-row :gutter="2">
           <el-col :span="12" class="input-item">
             <span class="input-text">审核结果：</span>

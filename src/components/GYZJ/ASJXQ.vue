@@ -3,7 +3,10 @@
   <div class="yymain tshu">
     <div class="yycontent">
       <div class="mb-15">
-        <div class="yylbt mb-15">基本信息</div>
+        <div class="yylbt mb-15 hyst">基本信息</div>
+        <div class="hybutton">
+        <el-button type="button"  class="el-button el-button--primary el-button--small"  title="人员档案" @click="$router.push({name:'RYHX_XQ',query:{zjhm:$route.query.row.ZJHM,row:$route.query.row}})">人员档案</el-button>
+        </div>
         <el-row type="flex" class="yyf">
           <el-col :span="24" class="stu-left">
             <el-row  class="stu-row tt-bb">

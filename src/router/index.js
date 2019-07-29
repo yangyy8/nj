@@ -301,6 +301,37 @@ export default new Router({
           meta:{title:['数据分析','案件分析','重点区域监控分析']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/ZDQYJKFX'], resolve),
         },
+        /* 19.07添加 */
+        {
+          path: 'QSSWASJYTBB',
+          name: 'QSSWASJYTBB',
+          meta:{title:['数据分析','案件分析','全市涉外案事件月通报表']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/QSSWASJYTBB'], resolve),
+        },
+        /*  {
+          path: 'SWASJTJB',
+          name: 'SWASJTJB',
+          meta:{title:['数据分析','案件分析','涉外案事件统计表']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
+        },  */
+        {
+          path: 'GAJGCCFFJLJY',
+          name: 'GAJGCCFFJLJY',
+          meta:{title:['数据分析','案件分析','公安机关查处非法居留非法就业外国人工作情况统计表']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/GAJGCCFFJLJY'], resolve),
+        },
+        {
+          path: 'MYSFZGTJB',
+          name: 'MYSFZGTJB',
+          meta:{title:['数据分析','案件分析','每月三非战果统计表']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/MYSFZGTJB'], resolve),
+        },
+        /*{
+          path: 'NJSFWGRZLGZ',
+          name: 'NJSFWGRZLGZ',
+          meta:{title:['数据分析','案件分析','南京“三非”外国人治理工作情况统计表']},
+          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/NJSFWGRZLGZ'], resolve),
+        }, */
         {
           path: 'SLQFXXYJ',
           name: 'SLQFXXYJ',

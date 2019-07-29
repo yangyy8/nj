@@ -201,8 +201,8 @@ export default {
         if(this.zjhm==undefined || this.zjhm==""){
           this.$message.error("请输入内容再进行查询！");return ;
         }
-       this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})   //人员画像
-      // this.$router.push({name:'QWJS',query:{zjhm:this.zjhm,stype:this.selecttype}})    //全文检索
+       // this.$router.push({name:'RYHX_XQ',query:{zjhm:this.zjhm}})   //人员画像
+      this.$router.push({name:'QWJS',query:{zjhm:this.zjhm,stype:this.selecttype}})    //全文检索
 
     },
     conditionChange(){
