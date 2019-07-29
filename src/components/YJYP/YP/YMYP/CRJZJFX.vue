@@ -6,10 +6,10 @@
             <el-col :span="22" class="br pr-20">
               <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">状态：</span>
-                  <el-select v-model="pd.YXZT"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <span class="input-text">移民状态：</span>
+                  <el-select v-model="pd.YXZT" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.gjdq"
+                      v-for="item in $store.state.ymzt"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
@@ -45,9 +45,9 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">移民种类：</span>
-                  <el-select v-model="pd.YMZLDM"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.YMZLDM" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.gjdq"
+                      v-for="item in $store.state.ymzl"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
@@ -363,6 +363,10 @@
       mounted() {
          this.$store.dispatch("getGjdq");
          this.$store.dispatch("getXB");
+         this.$store.dispatch("getYmzt");
+         this.$store.dispatch("getYmzl");
+
+
          this.$store.dispatch("getSsdw");
          this.$store.dispatch("getZjzl");
          this.$store.dispatch("getRjqzzl");

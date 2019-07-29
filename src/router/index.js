@@ -314,18 +314,18 @@ export default new Router({
           meta:{title:['数据分析','案件分析','涉外案事件统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
         },  */
-        {
-          path: 'GAJGCCFFJLJY',
-          name: 'GAJGCCFFJLJY',
-          meta:{title:['数据分析','案件分析','公安机关查处非法居留非法就业外国人工作情况统计表']},
-          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/GAJGCCFFJLJY'], resolve),
-        },
-        {
-          path: 'MYSFZGTJB',
-          name: 'MYSFZGTJB',
-          meta:{title:['数据分析','案件分析','每月三非战果统计表']},
-          component: resolve => require(['@/components/YJYP/YJ/ASJYJ/MYSFZGTJB'], resolve),
-        },
+        // {
+        //   path: 'GAJGCCFFJLJY',
+        //   name: 'GAJGCCFFJLJY',
+        //   meta:{title:['数据分析','案件分析','公安机关查处非法居留非法就业外国人工作情况统计表']},
+        //   component: resolve => require(['@/components/YJYP/YJ/ASJYJ/GAJGCCFFJLJY'], resolve),
+        // },
+        // {
+        //   path: 'MYSFZGTJB',
+        //   name: 'MYSFZGTJB',
+        //   meta:{title:['数据分析','案件分析','每月三非战果统计表']},
+        //   component: resolve => require(['@/components/YJYP/YJ/ASJYJ/MYSFZGTJB'], resolve),
+        // },
         /*{
           path: 'NJSFWGRZLGZ',
           name: 'NJSFWGRZLGZ',
