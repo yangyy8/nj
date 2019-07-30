@@ -60,7 +60,9 @@ const jzztlx="/service/getRedisDataByDm?tablename=DM_JWRYJZZTLX";//居住状态�
 const xxdm="/service/getRedisDataByDm?tablename=zyxd_xx";//在校学校代码
 const erxxdm="/service/getRedisDataByDm?tablename=jyt_xx";//202学校代码
 const lgyj="/service/getRedisDataByDm?tablename=DM_ZDRY_LGYJ";//重点人员列管依据
-const gljb="/service/getRedisDataByDm?tablename=DM_ZDRY_GLJB";//重点人员管理级别 
+const gljb="/service/getRedisDataByDm?tablename=DM_ZDRY_GLJB";//重点人员管理级别
+const ymzt="/service/getRedisDataByDm?tablename=DM_YMSQZT"//移民申请状态
+const ymzl="/service/getRedisDataByDm?tablename=DM_YMZL"//移民种类
 const tablists=[];
 export default
 {
@@ -80,5 +82,5 @@ export default
   aport6,
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb,ymzt,ymzl
 }

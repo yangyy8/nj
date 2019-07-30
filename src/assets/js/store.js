@@ -48,7 +48,9 @@ var store = new Vuex.Store({
     shzt:[],
     tbry:[],
     lgyj:[],
-    gljb:[]
+    gljb:[],
+    ymzt:[],
+    ymzl:[],
   },
   mutations: {
     getToken(state, data) {
@@ -178,9 +180,27 @@ var store = new Vuex.Store({
     },
     getGljb(state,data){
       state.gljb=data;
-    }
+    },
+    getYmzt(state,data){
+      state.ymzt=data;
+    },
+    getYmzl(state,data){
+      state.ymzl=data;
+    },
   },
   actions: {
+    getYmzt(context){
+      api.get(global_.aport1 + global_.ymzt, null,
+        r => {
+          context.commit('getYmzt', ToArray(r.data))
+        })
+    },
+    getYmzl(context){
+      api.get(global_.aport1 + global_.ymzl, null,
+        r => {
+          context.commit('getYmzl', ToArray(r.data))
+        })
+    },
      getLgyj(context) {
       api.get(global_.aport1 + global_.lgyj, null,
         r => {
@@ -192,7 +212,7 @@ var store = new Vuex.Store({
         r => {
           context.commit('getGljb', ToArray(r.data))
         })
-    }, 
+    },
     getSsdw(context) {
       var formData = new FormData();
       formData.append("org", global_.org);

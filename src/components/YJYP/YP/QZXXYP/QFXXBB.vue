@@ -81,12 +81,12 @@
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15">
-              <el-checkbox label="国家地区" v-model="pm.GJDQ_DESC" :disabled="disa"></el-checkbox>
-              <el-checkbox label="审批结果" v-model="pm.SPJG_DESC" :disabled="disa"></el-checkbox>
-              <el-checkbox label="申请类别" v-model="pm.SQLB_DESC" :disabled="disa"></el-checkbox>
-              <el-checkbox label="申请事由" v-model="pm.SQSY_DESC" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持签证种类" v-model="pm.QZZL_DESC" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持证件种类" v-model="pm.ZJZL_DESC" :disabled="disa"></el-checkbox>
+              <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
+              <el-checkbox label="审批结果" v-model="pm.SPJG" :disabled="disa"></el-checkbox>
+              <el-checkbox label="申请类别" v-model="pm.SQLB" :disabled="disa"></el-checkbox>
+              <el-checkbox label="申请事由" v-model="pm.SQSY" :disabled="disa"></el-checkbox>
+              <el-checkbox label="所持签证种类" v-model="pm.QZZL" :disabled="disa"></el-checkbox>
+              <el-checkbox label="所持证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
           </div>
           <div v-if="falg">
             <el-table
@@ -104,12 +104,12 @@
                  prop="count_DESC"
                  label="统计数量">
                </el-table-column>
-               <!-- <el-table-column
+               <el-table-column
                  label="操作" width="100">
                  <template slot-scope="scope">
-                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'JYTRYXX',query:{row:scope.row}})"></el-button>
+                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'QFRYXX',query:{row:scope.row}})"></el-button>
                  </template>
-               </el-table-column> -->
+               </el-table-column>
             </el-table>
             <div class="middle-foot">
               <div class="page-msg">
@@ -305,6 +305,7 @@
             },
           ],
           tableHeadHc:[],
+          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -347,23 +348,30 @@
                this.disa=false;
              }
             this.tableHeadHc=[];
-            if(this.pm.GJDQ_DESC==true){
-              this.tableHeadHc.push("GJDQ_DESC");
+            this.tableHeadHs=[];
+            if(this.pm.GJDQ==true){
+              this.tableHeadHc.push("GJDQ");
+              this.tableHeadHs.push('GJDQ_DESC')
             }
-            if(this.pm.SPJG_DESC==true){
-              this.tableHeadHc.push("SPJG_DESC");
+            if(this.pm.SPJG==true){
+              this.tableHeadHc.push("SPJG");
+              this.tableHeadHs.push('SPJG_DESC')
             }
-            if(this.pm.SQLB_DESC==true){
-              this.tableHeadHc.push("SQLB_DESC");
+            if(this.pm.SQLB==true){
+              this.tableHeadHc.push("SQLB");
+              this.tableHeadHs.push('SQLB_DESC')
             }
-            if(this.pm.SQSY_DESC==true){
-              this.tableHeadHc.push("SQSY_DESC");
+            if(this.pm.SQSY==true){
+              this.tableHeadHc.push("SQSY");
+              this.tableHeadHs.push('SQSY_DESC')
             }
-            if(this.pm.QZZL_DESC==true){
-              this.tableHeadHc.push("QZZL_DESC");
+            if(this.pm.QZZL==true){
+              this.tableHeadHc.push("QZZL");
+              this.tableHeadHs.push('QZZL_DESC')
             }
-            if(this.pm.ZJZL_DESC==true){
-              this.tableHeadHc.push("ZJZL_DESC");
+            if(this.pm.ZJZL==true){
+              this.tableHeadHc.push("ZJZ");
+              this.tableHeadHs.push('ZJZL_DESC')
             }
           let p = {
             "currentPage": currentPage,
@@ -382,11 +390,11 @@
                 this.falg=true;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHc.length;i++){
+                for(var i=0;i<_this.tableHeadHs.length;i++){
                   var a='';
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].code==_this.tableHeadHc[i]){
+                    if(_this.tableHead[j].code==_this.tableHeadHs[i]){
                       a=j;
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
