@@ -262,8 +262,7 @@ export default {
           list.cjr=arr[i].cjr;
           list.cjsj=arr[i].cjsj;
           list.gxr=this.$store.state.uid;
-          list.gxsj=formatDate(new Date(),'yyyy-MM-dd hh:mm:ss');;
-
+          list.gxsj=formatDate(new Date(),'yyyy-MM-dd hh:mm:ss');
          alist.push(list);
         }
         console.log(alist);
