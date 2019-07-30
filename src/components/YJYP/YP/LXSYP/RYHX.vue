@@ -5,7 +5,7 @@
       <div class="yycontent ryhm">
         <div class="title"><img src="../../../../assets/img/js.png" border='0'></div>
         <div class="zhcx">
-            <el-input placeholder="+包含 -为不包含 +(a b)为in -(a b)为notIn" v-model="zjhm" class="inputs" max="500">
+            <el-input placeholder=" " v-model="zjhm" class="inputs" max="500">
               <el-select v-model="selecttype" slot="prepend" placeholder="请选择" style="width:100px;">
                  <el-option label="综合" value="all"></el-option>
                  <el-option label="组织" value="org"></el-option>

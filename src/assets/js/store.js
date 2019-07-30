@@ -46,7 +46,7 @@ var store = new Vuex.Store({
     xxdm:[],
     erxxdm:[],
     shzt:[],
-    tbry:[],
+    tbry:[],ymsqzt:[],ymqzzl:[],ymzl:[]
   },
   mutations: {
     getToken(state, data) {
@@ -170,6 +170,15 @@ var store = new Vuex.Store({
     },
     getTbry(state,data){
       state.tbry=data;
+    },
+    getYmsqzt(state,data){
+      state.ymsqzt=data;
+    },
+    getYmqzzl(state,data){
+      state.ymqzzl=data;
+    },
+    getYmzl(state,data){
+      state.ymzl=data;
     }
   },
   actions: {
@@ -356,7 +365,25 @@ var store = new Vuex.Store({
         r => {
           context.commit('getTbry', ToArray(r.data))
         })
-    }
+    },
+    getYmsqzt(context){
+      api.get(global_.aport1 + global_.ymsqzt, null,
+        r => {
+          context.commit('getYmsqzt', ToArray(r.data))
+        })
+    },
+    getYmqzzl(context){
+      api.get(global_.aport1 + global_.ymqzzl, null,
+        r => {
+          context.commit('getYmqzzl', ToArray(r.data))
+        })
+    },
+    getYmzl(context){
+      api.get(global_.aport1 + global_.ymzl, null,
+        r => {
+          context.commit('getYmzl', ToArray(r.data))
+        })
+    },
   }
 });
 export default store;

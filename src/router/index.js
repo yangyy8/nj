@@ -313,7 +313,7 @@ export default new Router({
           name: 'SWASJTJB',
           meta:{title:['数据分析','案件分析','涉外案事件统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
-        }, 
+        },
         {
           path: 'GAJGCCFFJLJY',
           name: 'GAJGCCFFJLJY',
@@ -592,8 +592,14 @@ export default new Router({
         {
           path: 'YMDR',
           name: 'YMDR',
-          meta:{title:['日常管理','数据导入','移民导入']},
+          meta:{title:['日常管理','数据导入','移民数据导入']},
           component: resolve => require(['@/components/YWCZ/SJDR/YMDR'], resolve),
+        },
+        {
+          path: 'YMDBDR',
+          name: 'YMDBDR',
+          meta:{title:['日常管理','数据导入','移民代办签证导入']},
+          component: resolve => require(['@/components/YWCZ/SJDR/YMDBDR'], resolve),
         },
         {
           path: 'FFJLRY',
@@ -656,6 +662,12 @@ export default new Router({
           name: 'GNSQ',
           meta:{title:['系统管理','用户权限','功能授权']},
           component: resolve => require(['@/components/XTGL/YHQX/GNSQ'], resolve),
+        },
+        {
+          path: 'GZGLYJ',
+          name: 'GZGLYJ',
+          meta:{title:['系统管理','系统配置','规则管理']},
+          component: resolve => require(['@/components/XTGL/XTSZ/GZGLYJ'], resolve),
         },
         {
           path: 'YHSQ',

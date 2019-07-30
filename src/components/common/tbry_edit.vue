@@ -240,6 +240,7 @@
 </template>
 <script>
 import imgUrl from "../../assets/img/mrzp.png"
+let Base64 = require('js-base64').Base64;
 export default {
   name: 'TBRYEDIT',
   props: ['type', 'xid', 'random'],
@@ -290,7 +291,8 @@ export default {
     this.$store.dispatch("getZjzl");
     this.$store.dispatch("getXB");
     this.$store.dispatch("getTbry");
-    this.actions = window.IPConfig.IP + this.Global.aport3;
+    // this.actions = window.IPConfig.IP + this.Global.aport3;
+      this.actions = this.Global.aport3;
     this.getData0(this.id);
 
   },
@@ -373,7 +375,7 @@ export default {
           message: '上传文件只能是pdf文件或者png,jpg图片格式!',
           type: 'warning'
         });
-        return ;
+        return false;
       }
       return true;
     },
@@ -395,6 +397,9 @@ export default {
         });
         return
       }
+      this.uploadIconData.fileName=this.$refs.upload.uploadFiles[0].name;
+
+      console.log(encodeURIComponent(this.$refs.upload.uploadFiles));
       this.$refs.upload.submit();
     },
     downloadM(data,tt,fname) {

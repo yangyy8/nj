@@ -14,50 +14,50 @@
                    <el-input placeholder="请输入内容" size="small" v-model="pd.SFZH" class="input-input"></el-input>
                 </el-col>
 
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">前往国：</span>
-                    <el-select v-model="pd.QWGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
-                      <el-option
-                        v-for="(item,ind) in $store.state.gjdq"
-                        :key="ind"
-                        :label="item.dm+' - '+item.mc"
-                        :value="item.dm">
-                      </el-option>
-                    </el-select>
-                </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">移民种类：</span>
-                  <el-select v-model="pd.YMZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                  <span class="input-text">性别：</span>
+                  <el-select v-model="pd.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option
-                      v-for="(item,ind) in $store.state.ymzl"
+                      v-for="(item,ind) in $store.state.xb"
                       :key="ind"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                  <span class="input-text">移民签证种类：</span>
+                  <el-select v-model="pd.YMQZZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind1) in $store.state.ymqzzl"
+                      :key="ind1"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
+                    </el-option>
+                  </el-select>
+                </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">签约时间：</span>
+                  <span class="input-text">申请时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.QYSJStart" format="yyyy-MM-dd"
+                       v-model="pd.SQSJStart" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.QYSJEnd" format="yyyy-MM-dd"
+                        v-model="pd.SQSJEnd" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">移民申请状态：</span>
-                    <el-select v-model="pd.YMSQZTDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <span class="input-text">签证国家：</span>
+                    <el-select v-model="pd.QZGJDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="(item,ind) in $store.state.ymsqzt"
-                        :key="ind"
+                        v-for="(item,ind1) in $store.state.gjdq"
+                        :key="ind1"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
                       </el-option>
@@ -93,20 +93,20 @@
              label="身份证号">
            </el-table-column>
            <el-table-column
-             prop="QYSJ"
-             label="签约日期">
+             prop="XBMC"
+             label="性别">
            </el-table-column>
            <el-table-column
-             prop="YMSQZTMC"
-             label="移民申请状态">
+             prop="YMQZZLMC"
+             label="移民签证种类">
            </el-table-column>
            <el-table-column
-             prop="QWGMC"
-             label="前往国">
+             prop="SQSJ"
+             label="申请时间">
            </el-table-column>
            <el-table-column
-             prop="YMZLMC"
-             label="移民种类">
+             prop="QZGJMC"
+             label="签证国家">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -156,9 +156,9 @@
           <el-upload
             class="input-input"
             ref="upload"
-            :action='actions+"/drym/readExcel"'
+            :action='actions+"/drymdbqz/readExcel"'
             :file-list="fileList"
-            multiple
+             multiple
             :on-success="upSuccess"
             :data="uploadIconData"
             :before-upload="beforeAvatarUpload"
@@ -184,20 +184,30 @@
           <span class="input-text">身份证号：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.SFZH" class="input-input"></el-input>
         </el-col>
-
         <el-col :span="12" class="input-item">
-         <span class="input-text">签约日期：</span>
+          <span class="input-text">性别：</span>
+          <el-select v-model="editForm.XBDM" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+            <el-option
+              v-for="(item,ind) in $store.state.xb"
+              :key="ind"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="12" class="input-item">
+         <span class="input-text">出生日期：</span>
          <el-date-picker class="input-input"
-             v-model="editForm.QYSJ" format="yyyy-MM-dd"
+             v-model="editForm.CSRQ" format="yyyy-MM-dd"
              type="date" size="small" value-format="yyyy-MM-dd"
              placeholder="选择日期" >
          </el-date-picker>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">移民申请状态：</span>
-          <el-select v-model="editForm.YMSQZTDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+          <span class="input-text">移民签证种类：</span>
+          <el-select v-model="editForm.YMQZZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
             <el-option
-              v-for="(item,ind1) in $store.state.ymsqzt"
+              v-for="(item,ind1) in $store.state.ymqzzl"
               :key="ind1"
               :label="item.dm+' - '+item.mc"
               :value="item.dm">
@@ -205,8 +215,8 @@
           </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">前往国：</span>
-          <el-select v-model="editForm.QWGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+          <span class="input-text">签证国家：</span>
+          <el-select v-model="editForm.QZGJDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
             <el-option
               v-for="(item,ind1) in $store.state.gjdq"
               :key="ind1"
@@ -216,46 +226,23 @@
           </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">移民种类：</span>
-          <el-select v-model="editForm.YMZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
-            <el-option
-              v-for="(item,ind1) in $store.state.ymzl"
-              :key="ind1"
-              :label="item.dm+' - '+item.mc"
-              :value="item.dm">
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">同行人姓名：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.TXRXM" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-         <span class="input-text">填表时间：</span>
-         <el-date-picker class="input-input"
-             v-model="editForm.TBSJ" format="yyyy-MM-dd"
-             type="date" size="small" value-format="yyyy-MM-dd"
-             placeholder="选择日期" >
-         </el-date-picker>
-        </el-col>
-        <el-col :span="12" class="input-item">
           <span class="input-text">单位名称：</span>
             <el-input placeholder="请输入内容" size="small" v-model="editForm.DWMC" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-         <span class="input-text">批复日期：</span>
-         <el-date-picker class="input-input"
-             v-model="editForm.PFRQ" format="yyyy-MM-dd"
-             type="date" size="small" value-format="yyyy-MM-dd"
-             placeholder="选择日期" >
-         </el-date-picker>
+          <span class="input-text">申请时间：</span>
+          <el-date-picker class="input-input"
+              v-model="editForm.SQSJ" format="yyyy-MM-dd"
+              type="date" size="small" value-format="yyyy-MM-dd"
+              placeholder="选择日期" >
+          </el-date-picker>
         </el-col>
 
       </el-row>
 
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="editsItem()" size="small">确 定</el-button>
+      <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
@@ -268,40 +255,31 @@
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">身份证号：</span>
-               <span class="input-input detailinput">  {{mapForm.SFZH}}</span>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
-         <span class="input-text">签约日期：</span>
-         <span class="input-input detailinput">  {{mapForm.QYSJ}}</span>
+          <span class="input-input detailinput">  {{mapForm.SFZH}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">移民申请状态：</span>
-          <span class="input-input detailinput">  {{mapForm.YMSQZTMC}}</span>
+         <span class="input-text">性别：</span>
+         <span class="input-input detailinput">  {{mapForm.XBMC}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">前往国：</span>
-          <span class="input-input detailinput">  {{mapForm.QWGMC}}</span>
+          <span class="input-text">出生日期：</span>
+          <span class="input-input detailinput">  {{mapForm.CSRQ}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">移民种类：</span>
-          <span class="input-input detailinput">  {{mapForm.YMZLMC}}</span>
+          <span class="input-text">移民签证种类：</span>
+          <span class="input-input detailinput">  {{mapForm.YMQZZLMC}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">同行人姓名：</span>
-          <span class="input-input detailinput">  {{mapForm.TXRXM}}</span>
-        </el-col>
-        <el-col :span="12" class="input-item">
-         <span class="input-text">填表时间：</span>
-         <span class="input-input detailinput">  {{mapForm.TBSJ}}</span>
+          <span class="input-text">签证国家：</span>
+          <span class="input-input detailinput">  {{mapForm.QZGJMC}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">单位名称：</span>
           <span class="input-input detailinput">  {{mapForm.DWMC}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
-         <span class="input-text">批复日期：</span>
-         <span class="input-input detailinput">  {{mapForm.PFRQ}}</span>
+         <span class="input-text">申请时间：</span>
+         <span class="input-input detailinput">  {{mapForm.SQSJ}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">操作人：</span>
@@ -309,20 +287,17 @@
         </el-col>
         <el-col :span="12" class="input-item">
          <span class="input-text">操作时间：</span>
-         <span class="input-input detailinput">  {{mapForm.CZS}}</span>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">数据有效状态：</span>
-         <span class="input-input detailinput">{{mapForm.YXZT=="0"?"删除":"有效"}}</span>
+         <span class="input-input detailinput">  {{mapForm.CZSJ}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
           <span class="input-text">修改人：</span>
-          <span class="input-input detailinput">{{mapForm.XGR}}</span>
+          <span class="input-input detailinput">  {{mapForm.XGR}}</span>
         </el-col>
         <el-col :span="12" class="input-item">
          <span class="input-text">修改时间：</span>
-         <span class="input-input detailinput">{{mapForm.XGSJ}}</span>
+         <span class="input-input detailinput">  {{mapForm.XGSJ}}</span>
         </el-col>
+
       </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -363,20 +338,22 @@ export default {
         }
       ],
       tableData: [],
+      type:'',
+      xid:'',
+
     }
   },
   activated(){
-
+    this.detailsDialogVisible=false;
   },
   mounted() {
   this.$store.dispatch("getGjdq");
   this.$store.dispatch("getYmqzzl");
   this.$store.dispatch("getXB");
-  this.$store.dispatch("getYmzl");
-  this.$store.dispatch("getYmsqzt");
   this.actions = window.IPConfig.IP+this.Global.aport3;
   },
   methods: {
+
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -395,7 +372,7 @@ export default {
         "pd": pd,
         "token":this.$store.state.token
       };
-      this.$api.post(this.Global.aport3+'/drym/getYMPage', p,
+      this.$api.post(this.Global.aport3+'/drymdbqz/getYMDBQZPage', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -403,17 +380,19 @@ export default {
     },
     details(n)
     {
-      this.detailsDialogVisible=true;
       this.mapForm=n;
+      this.detailsDialogVisible=true;
+
     },
     edits(n){
-        this.editForm=n;
+      this.editForm=n;
       this.editsDialogVisible=true;
+
     },
     editsItem()
     {
       this.editForm.token=this.$store.state.token;
-      this.$api.post(this.Global.aport3+'/drym/updateYM', this.editForm,
+      this.$api.post(this.Global.aport3+'/drymdbqz/updateYMDBQZ', this.editForm,
         r => {
 
           if (r.success) {
@@ -423,6 +402,7 @@ export default {
             });
             this.editsDialogVisible=false;
             this.getList(this.CurrentPage, this.pageSize, this.pd);
+
           } else {
             this.$message.error(r.Message);
           }
@@ -440,9 +420,9 @@ export default {
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$api.post(this.Global.aport3+'/drym/deleteYMById', p,
+      this.$api.post(this.Global.aport3+'/drymdbqz/deleteYMDBQZById', p,
         r => {
-          console.log("===" + r);
+
           if (r.success) {
             this.$message({
               message: '删除成功！',
@@ -476,7 +456,7 @@ export default {
       this.getList(this.CurrentPage, this.pageSize, this.pd);
     },
     beforeAvatarUpload(file) {
-      console.log(file.type)
+
       const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       const isExls=file.type==='application/vnd.ms-excel';
 
@@ -487,6 +467,8 @@ export default {
     },
     showUpload() {
       this.uploadDialogVisible = true;
+      this.typemd = "";
+
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
@@ -503,7 +485,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/移民数据导入模板.xlsx'
+      window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/代办签证数据导入模板.xlsx'
     },
   }
 }
@@ -513,7 +495,7 @@ export default {
 .el-dialog{
   width: 60%!important;
 }
-.input-text{width: 25%!important}
+.input-text{width: 25%!important;}
 </style>
 <style>
 
