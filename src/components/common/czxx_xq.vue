@@ -1298,20 +1298,21 @@ export default {
       this.initData();
    },
   watch:{
-      random:function(newVal,oldVal){
-        this.random=newVal;
-        this.initData();
-      },
-      type: function(val){
-        this.types=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
-      },
+    xid:{
+      handler(val){
+      this.id=val;
+      this.initData()
+    },
+    immediate: true
+    },
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.initData();
+    },
+    type: function(val){
+      this.types=val;
+    },
+
     },
 
   methods:{
@@ -1436,12 +1437,12 @@ export default {
            }
       })
 
-      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.pd);
-      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.pd);
-      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.pd);
-      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pd);
-      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pd);
-      this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pd);
+      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.pp);
+      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.pp);
+      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.pp);
+      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pp);
+      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pp);
+      this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pp);
       this.getPhoto();
     },
     // 居住地信息

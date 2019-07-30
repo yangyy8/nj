@@ -6,29 +6,26 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-              <span class="input-text">姓名：</span>
-              <el-input placeholder="请输入内容" size="small" v-model="pd.CNAME"   class="input-input"></el-input>
+              <span class="input-text">英文姓名：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM"   class="input-input"></el-input>
             </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">国家地区：</span>
-                  <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
-                    <el-option
-                      v-for="item in $store.state.gjdq"
-                      :key="item.dm"
-                      :label="item.dm+' - '+item.mc"
-                      :value="item.dm">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.IDCARD" class="input-input"></el-input>
-                </el-col>
+            <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+              <span class="input-text">中文姓名：</span>
+              <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM"   class="input-input"></el-input>
+            </el-col>
+            <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+               <span class="input-text">证件号码：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="pd.XCZJHM" class="input-input"></el-input>
+            </el-col>
+            <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+               <span class="input-text">签证号码：</span>
+               <el-input placeholder="请输入内容" size="small" v-model="pd.SBQZHM" class="input-input"></el-input>
+            </el-col>
           </el-row>
          </el-col>
             <el-col :span="4" >
               <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-              <el-button type="info" size="small" @click="$router.push('JYTZSTJ')" class="mb-15">返回</el-button>
+              <el-button type="info" size="small" @click="$router.go(-1)" class="mb-15">返回</el-button>
             </el-col>
           </el-row>
     </div>
@@ -40,52 +37,32 @@
          border
          style="width: 100%">
          <el-table-column
-           prop="CNAME"
+           prop="ZWXM"
            label="中文姓名">
          </el-table-column>
          <el-table-column
-           prop="EFAMILY"
-           label="英文姓">
-         </el-table-column>
-         <el-table-column
-           prop="ENAME"
-           label="英文名">
-         </el-table-column>
-         <el-table-column
-           prop="SEX"
-           label="性别">
-         </el-table-column>
-         <el-table-column
-           prop="BIRTHDAY"
-           label="出生日期">
-         </el-table-column>
-         <el-table-column
-           prop="IDCARD"
-           label="证件号码">
-         </el-table-column>
-         <el-table-column
-           prop="STASTUDY"
-           label="学习开始时间">
-         </el-table-column>
-         <el-table-column
-           prop="ENDSTUDY"
-           label="学习结束时间">
+           prop="YWXM"
+           label="英文姓名">
          </el-table-column>
          <el-table-column
            prop="GJDQ_DESC"
            label="国家地区">
          </el-table-column>
          <el-table-column
-           prop="STUTYPE"
-           label="学生类别">
+           prop="CSRQ"
+           label="出生日期">
          </el-table-column>
          <el-table-column
-           prop="ACCACADEMY"
-           label="申请学校">
+           prop="XCZJHM"
+           label="证件号码">
          </el-table-column>
          <el-table-column
-           prop="COMPANY"
-           label="推荐人">
+           prop="SQQZZL_DESC"
+           label="签证种类">
+         </el-table-column>
+         <el-table-column
+           prop="SBQZHM"
+           label="签证号码">
          </el-table-column>
          <el-table-column
            label="操作" width="70">
@@ -125,19 +102,19 @@
       </div>
     </div>
       <div class="bj">
-        <el-dialog title="留学生申请信息详情" :visible.sync="lxsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-            <LXSXX :type="type" :xid="xid" :random="random"></LXSXX>
+        <el-dialog title="证件信息详情" :visible.sync="qzsqDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+            <QZXXTJXQ  :xid="xid" :random="random"></QZXXTJXQ>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="lxsDialogVisible = false" size="small">取 消</el-button>
+              <el-button @click="qzsqDialogVisible = false" size="small">取 消</el-button>
             </div>
        </el-dialog>
      </div>
     </div>
 </template>
 <script>
-import LXSXX from '../../../common/lxsxx_xq'
+import QZXXTJXQ from '../../../common/qzxxtj_xq'
 export default {
-  components:{LXSXX},
+  components:{QZXXTJXQ},
   data() {
     return {
       type:1,
@@ -157,7 +134,7 @@ export default {
       shm:false,
       lg:false,
       tableData:[],
-      lxsDialogVisible:false,
+      qzsqDialogVisible:false,
       options:[{
         value: 10,
         label: "10"
@@ -203,7 +180,7 @@ export default {
         "showCount": showCount,
         "pd": pd
       };
-      this.$api.post(this.Global.aport5+'/jiaoYuTing202Controller/getResultListByParams', p,
+      this.$api.post(this.Global.aport5+'/esFnvisasController/getResultListByParams', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
@@ -211,8 +188,8 @@ export default {
     },
     details(i) {
       this.random=new Date().getTime();
-      this.xid=i.DTID;
-      this.lxsDialogVisible = true;
+      this.xid=i;
+      this.qzsqDialogVisible = true;
     },
   }
 }

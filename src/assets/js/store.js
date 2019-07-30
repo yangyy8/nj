@@ -54,7 +54,10 @@ var store = new Vuex.Store({
     gljb:[],
     ymzt:[],
     sldw:[],
-
+    bzlb:[],
+    sqsy:[],
+    rydylb:[],
+    sqqzzl:[],
   },
   mutations: {
     getToken(state, data) {
@@ -200,7 +203,18 @@ var store = new Vuex.Store({
     getSldw(state,data){
       state.sldw=data;
     },
-
+    getBzlb(state,data){
+      state.bzlb=data;
+    },
+    getSqsy(state,data){
+      state.sqsy=data;
+    },
+    getRydylb(state,data){
+      state.rydylb=data;
+    },
+    getSqqzzl(state,data){
+      state.sqqzzl=data;
+    },
   },
   actions: {
     getSldw(context){
@@ -427,6 +441,30 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.ymzl, null,
         r => {
           context.commit('getYmzl', ToArray(r.data))
+        })
+    },
+    getBzlb(context){
+      api.get(global_.aport1 + global_.bzlb, null,
+        r => {
+          context.commit('getBzlb', ToArray(r.data))
+        })
+    },
+    getSqsy(context){
+      api.get(global_.aport1 + global_.sqsy, null,
+        r => {
+          context.commit('getSqsy', ToArray(r.data))
+        })
+    },
+    getRydylb(context){
+      api.get(global_.aport1 + global_.rydylb, null,
+        r => {
+          context.commit('getRydylb', ToArray(r.data))
+        })
+    },
+    getSqqzzl(context){
+      api.get(global_.aport1 + global_.sqqzzl, null,
+        r => {
+          context.commit('getSqqzzl', ToArray(r.data))
         })
     },
   }

@@ -363,6 +363,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/CZYP/CZJWZHFX'], resolve),
         },
         {
+          path: 'CZJWZHFXRYXX',
+          name: 'CZJWZHFXRYXX',
+          meta:{title:['数据分析','常住分析','常住境外人员综合分析'],father:'CZJWZHFX'},
+          component: resolve => require(['@/components/YJYP/YP/CZYP/CZJWZHFXRYXX'], resolve),
+        },
+        {
           path: 'NMFX',
           name: 'NMFX',
           meta:{title:['数据分析','常住分析','难民和寻求庇护者分析']},
@@ -541,6 +547,12 @@ export default new Router({
           name: 'QZXXTJ',
           meta:{title:['数据分析','签证分析','签证信息统计']},
           component: resolve => require(['@/components/YJYP/YP/QZXXYP/QZXXTJ'], resolve),
+        },
+        {
+          path: 'QZRYXX',
+          name: 'QZRYXX',
+          meta:{title:['数据分析','签证分析','签证信息统计'],father:'QZXXTJ'},
+          component: resolve => require(['@/components/YJYP/YP/QZXXYP/QZRYXX'], resolve),
         },
         {
           path: 'QFXXBB',

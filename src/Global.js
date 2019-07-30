@@ -67,7 +67,10 @@ const gljb="/service/getRedisDataByDm?tablename=DM_ZDRY_GLJB";//重点人员管�
 const ymzt="/service/getRedisDataByDm?tablename=DM_YMSQZT"//移民申请状态
 const ymzl="/service/getRedisDataByDm?tablename=DM_YMZL"//移民种类
 const sldw="/service/getRedisDataByDm?tablename=HX_DWBM"//受理单位
-
+const bzlb="/service/getRedisDataByDm?tablename=HX_BZLB"//办证类别
+const sqsy="/service/getRedisDataByDm?tablename=HX_SQSY"//申请事由
+const rydylb="/service/getRedisDataByDm?tablename=HX_RYDYLB"//人员地域类别
+const sqqzzl="/service/getRedisDataByDm?tablename=HX_SQQZZL"//申请签证种类
 const tablists=[];
 export default
 {
@@ -87,6 +90,7 @@ export default
   aport6,aport7,
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
-  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb,ymzt,ymzl,sldw,ymsqzt,ymqzzl
+  dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb,ymzt,ymzl,sldw,ymsqzt,ymqzzl,
+  bzlb,sqsy,rydylb,sqqzzl
 
 }
