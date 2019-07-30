@@ -728,6 +728,9 @@ export default {
       };
       this.$api.post(this.Global.aport3+'/drnmhxqbhz/getNMHXQBHZPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -738,11 +741,14 @@ export default {
         	"showCount":showCount,
         	"pd":this.mapForm,
         	"orderBy":"",
-        	"orderType":"DESC"
-
+        	"orderType":"DESC",
+          "token":this.$store.state.token
       };
       this.$api.post(this.Global.aport3+'/ywescxlszsdjxx/getLSZSDJXXList', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData1 = r.data;
           this.TotalResult1 = r.data.totalResult;
         })
@@ -760,9 +766,12 @@ export default {
     },
     editsItem(formName)
     {
+      this.editForm.token=this.$store.state.token;
       this.$api.post(this.Global.aport3+'/drnmhxqbhz/updateNMHXQBHZ', this.editForm,
       r => {
-        console.log(r);
+        if(r.code=="1000001"){
+            window.location.href ="#/";
+        }
         if (r.success) {
           this.$message({
             message: '保存成功！',
@@ -791,7 +800,9 @@ export default {
     }).then(() => {
       this.$api.post(this.Global.aport3+'/drnmhxqbhz/deleteNMHXQBHZById', p,
         r => {
-
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '删除成功！',
