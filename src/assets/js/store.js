@@ -51,6 +51,7 @@ var store = new Vuex.Store({
     gljb:[],
     ymzt:[],
     ymzl:[],
+    sldw:[],
   },
   mutations: {
     getToken(state, data) {
@@ -187,8 +188,17 @@ var store = new Vuex.Store({
     getYmzl(state,data){
       state.ymzl=data;
     },
+    getSldw(state,data){
+      state.sldw=data;
+    },
   },
   actions: {
+    getSldw(context){
+      api.get(global_.aport1 + global_.sldw, null,
+        r => {
+          context.commit('getSldw', ToArray(r.data))
+        })
+    },
     getYmzt(context){
       api.get(global_.aport1 + global_.ymzt, null,
         r => {
