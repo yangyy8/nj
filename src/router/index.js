@@ -218,7 +218,7 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ'], resolve),
         },
         {
-          path: 'NMXQPHZYJ_X',
+          path: '0',
           name: 'NMXQPHZYJ_X',
           meta:{title:['日常管理','常住信息','难民和需求庇护者提醒'],father:'NMXQPHZYJ'},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
@@ -308,11 +308,12 @@ export default new Router({
           meta:{title:['数据分析','案件分析','全市涉外案事件月通报表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/QSSWASJYTBB'], resolve),
         },
-       /*  {
+        /*  {
           path: 'SWASJTJB',
           name: 'SWASJTJB',
           meta:{title:['数据分析','案件分析','涉外案事件统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
+<<<<<<< HEAD
         },
         {
           path: 'GAJGCCFFJLJY',
@@ -327,6 +328,22 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/MYSFZGTJB'], resolve),
         },
         {
+=======
+        },  */
+        // {
+        //   path: 'GAJGCCFFJLJY',
+        //   name: 'GAJGCCFFJLJY',
+        //   meta:{title:['数据分析','案件分析','公安机关查处非法居留非法就业外国人工作情况统计表']},
+        //   component: resolve => require(['@/components/YJYP/YJ/ASJYJ/GAJGCCFFJLJY'], resolve),
+        // },
+        // {
+        //   path: 'MYSFZGTJB',
+        //   name: 'MYSFZGTJB',
+        //   meta:{title:['数据分析','案件分析','每月三非战果统计表']},
+        //   component: resolve => require(['@/components/YJYP/YJ/ASJYJ/MYSFZGTJB'], resolve),
+        // },
+        /*{
+>>>>>>> 90388d8fc9d6169931396f92058e5bcd9f7953fc
           path: 'NJSFWGRZLGZ',
           name: 'NJSFWGRZLGZ',
           meta:{title:['数据分析','案件分析','南京“三非”外国人治理工作情况统计表']},
@@ -502,10 +519,22 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/YMYP/CRJZJFX'], resolve),
         },
         {
+          path: 'CRJRYXX',
+          name: 'CRJRYXX',
+          meta:{title:['预警研判','研判','移民研判','因私出入境中介分析'],father:'CRJZJFX'},
+          component: resolve => require(['@/components/YJYP/YP/YMYP/CRJRYXX'], resolve),
+        },
+        {
           path: 'DBQZXXTJ',
           name: 'DBQZXXTJ',
           meta:{title:['预警研判','研判','移民研判','代办签证信息统计']},
           component: resolve => require(['@/components/YJYP/YP/YMYP/DBQZXXTJ'], resolve),
+        },
+        {
+          path: 'DBQZRYXX',
+          name: 'DBQZRYXX',
+          meta:{title:['预警研判','研判','移民研判','代办签证信息统计'],father:'DBQZXXTJ'},
+          component: resolve => require(['@/components/YJYP/YP/YMYP/DBQZRYXX'], resolve),
         },
         {
           path: 'QZXXTJ',
@@ -518,6 +547,12 @@ export default new Router({
           name: 'QFXXBB',
           meta:{title:['数据分析','签证分析','签发信息报表']},
           component: resolve => require(['@/components/YJYP/YP/QZXXYP/QFXXBB'], resolve),
+        },
+        {
+          path: 'QFRYXX',
+          name: 'QFRYXX',
+          meta:{title:['数据分析','签证分析','签发信息报表'],father:'QFXXBB'},
+          component: resolve => require(['@/components/YJYP/YP/QZXXYP/QFRYXX'], resolve),
         },
         // 日常管理=====================================================================
         {
@@ -574,12 +609,6 @@ export default new Router({
           name: 'LZBKRYDR',
           meta:{title:['日常管理','布控人员','布控人员管理']},
           component: resolve => require(['@/components/YWCZ/SJDR/LZBKRYDR'], resolve),
-        },
-        {
-          path: 'LZRYSH',
-          name: 'LZRYSH',
-          meta:{title:['日常管理','布控人员','布控人员审核']},
-          component: resolve => require(['@/components/YWCZ/SJDR/LZRYSH'], resolve),
         },
 
         {

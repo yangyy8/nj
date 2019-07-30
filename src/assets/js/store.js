@@ -46,7 +46,15 @@ var store = new Vuex.Store({
     xxdm:[],
     erxxdm:[],
     shzt:[],
-    tbry:[],ymsqzt:[],ymqzzl:[],ymzl:[]
+    tbry:[],
+    ymsqzt:[],
+    ymqzzl:[],
+    ymzl:[],
+    lgyj:[],
+    gljb:[],
+    ymzt:[],
+    sldw:[],
+
   },
   mutations: {
     getToken(state, data) {
@@ -177,11 +185,48 @@ var store = new Vuex.Store({
     getYmqzzl(state,data){
       state.ymqzzl=data;
     },
+    getLgyj(state,data){
+      state.lgyj=data;
+    },
+    getGljb(state,data){
+      state.gljb=data;
+    },
+    getYmzt(state,data){
+      state.ymzt=data;
+    },
     getYmzl(state,data){
       state.ymzl=data;
-    }
+    },
+    getSldw(state,data){
+      state.sldw=data;
+    },
+
   },
   actions: {
+    getSldw(context){
+      api.get(global_.aport1 + global_.sldw, null,
+        r => {
+          context.commit('getSldw', ToArray(r.data))
+        })
+    },
+    getYmzt(context){
+      api.get(global_.aport1 + global_.ymzt, null,
+        r => {
+          context.commit('getYmzt', ToArray(r.data))
+        })
+    },
+     getLgyj(context) {
+      api.get(global_.aport1 + global_.lgyj, null,
+        r => {
+          context.commit('getLgyj', ToArray(r.data))
+        })
+    },
+    getGljb(context) {
+      api.get(global_.aport1 + global_.gljb, null,
+        r => {
+          context.commit('getGljb', ToArray(r.data))
+        })
+    },
     getSsdw(context) {
       var formData = new FormData();
       formData.append("org", global_.org);
