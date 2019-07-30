@@ -389,7 +389,8 @@ border-radius:15px;border:1px solid rgba(11,154,251,0.6);padding: 5px; backgroun
      border:1px solid rgba(19,210,247,1);
      color: #13D2F7;
    }
-.yyryhm .el-input-number--small .el-input-number__decrease,.el-input-number--small .el-input-number__increase {
+.yyryhm .el-input-number--small .el-input-number__decrease,
+.yyryhm .el-input-number--small .el-input-number__increase {
     width: 15px!important;
     font-size: 13px;
     background:linear-gradient(0deg,rgba(0,255,234,1),rgba(24,201,250,1),rgba(0,255,234,1));
