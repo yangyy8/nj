@@ -3,7 +3,6 @@
       <div style="color:red;font-size:12px;line-height:40px;padding-left:10px;">  注：勾选才为有效状态，在点保存时请再次确认是否勾选正确！</div>
       <el-row align="center"   :gutter="2">
         <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-
           <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>预警规则管理</span>
