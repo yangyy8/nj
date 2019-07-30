@@ -622,7 +622,12 @@ export default new Router({
           meta:{title:['日常管理','布控人员','布控人员管理']},
           component: resolve => require(['@/components/YWCZ/SJDR/LZBKRYDR'], resolve),
         },
-
+        {
+          path: 'LZRYSH',
+          name: 'LZRYSH',
+          meta:{title:['日常管理','布控人员','布控人员审核']},
+          component: resolve => require(['@/components/YWCZ/SJDR/LZRYSH'], resolve),
+        },
         {
           path: 'NMSJCJ',
           name: 'NMSJCJ',

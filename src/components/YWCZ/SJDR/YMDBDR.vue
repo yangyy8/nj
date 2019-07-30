@@ -374,6 +374,9 @@ export default {
       };
       this.$api.post(this.Global.aport3+'/drymdbqz/getYMDBQZPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -394,7 +397,9 @@ export default {
       this.editForm.token=this.$store.state.token;
       this.$api.post(this.Global.aport3+'/drymdbqz/updateYMDBQZ', this.editForm,
         r => {
-
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '保存成功！',
@@ -422,7 +427,9 @@ export default {
     }).then(() => {
       this.$api.post(this.Global.aport3+'/drymdbqz/deleteYMDBQZById', p,
         r => {
-
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '删除成功！',

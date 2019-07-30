@@ -82,7 +82,7 @@
                         <el-option
                           v-for="(item,ind) in $store.state.rjqzzl"
                           :key="ind"
-                          :label="item.dm+' - '+item.mc"
+                          :label="item.mc"
                           :value="item.dm">
                         </el-option>
                       </el-select>

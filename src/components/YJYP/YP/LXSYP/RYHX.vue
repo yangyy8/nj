@@ -180,7 +180,7 @@ export default {
       pd0:{},
       listDialogVisible:false,
       tableData:[],
-      selecttype:'',
+      selecttype:'all',
     }
   },
   mounted() {

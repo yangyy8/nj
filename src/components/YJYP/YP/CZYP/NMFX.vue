@@ -22,8 +22,8 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">户室人数：</span>
-                  <el-input-number size="small" v-model="rs" controls-position="right" @change="handleChange" :min="0" :max="100" class="input-input"></el-input-number>
-                </el-col>
+                    <el-input-number v-model="rs" @change="handleChange" :min="0" :max="100" size="small" label="描述文字" class="input-input"></el-input-number>
+              </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">姓名：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.XM" class="input-input"></el-input>
