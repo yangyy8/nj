@@ -6,121 +6,64 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">英文姓：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <span class="input-text">姓名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.XM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">英文名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
+                   <span class="input-text">身份证号：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.SFZH" class="input-input"></el-input>
+                </el-col>
+
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">前往国：</span>
+                    <el-select v-model="pd.QWGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="(item,ind) in $store.state.gjdq"
+                        :key="ind"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">通报类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="红色通道">
-                    </el-option>
-                    <el-option value="M" label="黄色通道">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">通报编号：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">性别：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="U" label="U - 未知">
-                    </el-option>
-                    <el-option value="M" label="M - 男">
-                    </el-option>
-                    <el-option value="F" label="F - 女">
+                  <span class="input-text">移民种类：</span>
+                  <el-select v-model="pd.YMZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-option
+                      v-for="(item,ind) in $store.state.ymzl"
+                      :key="ind"
+                      :label="item.dm+' - '+item.mc"
+                      :value="item.dm">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">出生日期：</span>
+                  <span class="input-text">签约时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
+                       v-model="pd.QYSJStart" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy-MM-dd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
+                        v-model="pd.QYSJEnd" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyy-MM-dd"
                         placeholder="结束时间" >
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <span class="input-text">移民申请状态：</span>
+                    <el-select v-model="pd.YMSQZTDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
-                      </el-option>
-                    </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">请求国：</span>
-                    <el-select v-model="pd.NATIONALITY" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
-                      <el-option
-                        v-for="item in nation"
-                        :key="item.CODE"
-                        :label="item.CODE+' - '+item.CNAME"
-                        :value="item.CODE">
+                        v-for="(item,ind) in $store.state.ymsqzt"
+                        :key="ind"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
                       </el-option>
                     </el-select>
                 </el-col>
 
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">发布时间：</span>
-                  <div class="input-input t-flex t-date">
-                    <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
-                       placeholder="开始时间" >
-                    </el-date-picker>
-                    <span class="septum">-</span>
-                    <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
-                        placeholder="结束时间" >
-                    </el-date-picker>
-                 </div>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="input-text">证件类型：</span>
-                  <el-select v-model="pd.STATUS" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option value="0" label="0 - 身份证">
-                    </el-option>
-                    <el-option value="1" label="1 - 回乡证白卡">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CARDNO" class="input-input"></el-input>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">入库时间：</span>
-                  <div class="input-input t-flex t-date">
-                    <el-date-picker
-                       v-model="pd.BIRTHDATESTART" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyy-MM-dd"
-                       placeholder="开始时间" >
-                    </el-date-picker>
-                    <span class="septum">-</span>
-                    <el-date-picker
-                        v-model="pd.BIRTHDATESTARTEND" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyy-MM-dd"
-                        placeholder="结束时间" >
-                    </el-date-picker>
-                 </div>
-                </el-col>
 
           </el-row>
          </el-col>
@@ -141,53 +84,29 @@
            border
            style="width: 100%"
            @selection-change="handleSelectionChange">
-           <!-- <el-table-column
-             type="selection"
-             width="55">
-           </el-table-column> -->
            <el-table-column
-             prop="address"
-             label="通报类型">
+             prop="XM"
+             label="姓名">
            </el-table-column>
            <el-table-column
-             prop="address"
-             label="通报编号">
+             prop="SFZH"
+             label="身份证号">
            </el-table-column>
            <el-table-column
-             prop="address"
-             label="英文姓">
+             prop="QYSJ"
+             label="签约日期">
            </el-table-column>
            <el-table-column
-             prop="address"
-             label="英文名">
+             prop="YMSQZTMC"
+             label="移民申请状态">
            </el-table-column>
            <el-table-column
-             prop="address"
-             label="性别">
+             prop="QWGMC"
+             label="前往国">
            </el-table-column>
            <el-table-column
-             prop="address"
-             label="出生日期">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="证件类型">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="证件号码">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="国家地区">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="请求国">
-           </el-table-column>
-           <el-table-column
-             prop="address"
-             label="发布时间">
+             prop="YMZLMC"
+             label="移民种类">
            </el-table-column>
            <el-table-column
              label="操作" width="120">
@@ -201,7 +120,7 @@
      <div class="middle-foot">
         <div class="page-msg">
           <div class="">
-                  共{{TotalResult}}条记录
+              共{{TotalResult}}条记录
           </div>
           <div class="">
             每页显示
@@ -216,7 +135,7 @@
             条
           </div>
           <div class="">
-              共{{Math.ceil(TotalResult/pageSize)}}页
+            共{{Math.ceil(TotalResult/pageSize)}}页
           </div>
         </div>
         <el-pagination
@@ -231,20 +150,13 @@
     </div>
     <el-dialog title="上传模板" :visible.sync="uploadDialogVisible"  width="640px">
     <el-form>
-  <el-row  type="flex">
-     <el-col :span="24">
-       <span >上传类型：</span>
-       <el-radio v-model="type" label="1" @change="getTS('1')">数据上传(XML文件)</el-radio>
-       <el-radio v-model="type" label="2" @change="getTS('2')">资料上传(PDF文件)</el-radio>
-     </el-col>
-  </el-row>
-    <el-row  type="flex">
 
+    <el-row  type="flex">
      <el-col :span="24">
           <el-upload
             class="input-input"
             ref="upload"
-            :action='actions+"/manage-platform/riskNameList/riskReadExcel/"'
+            :action='actions+"/drym/readExcel"'
             :file-list="fileList"
             multiple
             :on-success="upSuccess"
@@ -265,90 +177,162 @@
     <el-form   ref="editForm">
       <el-row :gutter="3"  class="mb-6">
         <el-col :span="12" class="input-item">
-         <span class="input-text">案卷编号：</span>
-        <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TITLE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">登记日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">人数：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-
-        <el-col :span="12" class="input-item">
          <span class="input-text">姓名：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+        <el-input placeholder="请输入内容" size="small" v-model="editForm.XM" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">性别：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="12" class="input-item">
-          <span class="input-text">出生日期：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">身份证号：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="editForm.SFZH" class="input-input"></el-input>
         </el-col>
 
         <el-col :span="12" class="input-item">
-         <span class="input-text">护照号：</span>
-           <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+         <span class="input-text">签约日期：</span>
+         <el-date-picker class="input-input"
+             v-model="editForm.QYSJ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择日期" >
+         </el-date-picker>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">入签证件类型：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">移民申请状态：</span>
+          <el-select v-model="editForm.YMSQZTDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+            <el-option
+              v-for="(item,ind1) in $store.state.ymsqzt"
+              :key="ind1"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">身份：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">前往国：</span>
+          <el-select v-model="editForm.QWGDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+            <el-option
+              v-for="(item,ind1) in $store.state.gjdq"
+              :key="ind1"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
-         <span class="input-text">电话号码：</span>
-          <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">移民种类：</span>
+          <el-select v-model="editForm.YMZLDM" filterable clearable  default-first-option placeholder="请选择"  size="small" class="input-input">
+            <el-option
+              v-for="(item,ind1) in $store.state.ymzl"
+              :key="ind1"
+              :label="item.dm+' - '+item.mc"
+              :value="item.dm">
+            </el-option>
+          </el-select>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">邮箱地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">同行人姓名：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="editForm.TXRXM" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">临住登记：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+         <span class="input-text">填表时间：</span>
+         <el-date-picker class="input-input"
+             v-model="editForm.TBSJ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择日期" >
+         </el-date-picker>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">省：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
+          <span class="input-text">单位名称：</span>
+            <el-input placeholder="请输入内容" size="small" v-model="editForm.DWMC" class="input-input"></el-input>
         </el-col>
         <el-col :span="12" class="input-item">
-          <span class="input-text">城市：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"></el-input>
-        </el-col>
-        <el-col :span="24" class="input-item">
-          <span class="input-text" style="width:10%!important;">详细地址：</span>
-            <el-input placeholder="请输入内容" size="small" v-model="editForm.APPLY_TYPE" class="input-input"  style="width:87%!important;"></el-input>
+         <span class="input-text">批复日期：</span>
+         <el-date-picker class="input-input"
+             v-model="editForm.PFRQ" format="yyyy-MM-dd"
+             type="date" size="small" value-format="yyyy-MM-dd"
+             placeholder="选择日期" >
+         </el-date-picker>
         </el-col>
 
       </el-row>
 
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="editsItem('editForm')" size="small">确 定</el-button>
+      <el-button type="primary" @click="editsItem()" size="small">确 定</el-button>
       <el-button @click="editsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-  <el-dialog title="详情" :visible.sync="detailsDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-     <LZXX :xid="xid"></LZXX>
+  <el-dialog title="详情" :visible.sync="detailsDialogVisible">
+    <el-form   ref="mapForm">
+      <el-row :gutter="3"  class="mb-6">
+        <el-col :span="12" class="input-item">
+         <span class="input-text">姓名：</span>
+         <span class="input-input detailinput">  {{mapForm.XM}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">身份证号：</span>
+               <span class="input-input detailinput">  {{mapForm.SFZH}}</span>
+        </el-col>
+
+        <el-col :span="12" class="input-item">
+         <span class="input-text">签约日期：</span>
+         <span class="input-input detailinput">  {{mapForm.QYSJ}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">移民申请状态：</span>
+          <span class="input-input detailinput">  {{mapForm.YMSQZTMC}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">前往国：</span>
+          <span class="input-input detailinput">  {{mapForm.QWGMC}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">移民种类：</span>
+          <span class="input-input detailinput">  {{mapForm.YMZLMC}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">同行人姓名：</span>
+          <span class="input-input detailinput">  {{mapForm.TXRXM}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+         <span class="input-text">填表时间：</span>
+         <span class="input-input detailinput">  {{mapForm.TBSJ}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">单位名称：</span>
+          <span class="input-input detailinput">  {{mapForm.DWMC}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+         <span class="input-text">批复日期：</span>
+         <span class="input-input detailinput">  {{mapForm.PFRQ}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">操作人：</span>
+          <span class="input-input detailinput">  {{mapForm.CZR}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+         <span class="input-text">操作时间：</span>
+         <span class="input-input detailinput">  {{mapForm.CZS}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">数据有效状态：</span>
+         <span class="input-input detailinput">{{mapForm.YXZT=="0"?"删除":"有效"}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+          <span class="input-text">修改人：</span>
+          <span class="input-input detailinput">{{mapForm.XGR}}</span>
+        </el-col>
+        <el-col :span="12" class="input-item">
+         <span class="input-text">修改时间：</span>
+         <span class="input-input detailinput">{{mapForm.XGSJ}}</span>
+        </el-col>
+      </el-row>
+    </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
-
   </div>
-
 </template>
 <script>
-import LZXX from '../../common/lzxx_xq'
 export default {
-  components:{LZXX},
   data() {
     return {
       CurrentPage: 1,
@@ -378,25 +362,21 @@ export default {
           label: "30"
         }
       ],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: 'XXXXX'
-      }],
-      type:'',
-      xid:'',
-
+      tableData: [],
     }
   },
   activated(){
-    this.detailsDialogVisible=false;
+
   },
   mounted() {
-
-     this.xid="111";
+  this.$store.dispatch("getGjdq");
+  this.$store.dispatch("getYmqzzl");
+  this.$store.dispatch("getXB");
+  this.$store.dispatch("getYmzl");
+  this.$store.dispatch("getYmsqzt");
+  this.actions = window.IPConfig.IP+this.Global.aport3;
   },
   methods: {
-
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -412,10 +392,14 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "token":this.$store.state.token
       };
-      this.$api.post('/manage-platform/riskNameList/getRiskNameListPage', p,
+      this.$api.post(this.Global.aport3+'/drym/getYMPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -426,26 +410,46 @@ export default {
       this.mapForm=n;
     },
     edits(n){
-      this.xid=n.id;
+        this.editForm=n;
       this.editsDialogVisible=true;
-
     },
-    editsItem(formName)
+    editsItem()
     {
-
+      this.editForm.token=this.$store.state.token;
+      this.$api.post(this.Global.aport3+'/drym/updateYM', this.editForm,
+        r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
+          if (r.success) {
+            this.$message({
+              message: '保存成功！',
+              type: 'success'
+            });
+            this.editsDialogVisible=false;
+            this.getList(this.CurrentPage, this.pageSize, this.pd);
+          } else {
+            this.$message.error(r.Message);
+          }
+        }, e => {
+          this.$message.error('失败了');
+        });
     },
     deletes(i) {
     let p = {
-      "id": i.SERIAL
+      "GUID": i.GUID,
+      "token":this.$store.state.token
     };
     this.$confirm('您是否确认删除？', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(() => {
-      this.$api.post('/manage-platform/riskNameList/updateRiskNameListById', p,
+      this.$api.post(this.Global.aport3+'/drym/deleteYMById', p,
         r => {
-          console.log("===" + r);
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '删除成功！',
@@ -490,8 +494,6 @@ export default {
     },
     showUpload() {
       this.uploadDialogVisible = true;
-      this.typemd = "";
-      this.actions = window.IPConfig.IP+this.Global.aport3;
       console.log(this.$refs.upload)
       if (this.$refs.upload) {
         this.$refs.upload.clearFiles();
@@ -508,7 +510,7 @@ export default {
       this.$refs.upload.submit();
     },
     download() {
-      window.location.href = this.$api.rootUrl + '/manage-platform/templateFile/riskNameListFile.xlsx'
+      window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/移民数据导入模板.xlsx'
     },
   }
 }
@@ -518,6 +520,7 @@ export default {
 .el-dialog{
   width: 60%!important;
 }
+.input-text{width: 25%!important}
 </style>
 <style>
 

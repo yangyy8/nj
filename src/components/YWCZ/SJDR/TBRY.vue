@@ -350,6 +350,9 @@ export default {
       };
       this.$api.post(this.Global.aport3+'/drtbry/getTBRYPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -386,6 +389,9 @@ export default {
     }).then(() => {
       this.$api.post(this.Global.aport3+'/drtbry/deleteTBRYById', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '删除成功！',

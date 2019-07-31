@@ -47,10 +47,17 @@ var store = new Vuex.Store({
     erxxdm:[],
     shzt:[],
     tbry:[],
+    ymsqzt:[],
+    ymqzzl:[],
+    ymzl:[],
     lgyj:[],
     gljb:[],
     ymzt:[],
-    ymzl:[],
+    sldw:[],
+    bzlb:[],
+    sqsy:[],
+    rydylb:[],
+    sqqzzl:[],
   },
   mutations: {
     getToken(state, data) {
@@ -175,6 +182,12 @@ var store = new Vuex.Store({
     getTbry(state,data){
       state.tbry=data;
     },
+    getYmsqzt(state,data){
+      state.ymsqzt=data;
+    },
+    getYmqzzl(state,data){
+      state.ymqzzl=data;
+    },
     getLgyj(state,data){
       state.lgyj=data;
     },
@@ -187,18 +200,33 @@ var store = new Vuex.Store({
     getYmzl(state,data){
       state.ymzl=data;
     },
+    getSldw(state,data){
+      state.sldw=data;
+    },
+    getBzlb(state,data){
+      state.bzlb=data;
+    },
+    getSqsy(state,data){
+      state.sqsy=data;
+    },
+    getRydylb(state,data){
+      state.rydylb=data;
+    },
+    getSqqzzl(state,data){
+      state.sqqzzl=data;
+    },
   },
   actions: {
+    getSldw(context){
+      api.get(global_.aport1 + global_.sldw, null,
+        r => {
+          context.commit('getSldw', ToArray(r.data))
+        })
+    },
     getYmzt(context){
       api.get(global_.aport1 + global_.ymzt, null,
         r => {
           context.commit('getYmzt', ToArray(r.data))
-        })
-    },
-    getYmzl(context){
-      api.get(global_.aport1 + global_.ymzl, null,
-        r => {
-          context.commit('getYmzl', ToArray(r.data))
         })
     },
      getLgyj(context) {
@@ -396,7 +424,49 @@ var store = new Vuex.Store({
         r => {
           context.commit('getTbry', ToArray(r.data))
         })
-    }
+    },
+    getYmsqzt(context){
+      api.get(global_.aport1 + global_.ymsqzt, null,
+        r => {
+          context.commit('getYmsqzt', ToArray(r.data))
+        })
+    },
+    getYmqzzl(context){
+      api.get(global_.aport1 + global_.ymqzzl, null,
+        r => {
+          context.commit('getYmqzzl', ToArray(r.data))
+        })
+    },
+    getYmzl(context){
+      api.get(global_.aport1 + global_.ymzl, null,
+        r => {
+          context.commit('getYmzl', ToArray(r.data))
+        })
+    },
+    getBzlb(context){
+      api.get(global_.aport1 + global_.bzlb, null,
+        r => {
+          context.commit('getBzlb', ToArray(r.data))
+        })
+    },
+    getSqsy(context){
+      api.get(global_.aport1 + global_.sqsy, null,
+        r => {
+          context.commit('getSqsy', ToArray(r.data))
+        })
+    },
+    getRydylb(context){
+      api.get(global_.aport1 + global_.rydylb, null,
+        r => {
+          context.commit('getRydylb', ToArray(r.data))
+        })
+    },
+    getSqqzzl(context){
+      api.get(global_.aport1 + global_.sqqzzl, null,
+        r => {
+          context.commit('getSqqzzl', ToArray(r.data))
+        })
+    },
   }
 });
 export default store;

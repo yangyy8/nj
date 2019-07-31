@@ -96,6 +96,7 @@
                    <span class="input-text" style="width: 7.3%;">分类标签：</span>
                    <el-radio-group v-model="ruleType" @change="rulesChange(ruleType)">
                       <el-radio :label="item.RULE_Map" v-for="(item,ind) in rules" :key="ind">{{item.RULE_NAME}}</el-radio>
+                      <el-radio label="other">其他</el-radio>
                     </el-radio-group>
                 </el-col>
           </el-row>
@@ -219,7 +220,7 @@
                  </el-select>
             </el-col>
         </el-row>
-      </el-form> 
+      </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
         <el-button @click="qxItem('addForm')" size="small">取 消</el-button>
@@ -243,7 +244,11 @@ export default {
       tableData: [],
       type:'',
       tabList:[],
-      ruleType:'',
+      ruleType:{},
+      pdNotIn:{
+        ZJZL:["ZJZL_11","ZJZL_12"],
+        QZZL:["QZZL_05","QZZL_20"]
+      },
       rules:[],
       rulesTotal:0,
       addsDialogVisible:false,
@@ -298,11 +303,11 @@ export default {
       }
     },
     rulesChange(val){
-      this.pd1=val;
-      this.pd1.MXLX=this.pd.MXLX
-      this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[],MXLX:this.pd.MXLX};
-      this.pd0={};
-      this.getList(this.CurrentPage, this.pageSize,this.pd1);
+      // this.pd1=val;
+      // this.pd1.MXLX=this.pd.MXLX
+      // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[],MXLX:this.pd.MXLX};
+      // this.pd0={};
+      // this.getList(this.CurrentPage, this.pageSize,this.pd1);
     },
     getMXLX(type){
 
@@ -424,15 +429,20 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
-
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd
       };
+      if(this.ruleType=='other'){
+        p.pdNotIn=this.pdNotIn;
+      }else{
+        let pdReal={};
+        pdReal=Object.assign({},pd,this.ruleType)
+        p.pd=pdReal
+      }
       this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
         r => {
           this.tableData = r.data.resultList;
@@ -475,7 +485,7 @@ export default {
         this.$api.post(this.Global.aport4+'/zDRYController/isLGRY', p,
          r => {
            if(r.data==1){
-             this.addsDialogVisible=true;  
+             this.addsDialogVisible=true;
            } else if(r.data==0){
               this.$message('该人员已经被列管');
            } else if(r.data==2){
@@ -485,9 +495,9 @@ export default {
               type: 'warning'
             }).then(() => {
                 this.addsDialogVisible=true;
-            })  
-          }  
-        })     
+            })
+          }
+        })
      },
       addItem(addForm){
         let p={
@@ -496,11 +506,11 @@ export default {
             GJDQ:this.addlg.GJDQ,
             LGYJ:this.form.LGYJ,
             GLJB:this.form.GLJB,
-          },  
+          },
            userName:this.userName,
            userCode:this.userCode,
            orgCode:this.orgCode,
-           orgName:this.orgName    
+           orgName:this.orgName
          }
         this.$api.post(this.Global.aport4+'/zDRYController/setZdry', p,
          r => {

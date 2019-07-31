@@ -17,16 +17,26 @@
 
   </el-card>
     <div class="main">
+
        <el-row v-for="(item,index) in items" :key="index">
+       <el-card class="box-card" style="margin:5px 0;">
          <el-col :span="2" style="padding:10px;width:120px;">
-           <img :src="item.photo" width="100" height="120">
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm}})">
+           <img :src="item.photo" v-if="item.photo!=''" width="100" height="120">
+           <img src="../../../../assets/img/mrzp.png" width="100" height="120" v-else >
+          </div>
          </el-col>
          <el-col :span="18">
-           <div class="list">姓名：{{item.ywxm}} 性别：{{item.xb}} 出生日期：{{item.csrq}} 国家地区：{{item.gjdq}} 证件号码：{{item.zjhm}}</div>
-           <div class="list">命中信息：{{item.highlight}}</div>
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm}})">
+           <div class="list">姓名：{{item.ywxm}} <span>性别：{{item.xb}}</span> <span>出生日期：{{item.csrq}}</span> <span>国家地区：{{item.gjdq}}</span> <span>证件号码：{{item.zjhm}}</span></div>
+           <div class="list">命中信息：{{item.index}}</div>
+           <div class="list" v-html="item.highlight"></div>
+         </div>
          </el-col>
+         </el-card>
        </el-row>
-       <div class="middle-foot">
+
+       <div class="middle-foot" style="margin-top:10px;" v-if="TotalResult!=0">
           <el-pagination
             background
             @current-change="handleCurrentChange"
@@ -45,7 +55,7 @@ export default {
   data() {
     return {
       CurrentPage: 1,
-      pageSize: 10,
+      pageSize: 5,
       TotalResult: 0,
       items:[],
       type:'',
@@ -72,12 +82,26 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage,showCount){
+      this.items=[];
+      this.TotalResult=0;
+      if(this.content==undefined || this.content==""){
+        this.$message.error("请输入查询内容!");return ;
+      }
+      if(this.type==undefined || this.type==""){
+        this.$message.error("请选择类型!");return ;
+      }
      let p={
        "keywords":this.content,
        "type":this.type,
        "pageSize":showCount,
        "page":currentPage
      };
+     // var formData = new FormData();
+     // formData.append("keywords", this.content);
+     // formData.append("type", this.type);
+     // formData.append("page", currentPage);
+     // formData.append("pageSize", showCount);
+     // let p = formData;
      this.$api.post(this.Global.aport6+"/api/es/search/generalSearch",p,r=>{
        if(r.success){
          this.items=r.respondResult.respondData;
@@ -99,11 +123,14 @@ export default {
   width: 480px;
 }
 .qwjs .main{
-  width: 80%;  padding-left: 30px;
+  width: 95%;  padding-left: 30px; font-size:13px; margin-top: 20px; padding-bottom: 20px;
 }
 .qwjs .main .list{
-  width: 80%;padding-top: 6px;
+  width: 99%;margin-top: 10px;
 }
+.qwjs .main .list span{margin-left: 10px;}
+.shover{cursor:pointer;}
+.shover:hover{font-size: 14px;font-weight: bold;}
 </style>
 <style>
 .qwjs  .el-input-group__prepend {

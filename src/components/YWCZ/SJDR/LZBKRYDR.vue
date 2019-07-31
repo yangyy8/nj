@@ -325,7 +325,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      console.log('-----');
+
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -334,6 +334,9 @@ export default {
       };
       this.$api.post(this.Global.aport3+'/drlzbk/getLZBKPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -349,9 +352,12 @@ export default {
     },
     editsItem(formName)
     {
+      this.editform.token=this.$store.state.token;
       this.$api.post(this.Global.aport3+'/drlzbk/updateLZBK', this.editform,
       r => {
-        console.log(r);
+        if(r.code=="1000001"){
+            window.location.href ="#/";
+        }
         if (r.success) {
           this.$message({
             message: '保存成功！',
@@ -380,7 +386,9 @@ export default {
     }).then(() => {
       this.$api.post(this.Global.aport3+'/drlzbk/deleteLZBKById', p,
         r => {
-
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           if (r.success) {
             this.$message({
               message: '删除成功！',

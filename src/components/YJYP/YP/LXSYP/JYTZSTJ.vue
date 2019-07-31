@@ -66,7 +66,7 @@
 
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="yy-input-text">国家地区：</span>
-                  <el-select v-model="pd.BCOUNTRY"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
+                  <el-select v-model="pd.NATIONALITY"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
                     <el-option
                       v-for="item in $store.state.gjdq"
                       :key="item.dm"
@@ -101,7 +101,7 @@
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15">
-              <el-checkbox label="国家地区" v-model="pm.BCOUNTRY" :disabled="disa"></el-checkbox>
+              <el-checkbox label="国家地区" v-model="pm.NATIONALITY" :disabled="disa"></el-checkbox>
               <el-checkbox label="学生类别" v-model="pm.STUTYPE" :disabled="disa"></el-checkbox>
               <el-checkbox label="申请学校" v-model="pm.ACCACADEMY" :disabled="disa"></el-checkbox>
               <el-checkbox label="推荐人" v-model="pm.COMPANY" :disabled="disa"></el-checkbox>
@@ -313,7 +313,7 @@
           tableData: [],
           tableHead:[
             {
-              code:'BCOUNTRY',
+              code:'GJDQ_DESC',
               label:'国家地区'
             },
             {
@@ -329,15 +329,16 @@
               label:'推荐人'
             },
             {
-              code:'SHIGUO',
+              code:'GJDQ_DESC',
               label:'十国人员'
             },
             {
-              code:'SANSHIYIGUO',
+              code:'GJDQ_DESC',
               label:'三十一国人员'
             },
           ],
           tableHeadHc:[],
+          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -383,23 +384,30 @@
                this.disa=false;
              }
             this.tableHeadHc=[];
-            if(this.pm.BCOUNTRY==true){
-              this.tableHeadHc.push("BCOUNTRY");
+            this.tableHeadHs=[];
+            if(this.pm.NATIONALITY==true){
+              this.tableHeadHc.push("NATIONALITY");
+              this.tableHeadHs.push("国家地区");
             }
             if(this.pm.STUTYPE==true){
               this.tableHeadHc.push("STUTYPE");
+              this.tableHeadHs.push("学生类别");
             }
             if(this.pm.ACCACADEMY==true){
               this.tableHeadHc.push("ACCACADEMY");
+              this.tableHeadHs.push("申请学校");
             }
             if(this.pm.COMPANY==true){
               this.tableHeadHc.push("COMPANY");
+              this.tableHeadHs.push("推荐人");
             }
             if(this.pm.SHIGUO==true){
               this.tableHeadHc.push("SHIGUO");
+              this.tableHeadHs.push("十国人员");
             }
             if(this.pm.SANSHIYIGUO==true){
               this.tableHeadHc.push("SANSHIYIGUO");
+              this.tableHeadHs.push("三十一国人员");
             }
           let p = {
             "currentPage": currentPage,
@@ -418,11 +426,11 @@
                 this.falg=true;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHc.length;i++){
+                for(var i=0;i<_this.tableHeadHs.length;i++){
                   var a='';
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].code==_this.tableHeadHc[i]){
+                    if(_this.tableHead[j].label==_this.tableHeadHs[i]){
                       a=j;
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
@@ -430,30 +438,6 @@
                   }
                   _this.configHeader.splice(a,0,obj);
                 }
-
-
-                // console.log('this.tableData[0]',this.tableData[0]);
-                // let arr=this.tableData[0];
-                // let itemKey = Object.keys(arr);
-                // let res = itemKey.filter(function(item,index,array){
-                //  //元素值，元素的索引，原数组。
-                //   if(item=="SHIGUO" ||item=="SANSHIYIGUO"){
-                //      return item;
-                //    }else{
-                //      return item.indexOf('_DESC')>=0;
-                //    }
-                // });
-                // console.log('this.tableData[1]',itemKey);
-                // this.configHeader=[];
-                // res.forEach( key => {
-                //    let headItem = {
-                //        props : key,
-                //        label : this.getInfo(key),
-                //    }
-                //    this.configHeader.push(headItem)
-                //    console.log('this.configHeader',this.configHeader)
-                //  })
-                // this.allnum=r.data.totalAllResult;
               }else {
                 this.falg=false;
                 var url = this.Global.aport5 + "/jiaoYuTing202Controller/getResultListByParams";
@@ -466,33 +450,6 @@
                   });
               }
             })
-        },
-        getInfo(key){
-          switch (key) {
-            case 'BCOUNTRY':
-              return  "国家地区";
-              break;
-            case 'STUTYPE':
-              return  "学生类别";
-              break;
-            case 'ACCACADEMY':
-              return  "申请学校";
-              break;
-            case 'COMPANY':
-              return  "推荐人";
-              break;
-            case 'SHIGUO':
-              return  "十国人员";
-              break;
-            case 'SANSHIYIGUO':
-              return  "三十一国人员";
-              break;
-            case 'SJLY_DESC':
-              return  "数据来源";
-              break;
-            default:
-            break;
-          }
         },
         details(i) {
           this.random=new Date().getTime();

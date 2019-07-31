@@ -187,7 +187,7 @@ export default {
 }
 .tab-content{
   /* padding: 15px; */
-  min-height: 690px;
+  min-height: 710px;
   overflow: inherit !important;
   background: #dee8f2 url('../assets/img/bbg.png') no-repeat center;
 }

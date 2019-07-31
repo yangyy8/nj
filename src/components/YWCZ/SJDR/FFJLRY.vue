@@ -73,7 +73,6 @@
         <div class="ak-tab-item abehgt hand" :class="{'ak-checked':page==3}" @click="base3">
           逾期越南入出境通行证
         </div>
-
       </div>
       <div class="ak-tab-pane" >
           <div v-show="page==0">
@@ -1590,6 +1589,9 @@ export default {
       };
       this.$api.post(this.Global.aport3 + '/drffjlyndjlxk/getFFJL_YNDJLXKPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
         })
@@ -1607,6 +1609,9 @@ export default {
       };
       this.$api.post(this.Global.aport3 + '/drffjlyrjkawzswjlxk/getFFJL_YRJKAWZSWJLXKPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData1 = r.data.resultList;
           this.TotalResult1 = r.data.totalResult;
         })
@@ -1620,6 +1625,9 @@ export default {
       };
       this.$api.post(this.Global.aport3 + '/drffjlyzswjlxk/getFFJL_YZSWJLXKPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData2 = r.data.resultList;
           this.TotalResult2 = r.data.totalResult;
         })
@@ -1633,6 +1641,9 @@ export default {
       };
       this.$api.post(this.Global.aport3 + '/drffjlyqynrcjtxz/getFFJL_YQYNRCJTXZPage', p,
         r => {
+          if(r.code=="1000001"){
+              window.location.href ="#/";
+          }
           this.tableData3 = r.data.resultList;
           this.TotalResult3 = r.data.totalResult;
         })
@@ -1740,7 +1751,9 @@ export default {
       }).then(() => {
         this.$api.post(url, p,
           r => {
-
+            if(r.code=="1000001"){
+                window.location.href ="#/";
+            }
             if (r.success) {
               this.$message({
                 message: '删除成功！',

@@ -52,7 +52,7 @@
                   <span class="input-text">受理单位：</span>
                   <el-select v-model="pd.SLDW"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.gjdq"
+                      v-for="item in $store.state.sldw"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
@@ -322,6 +322,8 @@
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getSjly");
+
+        this.$store.dispatch("getSldw");
       },
       methods: {
         handleSelectionChange(val) {

@@ -11,7 +11,7 @@
             </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">国家地区：</span>
-                  <el-select v-model="pd.BCOUNTRY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.NATIONALITY" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.gjdq"
                       :key="item.dm"
@@ -72,7 +72,7 @@
            label="学习结束时间">
          </el-table-column>
          <el-table-column
-           prop="BCOUNTRY"
+           prop="GJDQ_DESC"
            label="国家地区">
          </el-table-column>
          <el-table-column
