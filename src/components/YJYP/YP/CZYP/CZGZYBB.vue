@@ -26,7 +26,7 @@
                 </el-date-picker>
                 <span class="septum">-</span>
                 <el-date-picker
-                    v-model="pd1.SJXFSJ_Begin.begin" format="yyyy-MM-dd"
+                    v-model="pd1.SJXFSJ_End.end" format="yyyy-MM-dd"
                     type="date" size="small" value-format="yyyy/MM/dd"
                     placeholder="结束时间" :disabled="radio!='2'">
                 </el-date-picker>
@@ -278,16 +278,62 @@ import echarts from 'echarts'
       TotalResult: 0,
       pd:{
         TLYXQ_Begin:{begin:'',dataType:"date"},
-        SJXFSJ_Begin:{begin:'',dataType:"date"}
+        SJXFSJ_End:{end:'',dataType:"date"}
       },
       pd0:{
         TLYXQ_Begin:{begin:'',dataType:"date"},
       },
       pd1:{
         TLYXQ_Begin:{begin:'',dataType:"date"},
-        SJXFSJ_Begin:{begin:'',dataType:"date"}
+        SJXFSJ_End:{end:'',dataType:"date"}
       },
-      tableData:{},
+      tableData:{
+        "华侨": {
+          "00": "0",
+          "01": "0",
+          "02": "0",
+          "03": "0",
+          "04": "0",
+          "05": "0",
+          "06": "0"
+        },
+        "港澳人员": {
+          "00": "0",
+          "01": "0",
+          "02": "0",
+          "03": "0",
+          "04": "0",
+          "05": "0",
+          "06": "0"
+        },
+        "合计": {
+          "00": "0",
+          "01": "0",
+          "02": "0",
+          "03": "0",
+          "04": "0",
+          "05": "0",
+          "06": "0"
+        },
+        "台湾居民": {
+          "00": "0",
+          "01": "0",
+          "02": "0",
+          "03": "0",
+          "04": "0",
+          "05": "0",
+          "06": "0"
+        },
+        "外国人": {
+          "00": "0",
+          "01": "0",
+          "02": "0",
+          "03": "0",
+          "04": "0",
+          "05": "0",
+          "06": "0"
+        }
+      },
       tableData1:{},
       tableData2:{},
       tableData3:[],
@@ -350,27 +396,41 @@ import echarts from 'echarts'
       }
     },
     changeTime(time,timeReal){
-      time.begin==''?timeReal.begin='':time.begin==null?timeReal.begin=null:timeReal.begin=time.begin+' 00:00:00';
-      // time.end==''?timeReal.end='':time.end==null?timeReal.end=null:timeReal.end=time.end+' 00:00:00';
+      if(this.radio=='1'){
+        if(timeReal.hasOwnProperty('begin')){
+          time.begin==''?timeReal.begin='':time.begin==null?timeReal.begin=null:timeReal.begin=time.begin+' 00:00:00';
+        }
+        if(timeReal.hasOwnProperty('end')){
+          time.begin==''?timeReal.end='':time.begin==null?timeReal.end=null:timeReal.end=time.begin+' 00:00:00';
+        }
+      }else if(this.radio=='2'){
+        if(timeReal.hasOwnProperty('begin')){
+          time.begin==''?timeReal.begin='':time.begin==null?timeReal.begin=null:timeReal.begin=time.begin+' 00:00:00';
+        }
+        if(timeReal.hasOwnProperty('end')){
+          time.end==''?timeReal.end='':time.end==null?timeReal.end=null:timeReal.end=time.end+' 00:00:00';
+        }
+      }
     },
     getPd(){
       if(this.radio=='1'){
         this.pd1={
           TLYXQ_Begin:{begin:'',dataType:"date"},
-          SJXFSJ_Begin:{begin:'',dataType:"date"}
+          SJXFSJ_End:{end:'',dataType:"date"}
         }
         this.changeTime(this.pd1.TLYXQ_Begin,this.pd.TLYXQ_Begin);
-        this.changeTime(this.pd1.SJXFSJ_Begin,this.pd.SJXFSJ_Begin);
+        this.changeTime(this.pd1.SJXFSJ_End,this.pd.SJXFSJ_End);
         this.changeTime(this.pd0.TLYXQ_Begin,this.pd.TLYXQ_Begin);
-        this.changeTime(this.pd0.TLYXQ_Begin,this.pd.SJXFSJ_Begin);
+        this.changeTime(this.pd0.TLYXQ_Begin,this.pd.SJXFSJ_End);
+        console.log(this.pd);
       }else if(this.radio=='2'){
         this.pd0={
           TLYXQ_Begin:{begin:'',dataType:"date"},
         }
         this.changeTime(this.pd0.TLYXQ_Begin,this.pd.TLYXQ_Begin);
-        this.changeTime(this.pd0.TLYXQ_Begin,this.pd.SJXFSJ_Begin);
+        this.changeTime(this.pd0.TLYXQ_Begin,this.pd.SJXFSJ_End);
         this.changeTime(this.pd1.TLYXQ_Begin,this.pd.TLYXQ_Begin);
-        this.changeTime(this.pd1.SJXFSJ_Begin,this.pd.SJXFSJ_Begin);
+        this.changeTime(this.pd1.SJXFSJ_End,this.pd.SJXFSJ_End);
       }
     },
     getList(){//工作月报表
