@@ -30,7 +30,7 @@
            <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm}})">
            <div class="list">姓名：{{item.ywxm}} <span>性别：{{item.xb}}</span> <span>出生日期：{{item.csrq}}</span> <span>国家地区：{{item.gjdq}}</span> <span>证件号码：{{item.zjhm}}</span></div>
            <div class="list">命中信息：{{item.index}}</div>
-           <div class="list" v-html="item.highlight"></div>
+           <div class="list" v-html="item.cusHighlight"></div>
          </div>
          </el-col>
          </el-card>
