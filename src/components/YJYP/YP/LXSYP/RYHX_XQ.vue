@@ -54,7 +54,7 @@
 
                  </el-col>
                  <el-col :span="2">
-                   <el-button type="primary" size="small" @click="$router.go(-1)" style="margin-left:15px;">返 回</el-button>
+                   <el-button type="primary" size="small" @click="ggo()" style="margin-left:15px;">返 回</el-button>
                  </el-col>
                </el-row>
            </el-col>
@@ -1335,6 +1335,22 @@ export default{
     {
       this.xid=n.RGUID;
       this.mhDialogVisible==true;
+    },
+    ggo(){
+      console.log('-----',this.$route.query.stype);
+      if(this.$route.query.stype!=undefined){
+      var tt=this.$route.query.stype;
+      var cc=this.$route.query.zjhmes;
+
+      if((tt!=undefined && tt!="") || (cc!=undefined && cc!=""))
+      {
+        this.$router.push({name:'QWJS',query:{zjhmes:cc,stype:tt}})
+      }else {
+          this.$router.go(-1);
+      }
+    }else {
+      this.$router.go(-1);
+    }
     },
   },
 }

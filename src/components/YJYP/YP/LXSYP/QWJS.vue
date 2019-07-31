@@ -21,16 +21,16 @@
        <el-row v-for="(item,index) in items" :key="index">
        <el-card class="box-card" style="margin:5px 0;">
          <el-col :span="2" style="padding:10px;width:120px;">
-           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm}})">
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type}})">
            <img :src="item.photo" v-if="item.photo!=''" width="100" height="120">
            <img src="../../../../assets/img/mrzp.png" width="100" height="120" v-else >
           </div>
          </el-col>
          <el-col :span="18">
-           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm}})">
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type}})">
            <div class="list">姓名：{{item.ywxm}} <span>性别：{{item.xb}}</span> <span>出生日期：{{item.csrq}}</span> <span>国家地区：{{item.gjdq}}</span> <span>证件号码：{{item.zjhm}}</span></div>
-           <div class="list">命中信息：{{item.index}}</div>
-           <div class="list" v-html="item.cusHighlight"></div>
+           <!-- <div class="list">命中信息：{{item.index}}</div>
+           <div class="list" v-html="item.cusHighlight"></div> -->
          </div>
          </el-col>
          </el-card>
@@ -65,7 +65,7 @@ export default {
   },
     activated(){
       this.type=this.$route.query.stype;
-      this.content=this.$route.query.zjhm;
+      this.content=this.$route.query.zjhmes;
       console.log(this.type,this.content);
       this.getList(this.CurrentPage, this.pageSize, this.pd);
     },

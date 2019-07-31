@@ -355,6 +355,7 @@ export default {
       this.editsDialogVisible=true;
       // this.editform={};
       // this.editform=n;
+      this.editform.RYBH=n.RYBH;
     },
     editsItem()
     {
