@@ -28,9 +28,9 @@
             </div>
            </el-col>
            <el-col :span="22">
-             <div class="shover">
+             <div class="shover" @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
                <div class="list">
-                 <p class="tc-b hand" style="margin-bottom:15px!important" @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})"><b>{{item.ywxm}}</b></p>
+                 <p style="margin-bottom:15px!important"><b>{{item.ywxm}}</b></p>
                  <el-row type="flex"  class="t-detail">
                    <el-col :span="22">
                      <el-row class="t-mb15">
