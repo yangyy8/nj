@@ -340,7 +340,11 @@ export default {
         }
       })
       let pp={
-        "pd":{'YWBH':this.xid.YWBH}
+        "pd":{
+          'YWBH':this.xid.YWBH
+        },
+        'currentPage':1,
+        'showCount':10,
       }
       this.$api.post(this.Global.aport5+'/esFnvisasController/getResultListByParams',pp,
       r =>{
