@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="ak-tab-pane">
-        <!-- <el-button  size="small"  class="mb-15" type="primary" plain @click="download">导出</el-button> -->
+        <el-button  size="small"  class="mb-15" type="primary" plain @click="download">导出</el-button>
         <div v-show="page==0">
           <el-table
              :data="tableData"
@@ -214,7 +214,7 @@
       
     },  
   methods:{
-    /* download(){
+    download(){
       this.getPd();
       if(this.page==0){
         this.$api.post(this.Global.aport2+'/czgltb/exportglqktbb',{pd:this.pd},
@@ -239,7 +239,7 @@
         link.setAttribute('download', '报表.xlsx')
         document.body.appendChild(link)
         link.click()
-    }, */
+    },
      sjzh(val){
       let str=""
       if(val.length==0){
