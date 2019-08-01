@@ -867,6 +867,7 @@ export default{
        pageSize8: 10,
        TotalResult8: 0,
        options: this.pl.ps,
+       gjdq:'',
     }
   },
   activated(){
@@ -882,6 +883,7 @@ export default{
     this.lxsZXDialogVisible=false;
     this.row=this.$route.query.row;
     this.zjhm=this.$route.query.zjhm;
+    this.gjdq=this.$route.query.gjdq;
     if(this.zjhm!="" && this.zjhm!=undefined){
       this.pd.ZJHM=this.zjhm;
     }else if(this.row.RYBH){

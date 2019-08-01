@@ -216,7 +216,7 @@
                  </el-select>
             </el-col>
         </el-row>
-      </el-form> 
+      </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="addItem('addForm')" size="small">确 定</el-button>
         <el-button @click="qxItem('addForm')" size="small">取 消</el-button>
@@ -239,7 +239,7 @@ export default {
       options: this.pl.ps,
       tableData: [],
       type:'',
-      addsDialogVisible:false, 
+      addsDialogVisible:false,
       userCode:'',
       userName:'',
       orgCode:'',
@@ -249,7 +249,10 @@ export default {
     }
   },
   activated(){
-     this.getList(this.CurrentPage, this.pageSize, this.pd);
+    let _this = this;
+    setTimeout(function(){
+      _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
+    },1000)
   },
   mounted() {
     this.$store.dispatch('getGjdq');
@@ -323,7 +326,7 @@ export default {
         this.$api.post(this.Global.aport4+'/zDRYController/isLGRY', p,
          r => {
            if(r.data==1){
-             this.addsDialogVisible=true;  
+             this.addsDialogVisible=true;
            } else if(r.data==0){
               this.$message('该人员已经被列管');
            } else if(r.data==2){
@@ -333,9 +336,9 @@ export default {
               type: 'warning'
             }).then(() => {
                 this.addsDialogVisible=true;
-            })  
-          }  
-        })     
+            })
+          }
+        })
      },
       addItem(addForm){
         let p={
@@ -344,11 +347,11 @@ export default {
             GJDQ:this.addlg.GJDQ,
             LGYJ:this.form.LGYJ,
             GLJB:this.form.GLJB,
-          },  
+          },
            userName:this.userName,
            userCode:this.userCode,
            orgCode:this.orgCode,
-           orgName:this.orgName    
+           orgName:this.orgName
          }
         this.$api.post(this.Global.aport4+'/zDRYController/setZdry', p,
          r => {
@@ -364,7 +367,7 @@ export default {
       qxItem(addForm){
           this.addsDialogVisible = false;
     },
-    
+
   }
 }
 </script>

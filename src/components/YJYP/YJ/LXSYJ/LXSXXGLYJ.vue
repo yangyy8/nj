@@ -94,7 +94,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="24" :lg="24"   class="input-item" v-if="rulesTotal!=0">
                    <span class="input-text" style="width: 7.3%;">分类标签：</span>
-                   <el-radio-group v-model="ruleType" @change="rulesChange(ruleType)">
+                   <el-radio-group v-model="ruleType" @change="rulesChange()">
                       <el-radio :label="item.RULE_Map" v-for="(item,ind) in rules" :key="ind">{{item.RULE_NAME}}</el-radio>
                       <el-radio label="other">其他</el-radio>
                     </el-radio-group>
@@ -263,9 +263,9 @@ export default {
   activated(){
     this.rulesTotal=0,
     this.type=this.$route.query.type;
-    this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
+    // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
     this.pd0={};
-    console.log('this.type',this.type)
+    // console.log('this.type',this.type)
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
        this.getMXLX(this.type);
@@ -275,6 +275,10 @@ export default {
        this.getRules();
      }
      this.Global.indexstate=1;
+     let _this = this;
+     setTimeout(function(){
+       _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
+     },1000)
   },
   mounted() {
     this.$store.dispatch('getGjdq');
@@ -303,11 +307,7 @@ export default {
       }
     },
     rulesChange(val){
-      // this.pd1=val;
-      // this.pd1.MXLX=this.pd.MXLX
-      // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[],MXLX:this.pd.MXLX};
-      // this.pd0={};
-      // this.getList(this.CurrentPage, this.pageSize,this.pd1);
+       this.getList(this.CurrentPage, this.pageSize,this.pd);
     },
     getMXLX(type){
 
