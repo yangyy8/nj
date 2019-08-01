@@ -10,41 +10,53 @@
         <el-row type="flex" class="yyf">
           <el-col :span="24" class="stu-left">
             <el-row  class="stu-row tt-bb">
-              <el-col :span="6" class="stu-col-row t-bb">
-             <span class="texth">  姓名：
-                <label  v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
-                <label  v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
-                <label  v-else>{{baseData.YWXM}}</label>
-              </span>
+              <el-col :span="6" class="stu-col-row slh">
+                <el-tooltip placement="top">
+                  <div slot="content">
+                    <label  v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
+                    <label  v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
+                    <label  v-else>{{baseData.YWXM}}</label>
+                  </div>
+                  <span class="texth">姓名：
+                     <label  v-if="baseData.YWXM!=undefined && baseData.ZWXM!=undefined">{{baseData.YWXM}}({{baseData.ZWXM}})</label>
+                     <label  v-else-if="baseData.ZWXM!=undefined">{{baseData.ZWXM}}</label>
+                     <label  v-else>{{baseData.YWXM}}</label>
+                   </span>
+                </el-tooltip>
+
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
-                <span>性别：</span>
-                   {{baseData.XB_DESC}}
+              <el-col :span="6" class="stu-col-row">
+                <span>性别：{{baseData.XB_DESC}}</span>
+
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
-                <span>国家/地区：</span>
-                   {{baseData.GJDQ_DESC}}
+              <el-col :span="6" class="stu-col-row">
+                <span>国家/地区：{{baseData.GJDQ_DESC}}</span>
+
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
-                <span>证件种类：</span>
-                   {{baseData.ZJZL_DESC}}
+              <el-col :span="6" class="stu-col-row">
+                <span>证件种类：{{baseData.ZJZL_DESC}}</span>
+
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
+            </el-row>
+            <el-row class="stu-row tt-bb">
+              <el-col :span="6" class="stu-col-row">
                 <span >证件有效期：</span>
                    {{baseData.ZJYXQ}}
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
+              <el-col :span="6" class="stu-col-row">
                 <span>证件号码：</span>
                    {{baseData.ZJHM}}
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
+              <el-col :span="6" class="stu-col-row">
                 <span>签证种类：</span>
                    {{baseData.QZZL_DESC}}
               </el-col>
-              <el-col :span="6" class="stu-col-row t-bb">
+              <el-col :span="6" class="stu-col-row">
                 <span>签证号码：</span>
                    {{baseData.QZHM}}
               </el-col>
+            </el-row>
+            <el-row class="stu-row tt-bb">
               <el-col :span="6" class="stu-col-row">
                 <span>预警时间：</span>
                   {{baseData.BJSJ}}

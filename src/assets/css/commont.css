@@ -158,7 +158,7 @@
   border-bottom: 1px solid #eee;
 }
 .tt-bb{
-  border-bottom: none;
+  border-bottom: 1px solid #eee;
 }
 .qz{
   font-weight: bold;
@@ -252,4 +252,9 @@
    width: 56%;
    word-wrap: break-word;
    flex-wrap: wrap;
+ }
+ .slh{
+   white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
  }

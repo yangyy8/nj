@@ -126,7 +126,7 @@
                   <span class="input-text">居住状态：</span>
                   <el-select v-model="pd.JZZT"  filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.jzztcz"
+                      v-for="item in $store.state.jzztlx"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
@@ -481,7 +481,7 @@
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getRzfs");
-         this.$store.dispatch("getJzztcz");
+         this.$store.dispatch("getJzztlx");
          this.$store.dispatch("getSf");
       },
       methods: {

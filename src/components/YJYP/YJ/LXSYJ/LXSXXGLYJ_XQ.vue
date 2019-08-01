@@ -29,7 +29,7 @@
                 {{basedata.GJDQ_DESC}}
              </el-col>
              <el-col :span="6" class="stu-col-row">
-               <span>证件种类：</span>
+               <span class="texth">证件种类：</span>
                   {{basedata.ZJZL_DESC}}
              </el-col>
            </el-row>
@@ -39,7 +39,7 @@
                   {{basedata.ZJHM}}
              </el-col>
              <el-col :span="6" class="stu-col-row">
-               <span>签证种类：</span>
+               <span class="texth">签证种类：</span>
                     {{basedata.QZZL_DESC}}
              </el-col>
              <el-col :span="6" class="stu-col-row">
