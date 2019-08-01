@@ -291,8 +291,8 @@ export default {
     this.$store.dispatch("getZjzl");
     this.$store.dispatch("getXB");
     this.$store.dispatch("getTbry");
-    // this.actions = window.IPConfig.IP + this.Global.aport3;
-      this.actions = this.Global.aport3;
+    this.actions = window.IPConfig.IP + this.Global.aport3;
+      // this.actions = this.Global.aport3;
     this.getData0(this.id);
 
   },

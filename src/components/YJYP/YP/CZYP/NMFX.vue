@@ -172,6 +172,10 @@
                   label="电话号码">
                 </el-table-column>
                 <el-table-column
+                  prop="RS"
+                  label="户室人数">
+                </el-table-column>
+                <el-table-column
                   label="操作" width="100">
                   <template slot-scope="scope">
                   <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'NMFX_XQ',query:{row:scope.row}})"></el-button>
@@ -301,7 +305,11 @@ export default {
 
     if(this.rs!=0)
     {
-      this.pd.RS_Nokeyword==this.rs;
+      this.pd.RS=this.rs;
+    }else{
+      if(this.pd.hasOwnProperty('RS')){
+        delete this.pd.RS
+      }
     }
         var list=[];
         if(this.pm.GJDQDM==true){

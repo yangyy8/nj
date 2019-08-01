@@ -355,6 +355,7 @@ export default {
       this.editsDialogVisible=true;
       // this.editform={};
       // this.editform=n;
+      this.editform.RYBH=n.RYBH;
     },
     editsItem()
     {
@@ -375,7 +376,7 @@ export default {
             type: 'success'
           });
         } else {
-          this.$message.error(r.Message);
+          this.$message.error(r.message);
         }
 
         this.editsDialogVisible = false;

@@ -437,7 +437,7 @@ export default new Router({
         {
           path: 'QWJS',
           name: 'QWJS',
-          meta:{title:['数据分析','人员画像','全文检索']},
+          meta:{title:['数据分析','人员画像','全文检索'],father:'RYHX'},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/QWJS'], resolve),
         },
         {

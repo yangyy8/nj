@@ -85,8 +85,8 @@
               <el-checkbox label="审批结果" v-model="pm.SPJG" :disabled="disa"></el-checkbox>
               <el-checkbox label="申请类别" v-model="pm.SQLB" :disabled="disa"></el-checkbox>
               <el-checkbox label="申请事由" v-model="pm.SQSY" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持签证种类" v-model="pm.QZZL" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
+              <el-checkbox label="所持签证种类" v-model="pm.XCQZZL" :disabled="disa"></el-checkbox>
+              <el-checkbox label="所持证件种类" v-model="pm.XCZJZL" :disabled="disa"></el-checkbox>
           </div>
           <div v-if="falg">
             <el-table
@@ -135,7 +135,7 @@
               <el-pagination
                 background
                 @current-change="handleCurrentChange"
-                :current-page:sync="CurrentPage"
+                :current-page.sync ="CurrentPage"
                 :page-size="pageSize"
                 layout="prev, pager, next"
                 :total="TotalResult">
@@ -215,7 +215,7 @@
             <el-pagination
               background
               @current-change="handleCurrentChange"
-              :current-page:sync="CurrentPage"
+              :current-page.sync ="CurrentPage"
               :page-size="pageSize"
               layout="prev, pager, next"
               :total="TotalResult">
@@ -296,11 +296,11 @@
               label:'申请事由'
             },
             {
-              code:'QZZL_DESC',
+              code:'XCQZZL_DESC',
               label:'所持签证种类'
             },
             {
-              code:'ZJZL_DESC',
+              code:'XCZJZL_DESC',
               label:'所持证件种类'
             },
           ],
@@ -367,13 +367,13 @@
               this.tableHeadHc.push("SQSY");
               this.tableHeadHs.push('SQSY_DESC')
             }
-            if(this.pm.QZZL==true){
-              this.tableHeadHc.push("QZZL");
-              this.tableHeadHs.push('QZZL_DESC')
+            if(this.pm.XCQZZL==true){
+              this.tableHeadHc.push("XCQZZL");
+              this.tableHeadHs.push('XCQZZL_DESC')
             }
-            if(this.pm.ZJZL==true){
-              this.tableHeadHc.push("ZJZ");
-              this.tableHeadHs.push('ZJZL_DESC')
+            if(this.pm.XCZJZL==true){
+              this.tableHeadHc.push("XCZJZL");
+              this.tableHeadHs.push('XCZJZL_DESC')
             }
           let p = {
             "currentPage": currentPage,
