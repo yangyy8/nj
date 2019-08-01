@@ -58,6 +58,7 @@ var store = new Vuex.Store({
     sqsy:[],
     rydylb:[],
     sqqzzl:[],
+    jzztcz:[],
   },
   mutations: {
     getToken(state, data) {
@@ -215,8 +216,17 @@ var store = new Vuex.Store({
     getSqqzzl(state,data){
       state.sqqzzl=data;
     },
+    getJzztcz(state,data){
+      state.jzztcz=data;
+    }
   },
   actions: {
+    getJzztcz(context){
+      api.get(global_.aport1 + global_.jzztcz, null,
+        r => {
+          context.commit('getJzztcz', ToArray(r.data))
+        })
+    },
     getSldw(context){
       api.get(global_.aport1 + global_.sldw, null,
         r => {

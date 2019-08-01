@@ -124,7 +124,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">居住状态：</span>
-                  <el-select v-model="pd.JZZT"  filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.jzztcz"  filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.jzzt"
                       :key="item.dm"
@@ -398,6 +398,7 @@
             FJJSSJ_DateRange:{begin:'',end:'',dataType:'date'},
             SJXFSJ_DateRange:{begin:'',end:'',dataType:'date'},
             PCSJSSJ_DateRange:{begin:'',end:'',dataType:'date'},
+            JZZT:"1"
           },
           pm:{},
           imagess:[],
@@ -480,7 +481,7 @@
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getRzfs");
-         this.$store.dispatch("getJzzt");
+         this.$store.dispatch("getJzztcz");
          this.$store.dispatch("getSf");
       },
       methods: {
