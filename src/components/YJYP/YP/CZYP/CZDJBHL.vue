@@ -6,7 +6,7 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">市局下发时间：</span>
+                  <span class="input-text" title="市局下发时间">市局下发时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.SJXFSJ_DateRange.begin" format="yyyy-MM-dd"
@@ -61,7 +61,7 @@
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">停留有效期：</span>
+                  <span class="input-text" title="停留有效期">停留有效期：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.TLYXQ_DateRange.begin" format="yyyy-MM-dd"
@@ -122,7 +122,7 @@
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">分局接收时间：</span>
+                  <span class="input-text" title="分局接收时间">分局接收时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd0.FJJSSJ_DateRange.begin" format="yyyy-MM-dd"
@@ -165,7 +165,7 @@
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">所属派出所：</span>
+                    <span class="input-text" title="所属派出所">所属派出所：</span>
                     <el-select v-model="pd.SSPCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in PSC"

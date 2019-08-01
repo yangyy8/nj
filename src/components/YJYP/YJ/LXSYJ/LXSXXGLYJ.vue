@@ -434,7 +434,9 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "orderBy":'BJSJ',
+        "orderType":'DESC'
       };
       if(this.ruleType=='other'){
         p.pdNotIn=this.pdNotIn;

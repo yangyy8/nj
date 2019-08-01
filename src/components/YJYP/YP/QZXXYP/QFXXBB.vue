@@ -60,7 +60,7 @@
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">申请证件种类：</span>
+                    <span class="input-text" title="申请证件种类">申请证件种类：</span>
                     <el-select v-model="pd.BZLX" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.zjzl"
@@ -251,7 +251,7 @@
           pd: {
             SLRQ_DateRange:{begin:'',end:'',dataType:'date'},
             SPRQ_DateRange:{begin:'',dataType:'date'},
-            SPDW_Like:'3201'
+            QZQFJG_Like:'3201'
           },
           pm:{},
           imagess:[],

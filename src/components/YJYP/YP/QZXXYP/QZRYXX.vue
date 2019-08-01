@@ -124,7 +124,9 @@ export default {
       pageSize: 10,
       TotalResult: 0,
       form:{},
-      pd: {},
+      pd: {
+        QZQFJG_Like:'3201'
+      },
       imagess:[],
       radio1:'0',
       radio2:'0',

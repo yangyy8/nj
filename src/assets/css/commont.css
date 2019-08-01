@@ -45,6 +45,9 @@
 .t-mb10{
   margin-bottom: 10px!important;
 }
+.t-mb15{
+  margin-bottom: 15px!important;
+}
 .t-must{
   color: red;
   padding: 2px;
@@ -239,3 +242,14 @@
 .t-table td{
   border:1px solid #eee
 }
+.t-el-content{
+   display: flex;
+ }
+ .t-el-text{
+   white-space: nowrap;
+ }
+ .t-el-sub{
+   width: 56%;
+   word-wrap: break-word;
+   flex-wrap: wrap;
+ }

@@ -286,7 +286,9 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "orderBy":'BJSJ',
+        "orderType":'DESC'
       };
       this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
         r => {

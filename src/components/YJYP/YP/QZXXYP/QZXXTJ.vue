@@ -17,16 +17,16 @@
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">出生日期：</span>
+                  <span class="input-text">受理日期：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.CSRQ_DateRange.begin" format="yyyy-MM-dd"
+                       v-model="pd.SLRQ_DateRange.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.CSRQ_DateRange.end" format="yyyy-MM-dd"
+                        v-model="pd.SLRQ_DateRange.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -45,7 +45,7 @@
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">所持签证种类：</span>
+                  <span class="input-text" title="所持签证种类">所持签证种类：</span>
                   <el-select v-model="pd.XCQZZL" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.qzzl"
@@ -56,7 +56,7 @@
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">申请签证种类：</span>
+                    <span class="input-text" title="申请签证种类">申请签证种类：</span>
                     <el-select v-model="pd.SQQZZL" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.sqqzzl"
@@ -78,7 +78,7 @@
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">签证办理状态：</span>
+                    <span class="input-text" title="签证办理状态">签证办理状态：</span>
                     <el-select v-model="pd.CURRENTSTATE" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.qzzl"
@@ -111,7 +111,7 @@
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                    <span class="input-text">人员地域类别：</span>
+                    <span class="input-text" title="人员地域类别">人员地域类别：</span>
                     <el-select v-model="pd.RYDYLB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.rydylb"
@@ -120,6 +120,14 @@
                         :value="item.dm">
                       </el-option>
                     </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.XCZJHM" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">签证号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.SBQZHM" class="input-input"></el-input>
                 </el-col>
               </el-row>
              </el-col>
@@ -295,7 +303,8 @@
           pageSize: 10,
           TotalResult: 0,
           pd: {
-            CSRQ_DateRange:{begin:'',end:'',dataType:'date'},
+            SLRQ_DateRange:{begin:'',end:'',dataType:'date'},
+            QZQFJG_Like:'3201'
           },
           pm:{},
           imagess:[],
