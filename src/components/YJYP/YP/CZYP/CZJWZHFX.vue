@@ -124,9 +124,9 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">居住状态：</span>
-                  <el-select v-model="pd.jzztcz"  filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.JZZT"  filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.jzzt"
+                      v-for="item in $store.state.jzztcz"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
