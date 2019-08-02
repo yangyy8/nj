@@ -247,7 +247,7 @@
                <el-table-column
                  label="操作" width="100">
                  <template slot-scope="scope">
-                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'CZJWZHFXRYXX',query:{row:scope.row}})"></el-button>
+                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'CZJWZHFXRYXX',query:{row:scope.row,queryPd:pd}})"></el-button>
                  </template>
                </el-table-column>
             </el-table>
@@ -439,7 +439,7 @@
               label:'居住地责任区'
             },
             {
-              code:'JZD_PCS',
+              code:'JZD_PCS_DESC',
               label:'居住地所属派出所'
             },
             {
@@ -524,7 +524,7 @@
             }
             if(this.pm.JZD_PCS==true){
               this.tableHeadHc.push("JZD_PCS");
-              this.tableHeadHs.push('JZD_PCS')
+              this.tableHeadHs.push('JZD_PCS_DESC')
             }
             if(this.pm.SFDM==true){
               this.tableHeadHc.push("SFDM");

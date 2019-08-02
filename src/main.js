@@ -48,6 +48,15 @@ Vue.prototype.$api = api;
 Vue.config.productionTip = false
 Vue.prototype.Global = global_;
 Vue.prototype.pl = pl;
+Vue.prototype.objCompare=function(objRow,objPd){
+  for(var i in objPd){
+    for(var j in objRow){
+      if(j==i){
+        delete objPd[i]
+      }
+    }
+  }
+};
 router.beforeResolve((to, from, next) => {
   // console.log("token",store.state.token)
   let state=store.state.token;

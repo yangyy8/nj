@@ -211,10 +211,12 @@ export default {
     ],
       row:[],
       czinfo:{},
+      queryPd:{},
     }
   },
   activated() {
     this.row = this.$route.query.row;
+    this.queryPd = this.$route.query.queryPd;
     console.log('row',this.row);
     this.getList(this.CurrentPage,this.pageSize,this.pd);
   },
@@ -234,9 +236,8 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      // pd.GJDQ=this.row.GJDQ;
-      // pd.ZJZL=this.row.ZJZL;
-      pd = Object.assign({}, pd, this.row);
+      this.objCompare(this.row,this.queryPd)
+      pd = Object.assign({},pd,this.row,this.queryPd);
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
