@@ -21,8 +21,8 @@
                     </el-date-picker>
                  </div>
                 </el-col>
-          </el-row> 
-        </el-col> 
+          </el-row>
+        </el-col>
         <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"   @click="getData">查询</el-button>
         </el-col>
@@ -111,14 +111,14 @@
                   <span>{{scope.row.dqwtxList.length==0?'0':scope.row.dqwtxList.length}}</span>
                 </template>
                 </el-table-column>
-             </el-table-column>  
+             </el-table-column>
              <el-table-column
                prop="djsxyssbfList"
                label="登记事项与事实严重不符">
                 <template slot-scope="scope">
                   <span>{{scope.row.djsxyssbfList.length==0?'0':scope.row.djsxyssbfList.length}}</span>
                 </template>
-             </el-table-column>     
+             </el-table-column>
            </el-table>
         </div>
 
@@ -136,56 +136,56 @@
                label="分局接收超时">
                 <template slot-scope="scope">
                   <span>{{sjzh(scope.row.fjcsjsList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="pcscsjsList"
                label="派出所接收超时效数">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.pcscsjsList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="jzxxqlList"
                label="居住信息登记缺项">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.jzxxqlList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="abxxqlList"
                label="无安保状况登记数">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.abxxqlList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="zfxxqlList"
                label="无安全走访登记数">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.zfxxqlList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="clfwwqzaList"
                label="承租房屋未签治安责任书数">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.clfwwqzaList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
              <el-table-column
                prop="dqwtxList"
                label="9月1日前到期无提醒登记数">
                <template slot-scope="scope">
                   <span>{{sjzh(scope.row.dqwtxList)}}</span>
-                </template> 
+                </template>
              </el-table-column>
            </el-table>
         </div>
 
       </div>
     </div>
-    
+
   </div>
 </template>
 <script scoped>
@@ -204,15 +204,15 @@
         SJXFSJ_DateRange:{begin:'',end:'',dataType:"date"}
       },
       tableData:[],
-      tableData1:[], 
+      tableData1:[],
     }
   },
   mounted(){
     this.getList()
   },
     activated(){
-      
-    },  
+
+    },
   methods:{
     download(){
       this.getPd();
@@ -236,7 +236,7 @@
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
-        link.setAttribute('download', '报表.xlsx')
+        link.setAttribute('download', '报表.xls')
         document.body.appendChild(link)
         link.click()
     },
@@ -245,12 +245,12 @@
       if(val.length==0){
         return ''
       }else{
-        for (var i in val) { 
-            str+=val[i].ZJHM+'/'                
-        } 
+        for (var i in val) {
+            str+=val[i].ZJHM+'/'
+        }
         return str
       }
-    }, 
+    },
     getData(){
       if(this.page==0){
         this.getList();
@@ -287,4 +287,3 @@
   }
 }
 </script>
-

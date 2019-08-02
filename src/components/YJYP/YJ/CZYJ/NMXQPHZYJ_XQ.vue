@@ -796,8 +796,8 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        "orderBy":"RQ_RZRQ",
-        "orderType":"DESC"
+        // "orderBy":"RQ_RZRQ",
+        // "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_CZ_JZDXXController/getResultListByParams', pp,
         r => {
@@ -810,7 +810,7 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": this.px,
-        "orderBy":"ZSRQ",
+        "orderBy":{value:"ZSRQ",dataType:"date"},
         "orderType":"DESC"
       };
       this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getResultListByParams', pp,
