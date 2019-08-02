@@ -374,7 +374,7 @@ import echarts from 'echarts'
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url
-        link.setAttribute('download', '报表.xlsx')
+        link.setAttribute('download', '报表.xls')
         document.body.appendChild(link)
         link.click()
     },

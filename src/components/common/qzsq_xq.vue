@@ -19,7 +19,7 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">出生地：</span>
-          <span class="input-input detailinput">  {{qzinfo.CSD}}</span>
+          <span class="input-input detailinput">  {{qzinfo.CSD_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">身份：</span>
@@ -79,11 +79,11 @@
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">当前环节：</span>
-          <span class="input-input detailinput">  {{qzinfo.CURRENTHJ}}</span>
+          <span class="input-input detailinput">  {{qzinfo.CURRENTHJ_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">当前状态：</span>
-          <span class="input-input detailinput">  {{qzinfo.CURRENTSTATE}}</span>
+          <span class="input-input detailinput">  {{qzinfo.CURRENTSTATE_DESC}}</span>
         </el-col>
         <el-col :span="8" class="input-item">
           <span class="input-text">证件内人数：</span>

@@ -108,7 +108,7 @@
                <el-table-column
                  label="操作" width="100">
                  <template slot-scope="scope">
-                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'CRJRYXX',query:{row:scope.row}})"></el-button>
+                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'CRJRYXX',query:{row:scope.row,queryPd:pd}})"></el-button>
                  </template>
                </el-table-column>
             </el-table>
