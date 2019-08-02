@@ -94,7 +94,7 @@ export default {
        "keywords":this.content,
        "type":this.type,
        "pageSize":showCount,
-       "page":currentPage
+       "page":currentPage 
      };
      // var formData = new FormData();
      // formData.append("keywords", this.content);
