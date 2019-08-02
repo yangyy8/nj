@@ -284,7 +284,6 @@ export default {
     },
     getList(currentPage, showCount, pd) {
       /* this.pd.MXLX='ASJ_DQQZFFJY'; */
-
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
 
