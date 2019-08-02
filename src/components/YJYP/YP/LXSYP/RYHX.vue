@@ -15,7 +15,7 @@
             </el-select>
             </el-input>
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
-          <el-button type="primary"  @click="gjshow=!gjshow">高级查询</el-button>
+          <el-button type="primary"  @click="$router.push({name:'GJCX'})">高级查询</el-button>
           <el-button type="warning"  @click="$router.push({name:'RYPLCX',query:{}})">模板导入</el-button>
         </div>
         <div class="tjsy" v-if="gjshow">

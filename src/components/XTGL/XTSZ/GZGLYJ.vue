@@ -75,7 +75,6 @@
                   <el-input v-model="city.bjz" size="mini" class="yy-input-input"></el-input>
                 </el-col>
             </el-row>
-
           </div>
         </el-card>
         </el-col>
@@ -99,7 +98,6 @@ export default {
       name2:'',
       name3:''
     }
-
   },
   mounted(){
     this.$store.dispatch("getGjdq");

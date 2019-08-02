@@ -211,9 +211,10 @@
 
       <el-col :span="24">
           <span class="yy-input-text">单位赋权：</span>
+
       <el-tree
         :data="menudata"
-        :check-strictly="true"
+
         show-checkbox
         default-expand-all
         node-key="dm"
@@ -375,6 +376,7 @@ export default {
       userid: '',
       org: '',
       ssdw: [],
+      menurr: [],
 
     }
   },
@@ -384,6 +386,7 @@ export default {
     console.log(this.from)
   },
   methods: {
+
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -674,25 +677,48 @@ export default {
       ff.append("userid", this.userid);
       let p = ff;
 
-      var lists = new Array();
-      var url1 = this.Global.aport1 + '/fun/getByUserID';
-      this.$api.post(url1, p,
-        rr => {
-          var arrs = rr.data;
-          for (var i = 0; i < arrs.length; i++) {
-            lists.push(arrs[i].id);
-          }
-        });
+      //var lists = new Array();
+      // var url1 = this.Global.aport1 + '/fun/getByUserID';
+      // this.$api.post(url1, p,
+      //   rr => {
+      //     var arrs = rr.data;
+      //     for (var i = 0; i < arrs.length; i++) {
+      //       lists.push(arrs[i].id);
+      //     }
+      //   });
       var url = this.Global.aport1 + '/fun/getFunTreeByUserID';
       this.$api.post(url, p,
         r => {
           if (r.success) {
             this.menudata = r.data;
-            //  let arr=r.data,that=this;
-            //  console.log('lists------',lists);
-            this.defaultChecked = lists;
+            var arr = r.data;
+            console.log(arr);
+            this.menurr = [];
+            this.uniteChildSame(arr);
+            console.log('menurr',  this.menurr.length);
+            this.defaultChecked = this.menurr;
           }
         })
+    },
+    uniteChildSame(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].checked == true || arr[i].children != null) {
+            this.selectChildSame(arr[i].children);
+        }
+      }
+    },
+    selectChildSame(arr){
+
+      for (var i = 0; i < arr.length; i++) {
+
+            if(arr[i].children!=null){
+                this.selectChildSame(arr[i].children);
+            }else {
+                if(arr[i].checked==true){
+                  this.menurr.push(arr[i].dm);
+                }
+            }
+      }
     },
 
     open(content) {
@@ -700,6 +726,7 @@ export default {
         confirmButtonText: '确定',
       });
     },
+    //保存赋权
     menuItem() {
 
       if (this.pd2.org == undefined || this.pd2.org == '') {
@@ -708,19 +735,18 @@ export default {
       }
 
       let checkList = this.$refs.tree.getCheckedNodes();
-      //  console.log('checkList',checkList);
+
       if (checkList.length == 0) {
         this.open("请选择权限！");
         return;
       }
       var array = checkList;
       var childrenlist = new Array();
-      //console.log('checkList',checkList);
-      for (var i = 0; i < array.length; i++) {
-
-        childrenlist.push(array[i].dm);
-      }
-      // console.log('-----',childrenlist);
+      // for (var i = 0; i < array.length; i++) {
+      //
+      //   childrenlist.push(array[i].dm);
+      // }
+      childrenlist = this.$refs.tree.getHalfCheckedKeys().concat(this.$refs.tree.getCheckedKeys());
       var ff = new FormData();
       ff.append("token", this.$store.state.token);
       ff.append("userid", this.userid);

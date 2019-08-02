@@ -441,6 +441,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YP/LXSYP/QWJS'], resolve),
         },
         {
+          path: 'GJCX',
+          name: 'GJCX',
+          meta:{title:['数据分析','人员画像','高级查询']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/GJCX'], resolve),
+        },
+        {
           path: 'RYHX_XQ',
           name: 'RYHX_XQ',
           meta:{title:['数据分析','人员画像','人员画像'],father:'RYHX'},

@@ -17,7 +17,6 @@
 
   </el-card>
     <div class="main">
-
        <el-row v-for="(item,index) in items" :key="index">
          <el-card class="box-card" style="margin:5px 0;">
            <el-row type="flex">

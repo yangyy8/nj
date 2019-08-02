@@ -156,7 +156,7 @@
                   label="姓名">
                 </el-table-column>
                 <el-table-column
-                  prop="XB_DESC"
+                  prop="XBDM_DESC"
                   label="性别">
                 </el-table-column>
                 <el-table-column
@@ -248,6 +248,7 @@ export default {
         value: 30,
         label: "30"
       },
+
     ],
   num:0,
     }
@@ -276,29 +277,22 @@ export default {
       });
     },
     getList(currentPage, showCount, pd) {
-
    if(this.pd.XM!=undefined || this.pd.XBDM!=undefined || this.pd.HZHM!=undefined){
-
      this.falg=false;
      this.disa=true;
    }else {
       this.disa=false;
    }
-
     if(this.pd0.beginCS!=undefined && this.pd0.endCS!=undefined){
-
       this.pd.CSRQ_DateRange.begin=this.pd0.beginCS;
       this.pd.CSRQ_DateRange.end=this.pd0.endCS;
-
     }else if(this.pd0.beginCS==undefined && this.pd0.endCS==undefined){
      }else{
         this.open("出生日期开始时间和结束时间都不能为空！");return ;
     }
     if(this.pd0.beginZC!=undefined && this.pd0.endZC!=undefined){
-
       this.pd.ZCRQ_DateRange.begin=this.pd0.beginZC;
       this.pd.ZCRQ_DateRange.end=this.pd0.endZC;
-
     }else if(this.pd0.beginZC==undefined && this.pd0.endZC==undefined){
    }else{
         this.open("注册日期的开始时间和结束时间都不能为空！");return ;
@@ -339,13 +333,10 @@ export default {
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
-
           if(r.data.isFenLei=="true"){
-
             this.falg=true;
             console.log('this.tableData[0]',this.tableData[0]);
             let arr=this.tableData[0];
-
             let itemKey = Object.keys(arr);
             let res = itemKey.filter(function(item,index,array){
              //元素值，元素的索引，原数组。
@@ -357,22 +348,16 @@ export default {
              return item.indexOf('_DESC')>=0;
            // }
             });
-              console.log('this.tableData[1]',itemKey);
-            this.configHeader=[];
 
+            this.configHeader=[];
              res.forEach( key => {
                      let headItem = {
                          props : key,
                          label : this.getInfo(key),
                      }
-
                      this.configHeader.push(headItem)
-
              })
-
-
             this.allnum=r.data.totalAllResult;
-
           }else {
             this.falg=false;
 
@@ -387,9 +372,6 @@ export default {
 
               });
           }
-
-
-
         })
     },
     getInfo(key){
@@ -406,7 +388,7 @@ export default {
         case 'SFDM_DESC':
           return  "身份类型";
           break;
-        case 'XB_DESC':
+        case 'XBDM_DESC':
           return  "性别";
           break;
         default:
