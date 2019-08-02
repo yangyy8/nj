@@ -19,39 +19,21 @@
     <div class="main">
 
        <el-row v-for="(item,index) in items" :key="index">
-         <el-card class="box-card" style="margin:5px 0;">
-           <el-row type="flex">
-           <el-col :span="2" style="padding:10px;width:120px;">
-             <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
-             <img :src="item.photo" v-if="item.photo!=''" width="100" height="120">
-             <img src="../../../../assets/img/mrzp.png" width="100" height="120" v-else >
-            </div>
-           </el-col>
-           <el-col :span="22">
-             <div class="shover" @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
-               <div class="list">
-                 <p style="margin-bottom:15px!important"><b>{{item.ywxm}}</b></p>
-                 <el-row type="flex"  class="t-detail">
-                   <el-col :span="22">
-                     <el-row class="t-mb15">
-                       <el-col :span="6" class="t-el-content"><div class="t-el-text">性别：</div><div class="t-el-sub">{{item.xb}}</div></el-col>
-                       <el-col :span="6" class="t-el-content"><div class="t-el-text">出生日期：</div><div class="t-el-sub">{{item.csrq}}</div></el-col>
-                       <el-col :span="6" class="t-el-content"><div class="t-el-text">国家地区：</div><div class="t-el-sub">{{item.gjdqmc}}</div></el-col>
-                       <el-col :span="6" class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{item.zjhm}}</div></el-col>
-                     </el-row>
-                     <el-row>
-                       <el-col :span="24" class="t-el-content"><div class="t-el-text">命中信息：</div><div class="t-el-sub">{{item.index}}</div></el-col>
-                     </el-row>
-                   </el-col>
-                   <el-col :span="2">
-                     <!-- <el-button type="text" title="详情">详情</el-button> -->
-                   </el-col>
-                 </el-row>
-               </div>
-             </div>
-           </el-col>
-           </el-row>
-           </el-card>
+       <el-card class="box-card" style="margin:5px 0;">
+         <el-col :span="2" style="padding:10px;width:120px;">
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type}})">
+           <img :src="item.photo" v-if="item.photo!=''" width="100" height="120">
+           <img src="../../../../assets/img/mrzp.png" width="100" height="120" v-else >
+          </div>
+         </el-col>
+         <el-col :span="18">
+           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type}})">
+           <div class="list">姓名：{{item.ywxm}} <span>性别：{{item.xb}}</span> <span>出生日期：{{item.csrq}}</span> <span>国家地区：{{item.gjdq}}</span> <span>证件号码：{{item.zjhm}}</span></div>
+           <div class="list">命中信息：{{item.index}}</div>
+          <!--  <div class="list" v-html="item.cusHighlight"></div> -->
+         </div>
+         </el-col>
+         </el-card>
        </el-row>
 
        <div class="middle-foot" style="margin-top:10px;" v-if="TotalResult!=0">
@@ -120,7 +102,7 @@ export default {
      // formData.append("page", currentPage);
      // formData.append("pageSize", showCount);
      // let p = formData;
-     this.$api.post(this.Global.aport6+"/api/es/search/generalSearch",p,r=>{
+     this.$api.post(window.IPConfig.QWJS+"/api/es/search/generalSearch",p,r=>{
        if(r.success){
          this.items=r.respondResult.respondData;
          this.TotalResult=r.respondResult.totalSize;
@@ -154,7 +136,4 @@ export default {
 .qwjs  .el-input-group__prepend {
     background-color: #fff;
   }
-.box-card .el-card__body{
-  padding: 5px 20px!important;
-}
 </style>
