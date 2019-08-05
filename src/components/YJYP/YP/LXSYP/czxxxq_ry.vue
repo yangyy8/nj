@@ -1243,7 +1243,7 @@
 import imgUrl from "../../../../assets/img/t1.png"
 export default {
   name:'CZXXRY',
-  props:['type','xid','rid','random','rybh'],
+  props:['type','xid','rid','random','rybh','gjdq'],
   data(){
     return{
       imgURL:imgUrl,
@@ -1440,7 +1440,8 @@ export default {
       let p={
         "pd":{
           RYBH:this.rybh||'',
-          YWLB:'0004'
+          YWLB:'0004',
+          GJDQ:this.gjdq||'',
         },
         // "orderType":"DESC",
 	      // "orderBy":{value:"CJSJ",dataType:"date"}

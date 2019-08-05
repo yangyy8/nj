@@ -147,7 +147,7 @@
 import imgUrl from '../../../../assets/img/t1.png'
 export default {
   name:'LZXXRY',
-  props:['type','xid','random','rybh'],
+  props:['type','xid','random','rybh','gjdq'],
   data(){
     return{
       form:{},
@@ -191,7 +191,8 @@ export default {
       let p={
         "pd":{
           RYBH:this.rybh||'',
-          YWLB:'0003'
+          YWLB:'0003',
+          GJDQ:this.gjdq||'',
         },
         // "orderType":"DESC",
 	      // "orderBy":{value:"CJSJ",dataType:"date"}

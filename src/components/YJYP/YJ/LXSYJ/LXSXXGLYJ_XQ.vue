@@ -7,7 +7,7 @@
       <div class="mb-15">
         <div class="yylbt hyst">基本信息</div>
         <div class="hybutton">
-        <el-button type="button"  class="el-button el-button--primary el-button--small"  title="人员档案" @click="$router.push({name:'RYHX_XQ',query:{zjhm:$route.query.row.ZJHM,row:$route.query.row}})">人员档案</el-button>
+        <el-button type="button"  class="el-button el-button--primary el-button--small"  title="人员档案" @click="$router.push({name:'RYHX_XQ',query:{zjhm:$route.query.row.ZJHM,gjdq:$route.query.row.GJ,row:$route.query.row}})">人员档案</el-button>
         </div>
       </div>
        <el-row type="flex" class="yyf hyst_a">

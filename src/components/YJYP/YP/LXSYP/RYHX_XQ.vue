@@ -646,13 +646,13 @@
          </div>
        </el-dialog>
        <el-dialog title="临住信息详情" :visible.sync="lzxxDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <LZXXRY :type="type" :xid="xid" :random="randomlzxx" :rybh="rybh"></LZXXRY>
+         <LZXXRY :type="type" :xid="xid" :random="randomlzxx" :rybh="rybh" :gjdq="gjdqxq"></LZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="lzxxDialogVisible = false" size="small">取 消</el-button>
          </div>
        </el-dialog>
        <el-dialog title="常住信息详情" :visible.sync="czDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-         <CZXXRY :type="type" :xid="xid" :random="randomczxx" :rid="rid" :rybh="rybh"></CZXXRY>
+         <CZXXRY :type="type" :xid="xid" :random="randomczxx" :rid="rid" :rybh="rybh" :gjdq="gjdqxq"></CZXXRY>
          <div slot="footer" class="dialog-footer">
            <el-button @click="czDialogVisible = false" size="small">取 消</el-button>
          </div>
@@ -868,6 +868,7 @@ export default{
        TotalResult8: 0,
        options: this.pl.ps,
        gjdq:'',
+       gjdqxq:'',
     }
   },
   activated(){
@@ -890,6 +891,11 @@ export default{
       this.pd.RYBH=this.row.RYBH;
     }else{
       this.pd.RYBH=""
+    }
+    if(this.gjdq){
+      this.pd.GJDQ=this.gjdq
+    }else{
+      this.pd.GJDQ=''
     }
     this.getRYXX();
     this.getLable();
@@ -1002,7 +1008,7 @@ export default{
     //最新照片
     getZXZP(){
       let p = {
-        "pd": {ZJHM:this.zjhm},
+        "pd": this.pd,
       };
       this.$api.post(this.Global.aport3+'/ryhx/getrytpxxpro', p,
         r => {
@@ -1016,18 +1022,19 @@ export default{
     getRYXX(){
       let p = {
         "certificateNO": this.zjhm,
+        "GJDQ":this.gjdq
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getryryxx', p,
         r => {
           // if(r.data.resultList.length!=0){
             this.baseinfo = r.data;
             this.rybh = r.data.RYBH;
+            this.gjdqxq = r.data.gjdq;
           // }
         })
     },
     //获取标签
     getLable(){
-
       let p = {
         "pd": this.pd,
       };
@@ -1135,6 +1142,11 @@ export default{
       }else{
         this.pd.RYBH='';
       }
+      if(this.gjdq){
+        this.pd.GJDQ=this.gjdq
+      }else{
+        this.pd.GJDQ=''
+      }
       let p={
         "pd":this.pd,
       };
@@ -1162,10 +1174,11 @@ export default{
     //临住信息
     getLzxx(currentPage,showCount,pd){
       let p={
-        "currentPage":currentPage,
-        "showCount":showCount,
+        // "currentPage":currentPage,
+        // "showCount":showCount,
         // "pd":pd
         "paperNO":this.zjhm,
+        "nationality":this.gjdq
 
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getlzxx', p,
@@ -1177,10 +1190,11 @@ export default{
     // 常住信息
     getCZXX(currentPage,showCount,pd){
       let p={
-        "currentPage":currentPage,
-        "showCount":showCount,
+        // "currentPage":currentPage,
+        // "showCount":showCount,
         // "pd":pd
         "paperNO":this.zjhm,
+        "nationality":this.gjdq
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getczxx', p,
         r => {
@@ -1191,10 +1205,11 @@ export default{
     // 案事件
     getASJXX(currentPage,showCount,pd){
       let p={
-        "currentPage":currentPage,
-        "showCount":showCount,
+        // "currentPage":currentPage,
+        // "showCount":showCount,
         // "pd":pd
         "paperNO":this.zjhm,
+        "nationality":this.gjdq
 
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getajjbxx', p,
@@ -1274,12 +1289,8 @@ export default{
     //签证信息
     getQZXX(pd){
       let p={
-        // "currentPage":"1",
-        // "showCount":"1",
-        // "pd":pd,
-        // "orderBy":"RJRQ",
-        // "orderType":"DESC"
-        "passportNO":this.zjhm
+        "passportNO":this.zjhm,
+        "nationality":this.gjdq
       };
       this.$api.post(this.Global.aport3+'/ryhxhx/getwgrzjxx', p,
         r => {
