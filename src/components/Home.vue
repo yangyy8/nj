@@ -1,7 +1,7 @@
 <template lang="html">
   <el-container class="content">
       <!-- <div class="bg-carousel"></div> -->
-    <el-header style="height:125px;">
+    <el-header style="height:100px;">
       <img src="../assets/img/logon.png" alt="南京市外国人管理信息应用系统">
       <div class="top-right">
        <div class="top-nav">
@@ -20,7 +20,6 @@
         <span v-for="(x,ind) in routeList" :key="ind" class="rItem">{{x}}</span>
       </div>
       <el-main class="right-main">
-
         <!-- <div class="right-main-top"> -->
           <ul class="tabList">
             <li class="tabList-item hand" :title="i.meta.title[i.meta.title.length-1]" :style="{width:tabliwidth}" :class="{'tabList-checked':tabListCheck==i.name}" v-for="(i, index) in tabList">
@@ -30,7 +29,6 @@
             </li>
           </ul>
         <!-- </div> -->
-
         <div class="tab-content">
           <keep-alive>
             <router-view></router-view>
@@ -163,7 +161,6 @@ export default {
   align-items: center;
   color: #fff;
   /* height:101px; */
-  line-height: 60px;
 }
 .footer{
   height: 103px;
@@ -263,11 +260,11 @@ export default {
 }
 
 .top-nav-ul {
-  height: 40px;
+  height: 50px;
   display: flex;
   background: rgba(27, 92, 168, 0.50);
   color: #fff;
-  line-height: 40px;
+  line-height: 50px;
   border-radius: 6px 0 0 6px;
 
 }

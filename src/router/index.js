@@ -314,7 +314,7 @@ export default new Router({
           meta:{title:['数据分析','案件分析','涉外案事件统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
 
-        }, */ 
+        }, */
         {
           path: 'GAJGCCFFJLJY',
           name: 'GAJGCCFFJLJY',
@@ -332,7 +332,7 @@ export default new Router({
           name: 'NJSFWGRZLGZ',
           meta:{title:['数据分析','案件分析','南京“三非”外国人治理工作情况统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/NJSFWGRZLGZ'], resolve),
-        }, 
+        },
         {
           path: 'SLQFXXYJ',
           name: 'SLQFXXYJ',
@@ -427,8 +427,14 @@ export default new Router({
         {
           path: 'GJCX',
           name: 'GJCX',
-          meta:{title:['数据分析','人员画像','高级查询']},
+          meta:{title:['数据分析','人员画像','高级查询'],father:'RYHX'},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/GJCX'], resolve),
+        },
+        {
+          path: 'ZDYCX',
+          name: 'ZDYCX',
+          meta:{title:['数据分析','人员画像','自定义查询']},
+          component: resolve => require(['@/components/YJYP/YP/LXSYP/ZDYCX'], resolve),
         },
         {
           path: 'RYHX_XQ',

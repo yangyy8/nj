@@ -5,7 +5,7 @@
       <div class="yycontent ryhm">
         <div class="title"><img src="../../../../assets/img/js.png" border='0'></div>
         <div class="zhcx">
-            <el-input placeholder=" " v-model="zjhm" class="inputs" max="500">
+            <el-input placeholder=" " v-model="zjhm" class="inputs" max="500" @keyup.enter.native="getList()">
               <el-select v-model="selecttype" slot="prepend" placeholder="请选择" style="width:100px;">
                  <el-option label="综合" value="all"></el-option>
                  <el-option label="组织" value="org"></el-option>
@@ -17,6 +17,7 @@
           <el-button type="primary"  @click="getList()" style="margin-left:-10px;">查询</el-button>
           <el-button type="primary"  @click="$router.push({name:'GJCX'})">高级查询</el-button>
           <el-button type="warning"  @click="$router.push({name:'RYPLCX',query:{}})">模板导入</el-button>
+          <el-button type="success"  @click="$router.push({name:'ZDYCX'})">自定义查询</el-button>
         </div>
         <div class="tjsy" v-if="gjshow">
            <el-row class="t-choose">

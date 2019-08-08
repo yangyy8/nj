@@ -3,7 +3,7 @@
           <el-card shadow="always">
      <div class="top">
        <i class="el-icon-search"></i>
-       <el-input placeholder=" +包含 -为不包含 +(a b)为in -(a b)为notIn" v-model="content" class="inputs">
+       <el-input placeholder="" v-model="content" class="inputs" @keyup.enter.native="CurrentPage=1;getList(CurrentPage,pageSize)">
           <el-select v-model="type" slot="prepend" placeholder="请选择" max="500" style="width:100px;">
             <el-option label="综合" value="all"></el-option>
             <el-option label="组织" value="org"></el-option>
@@ -13,8 +13,15 @@
           </el-select>
        </el-input>
       <el-button type="primary"  @click="CurrentPage=1;getList(CurrentPage,pageSize)" style="margin-left:-10px;">查询</el-button>
+       <el-button type="success" @click="$router.go(-1)">返回</el-button>
      </div>
-
+ <div class="navinfo" v-if='infoshow'>
+  <span> 临住数据 ( <b>{{info.lz}}</b> 条)  </span>
+  <span> 常住数据 ( <b>{{info.cz}}</b>  条)  </span>
+  <span> 签证数据 ( <b>{{info.qz}}</b>  条)  </span>
+  <span> 案件数据 ( <b>{{info.ajxx}}</b>  条)  </span>
+  <span> 出入境数据 ( <b>{{info.crj}}</b>  条)  </span>
+ </div>
   </el-card>
     <div class="main">
        <el-row v-for="(item,index) in items" :key="index">
@@ -76,11 +83,14 @@ export default {
       TotalResult: 0,
       items:[],
       type:'',
-      content:''
+      content:'',
+      infoshow:false,
+      info:{lz:0,cz:0,qz:0,ajxx:0,crj:0},
 
     }
   },
     activated(){
+
       this.type=this.$route.query.stype;
       this.content=this.$route.query.zjhmes;
       console.log(this.type,this.content);
@@ -122,6 +132,14 @@ export default {
      this.$api.post(window.IPConfig.QWJS+"/api/es/search/generalSearch",p,r=>{
        if(r.success){
          this.items=r.respondResult.respondData;
+         if(r.respondResult.respondCount!=undefined)
+        {
+          this.infoshow=true;
+          this.info=r.respondResult.respondCount;
+        }
+        else {
+          this.infoshow=false;
+        }
          this.TotalResult=r.respondResult.totalSize;
        }
      })
@@ -148,6 +166,9 @@ export default {
 .qwjs .main .list span{margin-left: 10px;}
 .shover{cursor:pointer;}
 .shover:hover{font-size: 14px;font-weight: bold;}
+.navinfo{color: blue;margin-top: 10px; font-size: 14px;}
+.navinfo span{ padding-left: 20px;}
+.navinfo span b{color: red}
 </style>
 <style>
 .qwjs  .el-input-group__prepend {

@@ -84,6 +84,7 @@ a{color: #333;text-decoration: none;}
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+  color: #666666;
 }
 
 .input-input{
@@ -210,7 +211,6 @@ table td,thead th{
   align-items: center;
   justify-content: center;
 }
-
 /*提示框详情*/
 .yzform{
   position: relative;
