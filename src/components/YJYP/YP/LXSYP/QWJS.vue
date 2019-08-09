@@ -13,14 +13,14 @@
           </el-select>
        </el-input>
       <el-button type="primary"  @click="CurrentPage=1;getList(CurrentPage,pageSize)" style="margin-left:-10px;">查询</el-button>
-       <el-button type="success" @click="$router.go(-1)">返回</el-button>
+       <el-button type="success" @click="$router.push({name:'RYHX'})">返回</el-button>
      </div>
  <div class="navinfo" v-if='infoshow'>
-  <span> 临住数据 ( <b>{{info.lz}}</b> 条)  </span>
-  <span> 常住数据 ( <b>{{info.cz}}</b>  条)  </span>
-  <span> 签证数据 ( <b>{{info.qz}}</b>  条)  </span>
-  <span> 案件数据 ( <b>{{info.ajxx}}</b>  条)  </span>
-  <span> 出入境数据 ( <b>{{info.crj}}</b>  条)  </span>
+  <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'lz')"> 临住数据 ( <b>{{info.lz}}</b> 条)  </span>
+  <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'cz')"> 常住数据 ( <b>{{info.cz}}</b>  条)  </span>
+  <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'qz')"> 签证数据 ( <b>{{info.qz}}</b>  条)  </span>
+  <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'ajxx')"> 案件数据 ( <b>{{info.ajxx}}</b>  条)  </span>
+  <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'crj')"> 出入境数据 ( <b>{{info.crj}}</b>  条)  </span>
  </div>
   </el-card>
     <div class="main">
@@ -86,7 +86,7 @@ export default {
       content:'',
       infoshow:false,
       info:{lz:0,cz:0,qz:0,ajxx:0,crj:0},
-
+      datatype:'',
     }
   },
     activated(){
@@ -94,23 +94,43 @@ export default {
       this.type=this.$route.query.stype;
       this.content=this.$route.query.zjhmes;
       console.log(this.type,this.content);
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getList(this.CurrentPage, this.pageSize);
     },
   mounted() {
 
   },
   methods: {
     pageSizeChange(val) {
-      this.getList(this.CurrentPage, val);
+      this.getList(this.CurrentPage, val,this.datatype);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.getList(val, this.pageSize);
+      this.getList(val, this.pageSize,this.datatype);
       console.log(`当前页: ${val}`);
     },
-    getList(currentPage,showCount){
+    getListType(currentPage,showCount,type){
+      let p={
+        "keywords":this.content,
+        "type":type,
+        "pageSize":showCount,
+        "page":currentPage
+      };
+      this.$api.post(window.IPConfig.QWJS+"/api/es/search/generalCountSearch",p,r=>{
+        if(r.success){
+          this.items=r.respondResult.respondData;
+          this.TotalResult=r.respondResult.totalSize;
+        }
+      })
+    },
+    getList(currentPage,showCount,type){
       this.items=[];
       this.TotalResult=0;
+
+      if(type!="" && type!=undefined){
+         this.datatype=type;
+         this.getListType(currentPage,showCount,type);
+      }else {
+        this.datatype="";
       if(this.content==undefined || this.content==""){
         this.$message.error("请输入查询内容!");return ;
       }
@@ -143,6 +163,7 @@ export default {
          this.TotalResult=r.respondResult.totalSize;
        }
      })
+       }
     },
   },
 }
@@ -167,7 +188,8 @@ export default {
 .shover{cursor:pointer;}
 .shover:hover{font-size: 14px;font-weight: bold;}
 .navinfo{color: blue;margin-top: 10px; font-size: 14px;}
-.navinfo span{ padding-left: 20px;}
+.navinfo span{ padding-left: 20px;cursor: pointer; }
+.navinfo span :hover{color: #333}
 .navinfo span b{color: red}
 </style>
 <style>

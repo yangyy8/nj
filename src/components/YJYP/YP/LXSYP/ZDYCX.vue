@@ -4,15 +4,15 @@
     <el-row :gutter="2">
       <el-col :sm="24" :md="12" :lg="11" style="min-width:600px;">
           <el-row type="flex" v-for="(rr,indes) in rows"  :key="indes" style="line-height:40px;">
-              <el-col :span="5" style="padding-left:30px;">
-                <el-select v-model="rr.type" filterable clearable default-first-option placeholder="请选择属性"  size="small">
+              <el-col :span="6" style="padding-left:30px;min-width:160px;">
+                <el-select v-model="rr.type"  filterable clearable default-first-option @change="getDMB()" placeholder="请选择属性"  size="small">
                   <el-option label="英文姓名" value="ywxm">
                   </el-option>
                   <el-option label="中文姓名" value="zwxm">
                   </el-option>
-                  <el-option label="证件种类" value="zjhm">
+                  <el-option label="证件种类" value="zjzl">
                   </el-option>
-                  <el-option label="证件号码" value="zjzl">
+                  <el-option label="证件号码" value="zjhm">
                   </el-option>
                   <el-option label="性别" value="xb">
                   </el-option>
@@ -30,10 +30,12 @@
                   </el-option>
                   <el-option label="停留事由" value="jssy">
                   </el-option>
+                  <el-option label="联系电话" value="tel">
+                  </el-option>
 
                 </el-select>
               </el-col>
-              <el-col :span="4" style="padding-left:10px;">
+              <el-col :span="3" style="padding-left:10px;min-width:50px;">
                 <el-select v-model="rr.symbol" filterable clearable default-first-option placeholder="请选择操作"  size="small">
                   <el-option label="=" value="="></el-option>
                   <el-option label="!=" value="!="></el-option>
@@ -45,11 +47,49 @@
                   <el-option label="notIn" value="notIn"></el-option>
                 </el-select>
               </el-col>
-              <el-col :span="6" style="padding-left:10px;">
-                 <!-- @blur="getChange(rr.type,rr.symbol,rr.value)" -->
-              <el-input placeholder="请输入内容" size="small"   v-model="rr.value" @focus="getPD(rr.type,rr.symbol,rr.relation)"></el-input>
+              <el-col :span="6" style="padding-left:10px;min-width:150px;">
+
+              <el-input placeholder="请输入内容" v-if='rr.dm==0' size="small"   v-model="rr.value" @focus="getPD(rr.type,rr.symbol,rr.relation)"></el-input>
+
+              <el-select v-model="rr.value" v-if='rr.dm==1'  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                    <el-option
+                      v-for="item in $store.state.xb"
+                      :key="item.dm"
+                      :label="item.mc"
+                      :value="item.dm">
+                    </el-option>
+              </el-select>
+              <el-select v-model="rr.value" v-if='rr.dm==2'  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                    <el-option
+                      v-for="item in $store.state.gjdq"
+                      :key="item.dm"
+                      :label="item.mc"
+                      :value="item.dm">
+                    </el-option>
+              </el-select>
+              <el-date-picker v-if='rr.dm==3'
+                  v-model="rr.value" format="yyyy-MM-dd"
+                  type="date" size="small" value-format="yyyy/MM/dd"
+                  placeholder="选择日期">
+              </el-date-picker>
+              <el-select v-model="rr.value" v-if='rr.dm==4'  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                    <el-option
+                      v-for="item in $store.state.zjzl"
+                      :key="item.dm"
+                      :label="item.mc"
+                      :value="item.dm">
+                    </el-option>
+              </el-select>
+              <el-select v-model="rr.value" v-if='rr.dm==5'  collapse-tags filterable clearable default-first-option placeholder="请选择"  size="small">
+                    <el-option
+                      v-for="item in $store.state.rjsy"
+                      :key="item.dm"
+                      :label="item.mc"
+                      :value="item.dm">
+                    </el-option>
+              </el-select>
               </el-col>
-                <el-col :span="3" style="padding-left:10px;">
+                <el-col :span="3" style="padding-left:10px;min-width:90px;">
               <el-select placeholder="请选择" v-model="rr.relation"  size="small">
                       <el-option label="and" value="and"></el-option>
                       <el-option label="or" value="or"></el-option>
@@ -72,20 +112,21 @@
 
       </el-col>
       <el-col :sm="24" :md="12" :lg="3"  class="down-btn-area" style="min-height:150px;">
-          <el-button type="primary" size="small"  @click="getList(CurrentPage,pageSize)">查询</el-button>
+          <el-button type="primary" size="small"  @click="getList(CurrentPage,pageSize)">查询</el-button><br/>
+          <el-button type="success" size="small"  @click="$router.push({name:'RYHX'})">返回</el-button>
       </el-col>
     </el-row>
   </el-card>
   <div class="main">
      <el-row   :gutter="4">
-    <el-col :sm="24" :md="12" :lg="6" :key="index" v-for="(item,index) in items">
-       <el-card class="box-card" style="margin:5px 5px;">
+    <el-col :sm="24" :md="12" :lg="6" :key="index" v-for="(item,index) in items" style="min-width:350px;">
+       <el-card class="box-card" style="margin:5px 5px; ">
          <el-row type="flex">
          <el-col :span="2" style="padding:10px;width:140px;">
-           <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
+
            <img :src="item.photo" v-if="item.photo!=''" width="120" height="140">
            <img src="../../../../assets/img/mrzp.png" width="120" height="140" v-else >
-          </div>
+
          </el-col>
          <el-col :span="22">
            <div class="shover" @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
@@ -102,11 +143,8 @@
          </el-col>
          </el-row>
          </el-card>
-
     </el-col>
-
      </el-row>
-
      <div class="middle-foot" style="margin-top:10px;" v-if="TotalResult!=0">
         <el-pagination
           background
@@ -137,22 +175,29 @@ export default {
         type: '',
         symbol: '',
         value: '',
-        relation:'and'
+        relation:'and',
+        dm:0,
         }],
       modelrow: [{
       id: 1,
       type: '',
       symbol: '',
       value: '',
-      relation:'and'
+      relation:'and',
+      dm:0,
          }],
       pd:{},
       count: 1,
       show:false,
 
+
     }
   },
   mounted() {
+    this.$store.dispatch("getXB");
+    this.$store.dispatch("getGjdq");
+    this.$store.dispatch("getZjzl");
+    this.$store.dispatch("getRjsy");
   },
   computed:{
       aaa:{
@@ -170,12 +215,29 @@ export default {
           },
           set:function(newVal){
 
-            console.log('====',newVal);
             this.keywords = newVal;
           },
       },
   },
   methods: {
+    getDMB(){
+      var arr=this.rows;
+      for(var i=0;i<arr.length;i++){
+      if(arr[i].type=="xb"){
+        arr[i].dm=1;
+      }else if(arr[i].type=="gjdq"){
+        arr[i].dm=2;
+      }else if(arr[i].type=="csrq"){
+        arr[i].dm=3;
+      }else if(arr[i].type=="zjzl"){
+        arr[i].dm=4;
+      }else if(arr[i].type=="jssy"){
+        arr[i].dm=5;
+      }else {
+        arr[i].dm=0;
+      }
+}
+    },
     getChange(n1,n2,n3){
       var ss=n1+" "+n2+" "+n3+" AND ";
       if(n1!="" && n1!=undefined && n2!="" && n2!=undefined){
@@ -206,7 +268,8 @@ export default {
         type: '',
         symbol: '',
         value: '',
-        relation:'and'
+        relation:'and',
+        dm:0,
       };
 
       this.modelrow.id = this.count;
