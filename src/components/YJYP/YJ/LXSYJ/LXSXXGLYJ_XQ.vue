@@ -665,6 +665,19 @@
 
    <div class="stu-footer">
      <div class="stu-title">预警处理</div>
+     <el-row v-if="qdshow">
+       <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+         <span class="input-text" style="width:13%!important">审核状态：</span>
+         <el-select v-model="pc.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
+           <el-option
+             v-for="item in $store.state.shzt"
+             :key="item.dm"
+             :label="item.dm+' - '+item.mc"
+             :value="item.dm">
+           </el-option>
+         </el-select>
+       </el-col>
+     </el-row>
      <el-row type="flex" class="mb-15">
       <el-col :span="20">
         <el-input
@@ -1175,7 +1188,7 @@ export default {
    }
   },
   mounted() {
-
+      this.$store.dispatch('getShzt');
   },
   methods: {
     asjpageSizeChange(val) {
@@ -1571,12 +1584,13 @@ export default {
     }
     this.pcl.YJID=this.row.YJID;
     this.pcl.CLJG=this.pc.CHANGE_RESON;
+    this.pcl.SHZT=this.pc.SHZT;
     this.pcl.CLDW=this.$store.state.orgname;
     this.pcl.CLR=this.withname;
     let p = {
       "pd":this.pcl
     };
-    this.$api.post(this.Global.aport4+'/warningInfoController/saveCLJG', p,
+    this.$api.post(this.Global.aport4+'/warningInfoController/saveLXS_ZSYJCLJG', p,
       r => {
          if(r.success){
            this.$message({
