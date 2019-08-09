@@ -148,16 +148,28 @@
         <div class="stu-titled">甄别结果</div>
         <el-row type="flex">
          <el-col :span="20">
+           <div v-if="$route.query.zdsh">
+             <span class="input-text" style="width:8%!important;text-align:left">审核状态：</span>
+             <el-select v-model="pm1.SHZT" filterable default-first-option placeholder="请选择"  size="small" class="input-input">
+               <el-option
+                 v-for="item in $store.state.shzt"
+                 :key="item.dm"
+                 :label="item.dm+' - '+item.mc"
+                 :value="item.dm">
+               </el-option>
+             </el-select>
+           </div>
            <el-input
+             v-else
              type="textarea"
              :autosize="{ minRows: 3, maxRows: 4}"
              placeholder="甄别说明必须填写原因(不超过100个字符)"
              v-model="pm.CHANGE_RESON"
-             :disabled="$route.query.row.CLZT=='0'">
+             :disabled="queryClzt=='0'">
            </el-input>
          </el-col>
          <el-col :span="4"  class="down-btn-area">
-           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" v-if="$route.query.row.CLZT!='0'">确定</el-button>
+           <el-button type="primary"  class="mb-5" size="small" @click="chuli()" v-if="queryClzt!='0'">确定</el-button>
            <el-button type="warning"  class="m0" size="small" @click="$router.go(-1)">返回</el-button>
          </el-col>
        </el-row>
@@ -234,7 +246,9 @@ export default {
       pd:{},
       pp:{BZHDZID:''},
       pm:{},
+      pm1:{},
       pcl:{},
+      pcl1:{},
       options:[{
          value: 10,
          label: "10"
@@ -250,11 +264,13 @@ export default {
      ],
       detailsDialogVisible:false,
       form:{},
+      queryClzt:'',
     }
   },
   activated(){
     this.pm={};
     this.row=this.$route.query.row;
+    this.queryClzt=this.$route.query.row.CLZT;
     this.baseData=this.row;
     this.getcwzxx(this.row.BZHDZID);
     this.leiType=this.$route.query.leiType;
@@ -262,6 +278,9 @@ export default {
     // this.type=this.$route.query.type;
     if(this.row.CLZT=='0'){
       this.pm.CHANGE_RESON=this.row.CLJG
+    }
+    if(this.$route.query.zdsh){
+      this.pm1.SHZT=this.row.SHZT
     }
     //区分重点和新增的临住案事件
     if(this.leiType=="zd"){
@@ -276,6 +295,7 @@ export default {
     // }
   },
   mounted() {
+     this.$store.dispatch('getShzt');
      this.withname=this.$store.state.uname;
   },
   methods: {
@@ -333,7 +353,26 @@ export default {
       }
     },
     chuli(){
+  if(this.$route.query.zdsh){
+    this.pcl1.YJID=this.row.YJID;
+    this.pcl1.SHZT=this.pm1.SHZT;
+    // this.pcl.CLDW=this.$store.state.orgname;
+    // this.pcl.CLR=this.withname;
+      let p = {
+        "pd": this.pcl1
+      };
+      this.$api.post(this.Global.aport4+'/fangWuWarningInfoController/saveSHZT', p,
+        r => {
+           if(r.success){
+             this.$message({
+               message: '保存成功',
+               type: 'success'
+             });
+            this.$router.go(-1)
+           }
 
+        })
+  }else{
     if(this.pm.CHANGE_RESON=="" || this.pm.CHANGE_RESON==undefined)
     {
       this.$alert('甄别结果不能为空！', '提示', {
@@ -359,6 +398,8 @@ export default {
            }
 
         })
+   }
+
     },
     details(n){
       this.xid=n.DTID;

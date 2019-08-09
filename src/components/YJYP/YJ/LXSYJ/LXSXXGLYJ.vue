@@ -102,7 +102,8 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <!-- <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button> -->
         </el-col>
       </el-row>
     </div>
@@ -113,7 +114,12 @@
            :data="tableData"
            border
            :highlight-current-row="true"
-           style="width: 100%">
+           style="width: 100%"
+           @selection-change="handleSelectionChange">
+           <el-table-column
+             type="selection"
+             width="55">
+           </el-table-column>
            <el-table-column
              prop="ZWXM"
              label="姓名">
@@ -258,6 +264,33 @@ export default {
       orgName:'',
       form:{},
       addlg:{},
+      multipleSelection0:[],
+      selectionAll0:[],
+
+      multipleSelection1:[],
+      selectionAll1:[],
+
+      multipleSelection2:[],
+      selectionAll2:[],
+
+      multipleSelection3:[],
+      selectionAll3:[],
+
+      multipleSelection4:[],
+      selectionAll4:[],
+
+      multipleSelection5:[],
+      selectionAll5:[],
+
+      multipleSelection6:[],
+      selectionAll6:[],
+
+      multipleSelection7:[],
+      selectionAll7:[],
+
+      multipleSelection8:[],
+      selectionAll8:[],
+      yuid:[],
     }
   },
   activated(){
@@ -294,6 +327,67 @@ export default {
     this.orgName=this.$store.state.orgid
   },
   methods: {
+    handleSelectionFilter(arr) {
+      var arrAfter=[];
+      var arrReal=[];
+      for(var j in arr){
+        if(arrAfter.indexOf(arr[j].YJID)==-1){
+          arrAfter.push(arr[j].YJID);
+          arrReal.push(arr[j])
+        }
+      }
+      arr = arrReal;
+      console.log(arr)
+    },
+    handleSelectionChange(val){
+      if(this.type==5){
+        this.multipleSelection5 = val;
+        for(var i in this.multipleSelection5){
+          this.selectionAll5.push(this.multipleSelection5[i]);
+        }
+        this.handleSelectionFilter(this.selectionAll5)
+      }
+    },
+    download(){
+      let p={};
+      if(this.type==5){
+        if(this.multipleSelection5.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll5){
+            this.yuid.push(this.selectionAll5[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }
+      this.$api.post(this.Global.aport4+'/warningInfoController/exportByMxLx',p,
+        r =>{
+          if(this.type==5){this.downloadM(r,'布控预警报表')}
+
+        },e=>{},{},'blob')
+    },
+    downloadM (data,name) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', name+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
+    },
     getRules(){
       if(this.pd.MXLX=="LZ_HC"){
         this.pd2.MXLX=this.pd.MXLX
@@ -431,6 +525,9 @@ export default {
     getList(currentPage, showCount, pd) {
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
+      if(pd.hasOwnProperty('YJID')){
+        delete pd['YJID']
+      }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -449,7 +546,17 @@ export default {
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
+
         })
+    },
+    selectionXr(table,arr){
+      for(var i=0;i<table.length;i++){
+        for(var j=0;j<arr.length;j++){
+          if(table[i].YJID==arr[j].YJID){
+            this.$refs.multipleTable.toggleRowSelection(table[i]);
+          }
+        }
+      }
     },
     getEdit(n){
 

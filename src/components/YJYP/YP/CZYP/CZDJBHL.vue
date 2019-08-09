@@ -282,7 +282,7 @@
       </div>
     </div>
     <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-      <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></CZXX>
+      <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()" :row="allData"></CZXX>
       <div slot="footer" class="dialog-footer">
         <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
       </div>
@@ -337,6 +337,7 @@ import CZXX from '../../../common/czxx_xq'
       lineChart:null,
       page:0,
       pdTu:{},
+      allData:{},
     }
   },
   mounted(){
@@ -395,6 +396,7 @@ import CZXX from '../../../common/czxx_xq'
     details(i){
       this.xid=i.RGUID;
       this.rybh=i.RYBH;
+      this.allData=i;
       this.CZDialogVisible=true;
     },
     getFj(){

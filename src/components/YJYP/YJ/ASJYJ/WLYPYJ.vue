@@ -96,7 +96,8 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -106,8 +107,14 @@
       <el-table
            :data="tableData"
            border
+           ref="multipleTable"
            :highlight-current-row="true"
-           style="width: 100%">
+           style="width: 100%"
+           @selection-change="handleSelectionChange">
+           <el-table-column
+             type="selection"
+             width="55">
+           </el-table-column>
            <el-table-column
              prop="ZWXM"
              label="姓名">
@@ -225,6 +232,7 @@
 
 </template>
 <script>
+// import {format} from '@/assets/js/date.js'
 export default {
   data() {
     return {
@@ -242,6 +250,10 @@ export default {
       orgName:'',
       form:{},
       addlg:{},
+
+      multipleSelection:[],
+      selectionAll:[],
+      yuid:[],
     }
   },
 
@@ -265,6 +277,60 @@ export default {
     this.orgName=this.$store.state.orgid
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      for(var i in this.multipleSelection){
+        this.selectionAll.push(this.multipleSelection[i]);
+      }
+      var arrAfter=[];
+      var arrReal=[];
+      for(var j in this.selectionAll){
+        if(arrAfter.indexOf(this.selectionAll[j].YJID)==-1){
+          arrAfter.push(this.selectionAll[j].YJID);
+          arrReal.push(this.selectionAll[j])
+        }
+      }
+      this.selectionAll = arrReal;
+      console.log(this.selectionAll)
+    },
+    download(){
+      let p={};
+      if(this.multipleSelection.length==0){//全部导出
+         p={
+          "pd":this.pd,
+          "orderBy":'BJSJ',
+          "orderType":'DESC'
+        }
+      }else{//导出选中
+        this.yuid=[];
+        for(var i in this.selectionAll){
+          this.yuid.push(this.selectionAll[i].YJID)
+        };
+        this.pd.YJID=this.yuid;
+         p={
+          "pd":this.pd,
+          "orderBy":'BJSJ',
+          "orderType":'DESC',
+        }
+      }
+      this.$api.post(this.Global.aport4+'/warningInfoController/exportByMxLx',p,
+        r =>{
+          console.log(r);
+          this.downloadM(r)
+        },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '违临预判报表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
@@ -277,21 +343,35 @@ export default {
     },
     getList(currentPage, showCount, pd) {
       this.pd.MXLX='ASJ_WLYP';
-
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
-
+      if(pd.hasOwnProperty('YJID')){
+        delete pd['YJID']
+      }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd,
         "orderBy":'BJSJ',
-        "orderType":'DESC'
+        "orderType":'DESC',
+        "requestTempList":this.selectionAll
       };
       this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
         r => {
-          this.tableData = r.data.resultList;
-          this.TotalResult = r.data.totalResult;
+          if(r.success){
+            this.tableData = r.data.resultList;
+            this.TotalResult = r.data.totalResult;
+            // this.selectionAll = r.data.requestTempList;
+            this.$nextTick(()=>{
+              for(var i=0;i<this.tableData.length;i++){
+                for(var j=0;j<this.selectionAll.length;j++){
+                  if(this.tableData[i].YJID==this.selectionAll[j].YJID){
+                    this.$refs.multipleTable.toggleRowSelection(this.tableData[i]);
+                  }
+                }
+              }
+            })
+          }
         })
     },
     getXM(zw,yw){

@@ -370,7 +370,7 @@ import echarts from 'echarts'
         if (!data) {
             return
         }
-        let url = window.URL.createObjectURL(new Blob([data],{type:"application/octet-stream"}))
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
         let link = document.createElement('a')
         link.style.display = 'none'
         link.href = url

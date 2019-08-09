@@ -1225,7 +1225,7 @@
 import imgUrl from "../../assets/img/t1.png"
 export default {
   name:'CZXX',
-  props:['type','xid','rybh','random'],
+  props:['type','xid','rybh','random','row'],
   data(){
     return{
       imgURL:imgUrl,
@@ -1327,52 +1327,44 @@ export default {
       this.tcDialogVisible=true;
     },
     pageSizeChange1(val) {
-          this.gettableDatajz(this.CurrentPage1,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatajz(this.CurrentPage1,val,this.pd);
+
     },
     handleCurrentChange1(val) {
       this.gettableDatajz(val,this.pageSize1,this.pd);
-      console.log(`当前页: ${val}`);
+
     },
     pageSizeChange2(val) {
       this.gettableDatagz(this.CurrentPage2,val,this.pd);
-      console.log(`每页 ${val} 条`);
+
     },
     handleCurrentChange2(val) {
      this.gettableDatagz(val,this.pageSize2,this.pd);
-      console.log(`当前页: ${val}`);
     },
     pageSizeChange3(val) {
-        this.gettableDatazf(this.CurrentPage3,val,this.pd);
-      console.log(`每页 ${val} 条`);
+     this.gettableDatazf(this.CurrentPage3,val,this.pd);
     },
     handleCurrentChange3(val) {
         this.gettableDatazf(val,this.pageSize3,this.pd);
-      console.log(`当前页: ${val}`);
+
     },
     pageSizeChange4(val) {
-    this.gettableDataab(this.CurrentPage4,val,this.pd);
-      console.log(`每页 ${val} 条`);
+       this.gettableDataab(this.CurrentPage4,val,this.pd);
     },
     handleCurrentChange4(val) {
       this.gettableDataab(val,this.pageSize4,this.pd);
-      console.log(`当前页: ${val}`);
     },
     pageSizeChange5(val) {
-          this.gettableDatalg(this.CurrentPage5,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatalg(this.CurrentPage5,val,this.pd);
     },
     handleCurrentChange5(val) {
-          this.gettableDatalg(val,this.pageSize5,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatalg(val,this.pageSize5,this.pd);
     },
     pageSizeChange6(val) {
-        this.gettableDatath(this.CurrentPage6,val,this.pd);
-      console.log(`每页 ${val} 条`);
+      this.gettableDatath(this.CurrentPage6,val,this.pd);
     },
     handleCurrentChange6(val) {
-        this.gettableDatath(val,this.pageSize6,this.pd);
-      console.log(`当前页: ${val}`);
+      this.gettableDatath(val,this.pageSize6,this.pd);
     },
     base() {
       this.page = 0;
@@ -1424,7 +1416,7 @@ export default {
     },
     getData2(){
       this.pp.RGUID=this.id;
-      this.pd.RYBH=this.rybh;
+      this.pd.DTID=this.row.DTID;
       let p = {
         "pd": this.pp
       };
@@ -1437,12 +1429,12 @@ export default {
            }
       })
 
-      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.pp);
-      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.pp);
-      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.pp);
-      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pp);
-      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pp);
-      this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pp);
+      this.gettableDatajz(this.CurrentPage1,this.pageSize1,this.pd);
+      this.gettableDatagz(this.CurrentPage2,this.pageSize2,this.pd);
+      this.gettableDatazf(this.CurrentPage3,this.pageSize3,this.pd);
+      this.gettableDataab(this.CurrentPage4,this.pageSize4,this.pd);
+      this.gettableDatalg(this.CurrentPage5,this.pageSize5,this.pd);
+      this.gettableDatath(this.CurrentPage6,this.pageSize6,this.pd);
       this.getPhoto();
     },
     // 居住地信息

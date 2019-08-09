@@ -205,7 +205,10 @@ export default {
     }
   },
   activated(){
-    this.getList(this.CurrentPage, this.pageSize, this.pd);
+    let _this = this;
+    setTimeout(function(){
+      _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
+    },1000)
   },
   mounted() {
     this.$store.dispatch('getGjdq');
@@ -258,7 +261,9 @@ export default {
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "orderBy":'BJSJ',
+        "orderType":'DESC'
       };
       this.$api.post(this.Global.aport4+'/fangWuWarningInfoController/getInfoListByMxLx', p,
         r => {

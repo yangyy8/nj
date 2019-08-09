@@ -778,7 +778,7 @@
                 </div>
         </el-dialog> -->
         <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-          <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></CZXX>
+          <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()" :row="allData"></CZXX>
           <div slot="footer" class="dialog-footer">
             <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
           </div>
@@ -829,6 +829,7 @@ export default {
       pd:{},
       type:1,
       xid:'',
+      allData:{},
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,
@@ -1079,6 +1080,7 @@ export default {
         case 4:
           this.xid=n.RGUID;
           this.rybh=n.RYBH;
+          this.allData=n;
           this.type=1;
           this.CZDialogVisible = true;
           this.czinfo = n;

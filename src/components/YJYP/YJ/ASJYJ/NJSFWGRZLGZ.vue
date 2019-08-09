@@ -3,19 +3,19 @@
   <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
-        <el-col :span="18" class="br pr-20">
+        <el-col :span="20" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8" :offset="2" class="input-item">
                   <span class="input-text">查询时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
+                       v-model="pd.BASJ_DateRange.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd0.endBJSJ" format="yyyy-MM-dd"
+                        v-model="pd.BASJ_DateRange.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -23,10 +23,8 @@
                 </el-col>
           </el-row>
         </el-col>
-        <el-col :span="2" class="down-btn-area">
+        <el-col :span="4">
           <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-        </el-col>
-        <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"  @click="download">导出</el-button>
         </el-col>
       </el-row>
@@ -36,59 +34,60 @@
            :data="tableData"
            border
            :highlight-current-row="true"
-           style="width: 100%">
+           style="width: 100%"
+           class="t-table1">
             <el-table-column prop="gjdq" label="国别" >
             </el-table-column>
-            <el-table-column prop="chzs" label="查获总数（人）">
+            <el-table-column prop="chzs" label="查获总数（人）" width="120px">
               <el-table-column width="100px">
               </el-table-column>
-            </el-table-column>  
+            </el-table-column>
             <el-table-column label="违法种类（人次）嫌疑人">
-              <el-table-column 
+              <el-table-column
               prop="ffrj"
-              label="非法入境" width="30px">
+              label="非法入境" width="70px">
               </el-table-column>
-              <el-table-column 
+              <el-table-column
               prop="ffjl"
-              label="非法居留" width="30px">
+              label="非法居留" width="70px">
               </el-table-column>
-              <el-table-column 
+              <el-table-column
               prop="ffjy"
-              label="非法就业" width="30px">
+              label="非法就业" width="70px">
               </el-table-column>
             </el-table-column>
             <el-table-column  label="来华事由">
-              <el-table-column 
+              <el-table-column
               prop="xx"
-              label="学习" width="30px">
+              label="学习" width="70px">
               </el-table-column>
-              <el-table-column 
+              <el-table-column
               prop="ly"
-              label="旅游" width="30px">
+              label="旅游" width="70px">
               </el-table-column>
               <el-table-column
               prop="my"
-              label="贸易" width="30px">
+              label="贸易" width="70px">
               </el-table-column>
               <el-table-column
-              prop="fw" 
-              label="访问" width="30px">
+              prop="fw"
+              label="访问" width="70px">
               </el-table-column>
               <el-table-column
-              prop="qstj" 
-              label="亲属团聚" width="30px">
+              prop="qstj"
+              label="亲属团聚" width="70px">
               </el-table-column>
               <el-table-column
-              prop="srsw" 
-              label="私人事务" width="30px">
+              prop="srsw"
+              label="私人事务" width="70px">
               </el-table-column>
               <el-table-column
-              prop="jy" 
-              label="就业" width="30px">
+              prop="jy"
+              label="就业" width="70px">
               </el-table-column>
-              <el-table-column 
-              prop="qt" 
-              label="其他" width="30px">
+              <el-table-column
+              prop="qt"
+              label="其他" width="70px">
               </el-table-column>
             </el-table-column>
             <el-table-column label="强制措施">
@@ -96,97 +95,97 @@
               </el-table-column>
               <el-table-column prop="xzhdfw" label="限制活动范围">
               </el-table-column>
-            </el-table-column> 
-              <el-table-column label="处理结果" width="30px">
-                <el-table-column 
+            </el-table-column>
+              <el-table-column label="处理结果" width="70px">
+                <el-table-column
                 prop="jg"
-                label="警告" width="30px">
+                label="警告" width="70px">
                 </el-table-column>
-                <el-table-column 
+                <el-table-column
                 prop="fk"
-                label="罚款" width="30px">
+                label="罚款" width="70px">
                 </el-table-column>
                 <el-table-column
                 prop="xzjl"
-                label="行政拘留" width="30px">
+                label="行政拘留" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="xqcj" 
-                label="限期出境" width="30px">
+                prop="xqcj"
+                label="限期出境" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="qscj" 
-                label="拦阻劝返" width="30px">
+                prop="qscj"
+                label="拦阻劝返" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="qscj" 
-                label="遣送出境" width="30px">
+                prop="qscj"
+                label="遣送出境" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="qscj" 
-                label="其他" width="30px">
+                prop="qscj"
+                label="其他" width="70px">
                 </el-table-column>
               </el-table-column>
-              <el-table-column label="发现方式" width="30px">
-                <el-table-column 
+              <el-table-column label="发现方式" width="70px">
+                <el-table-column
                 prop="xj6"
-                label="检查站截获" width="30px">
+                label="检查站截获" width="70px">
                 </el-table-column>
-                <el-table-column 
+                <el-table-column
                 prop="jg"
-                label="数据分析" width="30px">
+                label="数据分析" width="70px">
                 </el-table-column>
                 <el-table-column
                 prop="fk"
-                label="前台发现" width="30px">
+                label="前台发现" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="xzjl" 
-                label="走访检查" width="30px">
+                prop="xzjl"
+                label="走访检查" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="xqcj" 
-                label="群众举报" width="30px">
+                prop="xqcj"
+                label="群众举报" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="qzcj" 
-                label="社会面清查" width="30px">
+                prop="qzcj"
+                label="社会面清查" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="qzcj" 
-                label="APP 核查" width="30px">
+                prop="qzcj"
+                label="APP 核查" width="70px">
                 </el-table-column>
               </el-table-column>
-              <el-table-column label="活动场所" width="30px">
-                <el-table-column 
+              <el-table-column label="活动场所" width="70px">
+                <el-table-column
                 prop="xj7"
-                label="劳动密集型企业" width="30px">
+                label="劳动密集型企业" width="70px">
                 </el-table-column>
-                <el-table-column 
+                <el-table-column
                 prop="qbhs"
-                label="培训机构" width="30px">
+                label="培训机构" width="70px">
                 </el-table-column>
                 <el-table-column
                 prop="jsjz"
-                label="涉外院校" width="30px">
+                label="涉外院校" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="xsjl" 
-                label="家政中介" width="30px">
+                prop="xsjl"
+                label="家政中介" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="db" 
-                label="娱乐场所" width="30px">
+                prop="db"
+                label="娱乐场所" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="jc" 
-                label="出租屋" width="30px">
+                prop="jc"
+                label="出租屋" width="70px">
                 </el-table-column>
                 <el-table-column
-                prop="jc" 
-                label="其他" width="30px">
+                prop="jc"
+                label="其他" width="70px">
                 </el-table-column>
-              </el-table-column>  
+              </el-table-column>
          </el-table>
      <div class="middle-foot">
         <div class="page-msg">
@@ -229,8 +228,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{}},
-      pd0:{},
+      pd: {BASJ_DateRange:{begin:'',end:''}},
       options: this.pl.ps,
       tableData: [],
     }
@@ -244,19 +242,13 @@ export default {
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.CurrentPage=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
       /* this.pd.MXLX='ASJ_DQQZFFJY'; */
-
-      this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
-      this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
-
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -269,18 +261,10 @@ export default {
         })
     },
     download(){
-      this.getPd();
-      if(this.page==0){
         this.$api.post(this.Global.aport2+'/ajbbController/exportNjsf',{pd:this.pd},
          r =>{
            this.downloadM(r)
          },e=>{},{},'blob')
-      }else{
-        this.$api.post(this.Global.aport2+'/ajbbController/exportNjsf',{pd:this.pd},
-         r =>{
-           this.downloadM(r)
-         },e=>{},{},'blob')
-      }
     },
     downloadM (data) {
         if (!data) {
@@ -298,11 +282,4 @@ export default {
 }
 </script>
 <style scoped>
-.el-table thead th .cell{
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  white-space:normal!important;
-  position: relative!important;
-  background-color: #666;
-}
 </style>

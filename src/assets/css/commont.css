@@ -48,6 +48,12 @@
 .t-mb15{
   margin-bottom: 15px!important;
 }
+.t-mb{
+  margin-bottom: 6px!important;
+}
+.t-ml0{
+  margin-left: 0!important;
+}
 .t-must{
   color: red;
   padding: 2px;
@@ -257,4 +263,7 @@
    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+ }
+ .t-table1 thead th .cell{
+   white-space: normal!important;
  }

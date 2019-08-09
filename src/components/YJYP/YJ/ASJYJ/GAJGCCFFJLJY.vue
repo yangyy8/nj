@@ -3,19 +3,19 @@
   <div class="yymain">
     <div class="yytitle">
       <el-row type="flex">
-        <el-col :span="18" class="br pr-20">
+        <el-col :span="20" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8" :offset="2" class="input-item">
                   <span class="input-text">查询时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
+                       v-model="pd.BASJ_DateRange.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd0.endBJSJ" format="yyyy-MM-dd"
+                        v-model="pd.BASJ_DateRange.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间">
                     </el-date-picker>
@@ -23,10 +23,8 @@
                 </el-col>
           </el-row>
         </el-col>
-        <el-col :span="2" class="down-btn-area">
+        <el-col :span="4">
           <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-        </el-col>
-        <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"  @click="download">导出</el-button>
         </el-col>
       </el-row>
@@ -125,37 +123,31 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BASJ_DateRange:{}},
-      pd0:{},
+      pd: {BASJ_DateRange:{begin:'',end:''}},
       options: this.pl.ps,
       tableData: [],
     }
   },
     activated(){
-       
+
     },
   mounted() {
-    
+
    },
   methods: {
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.CurrentPage=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      this.pd.BASJ_DateRange.begin=this.pd0.beginBJSJ==undefined?"":this.pd0.beginBJSJ;
-      this.pd.BASJ_DateRange.end=this.pd0.endBJSJ==undefined?"":this.pd0.endBJSJ; 
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd,
-       
       };
       this.$api.post(this.Global.aport2+'/ajbbController/gajggzqk', p,
         r => {
@@ -163,23 +155,11 @@ export default {
           this.TotalResult = r.data.totalResult;
         })
     },
-    getPd(pd){
-       this.pd.BASJ_DateRange.begin=this.pd0.beginBJSJ==undefined?"":this.pd0.beginBJSJ;
-      this.pd.BASJ_DateRange.end=this.pd0.endBJSJ==undefined?"":this.pd0.endBJSJ; 
-    },
     download(){
-      this.getPd();
-      if(this.page==0){
-        this.$api.post(this.Global.aport2+'/ajbbController/exportGajggzqk',{pd:this.pd},
-         r =>{
-           this.downloadM(r)
-         },e=>{},{},'blob')
-      }else{
-        this.$api.post(this.Global.aport2+'/ajbbController/exportGajggzqk',{pd:this.pd},
-         r =>{
-           this.downloadM(r)
-         },e=>{},{},'blob')
-      }
+      this.$api.post(this.Global.aport2+'/ajbbController/exportGajggzqk',{pd:this.pd},
+       r =>{
+         this.downloadM(r)
+       },e=>{},{},'blob')
     },
     downloadM (data) {
         if (!data) {
@@ -193,7 +173,7 @@ export default {
         document.body.appendChild(link)
         link.click()
     },
-   
+
   }
 }
 </script>

@@ -68,6 +68,12 @@ export default new Router({
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/ZDGZCZWYJ'], resolve),
         },
         {
+          path: 'ZDGZCZWSH',
+          name: 'ZDGZCZWSH',
+          meta:{title:['日常管理','临住信息','重点关注出租屋审核']},
+          component: resolve => require(['@/components/YJYP/YJ/LZYJ/ZDGZCZWSH'], resolve),
+        },
+        {
           path: 'GJYWWYLZYJ',
           name: 'GJYWWYLZYJ',
           meta:{title:['日常管理','临住信息','重点国家境外人员统计']},
@@ -308,13 +314,12 @@ export default new Router({
           meta:{title:['数据分析','案件分析','全市涉外案事件月通报表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/QSSWASJYTBB'], resolve),
         },
-        /* {
+        {
           path: 'SWASJTJB',
           name: 'SWASJTJB',
           meta:{title:['数据分析','案件分析','涉外案事件统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/SWASJTJB'], resolve),
-
-        }, */ 
+        },
         {
           path: 'GAJGCCFFJLJY',
           name: 'GAJGCCFFJLJY',
@@ -332,7 +337,7 @@ export default new Router({
           name: 'NJSFWGRZLGZ',
           meta:{title:['数据分析','案件分析','南京“三非”外国人治理工作情况统计表']},
           component: resolve => require(['@/components/YJYP/YJ/ASJYJ/NJSFWGRZLGZ'], resolve),
-        }, 
+        },
         {
           path: 'SLQFXXYJ',
           name: 'SLQFXXYJ',
