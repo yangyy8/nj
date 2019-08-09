@@ -212,6 +212,7 @@
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
+                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
                 </el-col>
               </el-row>
         </div>
@@ -230,10 +231,15 @@
           </div>
           <div v-if="falg">
             <el-table
-               ref="multipleTable"
+               ref="tableTj"
                :data="tableData"
                border
-               style="width: 100%">
+               style="width: 100%"
+               @selection-change="handleSelectionChange">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -284,10 +290,15 @@
         </div>
         <div v-else>
           <el-table
-             ref="multipleTable"
+             ref="tableTj"
              :data="tableData"
              border
-             style="width: 100%">
+             style="width: 100%"
+             @selection-change="handleSelectionChange">
+             <el-table-column
+               type="selection"
+               width="55">
+             </el-table-column>
              <el-table-column
                prop="ZWXM"
                label="中文姓名">
@@ -471,6 +482,10 @@
           falg:false,
           disa:false,
           allData:{},
+
+          multipleSelection:[],
+          selectionAll:[],
+          yuid:[],
         }
       },
       mounted() {
@@ -485,9 +500,92 @@
          this.$store.dispatch("getJzztlx");
          this.$store.dispatch("getSf");
       },
+      watch:{
+        falg:function(newVal,oldVal){
+          console.log('1111');
+          this.multipleSelection=[];
+          this.selectionAll=[];
+        },
+        tableHeadHc:{
+          handler(newVal, oldVal) {
+
+            this.tableHeadHc=newVal;
+            console.log('深度监听', newVal, oldVal)
+          },
+        
+        }
+      },
       methods: {
         handleSelectionChange(val) {
+          // console.log(val)
           this.multipleSelection = val;
+          for(var i in this.multipleSelection){
+            this.selectionAll.push(this.multipleSelection[i]);
+          }
+          var arrAfter=[];
+          var arrReal=[];
+          for(var j in this.selectionAll){
+            if(arrAfter.indexOf(this.selectionAll[j].RGUID)==-1){
+              arrAfter.push(this.selectionAll[j].RGUID);
+              arrReal.push(this.selectionAll[j])
+            }
+          }
+          this.selectionAll = arrReal;
+          console.log(this.selectionAll)
+        },
+        download(){
+          let p={};
+          let url="";
+          if(this.multipleSelection.length==0){//全部导出
+            if(this.tableHeadHc.length==0){//人员全部导出
+              p={
+               "pd":this.pd,
+             }
+            }else{//统计全部导出
+             p={
+               "pd":this.pd,
+               "groupList":this.tableHeadHc,
+             }
+            }
+          }else{//导出选中
+            if(this.tableHeadHc.length==0){//人员选中导出
+              this.yuid=[];
+              for(var i in this.selectionAll){
+                this.yuid.push(this.selectionAll[i].RGUID)
+              };
+              this.pd.RGUID=this.yuid;
+               p={
+                "pd":this.pd,
+              }
+            }else{//统计选中导出
+              p={
+                "requestTempList":this.selectionAll,
+                "groupList":this.tableHeadHc,
+              }
+            }
+          }
+          if(this.tableHeadHc.length==0){
+            url='/changZhuController/export'
+          }else{
+            url='/changZhuController/export'
+          }
+          this.$api.post(this.Global.aport5+url,p,
+            r =>{
+              console.log(r);
+              this.downloadM(r)
+            },e=>{},{},'blob')
+        },
+        downloadM (data) {
+            if (!data) {
+                return
+            }
+            let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', '常住信息综合分析人员列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+            document.body.appendChild(link)
+            link.click()
         },
         pageSizeChange(val) {
           this.getList(this.CurrentPage, val, this.pd);
@@ -547,6 +645,9 @@
               this.tableHeadHc.push("XB");
               this.tableHeadHs.push('XB_DESC')
             }
+            if(pd.hasOwnProperty('RGUID')){
+              delete pd['RGUID']
+            }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
@@ -574,6 +675,15 @@
                   }
                   _this.configHeader.splice(a,0,obj);
                 }
+                // this.$nextTick(()=>{
+                //   for(var i=0;i<this.tableData.length;i++){
+                //     for(var j=0;j<this.selectionAll.length;j++){
+                //       if(this.tableData[i].YJID==this.selectionAll[j].YJID){
+                //         this.$refs.multipleTable.toggleRowSelection(this.tableData[i]);
+                //       }
+                //     }
+                //   }
+                // })
               }else {
                 this.falg=false;
                 var url = this.Global.aport5 + "/changZhuController/getResultListByParams";

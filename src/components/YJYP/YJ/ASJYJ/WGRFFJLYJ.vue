@@ -106,6 +106,7 @@
           <el-table
                :data="tableData"
                border
+               ref="multipleTable"
                :highlight-current-row="true"
                style="width: 100%"
                @selection-change="handleSelectionChange">

@@ -103,7 +103,7 @@
          </el-col>
         <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-          <!-- <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button> -->
+          <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -113,6 +113,7 @@
       <el-table
            :data="tableData"
            border
+           ref="multipleTable"
            :highlight-current-row="true"
            style="width: 100%"
            @selection-change="handleSelectionChange">
@@ -294,6 +295,14 @@ export default {
     }
   },
   activated(){
+    this.selectionAll5=[];
+    this.selectionAll3=[];
+    this.selectionAll0=[];
+    this.selectionAll1=[];
+    this.selectionAll2=[];
+    this.selectionAll4=[];
+    this.selectionAll6=[];
+    this.selectionAll8=[];
     this.rulesTotal=0,
     this.type=this.$route.query.type;
     // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
@@ -347,6 +356,55 @@ export default {
         }
         this.handleSelectionFilter(this.selectionAll5)
       }
+      if(this.type==3){
+        this.multipleSelection3 = val;
+        for(var i in this.multipleSelection3){
+          this.selectionAll3.push(this.multipleSelection3[i])
+        }
+        this.handleSelectionFilter(this.selectionAll3)
+      }
+      if(this.type==0){
+        this.multipleSelection0 = val;
+        for(var i in this.multipleSelection0){
+          this.selectionAll0.push(this.multipleSelection0[i])
+        }
+        this.handleSelectionFilter(this.selectionAll0)
+      }
+      if(this.type==1){
+        this.multipleSelection1 = val;
+        for(var i in this.multipleSelection1){
+          this.selectionAll1.push(this.multipleSelection1[i])
+        }
+        this.handleSelectionFilter(this.selectionAll1)
+      }
+      if(this.type==2){
+        this.multipleSelection2 = val;
+        for(var i in this.multipleSelection2){
+          this.selectionAll2.push(this.multipleSelection2[i])
+        }
+        this.handleSelectionFilter(this.selectionAll2)
+      }
+      if(this.type==4){
+        this.multipleSelection4 = val;
+        for(var i in this.multipleSelection4){
+          this.selectionAll4.push(this.multipleSelection4[i])
+        }
+        this.handleSelectionFilter(this.selectionAll4)
+      }
+      if(this.type==6){
+        this.multipleSelection6 = val;
+        for(var i in this.multipleSelection6){
+          this.selectionAll6.push(this.multipleSelection6[i])
+        }
+        this.handleSelectionFilter(this.selectionAll6)
+      }
+      if(this.type==8){
+        this.multipleSelection8 = val;
+        for(var i in this.multipleSelection8){
+          this.selectionAll8.push(this.multipleSelection8[i])
+        }
+        this.handleSelectionFilter(this.selectionAll8)
+      }
     },
     download(){
       let p={};
@@ -369,11 +427,151 @@ export default {
             "orderType":'DESC',
           }
         }
+      }else if(this.type==3){
+        if(this.multipleSelection3.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll3){
+            this.yuid.push(this.selectionAll3[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==0){
+        if(this.multipleSelection0.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll0){
+            this.yuid.push(this.selectionAll0[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==1){
+        if(this.multipleSelection1.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll1){
+            this.yuid.push(this.selectionAll1[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==2){
+        if(this.multipleSelection2.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll2){
+            this.yuid.push(this.selectionAll2[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==4){
+        if(this.multipleSelection4.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll4){
+            this.yuid.push(this.selectionAll4[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==6){
+        if(this.multipleSelection6.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll6){
+            this.yuid.push(this.selectionAll6[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
+      }else if(this.type==8){
+        if(this.multipleSelection8.length==0){//全部导出
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC'
+          }
+        }else{//导出选中
+          this.yuid=[];
+          for(var i in this.selectionAll8){
+            this.yuid.push(this.selectionAll8[i].YJID)
+          };
+          this.pd.YJID=this.yuid;
+           p={
+            "pd":this.pd,
+            "orderBy":'BJSJ',
+            "orderType":'DESC',
+          }
+        }
       }
+
       this.$api.post(this.Global.aport4+'/warningInfoController/exportByMxLx',p,
         r =>{
           if(this.type==5){this.downloadM(r,'布控预警报表')}
-
+          if(this.type==3){this.downloadM(r,'临住核查报表')}
+          if(this.type==0){this.downloadM(r,'留学生市外临住报表')}
+          if(this.type==1){this.downloadM(r,'留学生涉恐报表')}
+          if(this.type==2){this.downloadM(r,'留学生市出入境报表')}
+          if(this.type==4){this.downloadM(r,'难民和需求庇护者提醒报表')}
+          if(this.type==6){this.downloadM(r,'留学生录取未报到报表')}
+          if(this.type==8){this.downloadM(r,'涉恐国家人员信息报表')}
         },e=>{},{},'blob')
     },
     downloadM (data,name) {
@@ -523,6 +721,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
+
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
       if(pd.hasOwnProperty('YJID')){
@@ -544,16 +743,29 @@ export default {
       }
       this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
         r => {
-          this.tableData = r.data.resultList;
-          this.TotalResult = r.data.totalResult;
-
+          if(r.success){
+            this.tableData = r.data.resultList;
+            this.TotalResult = r.data.totalResult;
+            this.$nextTick(()=>{
+              if(this.type==5){this.selectionXr(this.tableData,this.selectionAll5)}
+              if(this.type==3){this.selectionXr(this.tableData,this.selectionAll3)}
+              if(this.type==0){this.selectionXr(this.tableData,this.selectionAll0)}
+              if(this.type==1){this.selectionXr(this.tableData,this.selectionAll1)}
+              if(this.type==2){this.selectionXr(this.tableData,this.selectionAll2)}
+              if(this.type==4){this.selectionXr(this.tableData,this.selectionAll4)}
+              if(this.type==6){this.selectionXr(this.tableData,this.selectionAll6)}
+              if(this.type==8){this.selectionXr(this.tableData,this.selectionAll8)}
+            })
+          }
         })
     },
     selectionXr(table,arr){
+      console.log('this.selectionAll',arr);
       for(var i=0;i<table.length;i++){
         for(var j=0;j<arr.length;j++){
           if(table[i].YJID==arr[j].YJID){
-            this.$refs.multipleTable.toggleRowSelection(table[i]);
+            console.log(table[i].YJID,arr[j].YJID,table[i].YJID==arr[j].YJID)
+            this.$refs.multipleTable.toggleRowSelection(table[i],true);
           }
         }
       }
