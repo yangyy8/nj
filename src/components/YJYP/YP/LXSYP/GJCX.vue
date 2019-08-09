@@ -693,7 +693,7 @@ export default {
         'esCzGzdxx': this.pdczgzd,
         'esAjJbxx': this.pdaj,
       }
-      this.$api.post(window.IPConfig.QWJS + '/api/es/search/advanceSearch', p,
+      this.$api.post(this.Global.aport6 + '/api/es/search/advanceSearch', p,
         r => {
           console.log(r.success);
           if (r.success) {
