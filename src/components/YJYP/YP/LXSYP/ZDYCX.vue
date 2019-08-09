@@ -35,7 +35,7 @@
 
                 </el-select>
               </el-col>
-              <el-col :span="3" style="padding-left:10px;min-width:50px;">
+              <el-col :span="3" style="padding-left:10px;min-width:80px;">
                 <el-select v-model="rr.symbol" filterable clearable default-first-option placeholder="请选择操作"  size="small">
                   <el-option label="=" value="="></el-option>
                   <el-option label="!=" value="!="></el-option>
@@ -306,7 +306,7 @@ export default {
        "page":currentPage
      };
 
-     this.$api.post(window.IPConfig.QWJS+"/api/es/search/currencySearch",p,r=>{
+     this.$api.post(this.Global.aport6+"/api/es/search/currencySearch",p,r=>{
        if(r.success){
          this.items=r.respondResult.respondData;
          this.TotalResult=r.respondResult.totalSize;

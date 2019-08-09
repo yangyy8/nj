@@ -115,7 +115,7 @@ export default {
         "pageSize":showCount,
         "page":currentPage
       };
-      this.$api.post(window.IPConfig.QWJS+"/api/es/search/generalCountSearch",p,r=>{
+      this.$api.post(this.Global.aport6+"/api/es/search/generalCountSearch",p,r=>{
         if(r.success){
           this.items=r.respondResult.respondData;
           this.TotalResult=r.respondResult.totalSize;
@@ -149,7 +149,7 @@ export default {
      // formData.append("page", currentPage);
      // formData.append("pageSize", showCount);
      // let p = formData;
-     this.$api.post(window.IPConfig.QWJS+"/api/es/search/generalSearch",p,r=>{
+     this.$api.post(this.Global.aport6+"/api/es/search/generalSearch",p,r=>{
        if(r.success){
          this.items=r.respondResult.respondData;
          if(r.respondResult.respondCount!=undefined)
