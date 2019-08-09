@@ -20,7 +20,7 @@ var axios = require('axios');
 import store from '../assets/js/store' //注册store
 import { Message } from 'element-ui';
 import { Loading } from 'element-ui';
-
+import global_ from '../Global.js'
 // 自定义判断元素类型JS
 function toType (obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -43,8 +43,10 @@ function filterNull (o) {
 }
 function apiAxios (method, url, params, success, failure,header,responseType) {
   let loadingInstance1=null;
-  loadingInstance1 = Loading.service({ fullscreen: true, spinner: 'el-icon-loading',text:'正在加载中',background:'rgba(0,0,0,0.6)',customClass:'loadingClass'});
 
+  if(!(url==global_.aport+"/zxdt/getCtUrl")){
+  loadingInstance1 = Loading.service({ fullscreen: true, spinner: 'el-icon-loading',text:'正在加载中',background:'rgba(0,0,0,0.6)',customClass:'loadingClass'});
+   }
     if (params) {
         // params = filterNull(params);
         if(store.state.token){
