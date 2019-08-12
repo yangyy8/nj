@@ -107,7 +107,7 @@ export default {
   methods:{
     getlist(){
 
-      this.$api.get(window.IPConfig.GZGL + '/drools/getAllModels', null,
+      this.$api.get(this.Global.aport7 + '/drools/getAllModels', null,
         r => {
 
             this.cities1=r.data;
@@ -127,7 +127,7 @@ export default {
         let p={
            "args":n
         };
-        this.$api.get(window.IPConfig.GZGL + '/drools/getRules', p,
+        this.$api.get(this.Global.aport7 + '/drools/getRules', p,
           r => {
               this.cities2=r.data;
               var array=r.data
@@ -143,7 +143,7 @@ export default {
         let p={
            "args":n
         };
-        this.$api.get(window.IPConfig.GZGL + '/drools/getLable', p,
+        this.$api.get(this.Global.aport7 + '/drools/getLable', p,
           r => {
               //this.cities3=r.data;
               var array=r.data;
@@ -204,7 +204,7 @@ export default {
         let p={
           "args":alist
         };
-        this.$api.post(window.IPConfig.GZGL + '/drools/updateModel', p,
+        this.$api.post(this.Global.aport7 + '/drools/updateModel', p,
           r => {
               if(r.success){
                 this.$message({
@@ -236,7 +236,7 @@ export default {
         let p={
           "args":alist
         };
-        this.$api.post(window.IPConfig.GZGL + '/drools/updateRules', p,
+        this.$api.post(this.Global.aport7 + '/drools/updateRules', p,
           r => {
               if(r.success){
                 this.$message({
@@ -267,7 +267,7 @@ export default {
         let p={
           "args":alist
         };
-        this.$api.post(window.IPConfig.GZGL + '/drools/updateLable', alist,
+        this.$api.post(this.Global.aport7 + '/drools/updateLable', alist,
           r => {
 
               if(r.success){
