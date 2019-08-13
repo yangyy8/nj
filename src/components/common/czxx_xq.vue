@@ -1415,7 +1415,12 @@ export default {
        })
     },
     getData2(){
-      this.pp.RGUID=this.id;
+      if(this.id){
+        this.pp.RGUID=this.id;
+      }else{
+        this.pp.RYBH=this.rybh;
+      }
+
       this.pd.DTID=this.row.DTID;
       let p = {
         "pd": this.pp

@@ -665,7 +665,7 @@
 
    <div class="stu-footer">
      <div class="stu-title">预警处理</div>
-     <el-row v-if="qdshow">
+     <el-row v-if="this.$route.query.sh_special">
        <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
          <span class="input-text" style="width:13%!important">审核状态：</span>
          <el-select v-model="pc.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
@@ -1094,6 +1094,7 @@ export default {
     }
   },
   activated(){
+    console.log('this.$route.query.sh_special',this.$route.query.sh_special)
     this.CurrentPage=1;
     this.CurrentPage1=1;
     this.CurrentPage2=1;
@@ -1109,9 +1110,11 @@ export default {
     this.row=this.$route.query.row;
     this.pc={};
     this.qdshow=true;
+    this.pc.CHANGE_RESON='';
     console.log(this.row.RYBH);
-    if(this.row!=undefined && this.row.CLZT=='0'){
+    if(this.row!=undefined && (this.row.CLZT=='0'||this.row.CLZT=='CLZT_0')){
       this.qdshow=false;
+      this.pc.CHANGE_RESON=this.row.CLJG;
      }
      if(this.row.RYBH!=undefined){
         this.pd.YJID=this.row.YJID;
@@ -1587,10 +1590,15 @@ export default {
     this.pcl.SHZT=this.pc.SHZT;
     this.pcl.CLDW=this.$store.state.orgname;
     this.pcl.CLR=this.withname;
+
     let p = {
       "pd":this.pcl
     };
-    this.$api.post(this.Global.aport4+'/warningInfoController/saveLXS_ZSYJCLJG', p,
+    let url='/warningInfoController/saveCLJG';
+    if(this.$route.query.sh_special){//教育厅
+      url="/warningInfoController/saveLXS_ZSYJCLJG"
+    }
+    this.$api.post(this.Global.aport4+url, p,
       r => {
          if(r.success){
            this.$message({
@@ -1599,7 +1607,7 @@ export default {
            });
 
     // this.getMX(this.row.MXLX);
-    this.$router.go(-1);
+           this.$router.go(-1);
          }
 
       })
