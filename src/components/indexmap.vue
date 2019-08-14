@@ -11,7 +11,7 @@
                   <template slot-scope="scope">
                     <div v-if="scope.row.zp">
                      <el-popover placement="right" title="" trigger="hover">
-                       <img :src="scope.row.zp"  style="max-width:700px; max-height:700px;"/>
+                       <img :src="scope.row.zp"  style="min-width:700px; min-height:700px;"/>
                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
                      </el-popover>
                     </div>

@@ -396,7 +396,7 @@ export default {
     },
     getEdit(n){
 
-      this.$router.push({name:'LXSXXGLYJ_XQ',query:{row:n}});
+      this.$router.push({name:'SLQFXXYJ_XQ',query:{row:n}});
 
     },
     getXM(zw,yw){

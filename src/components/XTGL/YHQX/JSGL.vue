@@ -152,6 +152,7 @@
       <el-button @click="addsDialogVisible = false" size="small">取 消</el-button>
     </div>
   </el-dialog>
+
 <el-dialog title="详情" :visible.sync="detailsDialogVisible" width="600px" >
   <el-form  ref="mapf">
     <el-row :gutter="1"  class="mb-6">

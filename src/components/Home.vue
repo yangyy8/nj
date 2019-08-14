@@ -96,8 +96,9 @@ export default {
   },
   methods: {
     tabClick(i){
-      // console.log(i)
-      this.$router.push({name:i.name})
+      console.log('-------',i)
+
+      this.$router.push({name:i.name,query:i.query});
     },
     // 关闭tab页面==========================
     close1(index, item) {
