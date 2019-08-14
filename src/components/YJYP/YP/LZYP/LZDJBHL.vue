@@ -115,6 +115,19 @@
                       </el-option>
                     </el-select>
                 </el-col>
+                <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
+                    <span class="input-text">日期选择：</span>
+                    <el-select v-model="pd.ZSLX" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option value="1" label="1 - 按日查询">
+                      </el-option>
+                      <el-option value="2" label="2 - 按月查询">
+                      </el-option>
+                      <el-option value="3" label="3 - 按季度查询">
+                      </el-option>
+                      <el-option value="4" label="4 - 按年查询">
+                      </el-option>
+                    </el-select>
+                </el-col>
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
