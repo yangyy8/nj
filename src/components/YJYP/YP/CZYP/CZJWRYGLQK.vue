@@ -31,11 +31,11 @@
 
     <div class="yycontent">
       <div class="ak-tabs">
-        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0;getList()">
-         境外人员管理情况通报表
-        </div>
         <div class="ak-tab-item hand" :class="{'ak-checked':page==1}" @click="page=1;getList1()">
         各分局错误信息名单
+        </div>
+        <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0;getList()">
+         境外人员管理情况通报表
         </div>
       </div>
       <div class="ak-tab-pane">
@@ -135,49 +135,49 @@
                prop="fjcsjsList"
                label="分局接收超时">
                 <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.fjcsjsList)}}</span>
+                  <span v-html="sjzh(scope.row.fjcsjsList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="pcscsjsList"
                label="派出所接收超时效数">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.pcscsjsList)}}</span>
+                  <span v-html="sjzh(scope.row.pcscsjsList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="jzxxqlList"
                label="居住信息登记缺项">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.jzxxqlList)}}</span>
+                  <span v-html="sjzh(scope.row.jzxxqlList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="abxxqlList"
                label="无安保状况登记数">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.abxxqlList)}}</span>
+                  <span v-html="sjzh(scope.row.abxxqlList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="zfxxqlList"
                label="无安全走访登记数">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.zfxxqlList)}}</span>
+                  <span v-html="sjzh(scope.row.zfxxqlList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="clfwwqzaList"
                label="承租房屋未签治安责任书数">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.clfwwqzaList)}}</span>
+                  <span v-html="sjzh(scope.row.clfwwqzaList)"></span>
                 </template>
              </el-table-column>
              <el-table-column
                prop="dqwtxList"
-               label="9月1日前到期无提醒登记数">
+               label="到期无提醒登记数">
                <template slot-scope="scope">
-                  <span>{{sjzh(scope.row.dqwtxList)}}</span>
+                  <span v-html="sjzh(scope.row.dqwtxList)"></span>
                 </template>
              </el-table-column>
            </el-table>
@@ -185,15 +185,25 @@
 
       </div>
     </div>
-
+    <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+      <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()" :row="allData"></CZXX>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script scoped>
-
+ import CZXX from '../../../common/czxx_xq'
  export default {
+  components:{CZXX},
   data() {
     return {
-      page:0,
+      type:3,
+      rybh:'',
+      xid:'',
+      allData:{},
+      page:1,
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -205,14 +215,19 @@
       },
       tableData:[],
       tableData1:[],
+      CZDialogVisible:false,
     }
   },
   mounted(){
-    this.getList()
-  },
-    activated(){
 
-    },
+  },
+  activated(){
+    // this.getList()
+  },
+  created(){
+    // let that = this;
+    window.cardDetail= this.cardDetail
+  },
   methods:{
     download(){
       this.getPd();
@@ -246,10 +261,15 @@
         return ''
       }else{
         for (var i in val) {
-            str+=val[i].ZJHM+'/'
+            str+='<span class="tc-b hand" onclick="cardDetail('+JSON.stringify(val[i]).replace(/\"/g, "'")+')">'+val[i].ZJHM+'/</span>'
         }
         return str
       }
+    },
+    cardDetail(i){
+      this.rybh=i.RYBH;
+      this.allData=i;
+      this.CZDialogVisible=true;
     },
     getData(){
       if(this.page==0){

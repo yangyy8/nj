@@ -589,7 +589,8 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 3}"
           placeholder="甄别说明必须填写原因(不超过100个字符)"
-          v-model="pd.CLJG">
+          v-model="pd.CLJG"
+          :disabled="!sshow">
         </el-input>
       </el-col>
       <el-col :span="4"  class="down-btn-area">
@@ -878,7 +879,7 @@ export default {
     this.row = this.$route.query.row;
     this.sshow=true;
     this.pd={};
-    if(this.row.CLZT==0){
+    if(this.row!=undefined && (this.row.CLZT=='0'||this.row.CLZT=='CLZT_0')){
       this.sshow=false;
       this.pd.CLJG=this.row.CLJG;
     }

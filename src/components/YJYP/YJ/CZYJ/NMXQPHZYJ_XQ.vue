@@ -548,12 +548,13 @@
            type="textarea"
            :autosize="{ minRows: 3, maxRows: 3}"
            placeholder="预警处理必须填写原因(不超过100个字符)"
-           v-model="pd.CHANGE_RESON">
+           v-model="pc.CHANGE_RESON"
+           :disabled="!clztShow">
          </el-input>
 
        </el-col>
        <el-col :span="4"  class="down-btn-area">
-         <el-button type="primary"  size="small" class="mb-5" @click="chuli()" >确定</el-button>
+         <el-button type="primary"  size="small" class="mb-5" @click="chuli()" v-if="clztShow">确定</el-button>
          <el-button type="warning" size="small" class="m0" @click="back()">返回</el-button>
        </el-col>
      </el-row>
@@ -621,6 +622,7 @@ export default {
       pd:{},
       px:{},
       pcl:{},
+      pc:{},
       bshow:false,
       xtitle:"",
       lzxxDialogVisible:false,
@@ -646,6 +648,7 @@ export default {
       clDialogVisible:false,
       withname:this.$store.state.uname,
       row:{},
+      clztShow:true,
     }
   },
   activated(){
@@ -653,6 +656,12 @@ export default {
     // this.yjid=this.$route.query.yjid;
     this.row=this.$route.query.row;
     console.log('this.row',this.row);
+    this.clztShow=true;
+    this.pc.CHANGE_RESON='';
+    if(this.row!=undefined && (this.row.CLZT=='0'||this.row.CLZT=='CLZT_0')){
+      this.clztShow=false;
+      this.pc.CHANGE_RESON=this.row.CLJG
+    }
     this.pd.YJID=this.row.YJID;
     this.px.RYBH=this.row.RYBH;
     this.getBase();
@@ -853,7 +862,7 @@ export default {
       this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
     },
     chuli(){
-      if(this.pd.CHANGE_RESON=="" || this.pd.CHANGE_RESON==undefined)
+      if(this.pc.CHANGE_RESON=="" || this.pc.CHANGE_RESON==undefined)
       {
         this.$alert('甄别结果不能为空！', '提示', {
           confirmButtonText: '确定',
@@ -867,9 +876,18 @@ export default {
       let p = {
         "pd":this.pcl
       };
-      this.$api.post('/educationParController/saveWarningInfo', p,
+      this.$api.post(this.Global.aport4+'/warningInfoController/saveCLJG', p,
         r => {
-          this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
+          if(r.success){
+          this.$message({
+            message: '处理成功！',
+            type: 'success'
+           });
+            this.$router.go(-1);
+          }else {
+            this.$message.error('处理失败了');
+          }
+          // this.$router.push({name:'NMXQPHZYJ_X',query:{type:4}});
         })
     }
   }

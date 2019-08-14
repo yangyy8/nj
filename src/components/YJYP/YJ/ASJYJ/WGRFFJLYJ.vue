@@ -109,6 +109,7 @@
                ref="multipleTable"
                :highlight-current-row="true"
                style="width: 100%"
+               @select="selectfn"
                @selection-change="handleSelectionChange">
                <el-table-column
                  type="selection"
@@ -250,6 +251,7 @@
           multipleSelection:[],
           selectionAll:[],
           yuid:[],
+          selectionReal:[],
         }
       },
         activated(){
@@ -273,21 +275,39 @@
       },
       methods: {
         handleSelectionChange(val) {
-          this.multipleSelection = val;
-          console.log(val);
-          for(var i in this.multipleSelection){
-            this.selectionAll.push(this.multipleSelection[i]);
-          }
-          var arrAfter=[];
-          var arrReal=[];
-          for(var j in this.selectionAll){
-            if(arrAfter.indexOf(this.selectionAll[j].YJID)==-1){
-              arrAfter.push(this.selectionAll[j].YJID);
-              arrReal.push(this.selectionAll[j])
+          // this.multipleSelection = val;
+          // console.log(val);
+          // for(var i in this.multipleSelection){
+          //   this.selectionAll.push(this.multipleSelection[i]);
+          // }
+          // var arrAfter=[];
+          // var arrReal=[];
+          // for(var j in this.selectionAll){
+          //   if(arrAfter.indexOf(this.selectionAll[j].YJID)==-1){
+          //     arrAfter.push(this.selectionAll[j].YJID);
+          //     arrReal.push(this.selectionAll[j])
+          //   }
+          // }
+          // this.selectionAll = arrReal;
+          // console.log(this.selectionAll)
+        },
+        selectfn(a,b){
+          this.multipleSelection = a;
+          this.dataSelection()
+        },
+        dataSelection(){
+          // console.log('this.multipleSelection',this.multipleSelection)
+          this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+          // console.log('this.selectionReal',this.selectionReal);
+          this.selectionAll=[];
+          for(var i=0;i<this.selectionReal.length;i++){
+            if(this.selectionReal[i]){
+              for(var j=0;j<this.selectionReal[i].length;j++){
+                this.selectionAll.push(this.selectionReal[i][j])
+              }
             }
           }
-          this.selectionAll = arrReal;
-          console.log(this.selectionAll)
+          // console.log('this.selectionAll',this.selectionAll);
         },
         download(){
           let p={};
@@ -355,11 +375,15 @@
             r => {
               this.tableData = r.data.resultList;
               this.TotalResult = r.data.totalResult;
+              if(this.selectionReal.length==0){//声明一个数组对象
+                this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+              }
               this.$nextTick(()=>{
+                this.multipleSelection=[]
                 for(var i=0;i<this.tableData.length;i++){
                   for(var j=0;j<this.selectionAll.length;j++){
                     if(this.tableData[i].YJID==this.selectionAll[j].YJID){
-                      this.$refs.multipleTable.toggleRowSelection(this.tableData[i]);
+                      this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
                     }
                   }
                 }

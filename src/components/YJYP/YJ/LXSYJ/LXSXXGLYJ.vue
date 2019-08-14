@@ -116,6 +116,7 @@
            ref="multipleTable"
            :highlight-current-row="true"
            style="width: 100%"
+           @select="selectfn"
            @selection-change="handleSelectionChange">
            <el-table-column
              type="selection"
@@ -267,42 +268,66 @@ export default {
       addlg:{},
       multipleSelection0:[],
       selectionAll0:[],
+      selectionReal0:[],
 
       multipleSelection1:[],
       selectionAll1:[],
+      selectionReal1:[],
 
       multipleSelection2:[],
       selectionAll2:[],
+      selectionReal2:[],
 
       multipleSelection3:[],
       selectionAll3:[],
+      selectionReal3:[],
 
       multipleSelection4:[],
       selectionAll4:[],
+      selectionReal4:[],
 
       multipleSelection5:[],
       selectionAll5:[],
+      selectionReal5:[],
 
       multipleSelection6:[],
       selectionAll6:[],
+      selectionReal6:[],
 
       multipleSelection7:[],
       selectionAll7:[],
+      selectionReal7:[],
 
       multipleSelection8:[],
       selectionAll8:[],
+      selectionReal8:[],
       yuid:[],
     }
   },
   activated(){
     this.selectionAll5=[];
+    this.selectionReal5=[];
+
     this.selectionAll3=[];
+    this.selectionReal3=[];
+
     this.selectionAll0=[];
+    this.selectionReal0=[];
+
     this.selectionAll1=[];
+    this.selectionReal1=[];
+
     this.selectionAll2=[];
+    this.selectionReal2=[];
+
     this.selectionAll4=[];
+    this.selectionReal4=[];
+
     this.selectionAll6=[];
+    this.selectionReal6=[];
+
     this.selectionAll8=[];
+    this.selectionReal8=[];
     this.rulesTotal=0,
     this.type=this.$route.query.type;
     // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
@@ -336,74 +361,119 @@ export default {
     this.orgName=this.$store.state.orgid
   },
   methods: {
-    handleSelectionFilter(arr) {
-      var arrAfter=[];
-      var arrReal=[];
-      for(var j in arr){
-        if(arrAfter.indexOf(arr[j].YJID)==-1){
-          arrAfter.push(arr[j].YJID);
-          arrReal.push(arr[j])
+    handleSelectionFilter(arrReal,arr,mul) {
+      // console.log('this.multipleSelection',mul)
+      arrReal.splice(this.CurrentPage-1,1,mul);
+      // console.log('this.selectionReal',arrReal);
+      arr=[];
+      for(var i=0;i<arrReal.length;i++){
+        if(arrReal[i]){
+          for(var j=0;j<arrReal[i].length;j++){
+            arr.push(arrReal[i][j])
+          }
         }
       }
-      arr = arrReal;
-      console.log(arr)
+      // console.log('this.selectionAll',arr);
+      if(this.type==5){this.selectionReal5=arrReal;this.selectionAll5=arr;this.multipleSelection5=mul}
+      if(this.type==3){this.selectionReal3=arrReal;this.selectionAll3=arr;this.multipleSelection3=mul}
+      if(this.type==2){this.selectionReal2=arrReal;this.selectionAll2=arr;this.multipleSelection2=mul}
+      if(this.type==1){this.selectionReal1=arrReal;this.selectionAll1=arr;this.multipleSelection1=mul}
+      if(this.type==0){this.selectionReal0=arrReal;this.selectionAll0=arr;this.multipleSelection0=mul}
+      if(this.type==4){this.selectionReal4=arrReal;this.selectionAll4=arr;this.multipleSelection4=mul}
+      if(this.type==6){this.selectionReal6=arrReal;this.selectionAll6=arr;this.multipleSelection6=mul}
+      if(this.type==8){this.selectionReal8=arrReal;this.selectionAll8=arr;this.multipleSelection8=mul}
     },
     handleSelectionChange(val){
+      // if(this.type==5){
+      //   this.multipleSelection5 = val;
+      //   for(var i in this.multipleSelection5){
+      //     this.selectionAll5.push(this.multipleSelection5[i]);
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll5)
+      // }
+      // if(this.type==3){
+      //   console.log(val)
+      //   this.multipleSelection3 = val;
+      //   for(var i in this.multipleSelection3){
+      //     this.selectionAll3.push(this.multipleSelection3[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll3)
+      // }
+      // if(this.type==0){
+      //   this.multipleSelection0 = val;
+      //   for(var i in this.multipleSelection0){
+      //     this.selectionAll0.push(this.multipleSelection0[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll0)
+      // }
+      // if(this.type==1){
+      //   this.multipleSelection1 = val;
+      //   for(var i in this.multipleSelection1){
+      //     this.selectionAll1.push(this.multipleSelection1[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll1)
+      // }
+      // if(this.type==2){
+      //   this.multipleSelection2 = val;
+      //   for(var i in this.multipleSelection2){
+      //     this.selectionAll2.push(this.multipleSelection2[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll2)
+      // }
+      // if(this.type==4){
+      //   this.multipleSelection4 = val;
+      //   for(var i in this.multipleSelection4){
+      //     this.selectionAll4.push(this.multipleSelection4[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll4)
+      // }
+      // if(this.type==6){
+      //   this.multipleSelection6 = val;
+      //   for(var i in this.multipleSelection6){
+      //     this.selectionAll6.push(this.multipleSelection6[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll6)
+      // }
+      // if(this.type==8){
+      //   this.multipleSelection8 = val;
+      //   for(var i in this.multipleSelection8){
+      //     this.selectionAll8.push(this.multipleSelection8[i])
+      //   }
+      //   this.handleSelectionFilter(this.selectionAll8)
+      // }
+    },
+    selectfn(val,b){
       if(this.type==5){
         this.multipleSelection5 = val;
-        for(var i in this.multipleSelection5){
-          this.selectionAll5.push(this.multipleSelection5[i]);
-        }
-        this.handleSelectionFilter(this.selectionAll5)
+        this.handleSelectionFilter(this.selectionReal5,this.selectionAll5,this.multipleSelection5)
       }
       if(this.type==3){
         this.multipleSelection3 = val;
-        for(var i in this.multipleSelection3){
-          this.selectionAll3.push(this.multipleSelection3[i])
-        }
-        this.handleSelectionFilter(this.selectionAll3)
+        this.handleSelectionFilter(this.selectionReal3,this.selectionAll3,this.multipleSelection3)
       }
       if(this.type==0){
         this.multipleSelection0 = val;
-        for(var i in this.multipleSelection0){
-          this.selectionAll0.push(this.multipleSelection0[i])
-        }
-        this.handleSelectionFilter(this.selectionAll0)
+        this.handleSelectionFilter(this.selectionReal0,this.selectionAll0,this.multipleSelection0)
       }
       if(this.type==1){
         this.multipleSelection1 = val;
-        for(var i in this.multipleSelection1){
-          this.selectionAll1.push(this.multipleSelection1[i])
-        }
-        this.handleSelectionFilter(this.selectionAll1)
+        this.handleSelectionFilter(this.selectionReal1,this.selectionAll1,this.multipleSelection1)
       }
       if(this.type==2){
         this.multipleSelection2 = val;
-        for(var i in this.multipleSelection2){
-          this.selectionAll2.push(this.multipleSelection2[i])
-        }
-        this.handleSelectionFilter(this.selectionAll2)
+        this.handleSelectionFilter(this.selectionReal2,this.selectionAll2,this.multipleSelection2)
       }
       if(this.type==4){
         this.multipleSelection4 = val;
-        for(var i in this.multipleSelection4){
-          this.selectionAll4.push(this.multipleSelection4[i])
-        }
-        this.handleSelectionFilter(this.selectionAll4)
+        this.handleSelectionFilter(this.selectionReal4,this.selectionAll4,this.multipleSelection4)
       }
       if(this.type==6){
         this.multipleSelection6 = val;
-        for(var i in this.multipleSelection6){
-          this.selectionAll6.push(this.multipleSelection6[i])
-        }
-        this.handleSelectionFilter(this.selectionAll6)
+        this.handleSelectionFilter(this.selectionReal6,this.selectionAll6,this.multipleSelection6)
       }
       if(this.type==8){
         this.multipleSelection8 = val;
-        for(var i in this.multipleSelection8){
-          this.selectionAll8.push(this.multipleSelection8[i])
-        }
-        this.handleSelectionFilter(this.selectionAll8)
+        this.handleSelectionFilter(this.selectionReal8,this.selectionAll8,this.multipleSelection8)
       }
     },
     download(){
@@ -420,6 +490,7 @@ export default {
           for(var i in this.selectionAll5){
             this.yuid.push(this.selectionAll5[i].YJID)
           };
+          console.log('============',this.selectionAll5,this.yuid)
           this.pd.YJID=this.yuid;
            p={
             "pd":this.pd,
@@ -746,21 +817,30 @@ export default {
           if(r.success){
             this.tableData = r.data.resultList;
             this.TotalResult = r.data.totalResult;
+            if(this.type==5&&this.selectionReal5.length==0){this.selectionReal5=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==3&&this.selectionReal3.length==0){this.selectionReal3=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==0&&this.selectionReal0.length==0){this.selectionReal0=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==1&&this.selectionReal1.length==0){this.selectionReal1=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==2&&this.selectionReal2.length==0){this.selectionReal2=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==4&&this.selectionReal4.length==0){this.selectionReal4=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==6&&this.selectionReal6.length==0){this.selectionReal6=new Array(Math.ceil(this.TotalResult/showCount))}
+            if(this.type==8&&this.selectionReal8.length==0){this.selectionReal8=new Array(Math.ceil(this.TotalResult/showCount))}
             this.$nextTick(()=>{
-              if(this.type==5){this.selectionXr(this.tableData,this.selectionAll5)}
-              if(this.type==3){this.selectionXr(this.tableData,this.selectionAll3)}
-              if(this.type==0){this.selectionXr(this.tableData,this.selectionAll0)}
-              if(this.type==1){this.selectionXr(this.tableData,this.selectionAll1)}
-              if(this.type==2){this.selectionXr(this.tableData,this.selectionAll2)}
-              if(this.type==4){this.selectionXr(this.tableData,this.selectionAll4)}
-              if(this.type==6){this.selectionXr(this.tableData,this.selectionAll6)}
-              if(this.type==8){this.selectionXr(this.tableData,this.selectionAll8)}
+              if(this.type==5){this.selectionXr(this.tableData,this.selectionAll5,this.multipleSelection5)}
+              if(this.type==3){this.selectionXr(this.tableData,this.selectionAll3,this.multipleSelection3)}
+              if(this.type==0){this.selectionXr(this.tableData,this.selectionAll0,this.multipleSelection0)}
+              if(this.type==1){this.selectionXr(this.tableData,this.selectionAll1,this.multipleSelection1)}
+              if(this.type==2){this.selectionXr(this.tableData,this.selectionAll2,this.multipleSelection2)}
+              if(this.type==4){this.selectionXr(this.tableData,this.selectionAll4,this.multipleSelection4)}
+              if(this.type==6){this.selectionXr(this.tableData,this.selectionAll6,this.multipleSelection6)}
+              if(this.type==8){this.selectionXr(this.tableData,this.selectionAll8,this.multipleSelection8)}
             })
           }
         })
     },
-    selectionXr(table,arr){
+    selectionXr(table,arr,mul){
       console.log('this.selectionAll',arr);
+      mul=[];
       for(var i=0;i<table.length;i++){
         for(var j=0;j<arr.length;j++){
           if(table[i].YJID==arr[j].YJID){

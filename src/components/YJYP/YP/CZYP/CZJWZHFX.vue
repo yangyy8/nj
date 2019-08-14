@@ -236,10 +236,10 @@
                border
                style="width: 100%"
                @selection-change="handleSelectionChange">
-               <el-table-column
+               <!-- <el-table-column
                  type="selection"
                  width="55">
-               </el-table-column>
+               </el-table-column> -->
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -508,11 +508,11 @@
         },
         tableHeadHc:{
           handler(newVal, oldVal) {
-
-            this.tableHeadHc=newVal;
-            console.log('深度监听', newVal, oldVal)
+            if(!(newVal.toString()==oldVal.toString())){
+              this.multipleSelection=[];
+              this.selectionAll=[];
+            }
           },
-        
         }
       },
       methods: {
@@ -657,10 +657,10 @@
 
           this.$api.post(this.Global.aport5+'/changZhuController/getCount', p,
             r => {
-              this.tableData = r.data.resultList;
-              this.TotalResult = r.data.totalResult;
               if(r.data.isFenLei==true){//统计列表
                 this.falg=true;
+                this.tableData = r.data.resultList;
+                this.TotalResult = r.data.totalResult;
                 this.configHeader=[];
                 let _this = this;
                 for(var i=0;i<_this.tableHeadHs.length;i++){
@@ -692,6 +692,15 @@
                     if (r.success) {
                      this.tableData = r.data.resultList;
                      this.TotalResult = r.data.totalResult;
+                     this.$nextTick(()=>{
+                       for(var i=0;i<this.tableData.length;i++){
+                         for(var j=0;j<this.selectionAll.length;j++){
+                           if(this.tableData[i].RGUID==this.selectionAll[j].RGUID){
+                             this.$refs.tableTj.toggleRowSelection(this.tableData[i],true);
+                           }
+                         }
+                       }
+                     })
                     }
                   });
               }
