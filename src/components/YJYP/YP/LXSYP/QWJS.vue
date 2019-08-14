@@ -15,7 +15,7 @@
       <el-button type="primary"  @click="CurrentPage=1;getList(CurrentPage,pageSize)" style="margin-left:-10px;">查询</el-button>
        <el-button type="success" @click="$router.push({name:'RYHX'})">返回</el-button>
      </div>
- <div class="navinfo" v-if='infoshow'>
+ <div class="navinfo">
   <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'lz')"> 临住数据 ( <b>{{info.lz}}</b> 条)  </span>
   <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'cz')"> 常住数据 ( <b>{{info.cz}}</b>  条)  </span>
   <span @click="CurrentPage=1;getList(CurrentPage,pageSize,'qz')"> 签证数据 ( <b>{{info.qz}}</b>  条)  </span>
@@ -59,7 +59,6 @@
            </el-row>
            </el-card>
        </el-row>
-
        <div class="middle-foot" style="margin-top:10px;" v-if="TotalResult!=0">
           <el-pagination
             background
@@ -122,6 +121,9 @@ export default {
       })
     },
     getList(currentPage,showCount,type){
+      console.log(this.$route.query.zjhmes,this.content);
+      if(this.content!=this.$route.query.zjhmes || this.type!=this.$route.query.stype)
+      {this.$router.push({name:'QWJS',query:{zjhmes:this.content,stype:this.type}})}
       this.items=[];
       this.TotalResult=0;
 
