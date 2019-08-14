@@ -76,6 +76,25 @@ Vue.prototype.format=function(date,format){
   }
   return format;
 };
+Vue.prototype.chargeObjectEqual = function(obj1,obj2){
+    // 当前Object对象
+    var propsCurr = Object.getOwnPropertyNames(obj1);
+    // console.log('obj1',propsCurr,propsCurr.length)
+    // 要比较的另外一个Object对象
+    var propsCompare = Object.getOwnPropertyNames(obj2);
+    // console.log('obj2',propsCompare,propsCompare.length)
+    if (propsCurr.length != propsCompare.length) {
+        return false;
+    }
+    for (var i = 0,max = propsCurr.length; i < max; i++) {
+        var propName = propsCurr[i];
+        // console.log('name',propName,obj1[propName],obj2[propName],obj1[propName] !== obj2[propName])
+        if ((obj1[propName] !== obj2[propName])&&(propName!='__ob__')) {
+            return false;
+        }
+    }
+    return true;
+}
 router.beforeResolve((to, from, next) => {
   // console.log("token",store.state.token)
   let state=store.state.token;

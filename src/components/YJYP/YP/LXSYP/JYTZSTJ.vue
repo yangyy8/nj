@@ -94,13 +94,14 @@
              </el-col>
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
+                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
                 </el-col>
               </el-row>
         </div>
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
-          <div class="mb-15">
+          <div class="mb-15 t-tjCheck">
               <el-checkbox label="国家地区" v-model="pm.NATIONALITY" :disabled="disa"></el-checkbox>
               <el-checkbox label="学生类别" v-model="pm.STUTYPE" :disabled="disa"></el-checkbox>
               <el-checkbox label="申请学校" v-model="pm.ACCACADEMY" :disabled="disa"></el-checkbox>
@@ -113,7 +114,12 @@
                ref="multipleTable"
                :data="tableData"
                border
-               style="width: 100%">
+               style="width: 100%"
+               @select="selectfn">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -168,7 +174,12 @@
              :data="tableData"
              border
              style="width: 100%"
-             @header-click="headerClick">
+             @header-click="headerClick"
+             @select="selectfn">
+             <el-table-column
+               type="selection"
+               width="55">
+             </el-table-column>
              <el-table-column
                prop="CNAME"
                label="中文姓名">
@@ -344,6 +355,11 @@
           form:{},
           falg:false,
           disa:false,
+
+          multipleSelection:[],
+          selectionAll:[],
+          yuid:[],
+          selectionReal:[],
         }
       },
       mounted() {
@@ -357,6 +373,71 @@
          this.$store.dispatch("getSjly");
       },
       methods: {
+        selectfn(a,b){
+          this.multipleSelection = a;
+          this.dataSelection()
+        },
+        dataSelection(){
+          console.log('this.multipleSelection',this.multipleSelection)
+          this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+          console.log('this.selectionReal',this.selectionReal);
+          this.selectionAll=[];
+          for(var i=0;i<this.selectionReal.length;i++){
+            if(this.selectionReal[i]){
+              for(var j=0;j<this.selectionReal[i].length;j++){
+                this.selectionAll.push(this.selectionReal[i][j])
+              }
+            }
+          }
+          console.log('this.selectionAll',this.selectionAll);
+        },
+        download(){
+          let p={};
+          if(this.tableHeadHc.length==0){//人员导出
+            if(this.selectionAll.length==0){//人员全部导出,无选中的数据
+              p={
+                "pd":this.pd
+              }
+            }else{//人员部分导出
+              this.yuid=[];
+              for(var i in this.selectionAll){
+                this.yuid.push(this.selectionAll[i].DTID)
+              }
+              this.pd.DTID=this.yuid;
+              p={
+                "pd":this.pd,
+              }
+            }
+          }else{//统计导出
+            if(this.selectionAll.length==0){//统计全部导出
+              p={
+                "pd":this.pd,
+                "groupList":this.tableHeadHc,
+              }
+            }else{//统计部分导出
+              p={
+                "requestTempList":this.selectionAll,
+                "groupList":this.tableHeadHc,
+              }
+            }
+          }
+          this.$api.post(this.Global.aport5+'/jiaoYuTing202Controller/export',p,
+            r =>{
+              this.downloadM(r)
+            },e=>{},{},'blob')
+        },
+        downloadM (data) {
+            if (!data) {
+                return
+            }
+            let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', '教育厅综合分析列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+            document.body.appendChild(link)
+            link.click()
+        },
         headerClick(column,event){
           event.target.title=column.label
         },
@@ -411,6 +492,9 @@
               this.tableHeadHc.push("SANSHIYIGUO");
               this.tableHeadHs.push("三十一国人员");
             }
+            if(pd.hasOwnProperty('DTID')){
+              delete pd['DTID']
+            }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
@@ -422,10 +506,10 @@
 
           this.$api.post(this.Global.aport5+'/jiaoYuTing202Controller/getCount', p,
             r => {
-              this.tableData = r.data.resultList;
-              this.TotalResult = r.data.totalResult;
               if(r.data.isFenLei=="true"){//统计列表
                 this.falg=true;
+                this.tableData = r.data.resultList;
+                this.TotalResult = r.data.totalResult;
                 this.configHeader=[];
                 let _this = this;
                 for(var i=0;i<_this.tableHeadHs.length;i++){
@@ -440,6 +524,21 @@
                   }
                   _this.configHeader.splice(a,0,obj);
                 }
+                if(this.selectionReal.length==0){//声明一个数组对象
+                  this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                }
+                this.$nextTick(()=>{
+                  this.multipleSelection=[];
+                  for(var a=0;a<this.tableData.length;a++){
+                    for(var b=0;b<this.selectionAll.length;b++){
+                      // console.log('======',this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                      if(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b])){
+                        // console.log(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                        this.$refs.multipleTable.toggleRowSelection(this.tableData[a],true);
+                      }
+                    }
+                  }
+                })
               }else {
                 this.falg=false;
                 var url = this.Global.aport5 + "/jiaoYuTing202Controller/getResultListByParams";
@@ -448,6 +547,20 @@
                     if (r.success) {
                      this.tableData = r.data.resultList;
                      this.TotalResult = r.data.totalResult;
+                     if(this.selectionReal.length==0){//声明一个数组对象
+                       this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                     }
+                     this.$nextTick(()=>{
+                       this.multipleSelection=[]
+                       for(var i=0;i<this.tableData.length;i++){
+                         for(var j=0;j<this.selectionAll.length;j++){
+                           if(this.tableData[i].DTID==this.selectionAll[j].DTID){
+                             // console.log(this.tableData[i].RGUID,this.selectionAll[j].RGUID,'this.selectionAll======',this.selectionAll)
+                             this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                           }
+                         }
+                       }
+                     })
                     }
                   });
               }
@@ -495,8 +608,8 @@
     </style>
     <style>
       .el-button+.el-button{margin-left: 0!important;}
-      .yycontent .el-checkbox{margin-left: 20px!important; line-height: 30px;}
-      .yycontent .el-checkbox+.el-checkbox{margin-left: 20px!important;}
+      .t-tjCheck .el-checkbox{margin-left: 20px!important; line-height: 30px;}
+      .t-tjCheck .el-checkbox+.el-checkbox{margin-left: 20px!important;}
       .bj .el-dialog__wrapper {
         background: #000;
         background: rgba(0, 0, 0, 0.3);

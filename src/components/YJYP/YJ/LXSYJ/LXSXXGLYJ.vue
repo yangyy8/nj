@@ -254,8 +254,10 @@ export default {
       tabList:[],
       ruleType:{},
       pdNotIn:{
-        ZJZL:["ZJZL_11","ZJZL_12"],
-        QZZL:["QZZL_05","QZZL_20"]
+        // ZJZL:["ZJZL_11","ZJZL_12"],
+        // QZZL:["QZZL_05","QZZL_20"]
+        ZJZL:["11","12"],
+        QZZL:["05","20"]
       },
       rules:[],
       rulesTotal:0,
@@ -479,7 +481,7 @@ export default {
     download(){
       let p={};
       if(this.type==5){
-        if(this.multipleSelection5.length==0){//全部导出
+        if(this.selectionAll5.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -499,7 +501,7 @@ export default {
           }
         }
       }else if(this.type==3){
-        if(this.multipleSelection3.length==0){//全部导出
+        if(this.selectionAll3.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -518,7 +520,7 @@ export default {
           }
         }
       }else if(this.type==0){
-        if(this.multipleSelection0.length==0){//全部导出
+        if(this.selectionAll0.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -537,7 +539,7 @@ export default {
           }
         }
       }else if(this.type==1){
-        if(this.multipleSelection1.length==0){//全部导出
+        if(this.selectionAll1.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -556,7 +558,7 @@ export default {
           }
         }
       }else if(this.type==2){
-        if(this.multipleSelection2.length==0){//全部导出
+        if(this.selectionAll2.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -575,7 +577,7 @@ export default {
           }
         }
       }else if(this.type==4){
-        if(this.multipleSelection4.length==0){//全部导出
+        if(this.selectionAll4.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -594,7 +596,7 @@ export default {
           }
         }
       }else if(this.type==6){
-        if(this.multipleSelection6.length==0){//全部导出
+        if(this.selectionAll6.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -613,7 +615,7 @@ export default {
           }
         }
       }else if(this.type==8){
-        if(this.multipleSelection8.length==0){//全部导出
+        if(this.selectionAll8.length==0){//全部导出
            p={
             "pd":this.pd,
             "orderBy":'BJSJ',
@@ -885,18 +887,20 @@ export default {
          }
         this.$api.post(this.Global.aport4+'/zDRYController/isLGRY', p,
          r => {
-           if(r.data==1){
-             this.addsDialogVisible=true;
-           } else if(r.data==0){
-              this.$message('该人员已经被列管');
-           } else if(r.data==2){
-              this.$confirm('该人员有常住信息，是否设为常住列管', {
-              confirmButtonText: '是',
-              cancelButtonText: '否',
-              type: 'warning'
-            }).then(() => {
-                this.addsDialogVisible=true;
-            })
+           if(r.success){
+             if(r.data==1){
+               this.addsDialogVisible=true;
+             } else if(r.data==0){
+                this.$message('该人员已经被列管');
+             } else if(r.data==2){
+                this.$confirm('该人员有常住信息，是否设为常住列管', {
+                confirmButtonText: '是',
+                cancelButtonText: '否',
+                type: 'warning'
+              }).then(() => {
+                  this.addsDialogVisible=true;
+              })
+            }
           }
         })
      },
@@ -921,6 +925,12 @@ export default {
                  type: 'success'
                });
                 this.addsDialogVisible=false;
+               }else{
+                 console.log('==========')
+                 this.$message({
+                   message: r.message,
+                   type: 'warning'
+                 });
                }
          })
      },
