@@ -2,7 +2,7 @@
    <div class="qwjs">
   <el-card shadow="always">
     <el-row :gutter="2">
-      <el-col :sm="24" :md="12" :lg="11" style="min-width:600px;">
+      <el-col :sm="24" :md="12" :lg="13" style="min-width:600px;">
           <el-row type="flex" v-for="(rr,indes) in rows"  :key="indes" style="line-height:40px;">
               <el-col :span="6" style="padding-left:30px;min-width:160px;">
                 <el-select v-model="rr.type"  filterable clearable default-first-option @change="getDMB()" placeholder="请选择属性"  size="small">
@@ -89,7 +89,7 @@
                     </el-option>
               </el-select>
               </el-col>
-                <el-col :span="3" style="padding-left:10px;min-width:90px;">
+                <el-col :span="3" style="padding-left:10px;min-width:110px;">
               <el-select placeholder="请选择" v-model="rr.relation"  size="small">
                       <el-option label="and" value="and"></el-option>
                       <el-option label="or" value="or"></el-option>
@@ -97,11 +97,11 @@
                 </el-col>
               <el-col :span="4" style="padding-left:10px;">
                   <el-button type="success" size="small" icon="el-icon-plus" circle @click="addrows()"></el-button>
-                  <el-button type="danger" size="small" icon="el-icon-minus" circle @click="deleterows(indes)"></el-button>
+                  <el-button type="danger" size="small" icon="el-icon-minus" v-if="indes!=0" circle @click="deleterows(indes)"></el-button>
               </el-col>
           </el-row>
       </el-col>
-      <el-col :sm="24" :md="12" :lg="8">
+      <el-col :sm="24" :md="12" :lg="6">
         <span style="line-height:30px;font-size:14px;">表达内容：</span>
         <el-input
           type="textarea"
@@ -109,7 +109,6 @@
           placeholder="请输入内容"
           v-model="aaa" :readonly="true">
         </el-input>
-
       </el-col>
       <el-col :sm="24" :md="12" :lg="3"  class="down-btn-area" style="min-height:150px;">
           <el-button type="primary" size="small"  @click="getList(CurrentPage,pageSize)">查询</el-button><br/>
@@ -203,15 +202,15 @@ export default {
       aaa:{
           get:function(){
               let arr = this.rows;
-              if(arr.length>1){
+              if(arr.length>=1){
                 this.keywords='';
                   for(var i=0;i<arr.length;i++){
-                    if(arr[i].type!="" && arr[i].symbol!="" && arr[i].value!=""){
+                    // if(arr[i].type!="" && arr[i].symbol!="" && arr[i].value!=""){
                      this.keywords+=" "+arr[i].type+" "+arr[i].symbol+" "+arr[i].value+" "+arr[i].relation;
-                     }
+                     // }
                   }
               }
-              return this.keywords.substr(0,this.keywords.length-4);
+              return this.keywords.substr(0,this.keywords.length-3);
           },
           set:function(newVal){
 

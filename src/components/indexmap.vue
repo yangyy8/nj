@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="bgh1">
-      <div id="mainMap" class="mapbj"></div>
+         <div id="mainMap" class="mapbjindex"></div>
          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
            <el-table
                 :data="tableData"
@@ -274,6 +274,7 @@ export default {
     height: 10px;
     border: 2px solid #06B4FB;
 }
+
 </style>
 
 <style>

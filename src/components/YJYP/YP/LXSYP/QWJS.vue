@@ -90,7 +90,6 @@ export default {
     }
   },
     activated(){
-
       this.type=this.$route.query.stype;
       this.content=this.$route.query.zjhmes;
       console.log(this.type,this.content);

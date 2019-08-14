@@ -8,7 +8,7 @@ const type=99;
 const indexstate=0;
 // const aport="http://10.33.72.144:9420";//正式环境
 const aport="api-reporter";//大师网关
-// const aport="http://50.32.166.56:9420";//大师
+// const aport="http://10.0.30.161:9420";//大师
 // const aport1="http://10.33.72.144:9435";//正式环境
 const aport1="api-permission";//大师网关
 // const aport1="http://192.168.3.217:9435";//大师
@@ -24,10 +24,18 @@ const aport4="api-yujing";//李文龙 预警
 
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
+<<<<<<< HEAD
 const aport6="http://10.33.72.217:9447";
 // const aport6="http://192.168.3.217:9447";
 const aport7="http://10.33.72.218:9436";
 // const aport7="http://192.168.3.217:9436";
+=======
+const aport6="http://10.33.72.217:9447";//孙
+// const aport6="http://192.168.3.217:9447";
+const aport7="http://10.33.72.218:9436";//游
+// const aport7="http://192.168.3.217:9436";
+
+>>>>>>> a9ced732eac3ca5fd578f7e37eeadd209e12db82
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
 const ssdw="/org/getSelfAndChilds";//所属单位
