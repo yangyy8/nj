@@ -128,6 +128,7 @@
 .modpwd{ margin-left: 10px; color: #5DAFE7;}
 
 .mapbj{width: 100%; height: 100%;min-height: 700px;}
+.mapbjindex{width:100%;height: 100%;min-height: 1000px;}
 .fxleft{ width: 300px; top:65px; left:190px; position: absolute; z-index: 1000;}
 .fxbnt{text-align: left; margin-left: -1px;}
 .fxcont{line-height: 40px; padding:10px 0 10px 10px;background:#ffffff; border: 1px solid #1c6cb4; margin-top: -3px; border-radius: 5px;}
@@ -139,7 +140,7 @@
     }
 .bghome .el-dialog__title{
       color: #86cdfb!important;
-font-size: 18px;font-weight: lighter;
+      font-size: 18px;font-weight: lighter;
       border-left: 4px #86cdfb solid;padding-left: 10px;
     }
   .bghome .el-dialog__header{

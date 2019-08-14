@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="bgh1">
-      <div id="mainMap" class="mapbj"></div>
+         <div id="mainMap" class="mapbjindex"></div>
          <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
            <el-table
                 :data="tableData"
@@ -11,7 +11,7 @@
                   <template slot-scope="scope">
                     <div v-if="scope.row.zp">
                      <el-popover placement="right" title="" trigger="hover">
-                       <img :src="scope.row.zp"  style="min-width:700px; min-height:700px;"/>
+                       <img :src="scope.row.zp"  style="max-width:700px; max-height:700px;"/>
                        <img slot="reference" :src="scope.row.zp" :alt="scope.row.zp"  width="50" height="50">
                      </el-popover>
                     </div>
@@ -274,6 +274,7 @@ export default {
     height: 10px;
     border: 2px solid #06B4FB;
 }
+
 </style>
 
 <style>
