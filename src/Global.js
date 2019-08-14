@@ -24,18 +24,11 @@ const aport4="api-yujing";//李文龙 预警
 
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
-<<<<<<< HEAD
-const aport6="http://10.33.72.217:9447";
-// const aport6="http://192.168.3.217:9447";
-const aport7="http://10.33.72.218:9436";
-// const aport7="http://192.168.3.217:9436";
-=======
 const aport6="http://10.33.72.217:9447";//孙
 // const aport6="http://192.168.3.217:9447";
 const aport7="http://10.33.72.218:9436";//游
 // const aport7="http://192.168.3.217:9436";
 
->>>>>>> a9ced732eac3ca5fd578f7e37eeadd209e12db82
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
 const ssdw="/org/getSelfAndChilds";//所属单位
