@@ -1010,7 +1010,6 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-
       CurrentPage1: 1,
       pageSize1: 10,
       TotalResult1: 0,

@@ -421,19 +421,19 @@ export default new Router({
         {
           path: 'RYHX_NX',
           name: 'RYHX_NX',
-          meta:{title:['数据分析','人员画像','人员画像']},
+          meta:{title:['数据分析','人员画像','人员画像详情']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX_XQ'], resolve),
         },
         {
           path: 'QWJS',
           name: 'QWJS',
-          meta:{title:['数据分析','人员画像','全文检索'],father:'RYHX'},
+          meta:{title:['数据分析','人员画像','全文检索']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/QWJS'], resolve),
         },
         {
           path: 'GJCX',
           name: 'GJCX',
-          meta:{title:['数据分析','人员画像','高级查询'],father:'RYHX'},
+          meta:{title:['数据分析','人员画像','高级查询']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/GJCX'], resolve),
         },
         {
@@ -445,13 +445,13 @@ export default new Router({
         {
           path: 'RYHX_XQ',
           name: 'RYHX_XQ',
-          meta:{title:['数据分析','人员画像','人员画像'],father:'RYHX'},
+          meta:{title:['数据分析','人员画像','人员画像详情']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHX_XQ'], resolve),
         },
         {
           path: 'RYHXGJCX',
           name: 'RYHXGJCX',
-          meta:{title:['数据分析','人员画像','人员高级查询'],father:'RYHX'},
+          meta:{title:['数据分析','人员画像','人员高级查询']},
           component: resolve => require(['@/components/YJYP/YP/LXSYP/RYHXGJCX'], resolve),
         },
         {
