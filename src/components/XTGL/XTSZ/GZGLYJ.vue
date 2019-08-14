@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="gzgl">
-      <div style="color:red;font-size:12px;line-height:40px;padding-left:10px;">  注：勾选才为有效状态，在点保存时请再次确认是否勾选正确！</div>
+      <div style="color:red;font-size:12px;line-height:40px;padding-left:10px;">  注：勾选才为有效状态，在点保存时请再次确认是否勾选正确！   <el-button size="small" type="primary" @click="doset()">刷新</el-button></div>
       <el-row align="center"   :gutter="2">
         <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
           <el-card class="box-card">
@@ -37,6 +37,7 @@
             <el-button style="float: right; padding: 3px 0" type="text" @click="save(3)">保存</el-button>
           </div>
           <div v-for="city in cities3" :key="city.bjmc" style="font-size:14px;line-height:40px; ">
+
             <el-row type="display">
               <el-col :span="12" style="line-height:45px; text-align:right;">
                     {{city.bjsm}} ：
@@ -82,233 +83,261 @@
   </div>
 </template>
 <script scoped>
-import {formatDate} from '@/assets/js/date.js'
+import {
+  formatDate
+} from '@/assets/js/date.js'
 export default {
-  data(){
-    return{
-      cities1:[],
-      cities2:[],
-      cities3:[],
-      checkedCities1:[],
-      checkedCities2:[],
-      checkedCities3:[],
-      card2:false,
-      card1:false,
-      input3:'',
-      name2:'',
-      name3:''
+  inject: ['reload'],
+  data() {
+    return {
+      cities1: [],
+      cities2: [],
+      cities3: [],
+      checkedCities1: [],
+      checkedCities2: [],
+      checkedCities3: [],
+      card2: false,
+      card1: false,
+      input3: '',
+      name2: '',
+      name3: ''
     }
   },
-  mounted(){
+  mounted() {
     this.$store.dispatch("getGjdq");
     this.$store.dispatch("getQzzl");
     this.getlist()
   },
-  methods:{
-    getlist(){
+  methods: {
+    getlist() {
 
       this.$api.get(this.Global.aport7 + '/drools/getAllModels', null,
         r => {
 
-            this.cities1=r.data;
-            var array=r.data
-            for (var i = 0; i < array.length; i++) {
-              if(array[i].sfyx=='1')
-                this.checkedCities1.push(array[i].id);
+          this.cities1 = r.data;
+          var array = r.data
+          for (var i = 0; i < array.length; i++) {
+            if (array[i].sfyx == '1') {
+              this.checkedCities1.push(array[i].id);
             }
+          }
 
 
         });
     },
-    getZJ(n,t,mc){
-      if(t==1){
-        this.name2=mc;
-        this.cities2=[];
-        let p={
-           "args":n
+    getZJ(n, t, mc) {
+      console.log(n);
+      if (t == 1) {
+        this.name2 = mc;
+        this.cities2 = [];
+        let p = {
+          "args": n
         };
         this.$api.get(this.Global.aport7 + '/drools/getRules', p,
           r => {
-              this.cities2=r.data;
-              var array=r.data
-              for (var i = 0; i < array.length; i++) {
-                if(array[i].sfyx=='1')
-                  this.checkedCities2.push(array[i].id);
-              }
+            this.cities2 = r.data;
+            var array = r.data
+            for (var i = 0; i < array.length; i++) {
+              if (array[i].sfyx == '1')
+                this.checkedCities2.push(array[i].id);
+            }
           });
-          this.card1=true;
-      }else {
-        this.name3=mc;
-        this.cities3=[];
-        let p={
-           "args":n
+        this.card1 = true;
+        this.card2 = false;
+      } else {
+        this.name3 = mc;
+        this.cities3 = [];
+        let p = {
+          "args": n
         };
         this.$api.get(this.Global.aport7 + '/drools/getLable', p,
           r => {
-              //this.cities3=r.data;
-              var array=r.data;
-              for (var i = 0; i < array.length; i++) {
-                var list={};
-                  list.bjmc=array[i].bjmc;
-                  list.bjsm=array[i].bjsm;
-                  if(array[i].bjmc.indexOf("GJDQ")>=0 || array[i].bjmc.indexOf("QZZL")>=0 || array[i].bjmc.indexOf("ZJZL")>=0){
-                      var arr=array[i].bjz.replace(/\"/g, "");;
-                      var spp=arr.substring(1, arr.length-1).split(',');
-                      console.log(spp,spp.length);
-                      list.bjz=spp;
+            //this.cities3=r.data;
+            var array = r.data;
+            for (var i = 0; i < array.length; i++) {
+              var list = {};
+              list.bjmc = array[i].bjmc;
+              list.bjsm = array[i].bjsm;
+              if (array[i].bjmc.indexOf("GJDQ") >= 0 || array[i].bjmc.indexOf("QZZL") >= 0 || array[i].bjmc.indexOf("ZJZL") >= 0) {
+                var arr = array[i].bjz.replace(/\"/g, "");;
+                var spp = arr.substring(1, arr.length - 1).split(',');
+                console.log(spp, spp.length);
+                list.bjz = spp;
 
-                  }else {
-                    list.bjz=array[i].bjz;
-                  }
-                  list.cjr=array[i].cjr;
-                  list.cjsj=array[i].cjsj;
-                  list.gxr=array[i].gxr;
-                  list.gxsj=array[i].gxsj;
-                  list.gzmc=array[i].gzmc;
-                  list.mxmc=array[i].mxmc;
+              } else {
+                list.bjz = array[i].bjz;
+              }
+              list.cjr = array[i].cjr;
+              list.cjsj = array[i].cjsj;
+              list.gxr = array[i].gxr;
+              list.gxsj = array[i].gxsj;
+              list.gzmc = array[i].gzmc;
+              list.mxmc = array[i].mxmc;
 
               this.cities3.push(list);
-              }
-              console.log(this.cities3);
+            }
+            console.log('this.cities3', this.cities3.length);
+
           });
-          this.card2=true;
+        this.card2 = true;
       }
 
     },
-    save(t){
-      if(t==1){
+    save(t) {
+      if (t == 1) {
         // console.log(this.checkedCities1);
         // console.log(this.cities1);
-        var alist=[];
-        var arr=this.cities1;
-        var srr=this.checkedCities1;
+        var alist = [];
+        var arr = this.cities1;
+        var srr = this.checkedCities1;
         for (var i = 0; i < arr.length; i++) {
-          var list={};
-          list.id=arr[i].id;
-          list.mxmc=arr[i].mxmc;
-          list.mxnr=arr[i].mxnr;
-          list.sfyx='0';
-          list.gxsj=formatDate(new Date(),'yyyy-MM-dd hh:mm:ss');
-          list.cjsj=arr[i].cjsj;
-          list.czr=this.$store.state.uid;
-          list.mxsm=arr[i].mxsm;
-          list.mxlx=arr[i].mxlx;
-          list.sfxs=arr[i].sfxs;
-               for (var j = 0; j < srr.length; j++) {
-                   if(arr[i].id==srr[j]){
-                    list.sfyx='1';
-                   }
-               }
-         alist.push(list);
+          var list = {};
+          list.id = arr[i].id;
+          list.mxmc = arr[i].mxmc;
+          list.mxnr = arr[i].mxnr;
+          list.sfyx = '0';
+          list.gxsj = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss');
+          list.cjsj = arr[i].cjsj;
+          list.czr = this.$store.state.uid;
+          list.mxsm = arr[i].mxsm;
+          list.mxlx = arr[i].mxlx;
+          list.sfxs = arr[i].sfxs;
+          for (var j = 0; j < srr.length; j++) {
+            if (arr[i].id == srr[j]) {
+              list.sfyx = '1';
+            }
+          }
+          alist.push(list);
         }
-        let p={
-          "args":alist
+        let p = {
+          "args": alist
         };
         this.$api.post(this.Global.aport7 + '/drools/updateModel', p,
           r => {
-              if(r.success){
-                this.$message({
-                  message: "更新成功！",
-                  type: 'success'
-                });
-              }
+            if (r.success) {
+              this.$message({
+                message: "更新成功！",
+                type: 'success'
+              });
+            }
           });
 
-      }else if (t==2) {
-        var alist=[];
-        var arr=this.cities2;
-        var srr=this.checkedCities2;
+      } else if (t == 2) {
+        var alist = [];
+        var arr = this.cities2;
+        var srr = this.checkedCities2;
         for (var i = 0; i < arr.length; i++) {
-          var list={};
-          list.id=arr[i].id;
-          list.mxmc=arr[i].mxmc;
-          list.gzmc=arr[i].gzmc;
-          list.gzsm=arr[i].gzsm;
-          list.sfyx="0";
-               for (var j = 0; j < srr.length; j++) {
-                   if(arr[i].id==srr[j]){
+          var list = {};
+          list.id = arr[i].id;
+          list.mxmc = arr[i].mxmc;
+          list.gzmc = arr[i].gzmc;
+          list.gzsm = arr[i].gzsm;
+          list.sfyx = "0";
+          for (var j = 0; j < srr.length; j++) {
+            if (arr[i].id == srr[j]) {
 
-                    list.sfyx='1';
-                   }
-               }
-         alist.push(list);
+              list.sfyx = '1';
+            }
+          }
+          alist.push(list);
         }
-        let p={
-          "args":alist
+        let p = {
+          "args": alist
         };
         this.$api.post(this.Global.aport7 + '/drools/updateRules', p,
           r => {
-              if(r.success){
-                this.$message({
-                  message: "更新成功！",
-                  type: 'success'
-                });
-              }
+            if (r.success) {
+              this.$message({
+                message: "更新成功！",
+                type: 'success'
+              });
+            }
           });
 
-      }else if (t==3) {
+      } else if (t == 3) {
 
-        var alist=[];
-        var arr=this.cities3;
+        var alist = [];
+        var arr = this.cities3;
         for (var i = 0; i < arr.length; i++) {
-          var list={};
-          list.mxmc=arr[i].mxmc;
-          list.gzmc=arr[i].gzmc;
-          list.bjmc=arr[i].bjmc;
-          list.bjz=arr[i].bjz;
-          list.bjsm=arr[i].bjsm;
-          list.cjr=arr[i].cjr;
-          list.cjsj=arr[i].cjsj;
-          list.gxr=this.$store.state.uid;
-          list.gxsj=formatDate(new Date(),'yyyy-MM-dd hh:mm:ss');
-         alist.push(list);
+          var list = {};
+          list.mxmc = arr[i].mxmc;
+          list.gzmc = arr[i].gzmc;
+          list.bjmc = arr[i].bjmc;
+          list.bjz = arr[i].bjz;
+          list.bjsm = arr[i].bjsm;
+          list.cjr = arr[i].cjr;
+          list.cjsj = arr[i].cjsj;
+          list.gxr = this.$store.state.uid;
+          list.gxsj = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss');
+          alist.push(list);
         }
         console.log(alist);
-        let p={
-          "args":alist
+        let p = {
+          "args": alist
         };
         this.$api.post(this.Global.aport7 + '/drools/updateLable', alist,
           r => {
 
-              if(r.success){
-                this.$message({
-                  message: "更新成功！",
-                  type: 'success'
-                });
-              }
+            if (r.success) {
+              this.$message({
+                message: "更新成功！",
+                type: 'success'
+              });
+            }
           });
       }
 
     },
+    doset() {
+      this.reload();
+    }
   }
 }
 </script>
 <style scoped>
-.gzgl {background: #FFFFFF; min-height: 700px; margin: 20px; padding: 20px;}
-.gzgl .el-checkbox{
-  width: 100%; margin: 10px 0px;
+.gzgl {
+  background: #FFFFFF;
+  min-height: 700px;
+  margin: 20px;
+  padding: 20px;
 }
-.input-text{ width: 75%!important; }
-.input-input{ width: 20%!important; }
-.yy-input-input{width: 90%!important; }
+
+.gzgl .el-checkbox {
+  width: 100%;
+  margin: 10px 0px;
+}
+
+.input-text {
+  width: 75% !important;
+}
+
+.input-input {
+  width: 20% !important;
+}
+
+.yy-input-input {
+  width: 90% !important;
+}
+
 .text {
-    font-size: 14px;
-  }
+  font-size: 14px;
+}
 
-  .item {
-    margin-bottom: 18px;
-  }
+.item {
+  margin-bottom: 18px;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
 
-  .box-card {
-    width: 480px;
-  }
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  width: 480px;
+}
 </style>

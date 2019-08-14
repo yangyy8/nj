@@ -117,7 +117,9 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="12"  class="input-item">
                     <span class="input-text">日期选择：</span>
-                    <el-select v-model="pd.ZSLX" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.ZSLX" filterable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option value="0" label="0 - 请选择">
+                      </el-option>
                       <el-option value="1" label="1 - 按日查询">
                       </el-option>
                       <el-option value="2" label="2 - 按月查询">
@@ -263,7 +265,7 @@ import LZXX from '../../../common/lzxx_xq'
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'1',LRDW_BH:'1',DJDWXZQH:'3201',LB_DJDW:''},
+      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'1',LRDW_BH:'1',DJDWXZQH:'3201',LB_DJDW:'',ZSLX:'0'},
       pdTu:{},
       pd0:{
         begin:'',
