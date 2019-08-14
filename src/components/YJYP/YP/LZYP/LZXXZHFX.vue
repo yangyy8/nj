@@ -165,6 +165,7 @@
              </el-col>
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
+                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
                 </el-col>
               </el-row>
@@ -172,7 +173,7 @@
         <div class="yycontent">
 
           <div class="yylbt mb-15">统计类别</div>
-          <div class="mb-15">
+          <div class="mb-15 t-tjCheck">
             <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
             <div style="margin: 15px 0;"></div> -->
                 <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
@@ -195,7 +196,12 @@
                ref="multipleTable"
                :data="tableData"
                border
-               style="width: 100%">
+               style="width: 100%"
+               @select="selectfn">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -246,7 +252,12 @@
                ref="multipleTable"
                :data="tableData"
                border
-               style="width: 100%">
+               style="width: 100%"
+               @select="selectfn">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
                <el-table-column
                  prop="YWXM"
                  label="英文姓名">
@@ -381,6 +392,12 @@ import LZXX from '../../../common/lzxx_xq'
           form:{},
           falg:false,
           disa:false,
+          tableHeadHc:[],
+
+          multipleSelection:[],
+          selectionAll:[],
+          yuid:[],
+          selectionReal:[],
         }
       },
       mounted() {
@@ -393,15 +410,104 @@ import LZXX from '../../../common/lzxx_xq'
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getSjly");
       },
+      watch:{
+        falg:function(newVal,oldVal){
+          console.log('flag',newVal,oldVal)
+          this.multipleSelection=[];
+          this.selectionAll=[];
+          this.selectionReal=[];
+        },
+        tableHeadHc:{
+          handler(newVal, oldVal) {
+            if(!(newVal.toString()==oldVal.toString())){
+              console.log(newVal,oldVal)
+              this.multipleSelection=[];
+              this.selectionAll=[];
+              this.selectionReal=[];
+            }
+          },
+        }
+      },
       methods: {
+        selectfn(a,b){
+          this.multipleSelection = a;
+          this.dataSelection()
+        },
+        dataSelection(){
+          console.log('this.multipleSelection',this.multipleSelection)
+          this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+          console.log('this.selectionReal',this.selectionReal);
+          this.selectionAll=[];
+          for(var i=0;i<this.selectionReal.length;i++){
+            if(this.selectionReal[i]){
+              for(var j=0;j<this.selectionReal[i].length;j++){
+                this.selectionAll.push(this.selectionReal[i][j])
+              }
+            }
+          }
+          console.log('this.selectionAll',this.selectionAll);
+        },
+        download(){
+          let p={};
+          let url="";
+          if(this.tableHeadHc.length==0){//人员导出
+            url="/linZhuInfoComprehensiveAnalysisController/exportPersonList"
+            if(this.selectionAll.length==0){//人员全部导出
+              p={
+                "pd":this.pd
+              }
+            }else{//人员部分导出
+              this.yuid=[];
+              for(var i in this.selectionAll){
+                this.yuid.push(this.selectionAll[i].DTID)
+              }
+              this.pd.DTID=this.yuid;
+              p={
+                "pd":this.pd,
+              }
+            }
+          }else{//统计导出
+            url="/linZhuInfoComprehensiveAnalysisController/export"
+            if(this.selectionAll.length==0){//统计全部导出
+              p={
+                "pd":this.pd,
+                "groupList":this.tableHeadHc,
+              }
+            }else{//统计部分导出
+              p={
+                "requestTempList":this.selectionAll,
+                "groupList":this.tableHeadHc,
+              }
+            }
+          }
+          this.$api.post(this.Global.aport5+url,p,
+            r =>{
+              console.log(r);
+              this.downloadM(r)
+            },e=>{},{},'blob')
+        },
+        downloadM (data) {
+            if (!data) {
+                return
+            }
+            let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', '临住信息综合分析列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+            document.body.appendChild(link)
+            link.click()
+        },
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },
         pageSizeChange(val) {
+          this.pageSize=val;
           this.getList(this.CurrentPage, val, this.pd);
           console.log(`每页 ${val} 条`);
         },
         handleCurrentChange(val) {
+          this.CurrentPage=val;
           this.getList(val, this.pageSize, this.pd);
           console.log(`当前页: ${val}`);
         },
@@ -443,67 +549,66 @@ import LZXX from '../../../common/lzxx_xq'
         // }else if(this.pd0.beginZSRQ==undefined && this.pd0.endZSRQ==undefined){}else {
             // this.open("入住日期开始时间和结束时间都不能为空！");return ;
         // }
-            var list=[];
+            this.tableHeadHc=[];
             if(this.pm.GJDQ==true){
-              list.push("GJDQ");
+              this.tableHeadHc.push("GJDQ");
             }
             if(this.pm.WAIGSIG==true){
-              list.push("WAIGSIG");
+              this.tableHeadHc.push("WAIGSIG");
             }
             if(this.pm.QZZL==true){
-              list.push("QZZL");
+              this.tableHeadHc.push("QZZL");
             }
             if(this.pm.JLSY==true){
-              list.push("JLSY");
+              this.tableHeadHc.push("JLSY");
             }
             if(this.pm.SHIGUO==true){
-              list.push("SHIGUO");
+              this.tableHeadHc.push("SHIGUO");
             }
             if(this.pm.ZFZL==true){
-              list.push("ZFZL");
+              this.tableHeadHc.push("ZFZL");
             }
             if(this.pm.LRDW==true){
-              list.push("LRDW");
+              this.tableHeadHc.push("LRDW");
             }
             if(this.pm.XB==true){
-              list.push("XB");
+              this.tableHeadHc.push("XB");
             }
             if(this.pm.ZJZL==true){
-              list.push("ZJZL");
+              this.tableHeadHc.push("ZJZL");
             }
             if(this.pm.SANSHIYIGUO==true){
-              list.push("SANSHIYIGUO");
+              this.tableHeadHc.push("SANSHIYIGUO");
             }
             if(this.pm.SJLY==true){
-              list.push("SJLY");
+              this.tableHeadHc.push("SJLY");
             }
             if(this.pm.DJDWMC==true){
-              list.push("DJDWMC");
+              this.tableHeadHc.push("DJDWMC");
             }
             if(this.pm.LSDWDZ==true){
-              list.push("LSDWDZ");
+              this.tableHeadHc.push("LSDWDZ");
             }
-
+            if(pd.hasOwnProperty('DTID')){
+              delete pd['DTID']
+            }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
             "orderBy":'',
             "orderType":'DESC',
-            "groupList":list
+            "groupList":this.tableHeadHc
           };
 
           this.$api.post(this.Global.aport5+'/linZhuInfoComprehensiveAnalysisController/getComprehensiveAnalysis', p,
             r => {
-              this.tableData = r.data.resultList;
-              this.TotalResult = r.data.totalResult;
-
               if(r.data.isFenLei=="true"){
-
                 this.falg=true;
+                this.tableData = r.data.resultList;
+                this.TotalResult = r.data.totalResult;
                 console.log('this.tableData[0]',this.tableData[0]);
                 let arr=this.tableData[0];
-
                 let itemKey = Object.keys(arr);
                 let res = itemKey.filter(function(item,index,array){
                  //元素值，元素的索引，原数组。
@@ -514,39 +619,56 @@ import LZXX from '../../../common/lzxx_xq'
                  }else{
                  return item.indexOf('_DESC')>=0;}
              });
-                  console.log('this.tableData[1]',itemKey);
-                this.configHeader=[];
-
-                 res.forEach( key => {
-                         let headItem = {
-                             props : key,
-                             label : this.getInfo(key),
-                         }
-
-                         this.configHeader.push(headItem)
-
-                 })
-
-
+                  // console.log('this.tableData[1]',itemKey);
+               this.configHeader=[];
+               res.forEach( key => {
+                   let headItem = {
+                       props : key,
+                       label : this.getInfo(key),
+                   }
+                   this.configHeader.push(headItem)
+               })
                 this.allnum=r.data.totalAllResult;
-
+                if(this.selectionReal.length==0){//声明一个数组对象
+                  this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                }
+                this.$nextTick(()=>{
+                  this.multipleSelection=[];
+                  for(var a=0;a<this.tableData.length;a++){
+                    for(var b=0;b<this.selectionAll.length;b++){
+                      // console.log('======',this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                      if(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b])){
+                        // console.log(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                        this.$refs.multipleTable.toggleRowSelection(this.tableData[a],true);
+                      }
+                    }
+                  }
+                })
               }else {
                 this.falg=false;
-
                 var url = this.Global.aport5 + "/linZhuInfoComprehensiveAnalysisController/getComprehensivePersonList";
                 this.$api.post(url, p,
                   r => {
-
                     if (r.success) {
-                   this.tableData = r.data.resultList;
-                   this.TotalResult = r.data.totalResult;
+                       this.tableData = r.data.resultList;
+                       this.TotalResult = r.data.totalResult;
+                       if(this.selectionReal.length==0){//声明一个数组对象
+                         this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                       }
+                       this.$nextTick(()=>{
+                         this.multipleSelection=[]
+                         for(var i=0;i<this.tableData.length;i++){
+                           for(var j=0;j<this.selectionAll.length;j++){
+                             if(this.tableData[i].DTID==this.selectionAll[j].DTID){
+                               console.log(this.tableData[i].RGUID,this.selectionAll[j].RGUID,'this.selectionAll======',this.selectionAll)
+                               this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                             }
+                           }
+                         }
+                       })
                     }
-
                   });
               }
-
-
-
             })
         },
         getInfo(key){
@@ -662,8 +784,8 @@ import LZXX from '../../../common/lzxx_xq'
     </style>
     <style>
       .el-button+.el-button{margin-left: 0!important;}
-      .yycontent .el-checkbox{margin-left: 20px!important; line-height: 30px;}
-      .yycontent .el-checkbox+.el-checkbox{margin-left: 20px!important;}
+      .t-tjCheck .el-checkbox{margin-left: 20px!important; line-height: 30px;}
+      .t-tjCheck .el-checkbox+.el-checkbox{margin-left: 20px!important;}
       .bj .el-dialog__wrapper {
         background: #000;
         background: rgba(0, 0, 0, 0.3);

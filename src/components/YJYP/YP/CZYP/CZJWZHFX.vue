@@ -212,13 +212,20 @@
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
-                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+                  <el-button type="primary"  size="small" @click="download" style="float:right">导出</el-button>
                 </el-col>
               </el-row>
         </div>
         <div class="yycontent">
-          <div class="yylbt mb-15">统计类别</div>
-          <div class="mb-15">
+          <el-row class="yylbt">
+            <el-col :span="22">
+              <span>统计类别</span>
+            </el-col>
+            <el-col :span="2" class="down-btn-area">
+
+            </el-col>
+          </el-row>
+          <div class="mb-15 t-tjCheck">
               <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
               <el-checkbox label="居住类型状态" v-model="pm.JZZT" :disabled="disa"></el-checkbox>
               <el-checkbox label="居住地责任区" v-model="pm.JZD_ZRQ" :disabled="disa"></el-checkbox>
@@ -228,18 +235,20 @@
               <el-checkbox label="服务处所" v-model="pm.FWCS" :disabled="disa"></el-checkbox>
               <el-checkbox label="证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
               <el-checkbox label="性别" v-model="pm.XB" :disabled="disa"></el-checkbox>
+              <!-- <el-button type="primary"  size="small" @click="download" style="float:right">导出Excel</el-button> -->
           </div>
           <div v-if="falg">
             <el-table
-               ref="tableTj"
+               ref="multipleTable"
                :data="tableData"
                border
                style="width: 100%"
+               @select="selectfn"
                @selection-change="handleSelectionChange">
-               <!-- <el-table-column
+               <el-table-column
                  type="selection"
                  width="55">
-               </el-table-column> -->
+               </el-table-column>
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -290,10 +299,11 @@
         </div>
         <div v-else>
           <el-table
-             ref="tableTj"
+             ref="multipleTable"
              :data="tableData"
              border
              style="width: 100%"
+             @select="selectfn"
              @selection-change="handleSelectionChange">
              <el-table-column
                type="selection"
@@ -486,6 +496,7 @@
           multipleSelection:[],
           selectionAll:[],
           yuid:[],
+          selectionReal:[],
         }
       },
       mounted() {
@@ -502,15 +513,16 @@
       },
       watch:{
         falg:function(newVal,oldVal){
-          console.log('1111');
           this.multipleSelection=[];
           this.selectionAll=[];
+          this.selectionReal=[];
         },
         tableHeadHc:{
           handler(newVal, oldVal) {
             if(!(newVal.toString()==oldVal.toString())){
               this.multipleSelection=[];
               this.selectionAll=[];
+              this.selectionReal=[];
             }
           },
         }
@@ -518,25 +530,43 @@
       methods: {
         handleSelectionChange(val) {
           // console.log(val)
-          this.multipleSelection = val;
-          for(var i in this.multipleSelection){
-            this.selectionAll.push(this.multipleSelection[i]);
-          }
-          var arrAfter=[];
-          var arrReal=[];
-          for(var j in this.selectionAll){
-            if(arrAfter.indexOf(this.selectionAll[j].RGUID)==-1){
-              arrAfter.push(this.selectionAll[j].RGUID);
-              arrReal.push(this.selectionAll[j])
+          // this.multipleSelection = val;
+          // for(var i in this.multipleSelection){
+          //   this.selectionAll.push(this.multipleSelection[i]);
+          // }
+          // var arrAfter=[];
+          // var arrReal=[];
+          // for(var j in this.selectionAll){
+          //   if(arrAfter.indexOf(this.selectionAll[j].RGUID)==-1){
+          //     arrAfter.push(this.selectionAll[j].RGUID);
+          //     arrReal.push(this.selectionAll[j])
+          //   }
+          // }
+          // this.selectionAll = arrReal;
+          // console.log(this.selectionAll)
+        },
+        selectfn(a,b){
+          this.multipleSelection = a;
+          this.dataSelection()
+        },
+        dataSelection(){
+          console.log('this.multipleSelection',this.multipleSelection)
+          this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+          console.log('this.selectionReal',this.selectionReal);
+          this.selectionAll=[];
+          for(var i=0;i<this.selectionReal.length;i++){
+            if(this.selectionReal[i]){
+              for(var j=0;j<this.selectionReal[i].length;j++){
+                this.selectionAll.push(this.selectionReal[i][j])
+              }
             }
           }
-          this.selectionAll = arrReal;
-          console.log(this.selectionAll)
+          console.log('this.selectionAll',this.selectionAll);
         },
         download(){
           let p={};
           let url="";
-          if(this.multipleSelection.length==0){//全部导出
+          if(this.selectionAll.length==0){//全部导出
             if(this.tableHeadHc.length==0){//人员全部导出
               p={
                "pd":this.pd,
@@ -564,14 +594,8 @@
               }
             }
           }
-          if(this.tableHeadHc.length==0){
-            url='/changZhuController/export'
-          }else{
-            url='/changZhuController/export'
-          }
-          this.$api.post(this.Global.aport5+url,p,
+          this.$api.post(this.Global.aport5+'/changZhuController/export',p,
             r =>{
-              console.log(r);
               this.downloadM(r)
             },e=>{},{},'blob')
         },
@@ -588,10 +612,12 @@
             link.click()
         },
         pageSizeChange(val) {
+          this.pageSize=val;
           this.getList(this.CurrentPage, val, this.pd);
           console.log(`每页 ${val} 条`);
         },
         handleCurrentChange(val) {
+          this.CurrentPage=val;
           this.getList(val, this.pageSize, this.pd);
           console.log(`当前页: ${val}`);
         },
@@ -675,15 +701,21 @@
                   }
                   _this.configHeader.splice(a,0,obj);
                 }
-                // this.$nextTick(()=>{
-                //   for(var i=0;i<this.tableData.length;i++){
-                //     for(var j=0;j<this.selectionAll.length;j++){
-                //       if(this.tableData[i].YJID==this.selectionAll[j].YJID){
-                //         this.$refs.multipleTable.toggleRowSelection(this.tableData[i]);
-                //       }
-                //     }
-                //   }
-                // })
+                if(this.selectionReal.length==0){//声明一个数组对象
+                  this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                }
+                this.$nextTick(()=>{
+                  this.multipleSelection=[];
+                  for(var a=0;a<this.tableData.length;a++){
+                    for(var b=0;b<this.selectionAll.length;b++){
+                      // console.log('======',this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                      if(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b])){
+                        // console.log(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                        this.$refs.multipleTable.toggleRowSelection(this.tableData[a],true);
+                      }
+                    }
+                  }
+                })
               }else {
                 this.falg=false;
                 var url = this.Global.aport5 + "/changZhuController/getResultListByParams";
@@ -692,11 +724,15 @@
                     if (r.success) {
                      this.tableData = r.data.resultList;
                      this.TotalResult = r.data.totalResult;
+                     if(this.selectionReal.length==0){//声明一个数组对象
+                       this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                     }
                      this.$nextTick(()=>{
+                       this.multipleSelection=[]
                        for(var i=0;i<this.tableData.length;i++){
                          for(var j=0;j<this.selectionAll.length;j++){
                            if(this.tableData[i].RGUID==this.selectionAll[j].RGUID){
-                             this.$refs.tableTj.toggleRowSelection(this.tableData[i],true);
+                             this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
                            }
                          }
                        }
@@ -751,8 +787,8 @@
     </style>
     <style>
       .el-button+.el-button{margin-left: 0!important;}
-      .yycontent .el-checkbox{margin-left: 20px!important; line-height: 30px;}
-      .yycontent .el-checkbox+.el-checkbox{margin-left: 20px!important;}
+      .t-tjCheck .el-checkbox{margin-left: 20px!important; line-height: 30px;}
+      .t-tjCheck .el-checkbox+.el-checkbox{margin-left: 20px!important;}
       .bj .el-dialog__wrapper {
         background: #000;
         background: rgba(0, 0, 0, 0.3);

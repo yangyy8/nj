@@ -315,7 +315,7 @@ export default {
     },
     download(){
       let p={};
-      if(this.multipleSelection.length==0){//全部导出
+      if(this.selectionAll.length==0){//全部导出
          p={
           "pd":this.pd,
           "orderBy":'BJSJ',

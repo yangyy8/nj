@@ -27,8 +27,11 @@
                 </div>
               </div>
           </el-col>
+          <el-col :sm="24" :md="12" :lg="2" class="input-item">
+            <el-button type="primary" size="small"  @click="getList()">&nbsp;&nbsp;查询&nbsp;&nbsp;</el-button>
+          </el-col>
          </el-row>
-         <div class="t-ak-tab-pane">
+         <div class="t-ak-tab-pane" v-show="false">
            <div class="t-pad" v-if="queryTerm=='1'">
              <el-checkbox-group v-model="checkList1" class="o-checkbox-g">
                <el-checkbox v-for="item in checkItem1" :label="item.ITEMNAME" :key="item.ITEMNAME" :disabled="item.disabled">{{item.LABEL}}</el-checkbox>
@@ -42,11 +45,11 @@
            </div>
          </div>
 
-        <el-row type="flex" class="t-mt20">
+        <!-- <el-row type="flex" class="t-mt20">
            <el-col :span="24" style="text-align: center;">
-              <el-button type="primary" size="small"  @click="getList()">&nbsp;&nbsp;查询&nbsp;&nbsp;</el-button>
+
            </el-col>
-         </el-row>
+         </el-row> -->
      </div>
     </div>
     <div class="yycontent" v-if="isShow">
@@ -259,15 +262,15 @@ export default {
          });
          return
        }
-       if(this.queryTerm=='2'){
-         if((this.checkList2.indexOf('zwxm')==-1)&&(this.checkList2.indexOf('ywxm')==-1)){
-           this.$message({
-            message: '中文姓名和英文姓名二者必选其一！',
-            type: 'warning'
-           });
-           return
-         }
-       }
+       // if(this.queryTerm=='2'){
+       //   if((this.checkList2.indexOf('zwxm')==-1)&&(this.checkList2.indexOf('ywxm')==-1)){
+       //     this.$message({
+       //      message: '中文姓名和英文姓名二者必选其一！',
+       //      type: 'warning'
+       //     });
+       //     return
+       //   }
+       // }
        this.isShow=true;
        this.upload();
      },
@@ -286,11 +289,16 @@ export default {
      },
      optionChange(){
        this.isShow=false;
-       this.checkList1=['zjhm','zjzl'];
-       this.checkList2=[];
+       this.checkList1=['zjhm','zjzl','gjdq'];
+       this.checkList2=['zwxm','ywxm','xb','csrq'];
      },
      download() {
-        window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/人员画像批量查询模板.xlsx'
+       if(this.queryTerm=='1'){
+         window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/人员画像证件号码证件种类查询模板.xls'
+       }else if(this.queryTerm=='2'){
+         window.location.href = window.IPConfig.IP +"/"+this.Global.aport3 + '/webapp/templateFile/人员画像姓名性别查询模板.xls'
+       }
+
      },
   }
 }
