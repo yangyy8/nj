@@ -265,6 +265,9 @@ export default {
         _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
       },1000)
   },
+  destroyed(){
+    console.log('我要离开')
+  },
   mounted() {
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');
