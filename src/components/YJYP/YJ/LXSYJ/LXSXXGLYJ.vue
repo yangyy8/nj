@@ -313,14 +313,18 @@ export default {
   watch:{
     $route:function(val){
       this.currRouteName = val.name;
-      // console.log('route',this.currRouteName);
+      // console.log('route',this.currRouteName,val);
     }
   },
-  destroyed(){
-    console.log('我要离开')
-  },
   activated(){
-    // console.log('activated',this.tabList)
+    // console.log('activated',this.tabList,this.currRouteName)
+    if(this.tabList+'_X'==this.currRouteName){
+      this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      this.ruleMap=null,
+      this.ruleNo=null,
+      this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
+      localStorage.removeItem("tabList");
+    }
     this.selectionAll5=[];
     this.selectionReal5=[];
 

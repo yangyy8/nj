@@ -103,8 +103,9 @@ export default {
     },
     // 关闭tab页面==========================
     close1(index, item) {
-      this.tabList.splice(index, 1);
+      console.log('item.name',item.name);
       this.$store.commit('getTabList',item.name);
+      this.tabList.splice(index, 1);
       if (index > 0) {
         this.tabClick(this.tabList[index - 1])
       }
