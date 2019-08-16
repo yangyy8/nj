@@ -133,12 +133,13 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getList()">查询</el-button>
+          <el-button type="success" size="small"  class="t-mb" @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getList()">查询</el-button>
+          <!-- <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button> -->
         </el-col>
       </el-row>
     </div>
 
-    <div class="yycontent">
+    <div class="yycontent t-ml0">
       <div class="ak-tabs">
         <div class="ak-tab-item hand" :class="{'ak-checked':page==0}" @click="page=0;getList()">
           图表
@@ -156,9 +157,15 @@
             <el-button type="primary" size="small" class="mb-5" @click="exportexcel">导出</el-button>
 
           <el-table
+              ref="multipleTable"
              :data="tableData"
              border
+             @select="selectfn"
              style="width: 100%">
+             <!-- <el-table-column
+               type="selection"
+               width="55">
+             </el-table-column> -->
              <el-table-column
                prop="YWXM"
                label="英文姓名">
@@ -288,6 +295,12 @@ import LZXX from '../../../common/lzxx_xq'
       lineChart:null,
       seriesT:[],
 
+
+      multipleSelection:[],
+      selectionAll:[],
+      yuid:[],
+      selectionReal:[],
+
     }
   },
   mounted(){
@@ -308,12 +321,63 @@ import LZXX from '../../../common/lzxx_xq'
   //   this.seriesT=[];
   // },
   methods:{
+    selectfn(a,b){
+      this.multipleSelection = a;
+      this.dataSelection()
+    },
+    dataSelection(){
+      console.log('this.multipleSelection',this.multipleSelection)
+      this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+      console.log('this.selectionReal',this.selectionReal);
+      this.selectionAll=[];
+      for(var i=0;i<this.selectionReal.length;i++){
+        if(this.selectionReal[i]){
+          for(var j=0;j<this.selectionReal[i].length;j++){
+            this.selectionAll.push(this.selectionReal[i][j])
+          }
+        }
+      }
+      console.log('this.selectionAll',this.selectionAll);
+    },
+    download(){
+      let p={};
+      if(this.selectionAll.length==0){//全部导出
+         p={
+          "pd":this.pdTu,
+        }
+      }else{//导出选中
+        this.yuid=[];
+        for(var i in this.selectionAll){
+          this.yuid.push(this.selectionAll[i].DTID)
+        };
+        this.pdTu.DTID=this.yuid;
+         p={
+          "pd":this.pdTu,
+        }
+      }
+      this.$api.post(this.Global.aport4+'/warningInfoController/exportByMxLx',p,
+        r =>{
+          this.downloadM(r)
+        },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '临住登记变化量报表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
+    },
     pageSizeChange(val) {
-      // this.pageSize=10;
+      this.pageSize=val;
       this.getListTu(this.CurrentPage,val,this.pdTu);
     },
     handleCurrentChange(val) {
-      // this.CurrentPage=1;
+      this.CurrentPage=val;
       this.getListTu(val,this.pageSize,this.pdTu);
     },
     getFJ(){
@@ -397,6 +461,19 @@ import LZXX from '../../../common/lzxx_xq'
           if(r.success){
             this.tableData=r.data.resultList;
             this.TotalResult=r.data.totalResult;
+            if(this.selectionReal.length==0){//声明一个数组对象
+              this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+            }
+            this.$nextTick(()=>{
+              this.multipleSelection=[]
+              for(var i=0;i<this.tableData.length;i++){
+                for(var j=0;j<this.selectionAll.length;j++){
+                  if(this.tableData[i].DTID==this.selectionAll[j].DTID){
+                    this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                  }
+                }
+              }
+            })
           }
         })
     },
@@ -504,3 +581,9 @@ import LZXX from '../../../common/lzxx_xq'
   }
 }
 </script>
+<style media="screen">
+  .t-ml0 .el-checkbox{
+    margin-left: 0px!important;
+  }
+  .t-ml0 .el-checkbox+.el-checkbox{margin-left: 0px!important;}
+</style>

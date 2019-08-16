@@ -59,8 +59,13 @@ var store = new Vuex.Store({
     rydylb:[],
     sqqzzl:[],
     jzztcz:[],
+    tabList:localStorage.getItem('tabList') || '',
   },
   mutations: {
+    getTabList(state,data){
+      localStorage.setItem('tabList', data)
+      state.tabList = data;
+    },
     getToken(state, data) {
       localStorage.setItem('TOKEN', data)
       state.token = data;

@@ -42,7 +42,6 @@
     <div class="yycontent">
       <el-table
            :data="tableData"
-           v-loading="loading"
            border
            style="width: 100%">
            <el-table-column
@@ -169,7 +168,17 @@
             <el-col :span="24" class="input-item" data-scope="demo" data-name="RULE" data-type="input" v-validate-easy="[['required']]">
               <span class="input-text">标签规则：</span>
               <el-input placeholder="请输入内容" size="small" v-model="form.RULE"  class="bjinput"></el-input>
-              <span class="gzsl">示例：字段=值;字段=值</span>
+              <el-popover
+                placement="top-start"
+                title="示例"
+                width="250"
+                trigger="hover">
+                <div>
+                  字段=值;字段=值<br/>字段=["值","值"];字段=["值","值"]<br/>字段=值;字段=["值","值"]<br/><hr/>
+                  字段!=值;字段!=值<br/>字段!=["值","值"];字段!=["值","值"]<br/>字段!=值;字段!=["值","值"]<br/>
+                </div>
+                <span class="el-icon-view t-tip" style="margin-left:10px" slot="reference"></span>
+              </el-popover>
             </el-col>
         </el-row>
       </el-form>
@@ -198,6 +207,7 @@ export default {
       form:{},
       detailsDialogVisible:false,
       addsDialogVisible:false,
+      dialogText:'新增'
     }
   },
   mounted() {
@@ -288,17 +298,22 @@ export default {
          );
       });
     },
-    reset(pd){
-      let p={"pd":pd}
+    reset(val){
+      let p={
+        "pd":{
+          ID:val.ID,
+          SFYX:val.SFYX=='1'?'0':'1' //无效是0，有效是1
+        }
+      }
       this.$api.post(this.Global.aport4+'/warningSortRuleController/updateSFYXByID',p,
         r =>{
           if(r.success){
-            if(pd.SFYX=='0'){
-                pd.SFYX='1'
-                }else{
-                 pd.SFYX='0'
-                }
-            }
+            this.$message({
+              message: '设置成功',
+              type: 'success'
+            });
+            this.getList(this.CurrentPage, this.pageSize, this.pd);
+          }
         })
     },
   }

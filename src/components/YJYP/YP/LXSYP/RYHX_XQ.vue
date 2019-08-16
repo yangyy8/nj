@@ -583,7 +583,7 @@
          </el-pagination>
        </div>
      </div>
-       <div class="stru-lal bb" @click="con8=!con8">留学生信息-在校信息<i class="el-icon-d-caret"></i></div>
+       <div class="stru-lal bb" id="box9" @click="con8=!con8">留学生信息-在校信息<i class="el-icon-d-caret"></i></div>
        <div v-show="tableData8.length==0?(!con8):con8">
          <el-table
              :data="tableData8"
@@ -639,6 +639,63 @@
                  </el-pagination>
                </div>
              </div>
+
+             <div class="stru-lal bb" id="box10" @click="con9=!con9">通报人员信息<i class="el-icon-d-caret"></i></div>
+             <div v-show="tableData9.length==0?(!con9):con9">
+               <el-table
+                   :data="tableData9"
+                   border
+                   style="width: 100%" class="stu-table t-mt10">
+                   <el-table-column
+                     prop="TBRYZL_DESC"
+                     label="通报人员类别">
+                   </el-table-column>
+                   <el-table-column
+                     prop="TBBH"
+                     label="通报编号">
+                   </el-table-column>
+                   <el-table-column
+                     prop="FBSJ"
+                     label="发布时间">
+                   </el-table-column>
+                   <el-table-column
+                     label="操作" width="120">
+                     <template slot-scope="scope">
+                     <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="detailstbxx(scope.row)"></el-button>
+                     </template>
+                   </el-table-column>
+                 </el-table>
+                 <div class="middle-foot">
+                   <div class="page-msg">
+                     <div class="">
+                   共{{TotalResult9}}条记录
+                     </div>
+                     <div class="">
+                       每页显示
+                       <el-select v-model="pageSize9" @change="pageSizeChange9(pageSize9)" placeholder="10" size="mini" class="page-select">
+                         <el-option
+                           v-for="item in options"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value">
+                         </el-option>
+                       </el-select>
+                       条
+                     </div>
+                     <div class="">
+                       共{{Math.ceil(TotalResult9/pageSize9)}}页
+                     </div>
+                   </div>
+                       <el-pagination
+                         background
+                         @current-change="handleCurrentChange9"
+                         :current-page:sync="CurrentPage9"
+                         :page-size="pageSize9"
+                         layout="prev, pager, next"
+                         :total="TotalResult9">
+                       </el-pagination>
+                     </div>
+                   </div>
        <el-dialog title="案事件详情" :visible.sync="asjDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
          <ANSJRY :type="type" :xid="xid" :random="randomasj" :rybh="rybh"></ANSJRY>
          <div slot="footer" class="dialog-footer">
@@ -692,6 +749,13 @@
                    <el-button @click="lxsZXDialogVisible = false" size="small">取 消</el-button>
                  </div>
     </el-dialog>
+    <!-- 通报信息详情 -->
+    <el-dialog title="通报人员信息详情" :visible.sync="tbDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
+                <TBRYXX  :xid="xid" :random="new Date().getTime()"></TBRYXX>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="tbDialogVisible = false" size="small">取 消</el-button>
+                </div>
+   </el-dialog>
        </div>
       </div>
 <!-- 弹出小的窗口 -->
@@ -749,9 +813,10 @@ import LXSXXZX from '../../../common/lxsZx_xq'
 import CZXXRY from './czxxxq_ry'
 import DWXX from '../../../common/dwxx_xq'
 import MHXX from '../../../common/mhjcg_xq'
+import TBRYXX from '../../../common/tbryxx_xq'
 import imgUrl from '../../../../assets/img/mrzp.png'
 export default{
-    components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX,LXSXXZX},
+    components:{LZXXRY,ANSJRY,CRJXXRY,LXSXX,CZXXRY,DWXX,MHXX,LXSXXZX,TBRYXX},
   data(){
     return{
       con1:true,
@@ -796,6 +861,10 @@ export default{
           name:'留学生信息',
           id:'box8'
         },
+        {
+          name:'通报人员信息',
+          id:'box10'
+        },
       ],
       menuShow:true,
       rybh:'',
@@ -831,6 +900,7 @@ export default{
        dwDialogVisible:false,
        mhDialogVisible:false,
        lxsZXDialogVisible:false,
+       tbDialogVisible:false,
        tableData1:[],
        tableData2:[],
        tableData3:[],
@@ -839,6 +909,7 @@ export default{
        tableData6:[],
        tableData7:[],
        tableData8:[],
+       tableData9:[],
        tableData10:[],
        tableData11:[],
        tableDataQ:[],
@@ -866,6 +937,9 @@ export default{
        CurrentPage8: 1,
        pageSize8: 10,
        TotalResult8: 0,
+       CurrentPage9: 1,
+       pageSize9: 10,
+       TotalResult9: 0,
        options: this.pl.ps,
        gjdq:'',
        gjdqxq:'',
@@ -908,6 +982,8 @@ export default{
     this.getDWJBXX(this.CurrentPage6,this.pageSize6,this.pd);
     this.getLXSXX(this.CurrentPage7,this.pageSize7,this.pd);
     this.getLXSXXZXXX(this.CurrentPage8,this.pageSize8,this.pd);
+    this.getTbxx(this.CurrentPage9,this.pageSize9
+      ,this.pd);
     this.getQZXX(this.pd);
     // this.getZJXX(this.pd);
   },
@@ -998,11 +1074,19 @@ export default{
       console.log(`当前页: ${val}`);
     },
     pageSizeChange8(val) {
-        this.getLXSXXZXXX(this.CurrentPage8,val,this.pd);
+      this.getLXSXXZXXX(this.CurrentPage8,val,this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange8(val) {
       this.getLXSXXZXXX(val,this.pageSize8,this.pd);
+      console.log(`当前页: ${val}`);
+    },
+    pageSizeChange9(val) {
+      this.getTbxx(this.CurrentPage9,val,this.pd);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange9(val) {
+      this.getTbxx(val,this.pageSize9,this.pd);
       console.log(`当前页: ${val}`);
     },
     //最新照片
@@ -1297,6 +1381,25 @@ export default{
           this.tabLength = r.data.paperInfo;
           this.tableDataQ = r.data.wgrqzxxs;
         })
+    },
+    //通报信息
+    getTbxx(currentPage,showCount,pd){
+      let p={
+        "currentPage":currentPage,
+        "showCount":showCount,
+        "pd":pd
+      };
+      this.$api.post(this.Global.aport3+'/ryhx/gettbryjbxx', p,
+        r => {
+          this.tableData9 = r.data.resultList;
+          this.TotalResult9=r.data.totalResult;
+        })
+    },
+    //通报详情
+    detailstbxx(val){
+      this.xid=val;
+      target.scrollIntoView();
+      this.tbDialogVisible=true;
     },
     //出入境详情
     detailscrj(n){

@@ -94,9 +94,8 @@
                 </el-col>
                 <el-col  :sm="24" :md="24" :lg="24"   class="input-item" v-if="rulesTotal!=0">
                    <span class="input-text" style="width: 7.3%;">分类标签：</span>
-                   <el-radio-group v-model="ruleType" @change="rulesChange()">
-                      <el-radio :label="item.RULE_Map" v-for="(item,ind) in rules" :key="ind">{{item.RULE_NAME}}</el-radio>
-                      <el-radio label="other">其他</el-radio>
+                   <el-radio-group v-model="ruleType">
+                      <el-radio :label="item.RULE_NAME" v-for="(item,ind) in rules" :key="ind" @change="rulesKey(item.RULE_Map,item.RULE_Map_notIn)">{{item.RULE_NAME}}</el-radio>
                     </el-radio-group>
                 </el-col>
           </el-row>
@@ -253,11 +252,14 @@ export default {
       type:'',
       tabList:[],
       ruleType:{},
+      ruleMap:null,
+      ruleNo:null,
+      keyHis:{},
       pdNotIn:{
         // ZJZL:["ZJZL_11","ZJZL_12"],
         // QZZL:["QZZL_05","QZZL_20"]
-        ZJZL:["11","12"],
-        QZZL:["05","20"]
+        // ZJZL:["11","12"],
+        // QZZL:["05","20"]
       },
       rules:[],
       rulesTotal:0,
@@ -304,9 +306,25 @@ export default {
       selectionAll8:[],
       selectionReal8:[],
       yuid:[],
+      tabList:this.$store.state.tabList,
+      currRouteName:'',
+    }
+  },
+  watch:{
+    $route:function(val){
+      this.currRouteName = val.name;
+      // console.log('route',this.currRouteName,val);
     }
   },
   activated(){
+    // console.log('activated',this.tabList,this.currRouteName)
+    if(this.tabList+'_X'==this.currRouteName){
+      this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      this.ruleMap=null,
+      this.ruleNo=null,
+      this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
+      localStorage.removeItem("tabList");
+    }
     this.selectionAll5=[];
     this.selectionReal5=[];
 
@@ -334,22 +352,28 @@ export default {
     this.type=this.$route.query.type;
     // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
     this.pd0={};
+
     // console.log('this.type',this.type)
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
        this.getMXLX(this.type);
        this.getRules();
+       this.ruleType = this.keyHis;
      }else {
        this.getMX(this.$store.state.type);
        this.getRules();
+       this.ruleType = this.keyHis;
      }
      this.Global.indexstate=1;
      let _this = this;
      setTimeout(function(){
-       _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
+       console.log('_this.ruleType',_this.ruleType)
+       _this.ruleType = _this.keyHis;
+       _this.getList(_this.CurrentPage, _this.pageSize, _this.pd,_this.ruleMap,_this.ruleNo);
      },1000)
   },
   mounted() {
+    console.log('mounted',this.$store.state.tabList),
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');
     this.$store.dispatch('getXB');
@@ -671,8 +695,14 @@ export default {
         })
       }
     },
-    rulesChange(val){
-       this.getList(this.CurrentPage, this.pageSize,this.pd);
+    rulesChange(){
+       // this.getList(this.CurrentPage, this.pageSize,this.pd);
+    },
+    rulesKey(map,notIn){
+      this.keyHis = this.ruleType;
+      this.ruleMap = map;
+      this.ruleNo = notIn;
+      this.getList(this.CurrentPage, this.pageSize,this.pd,this.ruleMap,this.ruleNo);
     },
     getMXLX(type){
 
@@ -710,7 +740,7 @@ export default {
 
        console.log('this.pd.MXLX',this.pd.MXLX);
       if(this.pd.MXLX!=undefined){
-       this.getList(this.CurrentPage, this.pageSize, this.pd);
+       this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
        }
     },
     getMX(mm){
@@ -785,15 +815,15 @@ export default {
     },
     pageSizeChange(val) {
       this.pageSize=val;
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.CurrentPage=val;
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
+      this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
       console.log(`当前页: ${val}`);
     },
-    getList(currentPage, showCount, pd) {
+    getList(currentPage, showCount, pd,map,notIn) {
 
       this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
@@ -807,12 +837,11 @@ export default {
         "orderBy":'BJSJ',
         "orderType":'DESC'
       };
-      if(this.ruleType=='other'){
-        p.pdNotIn=this.pdNotIn;
-      }else{
+      if(this.type==3){
         let pdReal={};
-        pdReal=Object.assign({},pd,this.ruleType)
-        p.pd=pdReal
+        pdReal=Object.assign({},pd,map)
+        p.pd=pdReal;
+        p.pdNotIn=notIn;
       }
       this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
         r => {

@@ -58,6 +58,7 @@ export default {
   },
   watch: {
     tabList: function(val) {
+
       if (val.length > 9) {
         this.tabliwidth = Math.floor(100 / (this.tabList.length+1)) + '%'
       }
@@ -102,7 +103,8 @@ export default {
     },
     // 关闭tab页面==========================
     close1(index, item) {
-// console.log(index);
+      console.log('item.name',item.name);
+      this.$store.commit('getTabList',item.name);
       this.tabList.splice(index, 1);
       if (index > 0) {
         this.tabClick(this.tabList[index - 1])
