@@ -150,7 +150,8 @@
         <div class = "chart" style="width:100%" v-show="page==0">
           <div id = "echarts" style = "width: 100%;height: 400px"></div>
         </div>
-        <div v-show="page==1">
+        <div v-show="page==1"  style="width:100%;text-align:right;">
+                <el-button type="primary" size="small" class="mb-5" @click="exportexcel">导出</el-button>
           <el-table
              :data="tableData"
              border
@@ -262,7 +263,7 @@ import LZXX from '../../../common/lzxx_xq'
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'1',LRDW_BH:'1',DJDWXZQH:'3201',LB_SFBG:'2'},
+      pd:{LRRQ_DateRange:{},LRDW_BH_Like:'1',LRDW_BH:'1',DJDWXZQH:'3201',LB_SFBG:'2',ZSLX:'0'},
       pdTu:{},
       pd0:{
         begin:'',
@@ -453,6 +454,33 @@ import LZXX from '../../../common/lzxx_xq'
          that.getListTu(that.CurrentPage,that.pageSize,that.pdTu);
        })
       that.lineChart.resize()
+   },
+
+   exportexcel(){
+     console.log('this.pddc',this.pdTu);
+     let p={
+       'currentPage':1,
+       'showCount':10000,
+       'pd':this.pdTu
+     }
+     this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/export',p,
+
+           r =>{
+             this.downloadM(r,'宾馆临住信息趋势');
+           },e=>{},{},'blob')
+
+   },
+   downloadM (data,name) {
+       if (!data) {
+           return
+       }
+       let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+       let link = document.createElement('a')
+       link.style.display = 'none'
+       link.href = url
+       link.setAttribute('download', name+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+       document.body.appendChild(link)
+       link.click()
    },
   }
 }

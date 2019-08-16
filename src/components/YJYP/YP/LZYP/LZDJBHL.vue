@@ -151,7 +151,10 @@
         <div class = "chart" style="width:100%" v-show="page==0">
           <div id = "echarts" style = "width: 100%;height: 400px"></div>
         </div>
-        <div v-show="page==1">
+        <div v-show="page==1" style="width:100%;text-align:right;">
+
+            <el-button type="primary" size="small" class="mb-5" @click="exportexcel">导出</el-button>
+
           <el-table
              :data="tableData"
              border
@@ -284,6 +287,7 @@ import LZXX from '../../../common/lzxx_xq'
       rr:0,
       lineChart:null,
       seriesT:[],
+
     }
   },
   mounted(){
@@ -382,6 +386,7 @@ import LZXX from '../../../common/lzxx_xq'
 
     },
     getListTu(currentPage,pageSize,pd){
+
       let p={
         'currentPage':currentPage,
         'showCount':pageSize,
@@ -447,6 +452,7 @@ import LZXX from '../../../common/lzxx_xq'
         series: series
       },true)
       console.log('series',series)
+
       that.lineChart.on('click',function(params){
         let p={};
         p=Object.assign({}, that.pd);
@@ -460,6 +466,7 @@ import LZXX from '../../../common/lzxx_xq'
         p.TIME=params.name;
         p.DW=params.seriesName;
         that.pdTu=p;
+
         console.log('ppppp',p,that.pd);
         // that.listDialogVisible=true;
         that.page=1;
@@ -467,6 +474,32 @@ import LZXX from '../../../common/lzxx_xq'
         that.getListTu(that.CurrentPage,that.pageSize,that.pdTu);
       })
       that.lineChart.resize();
+    },
+    exportexcel(){
+      console.log('this.pddc',this.pdTu);
+      let p={
+        'currentPage':1,
+        'showCount':10000,
+        'pd':this.pdTu
+      }
+      this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/export',p,
+
+            r =>{
+              this.downloadM(r,'临住登记变化量');
+            },e=>{},{},'blob')
+
+    },
+    downloadM (data,name) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', name+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
     },
   }
 }

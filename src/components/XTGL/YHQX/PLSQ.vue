@@ -75,7 +75,6 @@
                       <span>  {{getDM(scope.row.ssdw)}}</span>
                      </template>
                    </el-table-column>
-
                  </el-table>
                    </el-row>
                  <div class="middle-foot" style="margin-top:10px">
