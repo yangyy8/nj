@@ -86,12 +86,13 @@ export default {
       infoshow:false,
       info:{lz:0,cz:0,qz:0,ajxx:0,crj:0},
       datatype:'',
+
     }
   },
     activated(){
       this.type=this.$route.query.stype;
       this.content=this.$route.query.zjhmes;
-      console.log(this.type,this.content);
+      // console.log(this.type,this.content);
       this.getList(this.CurrentPage, this.pageSize);
     },
   mounted() {
@@ -120,10 +121,13 @@ export default {
         }
       })
     },
+
     getList(currentPage,showCount,type){
-      console.log(this.$route.query.zjhmes,this.content);
+
       if(this.content!=this.$route.query.zjhmes || this.type!=this.$route.query.stype)
-      {this.$router.push({name:'QWJS',query:{zjhmes:this.content,stype:this.type}})}
+      {
+        this.$router.push({name:'QWJS',query:{zjhmes:this.content,stype:this.type}});
+      }
       this.items=[];
       this.TotalResult=0;
 

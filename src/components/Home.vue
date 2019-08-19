@@ -31,7 +31,7 @@
         <!-- </div> -->
         <div class="tab-content">
           <keep-alive>
-            <router-view></router-view>
+            <router-view :key="key"></router-view>
           </keep-alive>
         </div>
       </el-main>
@@ -56,23 +56,35 @@ export default {
       an:false,
     };
   },
+  computed: {
+      key() {
+
+        return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date()
+      }
+  },
   watch: {
     tabList: function(val) {
-
       if (val.length > 9) {
         this.tabliwidth = Math.floor(100 / (this.tabList.length+1)) + '%'
       }
     },
     $route:function(val){
-      // console.log("val====",val)
+
+
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
         if(this.tabList.length>0){
           for(var j=0;j<this.tabList.length;j++){
+
             if(this.tabList[j].name==val.name){
-              return
+              if(this.tabList[j].query!=val.query){
+                this.tabList[j]=val;
+                // console.log(this.tabList[j].query,val.query);
+              }
+              return ;
             }
+
           }
         }
         this.tabList.push(val);
@@ -97,13 +109,12 @@ export default {
   },
   methods: {
     tabClick(i){
-      console.log('-------',i)
-
+      // console.log(i.query);
       this.$router.push({name:i.name,query:i.query});
     },
     // 关闭tab页面==========================
     close1(index, item) {
-      console.log('item.name',item.name);
+      // console.log('item.name',item.name);
       this.$store.commit('getTabList',item.name);
       this.tabList.splice(index, 1);
       if (index > 0) {
@@ -134,7 +145,7 @@ export default {
        window.location.href='http://tymh.gaj.nkg.js:908/loginOperate/toUserLogin';return ;
       }else {
 
-        console.log('退出成功！');
+        // console.log('退出成功！');
       var url=this.Global.aport1+'/user/logout';
       var formData = new FormData();
       formData.append("token",this.$store.state.token);
