@@ -19,7 +19,7 @@
             <div v-if="c.children">
               <div class="h3_1" >{{c.mc}}</div>
               <el-row  :gutter="2">
-              <router-link :to="{ name: d.url }" class="h3_2" :class="{'h3_2check':menuPath==d.url}" v-for="(d,ind4) in c.children" :key="ind4">
+              <router-link :to="{ name: d.url }"  class="h3_2" :class="{'h3_2check':menuPath==d.url}" v-for="(d,ind4) in c.children" :key="ind4" replace>
                   <el-col :span="11">
                     <i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{d.mc}}
                   </el-col>
