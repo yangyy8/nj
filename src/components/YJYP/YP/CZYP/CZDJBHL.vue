@@ -178,6 +178,7 @@
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">显示类别：</span>
                     <el-select v-model="pd.XSLB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option value="day" label="日"></el-option>
                       <el-option value="month" label="月"></el-option>
                       <el-option value="quarter" label="季度"></el-option>
                       <el-option value="year" label="年"></el-option>

@@ -79,63 +79,63 @@
             </tr>
             <tr>
               <td class="th1">合计</td>
-              <td>{{tableData['合计']['00']}}</td>
-              <td>{{tableData['合计']['03']}}</td>
-              <td>{{tableData['合计']['02']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['合计']['01']}}</td>
-              <td>{{tableData['合计']['06']}}</td>
-              <td>{{tableData['合计']['04']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['合计']['05']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'00','合计')" class="hand tc-b">{{tableData['合计']['00']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'03','合计')" class="hand tc-b">{{tableData['合计']['03']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'02','合计')" class="hand tc-b">{{tableData['合计']['02']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','合计')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'01','合计')" class="hand tc-b">{{tableData['合计']['01']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'06','合计')" class="hand tc-b">{{tableData['合计']['06']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'04','合计')" class="hand tc-b">{{tableData['合计']['04']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','合计')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'05','合计')" class="hand tc-b">{{tableData['合计']['05']}}</td>
             </tr>
             <tr>
               <td class="th1">外国人</td>
-              <td>{{tableData['外国人']['00']}}</td>
-              <td>{{tableData['外国人']['03']}}</td>
-              <td>{{tableData['外国人']['02']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['外国人']['01']}}</td>
-              <td>{{tableData['外国人']['06']}}</td>
-              <td>{{tableData['外国人']['04']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['外国人']['05']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'00','外国人')" class="hand tc-b">{{tableData['外国人']['00']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'03','外国人')" class="hand tc-b">{{tableData['外国人']['03']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'02','外国人')" class="hand tc-b">{{tableData['外国人']['02']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','外国人')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'01','外国人')" class="hand tc-b">{{tableData['外国人']['01']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'06','外国人')" class="hand tc-b">{{tableData['外国人']['06']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'04','外国人')" class="hand tc-b">{{tableData['外国人']['04']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','外国人')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'05','外国人')" class="hand tc-b">{{tableData['外国人']['05']}}</td>
             </tr>
             <tr>
               <td class="th1">华侨</td>
-              <td>{{tableData['华侨']['00']}}</td>
-              <td>{{tableData['华侨']['03']}}</td>
-              <td>{{tableData['华侨']['02']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['华侨']['01']}}</td>
-              <td>{{tableData['华侨']['06']}}</td>
-              <td>{{tableData['华侨']['04']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['华侨']['05']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'00','华侨')" class="hand tc-b">{{tableData['华侨']['00']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'03','华侨')" class="hand tc-b">{{tableData['华侨']['03']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'02','华侨')" class="hand tc-b">{{tableData['华侨']['02']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','华侨')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'01','华侨')" class="hand tc-b">{{tableData['华侨']['01']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'06','华侨')" class="hand tc-b">{{tableData['华侨']['06']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'04','华侨')" class="hand tc-b">{{tableData['华侨']['04']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','华侨')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'05','华侨')" class="hand tc-b">{{tableData['华侨']['05']}}</td>
             </tr>
             <tr>
               <td class="th1">港澳人员</td>
-              <td>{{tableData['港澳人员']['00']}}</td>
-              <td>{{tableData['港澳人员']['03']}}</td>
-              <td>{{tableData['港澳人员']['02']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['港澳人员']['01']}}</td>
-              <td>{{tableData['港澳人员']['06']}}</td>
-              <td>{{tableData['港澳人员']['04']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['港澳人员']['05']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'00','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['00']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'03','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['03']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'02','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['02']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','港澳人员')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'01','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['01']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'06','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['06']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'04','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['04']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','港澳人员')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'05','港澳人员')" class="hand tc-b">{{tableData['港澳人员']['05']}}</td>
             </tr>
             <tr>
               <td class="th1">台湾居民</td>
-              <td>{{tableData['台湾居民']['00']}}</td>
-              <td>{{tableData['台湾居民']['03']}}</td>
-              <td>{{tableData['台湾居民']['02']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['台湾居民']['01']}}</td>
-              <td>{{tableData['台湾居民']['06']}}</td>
-              <td>{{tableData['台湾居民']['04']}}</td>
-              <td>{{0}}</td>
-              <td>{{tableData['台湾居民']['05']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'00','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['00']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'03','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['03']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'02','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['02']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','台湾居民')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'01','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['01']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'06','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['06']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'04','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['04']}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'0','台湾居民')" class="hand tc-b">{{0}}</td>
+              <td @click="getListD(CurrentPage,pageSize,'05','台湾居民')" class="hand tc-b">{{tableData['台湾居民']['05']}}</td>
             </tr>
           </table>
         </div>
@@ -149,23 +149,23 @@
                 </tr>
                 <tr>
                   <td>旅游</td>
-                  <td>{{tableData1['05']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'05')" class="hand tc-b">{{tableData1['05']}}</td>
                 </tr>
                 <tr>
                   <td>商务</td>
-                  <td>{{tableData1['03']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'03')" class="hand tc-b">{{tableData1['03']}}</td>
                 </tr>
                 <tr>
                   <td>学习</td>
-                  <td>{{tableData1['01']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'01')" class="hand tc-b">{{tableData1['01']}}</td>
                 </tr>
                 <tr>
                   <td>访问</td>
-                  <td>{{tableData1['04']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'04')" class="hand tc-b">{{tableData1['04']}}</td>
                 </tr>
                 <tr>
                   <td>其余各类事由</td>
-                  <td>{{tableData1['qt']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'qt')" class="hand tc-b">{{tableData1['qt']}}</td>
                 </tr>
               </table>
             </el-col>
@@ -186,23 +186,23 @@
                 </tr>
                 <tr>
                   <td>企业工作人员</td>
-                  <td>{{tableData2['01']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'01')" class="hand tc-b">{{tableData2['01']}}</td>
                 </tr>
                 <tr>
                   <td>高校留学生</td>
-                  <td>{{tableData2['02']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'02')" class="hand tc-b">{{tableData2['02']}}</td>
                 </tr>
                 <tr>
                   <td>文教专家</td>
-                  <td>{{tableData2['03']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'03')" class="hand tc-b">{{tableData2['03']}}</td>
                 </tr>
                 <tr>
                   <td>亲属</td>
-                  <td>{{tableData2['04']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'04')" class="hand tc-b">{{tableData2['04']}}</td>
                 </tr>
                 <tr>
                   <td>其他</td>
-                  <td>{{tableData2['05']}}</td>
+                  <td @click="getListD(CurrentPage,pageSize,'05')" class="hand tc-b">{{tableData2['05']}}</td>
                 </tr>
               </table>
             </el-col>
@@ -227,6 +227,9 @@
                 <el-table-column
                   prop="count"
                   label="数量">
+                  <template slot-scope="scope">
+                    <span @click="getListD(CurrentPage,pageSize,scope.row.GJDQ)" class="hand tc-b">{{ scope.row.count }}</span>
+                  </template>
                 </el-table-column>
               </el-table>
             </el-col>
@@ -251,6 +254,9 @@
                 <el-table-column
                   prop="count"
                   label="涉恐31国常住人数">
+                  <template slot-scope="scope">
+                    <span @click="getListD(CurrentPage,pageSize,scope.row.GJDQ)" class="hand tc-b">{{ scope.row.count }}</span>
+                  </template>
                 </el-table-column>
               </el-table>
             </el-col>
@@ -262,16 +268,102 @@
           </el-row>
         </div>
       </div>
-
     </div>
+    <el-dialog title="列表" :visible.sync="listDialogVisible"  width="900px">
+      <el-table
+         :data="tableDataD"
+         border
+         style="width: 100%">
+         <el-table-column
+           prop="CSRQ"
+           label="出生日期">
+         </el-table-column>
+         <el-table-column
+           prop="GJDQ_DESC"
+           label="国家地区">
+         </el-table-column>
+         <el-table-column
+           prop="SFDM_DESC"
+           label="身份">
+         </el-table-column>
+         <el-table-column
+           prop="XB_DESC"
+           label="性别">
+         </el-table-column>
+         <el-table-column
+           prop="YWXM"
+           label="英文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="ZWXM"
+           label="中文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="SJXFSJ"
+           label="市局下发时间">
+         </el-table-column>
+         <el-table-column
+           prop="SSPCS_DESC"
+           label="所属派出所">
+         </el-table-column>
+         <el-table-column
+           label="操作">
+           <template slot-scope="scope">
+             <el-button type="text"  class="a-btn" title="详情" size="mini" icon="el-icon-tickets" @click="details(scope.row)"></el-button>
+           </template>
+         </el-table-column>
+       </el-table>
+       <div class="middle-foot">
+          <div class="page-msg">
+            <div class="">
+                共{{TotalResult}}条记录
+            </div>
+            <div class="">
+              每页显示
+              <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+              条
+            </div>
+            <div class="">
+            共{{Math.ceil(TotalResult/pageSize)}}页
+            </div>
+          </div>
+          <el-pagination
+            background
+            @current-change="handleCurrentChange"
+            :current-page.sync ="CurrentPage"
+            :page-size="pageSize"
+            layout="prev, pager, next"
+            :total="TotalResult">
+          </el-pagination>
+        </div>
+    </el-dialog>
+    <el-dialog title="常住信息详情" :visible.sync="CZDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
+      <CZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()" :row="allData"></CZXX>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="CZDialogVisible = false" size="small">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script scoped>
 import echarts from 'echarts'
+import CZXX from '../../../common/czxx_xq'
  export default {
+  components:{CZXX},
   data() {
     return {
       page:0,
+      type:3,
+      rybh:'',
+      xid:'',
+      allData:{},
       radio:'1',
       CurrentPage: 1,
       pageSize: 10,
@@ -340,6 +432,29 @@ import echarts from 'echarts'
       tableData4:[],
       pieChart:null,
       barChart:null,
+
+      CurrentPage: 1,
+      pageSize: 10,
+      TotalResult: 0,
+      options:[
+        {
+          value:10,
+          label:"10"
+        },
+        {
+          value:20,
+          label:"20"
+        },
+        {
+          value:30,
+          label:"30"
+        }
+      ],
+      tableDataD:[],
+      listDialogVisible:false,
+      CZDialogVisible:false,
+      specialKey:'',
+      keyOne:'',
     }
   },
   mounted(){
@@ -352,6 +467,86 @@ import echarts from 'echarts'
     },
   },
   methods:{
+    getListD(currentPage,showCount,val,valOne){
+      this.getPd();
+      let p={
+        "pd":this.pd,
+        "currentPage":currentPage,
+        "showCount":showCount
+      }
+      this.specialKey = val;
+      this.keyOne = valOne;
+      if(this.page==0){
+        this.pd.SFDM = val;
+        this.pd.GJDQ = valOne;
+        this.$api.post(this.Global.aport2+'/gzybb/getgzybbryxx',p,
+         r =>{
+           if(r.success){
+              this.tableDataD = r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+              this.listDialogVisible=true;
+           }
+         })
+      }
+      if(this.page==1){
+        this.pd.TLSY = val;
+        this.$api.post(this.Global.aport2+'/gzybb/czlnsyryxx',p,
+         r =>{
+           if(r.success){
+              this.tableDataD = r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+              this.listDialogVisible=true;
+           }
+         })
+      }
+      if(this.page==2){
+        this.pd.SFDM = val;
+        this.$api.post(this.Global.aport2+'/gzybb/czsffbryxx',p,
+         r =>{
+           if(r.success){
+              this.tableDataD = r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+              this.listDialogVisible=true;
+           }
+         })
+      }
+      if(this.page==3){
+        this.pd.GJDQ = val;
+        this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
+         r =>{
+           if(r.success){
+              this.tableDataD = r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+              this.listDialogVisible=true;
+           }
+         })
+      }
+      if(this.page==4){
+        this.pd.GJDQ = val;
+        this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
+         r =>{
+           if(r.success){
+              this.tableDataD = r.data.resultList;
+              this.TotalResult=r.data.totalResult;
+              this.listDialogVisible=true;
+           }
+         })
+      }
+    },
+    details(i){
+      this.xid=i.RGUID;
+      this.rybh=i.RYBH;
+      this.allData=i;
+      this.CZDialogVisible=true;
+    },
+    pageSizeChange(val) {
+      this.pageSize=val;
+      this.getListD(this.CurrentPage,val,this.specialKey,this.keyOne);
+    },
+    handleCurrentChange(val) {
+      this.CurrentPage=val;
+      this.getListD(val,this.pageSize,this.specialKey,this.keyOne);
+    },
     download(){
       this.getPd();
       if(this.page==0){
