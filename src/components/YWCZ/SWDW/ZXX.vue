@@ -6,11 +6,11 @@
         <el-col :span="22" class="br pr-20">
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">英文姓：</span>
+                   <span class="input-text">英文姓名：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">英文名：</span>
+                   <span class="input-text">中文姓名：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
@@ -25,32 +25,8 @@
                     </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">护照号码：</span>
+                   <span class="input-text">证件号码：</span>
                    <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">曾持护照号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">数据上报时间：</span>
-                  <div class="input-input t-flex t-date">
-                    <el-date-picker
-                       v-model="pd.begin" format="yyyy-MM-dd"
-                       type="date" size="small" value-format="yyyyMMdd"
-                       placeholder="开始时间" >
-                    </el-date-picker>
-                    <span class="septum">-</span>
-                    <el-date-picker
-                        v-model="pd.end" format="yyyy-MM-dd"
-                        type="date" size="small" value-format="yyyyMMdd"
-                        placeholder="结束时间" >
-                    </el-date-picker>
-                 </div>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text">上报单位：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">核查状态：</span>
@@ -62,6 +38,100 @@
                       :value="item.dm">
                     </el-option>
                   </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">签证种类：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                  <span class="input-text">停留有效期：</span>
+                  <el-date-picker
+                     v-model="pd.TLYXQ_Nokeyword" format="yyyy-MM-dd"
+                     type="date" size="small" value-format="yyyy/MM/dd"
+                     placeholder="开始时间" class="input-input">
+                  </el-date-picker>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">婚姻状态：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">宗教信仰：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">学历：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">职业资格：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">授课课程：</span>
+                    <el-select v-model="pd.QZZL" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in $store.state.rjqzzl"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">手机号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">电子邮箱：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">境内联系人：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">联系人手机号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                   <span class="input-text">居住地址：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
                 </el-col>
           </el-row>
          </el-col>
@@ -86,16 +156,12 @@
              width="55">
            </el-table-column>
            <el-table-column
-             prop="ZWXM"
-             label="公证处单位">
-           </el-table-column>
-           <el-table-column
              prop="XB_DESC"
-             label="英文姓">
+             label="英文姓名">
            </el-table-column>
            <el-table-column
              prop="GJDQ_DESC"
-             label="英文名">
+             label="中文姓名">
            </el-table-column>
            <el-table-column
              prop="ZJZL_DESC"
@@ -103,15 +169,15 @@
            </el-table-column>
            <el-table-column
              prop="ZJHM"
-             label="护照号码">
+             label="证件号码">
            </el-table-column>
            <el-table-column
              prop="QZZL_DESC"
-             label="曾持护照号码">
+             label="手机号码">
            </el-table-column>
            <el-table-column
              prop="QZHM"
-             label="上报单位">
+             label="核查时间">
            </el-table-column>
            <el-table-column
              prop="CLZT_DESC"
@@ -121,7 +187,7 @@
              label="操作" width="120">
              <template slot-scope="scope">
                <div>
-                  <el-button type="text"  class="a-btn"  title="处理"  icon="el-icon-edit" @click="$router.push({name:'GZC_XQ',query:{hiType:'gzc',row:scope.row,pd:pd}})"></el-button>
+                  <el-button type="text"  class="a-btn"  title="处理"  icon="el-icon-edit" @click="$router.push({name:'ZXX_XQ',query:{hiType:'zxx',row:scope.row,pd:pd}})"></el-button>
                </div>
              </template>
            </el-table-column>

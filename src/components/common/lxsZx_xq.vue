@@ -719,36 +719,22 @@
 <script>
 export default {
   name:'LXSXXZX',
-  props:['type','xid'],
+  props:['type','xid','random'],
   data(){
     return{
       lxsinfo:{},
-      page:this.type,
-      id:this.xid,
       pp:{},
     }
   },
   mounted(){
-      console.log("-=====this.id---"+this.xid);
       this.initData();
    },
   watch:{
-
-      type:{
-        handler(val){
-        this.page=val;
-        this.initData()
-      },
-      immediate: true
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
-      },
+    random:function(newVal,oldVal){
+      this.random=newVal;
+      this.initData();
     },
+  },
 
   methods:{
     initData(){
@@ -762,21 +748,8 @@ export default {
 
     },
     getData2(){
-      this.pp.RGUID=this.id;
-
-      let p = {
-        "pd": this.pp
-      };
-       this.$api.post(this.Global.aport3+'/ryhx/getzyxdcrjstudent', p,
-        r => {
-          if(r.data.resultList.length){
-          this.lxsinfo=r.data.resultList[0];
-          }
-      })
+      this.lxsinfo = this.xid;
     },
-
-
-
   },
 }
 </script>

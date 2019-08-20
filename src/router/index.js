@@ -679,6 +679,66 @@ export default new Router({
           meta:{title:['日常管理','涉外单位','涉外企业批文信息下发']},
           component: resolve => require(['@/components/YWCZ/SWDW/QYPWXXXF'], resolve),
         },
+        {
+          path: 'GZC',
+          name: 'GZC',
+          meta:{title:['日常管理','涉外单位','公证处']},
+          component: resolve => require(['@/components/YWCZ/SWDW//GZC'], resolve),
+        },
+        {
+          path: 'GZC_XQ',
+          name: 'GZC_XQ',
+          meta:{title:['日常管理','涉外单位','公证处详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
+        {
+          path: 'WLJ',
+          name: 'WLJ',
+          meta:{title:['日常管理','涉外单位','文旅局']},
+          component: resolve => require(['@/components/YWCZ/SWDW//WLJ'], resolve),
+        },
+        {
+          path: 'WLJ_XQ',
+          name: 'WLJ_XQ',
+          meta:{title:['日常管理','涉外单位','文旅局详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
+        {
+          path: 'ZXX',
+          name: 'ZXX',
+          meta:{title:['日常管理','涉外单位','中小学幼儿园与语言培训机构']},
+          component: resolve => require(['@/components/YWCZ/SWDW/ZXX'], resolve),
+        },
+        {
+          path: 'ZXX_XQ',
+          name: 'ZXX_XQ',
+          meta:{title:['日常管理','涉外单位','中小学幼儿园与语言培训机构详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
+        {
+          path: 'GX',
+          name: 'GX',
+          meta:{title:['日常管理','涉外单位','高校']},
+          component: resolve => require(['@/components/YWCZ/SWDW/GX'], resolve),
+        },
+        {
+          path: 'GX_XQ',
+          name: 'GX_XQ',
+          meta:{title:['日常管理','涉外单位','高校详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
+        {
+          path: 'SLRY',
+          name: 'SLRY',
+          meta:{title:['日常管理','涉外单位','失联人员']},
+          component: resolve => require(['@/components/YWCZ/SWDW/SLRY'], resolve),
+        },
+        {
+          path: 'SLRY_XQ',
+          name: 'SLRY_XQ',
+          meta:{title:['日常管理','涉外单位','失联人员详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
 
         {
           path: 'ASJYBB',
