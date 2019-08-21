@@ -142,7 +142,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {HCMX:'YYRY'},
+      pd: {HCMX:'YYRY',SSPCS:this.$store.state.orgid},
       options: this.pl.ps,
       tableData: [],
       userCode:'',
