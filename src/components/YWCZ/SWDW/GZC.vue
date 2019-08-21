@@ -7,15 +7,15 @@
           <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文姓：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWX" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">英文名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">国家地区：</span>
-                    <el-select v-model="pd.GJ" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.GJDQ" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="item in $store.state.gjdq"
                         :key="item.dm"
@@ -26,23 +26,23 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">护照号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.HZHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">曾持护照号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.CCHZHM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">数据上报时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd.begin" format="yyyy-MM-dd"
+                       v-model="pd.SBSJ.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd.end" format="yyyy-MM-dd"
+                        v-model="pd.SBSJ.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -50,24 +50,26 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text">上报单位：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.SBDWBH" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">核查状态：</span>
                   <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option
+                    <el-option label="已核查" value="0"></el-option>
+                    <el-option label="未核查" value="1"></el-option>
+                    <!-- <el-option
                       v-for="item in $store.state.clzt"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
-                    </el-option>
+                    </el-option> -->
                   </el-select>
                 </el-col>
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-          <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+          <!-- <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button> -->
         </el-col>
       </el-row>
     </div>
@@ -81,36 +83,36 @@
            :highlight-current-row="true"
            style="width: 100%"
            @select="selectfn">
-           <el-table-column
+           <!-- <el-table-column
              type="selection"
              width="55">
-           </el-table-column>
+           </el-table-column> -->
            <el-table-column
-             prop="ZWXM"
+             prop="GZCDW"
              label="公证处单位">
            </el-table-column>
            <el-table-column
-             prop="XB_DESC"
+             prop="YWX"
              label="英文姓">
            </el-table-column>
            <el-table-column
-             prop="GJDQ_DESC"
+             prop="YWM"
              label="英文名">
            </el-table-column>
            <el-table-column
-             prop="ZJZL_DESC"
+             prop="GJDQ_DESC"
              label="国家地区">
            </el-table-column>
            <el-table-column
-             prop="ZJHM"
+             prop="HZHM"
              label="护照号码">
            </el-table-column>
            <el-table-column
-             prop="QZZL_DESC"
+             prop="CCHZHM"
              label="曾持护照号码">
            </el-table-column>
            <el-table-column
-             prop="QZHM"
+             prop="SBDWMC"
              label="上报单位">
            </el-table-column>
            <el-table-column
@@ -168,7 +170,7 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {BJSJ_DateRange:{begin:'',end:''}},
+      pd: {SBSJ:{begin:'',end:''},HCMX:'WFZJLZM'},
       options: this.pl.ps,
       tableData: [],
       userCode:'',
@@ -225,8 +227,8 @@ export default {
       if(this.selectionAll.length==0){//全部导出
          p={
           "pd":this.pd,
-          "orderBy":'BJSJ',
-          "orderType":'DESC'
+          "orderBy":'SBSJ',
+          "orderType":'DESC',
         }
       }else{//导出选中
         this.yuid=[];
@@ -236,7 +238,7 @@ export default {
         this.pd.YJID=this.yuid;
          p={
           "pd":this.pd,
-          "orderBy":'BJSJ',
+          "orderBy":'SBSJ',
           "orderType":'DESC',
         }
       }
@@ -268,7 +270,6 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
-      this.pd.MXLX='ASJ_WLYP';
       if(pd.hasOwnProperty('YJID')){
         delete pd['YJID']
       }
@@ -276,10 +277,10 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd,
-        "orderBy":'BJSJ',
+        "orderBy":'SBSJ',
         "orderType":'DESC',
       };
-      this.$api.post(this.Global.aport4+'/warningInfoController/getInfoListByMxLx1', p,
+      this.$api.post(this.Global.aport4+'/SWDWWarningInfoController/getInfoListByHCMX', p,
         r => {
           if(r.success){
             this.tableData = r.data.resultList;

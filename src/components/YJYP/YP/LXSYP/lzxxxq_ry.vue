@@ -192,6 +192,7 @@ export default {
         "pd":{
           RYBH:this.rybh||'',
           YWLB:'0003',
+          TXLY:'0',
           GJDQ:this.gjdq||'',
         },
         // "orderType":"DESC",

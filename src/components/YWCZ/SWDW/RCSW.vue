@@ -6,22 +6,22 @@
           <div class="t-bjxq">
             <img :src="imgURL" alt="" style="width:100%;">
             <div v-if="$route.query.hiType=='gzc'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">公证处单位：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">曾持护照号码：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">需核查时间段：</div><div class="t-el-sub">{{gzinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{gzinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gzinfo.YWX}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gzinfo.YWM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gzinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">公证处单位：</div><div class="t-el-sub">{{gzinfo.GZCDW}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{gzinfo.HZHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">曾持护照号码：</div><div class="t-el-sub">{{gzinfo.CCHZHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">需核查时间段：</div><div class="t-el-sub">{{gzinfo.HCSJ}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{gzinfo.SBSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='wlj'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{wljinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{wljinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{wljinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{wljinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{wljinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{wljinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{wljinfo.YWX}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{wljinfo.YWM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{wljinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{wljinfo.SBDWMC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{wljinfo.ZJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{wljinfo.SBSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='zxx'">
               <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
@@ -587,16 +587,50 @@ export default {
       pc:{},
       withname:this.$store.state.uname,
 
-      rybh:''
+      rybh:'',
+      row:{},
 
 
     }
   },
+  mounted(){
+    this.getData();
+  },
   activated(){
+    this.row = this.$route.query.row
     this.rybh=this.$route.query.row.RYBH;
-
+    this.getData();
   },
   methods:{
+    getData(){
+      if(this.$route.query.hiType=='gzc'){
+        this.gzinfo = this.row;
+        this.getData0(this.asjCurrentPage,this.asjpageSize);
+      }else if(this.$route.query.hiType=='wlj'){
+        this.wljinfo = this.row;
+        this.getData0(this.asjCurrentPage,this.asjpageSize);
+        this.getTBRY();
+      }else if(this.$route.query.hiType=='zxx'){
+        this.getData0(this.asjCurrentPage,this.asjpageSize);
+        this.getData1(this.sjCurrentPage,this.sjpageSize);
+        this.getLzxx(this.CurrentPage,this.pageSize);
+        this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        this.getQZXX(this.CurrentPage5,this.pageSize5);
+      }else if(this.$route.query.hiType=='gx'){
+        this.getLzxx(this.CurrentPage,this.pageSize);
+        this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        this.getQZXX(this.CurrentPage5,this.pageSize5);
+      }else if(this.$route.query.hiType=='slry'){
+        this.getData0(this.asjCurrentPage,this.asjpageSize);
+        this.getData1(this.sjCurrentPage,this.sjpageSize);
+        this.getLzxx(this.CurrentPage,this.pageSize);
+        this.getCrjxx(this.CurrentPage1,this.pageSize1);
+      }else if(this.$route.query.hiType=='jlxk'){
+        this.getLzxx(this.CurrentPage,this.pageSize);
+        this.getCrjxx(this.CurrentPage1,this.pageSize1);
+        this.getQZXX(this.CurrentPage5,this.pageSize5);
+      }
+    },
     asjpageSizeChange(val) {
       this.asjpageSize=val;
       this.getData0(this.asjCurrentPage,val);
