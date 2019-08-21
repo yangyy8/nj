@@ -149,7 +149,7 @@
     </div>
     <!-- 留学生信息详情 -->
     <el-dialog title="留学生在校信息详情" :visible.sync="lxsZXDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LXSXXZX :type="type" :xid="xid"></LXSXXZX>
+        <LXSXXZX :type="type" :xid="xid" :random="new Date().getTime()"></LXSXXZX>
         <div slot="footer" class="dialog-footer">
           <el-button @click="lxsZXDialogVisible = false" size="small">取 消</el-button>
         </div>
@@ -203,7 +203,7 @@ import echarts from 'echarts'
       this.getList(val,this.pageSize,this.pdList);
     },
     details(i){
-      this.xid=i.RGUID;
+      this.xid=i;
       target.scrollIntoView();
       this.lxsZXDialogVisible=true;
     },

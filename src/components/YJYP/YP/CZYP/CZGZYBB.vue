@@ -455,6 +455,8 @@ import CZXX from '../../../common/czxx_xq'
       CZDialogVisible:false,
       specialKey:'',
       keyOne:'',
+      pdKey:{},
+      pdAll:{},
     }
   },
   mounted(){
@@ -470,15 +472,16 @@ import CZXX from '../../../common/czxx_xq'
     getListD(currentPage,showCount,val,valOne){
       this.getPd();
       let p={
-        "pd":this.pd,
         "currentPage":currentPage,
         "showCount":showCount
       }
       this.specialKey = val;
       this.keyOne = valOne;
       if(this.page==0){
-        this.pd.SFDM = val;
-        this.pd.GJDQ = valOne;
+        this.pdKey.SFDM = val;
+        this.pdKey.GJDQ = valOne;
+        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/getgzybbryxx',p,
          r =>{
            if(r.success){
@@ -489,7 +492,9 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==1){
-        this.pd.TLSY = val;
+        this.pdKey.TLSY = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czlnsyryxx',p,
          r =>{
            if(r.success){
@@ -500,7 +505,9 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==2){
-        this.pd.SFDM = val;
+        this.pdKey.SFDM = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czsffbryxx',p,
          r =>{
            if(r.success){
@@ -511,7 +518,9 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==3){
-        this.pd.GJDQ = val;
+        this.pdKey.GJDQ = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
          r =>{
            if(r.success){
@@ -522,7 +531,9 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==4){
-        this.pd.GJDQ = val;
+        this.pdKey.GJDQ = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
          r =>{
            if(r.success){

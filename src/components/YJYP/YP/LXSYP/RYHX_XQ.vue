@@ -744,7 +744,7 @@
      </el-dialog>
      <!-- 留学生信息详情 -->
      <el-dialog title="留学生在校信息详情" :visible.sync="lxsZXDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-                 <LXSXXZX :type="type" :xid="xid"></LXSXXZX>
+                 <LXSXXZX :type="type" :xid="xid" :random="new Date().getTime()"></LXSXXZX>
                  <div slot="footer" class="dialog-footer">
                    <el-button @click="lxsZXDialogVisible = false" size="small">取 消</el-button>
                  </div>
@@ -1430,7 +1430,7 @@ export default{
     },
     //留学生在校信息
     detailslxszx(n){
-      this.xid=n.RGUID;
+      this.xid=n;
       target.scrollIntoView();
       this.lxsZXDialogVisible=true;
     },
