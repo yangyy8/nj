@@ -7,7 +7,7 @@
              <div class="yylbt mb-15">人员信息列表</div>
         </el-col>
         <el-col :span="12" style="text-align:right; padding-right:2px;">
-          <el-button type="success" @click="$router.go(-1)" size="mini">返回</el-button>
+          <!-- <el-button type="success" @click="$router.go(-1)" size="mini">返回</el-button> -->
         </el-col>
       </el-row>
       <el-table

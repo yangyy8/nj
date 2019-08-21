@@ -28,7 +28,7 @@
          </el-col>
             <el-col :span="4" >
               <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-              <el-button type="info" size="small" @click="$router.push('LZXXZHFX')" class="mb-15">返回</el-button>
+              <!-- <el-button type="info" size="small" @click="$router.push('LZXXZHFX')" class="mb-15">返回</el-button> -->
             </el-col>
           </el-row>
     </div>
