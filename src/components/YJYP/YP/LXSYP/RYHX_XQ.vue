@@ -54,7 +54,7 @@
 
                  </el-col>
                  <el-col :span="2">
-                   <el-button type="primary" size="small" @click="ggo()" style="margin-left:15px;">返 回</el-button>
+                   <!-- <el-button type="primary" size="small" @click="ggo()" style="margin-left:15px;">返 回</el-button> -->
                  </el-col>
                </el-row>
            </el-col>

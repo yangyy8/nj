@@ -248,8 +248,6 @@ export default {
     return {
       form: {},
       imgURL: imgUrl,
-      page: this.type,
-      id: this.xid,
       tableData1: [],
       tableData2: [],
       tableData3: [],
@@ -293,31 +291,29 @@ export default {
     this.$store.dispatch("getTbry");
     this.actions = window.IPConfig.IP + this.Global.aport3;
       // this.actions = this.Global.aport3;
-    this.getData0(this.id);
+  //  this.getData0(this.id);
 
   },
   watch: {
     random:{
      handler(newVal, oldVa){
-     this.page=newVal;
-      this.getData0(this.id);
+     this.getData0(this.xid);
    },
    immediate: true
    },
-    type:{
-     handler(val){
-     this.page=val;
-      this.getData0(this.id);
-   },
-   immediate: true
-   },
-   xid:{
-     handler(val){
-     this.id=val;
-     this.getData0(this.id);
-   },
-   immediate: true
-   },
+   //  type:{
+   //   handler(val){
+   //   this.page=val;
+   //    this.getData0(this.id);
+   // },
+   // immediate: true
+   // },
+   // xid:{
+   //   handler(val){
+   //   this.getData0(this.id);
+   // },
+   // immediate: true
+   // },
   },
 
   methods: {
@@ -362,7 +358,7 @@ export default {
         this.$message.error(r.message);
       }
       this.fileDialogVisible = false;
-      this.getData0(this.id);
+      this.getData0(this.xid);
     },
     beforeAvatarUpload(file) {
 
@@ -472,8 +468,8 @@ export default {
       this.datatype = t;
       this.savetype= n;
       if (t == 0) {
-        console.log(this.id);
-        this.savadtid=this.id;
+
+        this.savadtid=this.xid;
         if (n == 1) { //证件信息
           this.zjshow = true;
         } else if (n == 2) { //国家地区//请求图
@@ -511,7 +507,7 @@ export default {
         "FBSJ": this.form.FBSJ,
         "TBRYZL": this.form.TBRYZLDM,
         "XB": this.form.XBDM,
-        "DTID": this.id,
+        "DTID": this.xid,
         "token": this.$store.state.token,
       };
       this.$api.post(this.Global.aport3 + '/drtbry/updateTBRY', p,
@@ -583,7 +579,7 @@ export default {
                 type: 'success'
               });
               this.editDialogVisible=false;
-              this.getData0(this.id);
+              this.getData0(this.xid);
             } else {
               this.$message.error("保存失败");
               return;
@@ -606,7 +602,7 @@ export default {
                 type: 'success'
               });
               this.editDialogVisible=false;
-              this.getData0(this.id);
+              this.getData0(this.xid);
             } else {
               this.$message.error("保存失败");
               return;
@@ -627,7 +623,7 @@ export default {
               message: '删除成功',
               type: 'success'
             });
-          this.getData0(this.id);
+          this.getData0(this.xid);
           } else {
             this.$message.error("删除失败");
             return;

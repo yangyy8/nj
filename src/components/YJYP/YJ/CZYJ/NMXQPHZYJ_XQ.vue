@@ -555,7 +555,7 @@
        </el-col>
        <el-col :span="4"  class="down-btn-area">
          <el-button type="primary"  size="small" class="mb-5" @click="chuli()" v-if="clztShow">确定</el-button>
-         <el-button type="warning" size="small" class="m0" @click="back()">返回</el-button>
+         <!-- <el-button type="warning" size="small" class="m0" @click="back()">返回</el-button> -->
        </el-col>
      </el-row>
      <el-row type="flex">

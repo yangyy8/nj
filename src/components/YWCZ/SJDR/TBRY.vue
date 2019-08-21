@@ -368,6 +368,7 @@ export default {
     edits(n){
       this.type=1;
       this.xid=n.DTID;
+      console.log(this.type,n.DTID,new Date().getTime());
       this.randomtb=new Date().getTime();
 
       this.editsDialogVisible=true;
