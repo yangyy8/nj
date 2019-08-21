@@ -54,6 +54,46 @@
     </div>
     <div class="yycontent" v-if="isShow">
       <el-table
+         :data="tableDataDetail"
+         border
+         style="width: 100%">
+         <el-table-column
+           prop="zwxm"
+           label="中文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="ywxm"
+           label="英文姓名">
+         </el-table-column>
+         <el-table-column
+           prop="xb_desc"
+           label="性别">
+         </el-table-column>
+         <el-table-column
+           prop="csrq"
+           label="出生日期">
+         </el-table-column>
+         <el-table-column
+           prop="gjdq_desc"
+           label="国家地区">
+         </el-table-column>
+         <el-table-column
+           prop="zjzl_desc"
+           label="证件种类">
+         </el-table-column>
+         <el-table-column
+           prop="zjhm"
+           label="证件号码">
+           <template slot-scope="scope">
+              <span class="tc-b hand" @click="moreFn(scope.row)">{{scope.row.zjhm}}</span>
+            </template>
+         </el-table-column>
+         <el-table-column
+           prop="zjyxq"
+           label="证件有效期">
+         </el-table-column>
+       </el-table>
+      <!-- <el-table
          :data="tableData"
          border
          style="width: 100%">
@@ -102,49 +142,10 @@
              <el-button type="text"  class="a-btn" title="详情" size="mini" icon="el-icon-tickets" @click="details(scope.row)"></el-button>
            </template>
          </el-table-column>
-       </el-table>
+       </el-table> -->
     </div>
     <el-dialog title="列表" :visible.sync="listDialogVisible"  width="900px">
-      <el-table
-         :data="tableDataDetail"
-         border
-         style="width: 100%">
-         <el-table-column
-           prop="zwxm"
-           label="中文姓名">
-         </el-table-column>
-         <el-table-column
-           prop="ywxm"
-           label="英文姓名">
-         </el-table-column>
-         <el-table-column
-           prop="xb_desc"
-           label="性别">
-         </el-table-column>
-         <el-table-column
-           prop="csrq"
-           label="出生日期">
-         </el-table-column>
-         <el-table-column
-           prop="gjdq_desc"
-           label="国家地区">
-         </el-table-column>
-         <el-table-column
-           prop="zjzl_desc"
-           label="证件种类">
-         </el-table-column>
-         <el-table-column
-           prop="zjhm"
-           label="证件号码">
-           <template slot-scope="scope">
-              <span class="tc-b hand" @click="moreFn(scope.row)">{{scope.row.zjhm}}</span>
-            </template>
-         </el-table-column>
-         <el-table-column
-           prop="zjyxq"
-           label="证件有效期">
-         </el-table-column>
-       </el-table>
+
     </el-dialog>
   </div>
 </template>
@@ -176,7 +177,7 @@ export default {
           ITEMNAME:'csrq',
         }
       ],
-      checkList2:[],
+      checkList2:['zwxm','ywxm','xb','csrq'],
       checkItem1:[
         {
           LABEL:'证件号码',
@@ -194,7 +195,7 @@ export default {
           disabled:false,
         },
       ],
-      checkList1:['zjhm','zjzl'],
+      checkList1:['zjhm','zjzl','gjdq'],
       fileData:null,
       tableData: [],
       isShow:false,
@@ -247,12 +248,39 @@ export default {
        this.$api.post(this.Global.aport2+'/ryhxhx/gettjxx',p,
         r =>{
           if(r.success){
-            this.tableData=r.data
-          }else {
-
+            this.tableDataDetail=r.data;
+            this.isShow=true;
+          }else{
+            this.$confirm('上传文件存在错误信息, 是否导出错误信息?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$api.post(this.Global.aport2+'/ryhxhx/geterrdata',p,
+               r =>{
+                 this.downloadM(r,'错误信息')
+               },e=>{},{},'blob')
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消导出'
+              });
+            });
           }
         },e => {
         },{'Content-Type': 'multipart/form-data'})
+     },
+     downloadM (data,name) {
+         if (!data) {
+             return
+         }
+         let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+         let link = document.createElement('a')
+         link.style.display = 'none'
+         link.href = url
+         link.setAttribute('download', name+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+         document.body.appendChild(link)
+         link.click()
      },
      getList(){
        if(this.fileData==null){
@@ -271,20 +299,19 @@ export default {
        //     return
        //   }
        // }
-       this.isShow=true;
        this.upload();
      },
-     details(i){
-       this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',i,
-        r =>{
-          if(r.success){
-            this.listDialogVisible=true;
-            this.tableDataDetail=r.data
-          }
-        })
-     },
+     // details(i){
+     //   this.$api.post(this.Global.aport2+'/ryhxhx/getjbxx',i,
+     //    r =>{
+     //      if(r.success){
+     //        this.listDialogVisible=true;
+     //        this.tableDataDetail=r.data
+     //      }
+     //    })
+     // },
      moreFn(i){
-       this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i}});
+       this.$router.push({name:'RYHX_XQ',query:{zjhm:i.zjhm,row:i,gjdq:i.gjdq}});
        this.listDialogVisible=false;
      },
      optionChange(){

@@ -1,3 +1,19 @@
+.t-bjxq{
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 10px 15px;
+  /* display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center; */
+}
+.t-bjrt{
+  border: 1px solid #399bfe;
+  border-radius: 3px;
+  padding: 10px 15px;
+}
 .t-tsh{
   min-height: 350px;
 }
@@ -250,6 +266,8 @@
 }
 .t-el-content{
    display: flex;
+   font-size: 14px;
+   padding: 5px 0px;
  }
  .t-el-text{
    white-space: nowrap;
@@ -266,4 +284,8 @@
  }
  .t-table1 thead th .cell{
    white-space: normal!important;
+ }
+ .t-footer{
+   /* border-top: 1px solid #1c6cb4; */
+   padding: 20px 0px;
  }

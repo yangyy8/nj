@@ -739,6 +739,18 @@ export default new Router({
           meta:{title:['日常管理','涉外单位','失联人员详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
+        {
+          path: 'JLXK',
+          name: 'JLXK',
+          meta:{title:['日常管理','涉外单位','居留许可申请作废']},
+          component: resolve => require(['@/components/YWCZ/SWDW/JLXK'], resolve),
+        },
+        {
+          path: 'JLXK_XQ',
+          name: 'JLXK_XQ',
+          meta:{title:['日常管理','涉外单位','居留许可申请作废详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
 
         {
           path: 'ASJYBB',

@@ -121,7 +121,7 @@
              label="操作" width="120">
              <template slot-scope="scope">
                <div>
-                  <el-button type="text"  class="a-btn"  title="处理"  icon="el-icon-edit" @click="$router.push({name:'GZC_XQ',query:{hiType:'gzc',row:scope.row,pd:pd}})"></el-button>
+                  <el-button type="text"  class="a-btn"  title="处理"  icon="el-icon-edit" @click="$router.push({name:'GZC_XQ',query:{hiType:'gzc',row:scope.row}})"></el-button>
                </div>
              </template>
            </el-table-column>
