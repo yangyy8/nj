@@ -115,7 +115,7 @@
     </div>
 
     <el-dialog :title="dialogText" :visible.sync="addsDialogVisible" width="600px" >
-    <el-form :model="from" ref="addForm">
+    <el-form :model="from" ref="addForm" >
          <el-row :gutter="1">
            <el-col :span="24" class="yzform" data-scope="demo" data-name="mc" data-type="input"
             v-validate-easy="[['required']]">
