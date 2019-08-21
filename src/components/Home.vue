@@ -23,7 +23,7 @@
         <!-- <div class="right-main-top"> -->
           <ul class="tabList">
             <li class="tabList-item hand" :title="i.meta.title[i.meta.title.length-1]" :style="{width:tabliwidth}" :class="{'tabList-checked':tabListCheck==i.name}" v-for="(i, index) in tabList">
-              <span @click="tabClick(i)">{{i.meta.title[i.meta.title.length-1]}}</span>
+              <span @click="tabClick(i,99)">{{i.meta.title[i.meta.title.length-1]}}</span>
               <img src="../assets/img/tab-close1.png" alt="guanbi" @click="close1(index,i)" class="hand" style="padding:8px" v-if="tabListCheck==i.name">
               <img src="../assets/img/tab-close2.png" alt="" @click="tabList.splice(index, 1)" style="padding:8px" class="hand" v-else>
             </li>
@@ -31,6 +31,7 @@
         <!-- </div> -->
         <div class="tab-content">
           <keep-alive>
+              <!-- <router-view></router-view> -->
             <router-view :key="key"></router-view>
           </keep-alive>
         </div>
@@ -59,7 +60,9 @@ export default {
   computed: {
       key() {
 
-        return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date()
+       if(this.$store.state.key!=99){
+         return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
+       }
       }
   },
   watch: {
@@ -69,8 +72,7 @@ export default {
       }
     },
     $route:function(val){
-
-
+    
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
@@ -108,7 +110,8 @@ export default {
     this.getname();
   },
   methods: {
-    tabClick(i){
+    tabClick(i,n){
+      this.$store.commit('getKey',n);
       // console.log(i.query);
       this.$router.push({name:i.name,query:i.query});
     },

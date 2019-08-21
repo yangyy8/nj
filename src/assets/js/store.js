@@ -17,6 +17,7 @@ var store = new Vuex.Store({
     orgname: localStorage.getItem('ORGNAME') || '',
     orgid: localStorage.getItem('ORGID') || '',
     type: localStorage.getItem('Type') || '',
+    key: localStorage.getItem('Key') || '',
     ssdw: [],
     gjdq: [],
     zjzl: [],
@@ -97,6 +98,10 @@ var store = new Vuex.Store({
     getType(state, data) {
       localStorage.setItem('Type', data)
       state.type = data;
+    },
+    getKey(state, data) {
+      localStorage.setItem('Key', data)
+      state.key = data;
     },
     getSsdw(state, data) {
       state.ssdw = data;

@@ -14,16 +14,16 @@
         <div class="h3" v-if="h2Id==b.dm&&b.children.length">
           <div class="h3_content" v-for="(c,ind3) in b.children" :key="ind3">
             <div v-if="!c.children">
-              <router-link class="h3_2" :class="{'h3_2check':menuPath==c.url}" :to="{ name: c.url }"><i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{c.mc}}</router-link>
+              <div class="h3_2" :class="{'h3_2check':menuPath==c.url}" @click="checklast(c.url)"><i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{c.mc}}</div>
             </div>
             <div v-if="c.children">
               <div class="h3_1" >{{c.mc}}</div>
               <el-row  :gutter="2">
-              <router-link :to="{ name: d.url }"  class="h3_2" :class="{'h3_2check':menuPath==d.url}" v-for="(d,ind4) in c.children" :key="ind4" replace>
+              <div @click="checklast(d.url)"  class="h3_2" :class="{'h3_2check':menuPath==d.url}" v-for="(d,ind4) in c.children" :key="ind4" >
                   <el-col :span="11">
                     <i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{d.mc}}
                   </el-col>
-              </router-link>
+              </div>
               </el-row>
             </div>
           </div>
@@ -63,7 +63,10 @@ export default {
     checkH2(serial){
       this.h2Id=serial;
     },
-
+     checklast(name){
+       this.$store.commit("getKey",0);
+       this.$router.push({name:name});
+     },
     getNav(){
       var formData = new FormData();
       formData.append("token", this.$store.state.token);
