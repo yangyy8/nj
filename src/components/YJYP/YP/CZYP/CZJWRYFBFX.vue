@@ -15,7 +15,9 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="2">
                   <el-col :span="12">
-                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
+                      <span class="yy-input-text">
+                        <!-- <font color="red">*</font>  -->
+                        所属分局：</span>
                       <el-select v-model="pd.ssfj" filterable clearable default-first-option @change="getSSPCS(pd.ssfj)" placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind) in ssfj"
@@ -493,52 +495,52 @@ export default {
     },
     getSearch() {
 
-      if (this.pd.ssfj == undefined || this.pd.ssfj == null || this.pd.ssfj == "") {
-        this.$message.error("请选择所属分局!");
-        return;
-      } else {
-        var ssj = this.pd.ssfj.substr(0, 6);
-        switch (ssj) {
-          case '320116': //六合区
-            this.centers = [32.39215480155289, 118.81641980133281];
-            break;
-          case '320112': //江北新区
-            this.centers = [32.03613281, 118.78211975];
-            break;
-          case '320113': //栖霞区
-            this.centers = [32.137307901838255, 118.9995913711449];
-            break;
-          case '320102': //玄武区
-            this.centers = [32.062475576087024, 118.8436456413333];
-            break;
-          case '320106': //鼓楼区
-            this.centers = [32.08265178165445, 118.75812113098544];
-            break;
-          case '320111': //浦口区
-            this.centers = [31.943626916199264, 118.35524238617728];
-            break;
-          case '320104': //秦淮区
-            this.centers = [32.01143013679143, 118.81736758064937];
-            break;
-          case '320105': //建邺区
-            this.centers = [32.0275950355325, 118.70538415685343];
-            break;
-          case '320114': //雨花台区
-            this.centers = [31.94205101079558, 118.69497417187063];
-            break;
-          case '320115': //江宁区
-            this.centers = [31.865733721334237, 118.79198266097109];
-            break;
-          case '320124 ': //溧水区
-            this.centers = [31.726803147547287, 119.1224894259463];
-            break;
-          case '320125 ': //高淳区
-            this.centers = [31.3703836314495, 119.19202124153713];
-            break;
-          default:
-
-        }
-      }
+      // if (this.pd.ssfj == undefined || this.pd.ssfj == null || this.pd.ssfj == "") {
+      //   this.$message.error("请选择所属分局!");
+      //   return;
+      // } else {
+      //   var ssj = this.pd.ssfj.substr(0, 6);
+      //   switch (ssj) {
+      //     case '320116': //六合区
+      //       this.centers = [32.39215480155289, 118.81641980133281];
+      //       break;
+      //     case '320112': //江北新区
+      //       this.centers = [32.03613281, 118.78211975];
+      //       break;
+      //     case '320113': //栖霞区
+      //       this.centers = [32.137307901838255, 118.9995913711449];
+      //       break;
+      //     case '320102': //玄武区
+      //       this.centers = [32.062475576087024, 118.8436456413333];
+      //       break;
+      //     case '320106': //鼓楼区
+      //       this.centers = [32.08265178165445, 118.75812113098544];
+      //       break;
+      //     case '320111': //浦口区
+      //       this.centers = [31.943626916199264, 118.35524238617728];
+      //       break;
+      //     case '320104': //秦淮区
+      //       this.centers = [32.01143013679143, 118.81736758064937];
+      //       break;
+      //     case '320105': //建邺区
+      //       this.centers = [32.0275950355325, 118.70538415685343];
+      //       break;
+      //     case '320114': //雨花台区
+      //       this.centers = [31.94205101079558, 118.69497417187063];
+      //       break;
+      //     case '320115': //江宁区
+      //       this.centers = [31.865733721334237, 118.79198266097109];
+      //       break;
+      //     case '320124 ': //溧水区
+      //       this.centers = [31.726803147547287, 119.1224894259463];
+      //       break;
+      //     case '320125 ': //高淳区
+      //       this.centers = [31.3703836314495, 119.19202124153713];
+      //       break;
+      //     default:
+      //
+      //   }
+      // }
 
       getSearch(this.centers);
     },
