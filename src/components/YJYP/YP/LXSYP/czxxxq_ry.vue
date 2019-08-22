@@ -107,22 +107,6 @@
         <hr/>
       <el-row :gutter="3"  class="mb-6">
         <el-col :span="8" class="input-item">
-          <span class="input-text">常住境外人员业务编号：</span>
-          <span class="input-input detailinput">  {{czinfo.businessNO}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">居住地业务编号：</span>
-          <span class="input-input detailinput">  {{czinfo.inhabiBusinessNO}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-         <span class="input-text">工作地业务编号：</span>
-         <span class="input-input detailinput">  {{czinfo.workplaceBusinessNO}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-         <span class="input-text">人员编号：</span>
-         <span class="input-input detailinput">  {{czinfo.personNO}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
           <span class="input-text">证件内人数：</span>
           <span class="input-input detailinput">  {{czinfo.qtyOfParty}}</span>
         </el-col>
@@ -216,54 +200,6 @@
             <span class="input-text">当前工作任职起始时间：</span>
             <span class="input-input detailinput">  {{czinfo.workingBeginTime}}</span>
           </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">当前工作任职终止时间：</span>
-            <span class="input-input detailinput">  {{czinfo.workingEndTime}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">当前状态类型：</span>
-            <span class="input-input detailinput">  {{czinfo.workingState_desc}}</span>
-          </el-col>
-          <el-col :span="8" class="input-item">
-            <span class="input-text">当前工作初始状态产生时间：</span>
-            <span class="input-input detailinput">  {{czinfo.workingOriStateTime}}</span>
-          </el-col>
-
-      </el-row>
-      <hr/>
-      <el-row :gutter="3" style="">
-        <el-col :span="8" class="input-item">
-          <span class="input-text">最后更新数据来源：</span>
-          <span class="input-input detailinput">  {{czinfo.lastUpStringDataSource}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">更新级别：</span>
-          <span class="input-input detailinput">  {{czinfo.upStringLevel}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">备注：</span>
-          <span class="input-input detailinput">  {{czinfo.remarks}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">省服务器上报此记录的时间：</span>
-          <span class="input-input detailinput">  {{czinfo.reportTime}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">省代码：</span>
-          <span class="input-input detailinput">  {{czinfo.province}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">居住地城市：</span>
-          <span class="input-input detailinput">  {{czinfo.inhabiCity}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">工作地城市：</span>
-          <span class="input-input detailinput">  {{czinfo.workplaceCity}}</span>
-        </el-col>
-        <el-col :span="8" class="input-item">
-          <span class="input-text">新建标识：</span>
-          <span class="input-input detailinput">  {{czinfo.create}}</span>
-        </el-col>
       </el-row>
     </div>
     <div v-show="page==1" style="padding:0 15px;">

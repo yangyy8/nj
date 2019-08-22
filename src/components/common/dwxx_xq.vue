@@ -168,35 +168,24 @@
 <script>
 export default {
   name:'DWXX',
-  props:['type','xid'],
+  props:['type','xid','random'],
   data(){
     return{
       dwinfo:{},
-      page:this.type,
-      id:this.xid,
-      pp:{},
     }
   },
   mounted(){
       this.initData();
    },
   watch:{
-      type: function(val){
-        this.page=val;
-      },
-      xid:{
-        handler(val){
-        this.id=val;
-        this.initData()
-      },
-      immediate: true
-      },
-    },
-
+      random:function(newVal,oldVal){
+        this.random=newVal;
+        this.initData();
+      }
+  },
   methods:{
     initData(){
-      switch (this.page) {
-
+      switch (this.type) {
         case 2://人员画像
             this.getData2();
             break;
@@ -204,16 +193,17 @@ export default {
       }
     },
     getData2(){
-      this.pp.RGUID=this.id;
-      let p = {
-        "pd": this.pp
-      };
-       this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', p,
-        r => {
-          if(r.data.resultList.length>0){
-          this.dwinfo=r.data.resultList[0];
-          }
-      })
+      this.dwinfo = this.xid;
+      // this.pp.RGUID=this.id;
+      // let p = {
+      //   "pd": this.pp
+      // };
+      //  this.$api.post(this.Global.aport3+'/ryhx/getczgzdxx', p,
+      //   r => {
+      //     if(r.data.resultList.length>0){
+      //     this.dwinfo=r.data.resultList[0];
+      //     }
+      // })
     },
 
   },

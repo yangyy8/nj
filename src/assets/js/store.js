@@ -60,6 +60,8 @@ var store = new Vuex.Store({
     rydylb:[],
     sqqzzl:[],
     jzztcz:[],
+    hyzt:[],
+    zjxy:[],
     tabList:localStorage.getItem('tabList') || '',
   },
   mutations: {
@@ -102,6 +104,12 @@ var store = new Vuex.Store({
     getKey(state, data) {
       localStorage.setItem('Key', data)
       state.key = data;
+    },
+    getHyzt(state, data){
+      state.hyzt = data;
+    },
+    getZjxy(state, data){
+      state.zjxy = data;
     },
     getSsdw(state, data) {
       state.ssdw = data;
@@ -231,6 +239,18 @@ var store = new Vuex.Store({
     }
   },
   actions: {
+    getZjxy(context){
+      api.get(global_.aport1 + global_.zjxy, null,
+        r => {
+          context.commit('getZjxy', ToArray(r.data))
+        })
+    },
+    getHyzt(context){
+      api.get(global_.aport1 + global_.hyzt, null,
+        r => {
+          context.commit('getHyzt', ToArray(r.data))
+        })
+    },
     getJzztcz(context){
       api.get(global_.aport1 + global_.jzztcz, null,
         r => {

@@ -264,8 +264,9 @@ export default {
     this.$store.dispatch('getGljb');
     this.userCode=this.$store.state.uname;
     this.userName=this.$store.state.uid;
-    this.orgCode=this.$store.state.orgname;
-    this.orgName=this.$store.state.orgid
+    this.orgName=this.$store.state.orgname;
+    this.orgCode=this.$store.state.orgid
+    console.log(this.$store.state.orgname,this.$store.state.orgid)
    },
    activated(){
      let _this = this;

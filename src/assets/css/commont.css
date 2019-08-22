@@ -265,15 +265,16 @@
   border:1px solid #eee
 }
 .t-el-content{
+  color: #606266;
    display: flex;
-   font-size: 14px;
+   font-size: 13px;
    padding: 5px 0px;
  }
  .t-el-text{
    white-space: nowrap;
  }
  .t-el-sub{
-   width: 56%;
+   width: 60%;
    word-wrap: break-word;
    flex-wrap: wrap;
  }

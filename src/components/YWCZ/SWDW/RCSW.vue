@@ -24,49 +24,47 @@
               <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{wljinfo.SBSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='zxx'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">签证种类：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">停留有效期：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">婚姻状态：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">宗教信仰：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">学历：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">职业资格：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">授课课程：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">电子邮箱：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">境内联系人：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">联系人手机号码：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">居住地址：</div><div class="t-el-sub">{{zxxinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{zxxinfo.YWX}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{zxxinfo.YWM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{zxxinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{zxxinfo.ZJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">签证种类：</div><div class="t-el-sub">{{zxxinfo.QZZL_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">停留有效期：</div><div class="t-el-sub">{{zxxinfo.TLYXQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">婚姻状态：</div><div class="t-el-sub">{{zxxinfo.HYZT}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">宗教信仰：</div><div class="t-el-sub">{{zxxinfo.ZJXY}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">学历：</div><div class="t-el-sub">{{zxxinfo.XL}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">职业资格：</div><div class="t-el-sub">{{zxxinfo.ZYZG}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">授课课程：</div><div class="t-el-sub">{{zxxinfo.SKKC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{zxxinfo.SJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">电子邮箱：</div><div class="t-el-sub">{{zxxinfo.DZYX}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">境内联系人：</div><div class="t-el-sub">{{zxxinfo.JNLXR}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">联系人手机号码：</div><div class="t-el-sub">{{zxxinfo.LXRSJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">居住地址：</div><div class="t-el-sub">{{zxxinfo.JZDZ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='gx'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{gxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{gxinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">核查时间：</div><div class="t-el-sub">{{gxinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gxinfo.YWX}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gxinfo.YWM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gxinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{gxinfo.ZJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{gxinfo.SBDWMC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">核查时间：</div><div class="t-el-sub">{{gxinfo.HCSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='slry'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">失联时间：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">简要情况：</div><div class="t-el-sub">{{slryinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{slryinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{slryinfo.XM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{slryinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{slryinfo.HZHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">失联时间：</div><div class="t-el-sub">{{slryinfo.SLSJ}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">简要情况：</div><div class="t-el-sub">{{slryinfo.JYQK}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{slryinfo.SJHM}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='jlxk'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">签证有效期：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">申请作废原因：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">申请时间：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{jlxkinfo}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{jlxkinfo.XM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{jlxkinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{jlxkinfo.HZHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">签证有效期：</div><div class="t-el-sub">{{jlxkinfo.QZYXQ}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">申请作废原因：</div><div class="t-el-sub">{{jlxkinfo.SQZFYY}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">申请时间：</div><div class="t-el-sub">{{jlxkinfo.SQSJ}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{jlxkinfo.SBDWMC}}</div></div>
             </div>
           </div>
 
@@ -452,13 +450,15 @@
                <el-row>
                  <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                    <span class="input-text" style="width:70px!important">核查状态：</span>
-                   <el-select v-model="pc.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                     <el-option
+                   <el-select v-model="pc.HCZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input" :disabled="!hcShow">
+                     <el-option label="否" value="0"></el-option>
+                     <el-option label="是" value="1"></el-option>
+                     <!-- <el-option
                        v-for="item in $store.state.shzt"
                        :key="item.dm"
                        :label="item.dm+' - '+item.mc"
                        :value="item.dm">
-                     </el-option>
+                     </el-option> -->
                    </el-select>
                  </el-col>
                </el-row>
@@ -468,13 +468,13 @@
                     type="textarea"
                     :autosize="{ minRows: 3, maxRows: 3}"
                     placeholder="核查备注(不超过100个字符)"
-                    v-model="pc.CHANGE_RESON"
-                    :disabled="false">
+                    v-model="pc.HCBZ"
+                    :disabled="!hcShow">
                   </el-input>
                 </el-col>
                 <el-col :span="4"  class="down-btn-area">
-                  <el-button type="primary" v-if=""  size="small" class="mb-5" @click="addSaves()">确定</el-button>
-                  <el-button type="warning" size="small" class="m0" @click="$router.go(-1)">返回</el-button>
+                  <el-button type="primary" v-if="hcShow"  size="small" class="mb-5" @click="addSaves()">确定</el-button>
+                  <el-button type="warning" size="small" class="m0" @click="$router.go(-1)" v-show="false">返回</el-button>
                 </el-col>
               </el-row>
               <el-row type="flex">
@@ -585,7 +585,9 @@ export default {
       jlxkinfo:{},
 
       pc:{},
+      pcl:{},
       withname:this.$store.state.uname,
+      hcShow:true,
 
       rybh:'',
       row:{},
@@ -597,8 +599,20 @@ export default {
     this.getData();
   },
   activated(){
+    this.asjCurrentPage=1;
+    this.sjCurrentPage=1;
+    this.CurrentPage=1;
+    this.CurrentPage1=1;
+    this.CurrentPage5=1;
     this.row = this.$route.query.row
     this.rybh=this.$route.query.row.RYBH;
+    this.hcShow=true;
+    this.pc.HCBZ='';
+    if(this.row.CLZT=='0'){
+      this.hcShow=false;
+      this.pc.HCZT = this.row.HCZT;
+      this.pc.HCBZ = this.row.HCBZ;
+    }
     this.getData();
   },
   methods:{
@@ -611,21 +625,25 @@ export default {
         this.getData0(this.asjCurrentPage,this.asjpageSize);
         this.getTBRY();
       }else if(this.$route.query.hiType=='zxx'){
+        this.zxxinfo = this.row;
         this.getData0(this.asjCurrentPage,this.asjpageSize);
         this.getData1(this.sjCurrentPage,this.sjpageSize);
         this.getLzxx(this.CurrentPage,this.pageSize);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
         this.getQZXX(this.CurrentPage5,this.pageSize5);
       }else if(this.$route.query.hiType=='gx'){
+        this.gxinfo = this.row;
         this.getLzxx(this.CurrentPage,this.pageSize);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
         this.getQZXX(this.CurrentPage5,this.pageSize5);
       }else if(this.$route.query.hiType=='slry'){
+        this.slryinfo = this.row;
         this.getData0(this.asjCurrentPage,this.asjpageSize);
         this.getData1(this.sjCurrentPage,this.sjpageSize);
         this.getLzxx(this.CurrentPage,this.pageSize);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
       }else if(this.$route.query.hiType=='jlxk'){
+        this.jlxkinfo = this.row;
         this.getLzxx(this.CurrentPage,this.pageSize);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
         this.getQZXX(this.CurrentPage5,this.pageSize5);
@@ -781,34 +799,66 @@ export default {
      this.QZDialogVisible = true;
    },
     addSaves(){
-      if(this.pc.CHANGE_RESON=="" || this.pc.CHANGE_RESON==undefined){
+      if(this.pc.HCBZ=="" || this.pc.HCBZ==undefined){
         this.$alert('核查结果不能为空！', '提示', {
           confirmButtonText: '确定',
         });
         return;
       }
-      this.pcl.YJID=this.row.YJID;
-      this.pcl.CLJG=this.pc.CHANGE_RESON;
-      this.pcl.SHZT=this.pc.SHZT;
-      this.pcl.CLDW=this.$store.state.orgname;
-      this.pcl.CLR=this.withname;
-      let p = {
-        "pd":this.pcl
-      };
-      let url='/warningInfoController/saveCLJG';
-      if(this.$route.query.sh_special){//教育厅
-        url="/warningInfoController/saveLXS_ZSYJCLJG"
+      let url="";
+      this.pcl={
+        HCZT:this.pc.HCZT,
+        HCBZ:this.pc.HCBZ,
+        HCCLRDW:this.$store.state.orgname,
+        HCCLR:this.withname,
       }
-      this.$api.post(this.Global.aport4+url, p,
-        r => {
-           if(r.success){
-             this.$message({
-               message: '保存成功',
-               type: 'success'
-             });
-             this.$router.go(-1);
-           }
-        })
+      if(this.$route.query.hiType=='slry'){
+        this.pcl.DTID=this.row.DTID,
+        url="/SLRYSBWarningInfoController/saveCLJG"
+      }else if(this.$route.query.hiType=='jlxk'){
+        this.pcl.DTID=this.row.DTID,
+        url="/JLXKXBZFWarningInfoController/saveCLJG"
+      }else{
+        this.pcl.YJID=this.row.YJID,
+        url="/SWDWWarningInfoController/saveCLJG"
+      }
+      this.$confirm('是否将案由反馈至外网?', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'warning',
+         center: true
+       }).then(() => {
+         this.pcl.SFFK='1'
+         let p = {
+           "pd":this.pcl
+         };
+         this.$api.post(this.Global.aport4+url, p,
+           r => {
+              if(r.success){
+                this.$message({
+                  message: '反馈成功',
+                  type: 'success'
+                });
+                this.$router.go(-1);
+              }
+           })
+       }).catch(() => {
+         this.pcl.SFFK='0';
+         let p = {
+           "pd":this.pcl
+         };
+         this.$api.post(this.Global.aport4+url, p,
+           r => {
+              if(r.success){
+                this.$message({
+                  message: '取消反馈，保存成功',
+                  type: 'success'
+                });
+                this.$router.go(-1);
+              }
+           })
+       });
+
     },
   }
 }
