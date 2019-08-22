@@ -474,7 +474,7 @@
                 </el-col>
                 <el-col :span="4"  class="down-btn-area">
                   <el-button type="primary" v-if="hcShow"  size="small" class="mb-5" @click="addSaves()">确定</el-button>
-                  <el-button type="warning" size="small" class="m0" @click="$router.go(-1)">返回</el-button>
+                  <el-button type="warning" size="small" class="m0" @click="$router.go(-1)" v-show="false">返回</el-button>
                 </el-col>
               </el-row>
               <el-row type="flex">

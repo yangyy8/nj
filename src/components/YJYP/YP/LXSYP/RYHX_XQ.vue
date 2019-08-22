@@ -306,8 +306,8 @@
                 label="签发机关">
               </el-table-column>
               <el-table-column
-                prop="degreeCode_desc"
-                label="身份">
+                prop="inhabiState_desc"
+                label="居住状态">
               </el-table-column>
               <el-table-column
                 prop="resideReason_desc"
@@ -729,7 +729,7 @@
       </el-dialog>
       <!-- 单位信息详情 -->
      <el-dialog title="单位信息详情" :visible.sync="dwDialogVisible"  custom-class="big_dialog" :append-to-body="false" :modal="false">
-               <DWXX :type="type" :xid="xid"></DWXX>
+               <DWXX :type="type" :xid="xid" :random="new Date().getTime()"></DWXX>
                   <div slot="footer" class="dialog-footer">
                     <el-button @click="dwDialogVisible = false" size="small">取 消</el-button>
                   </div>
@@ -1443,7 +1443,9 @@ export default{
       this.czDialogVisible=true;
     },
     detailsdw(n){
-      this.xid=n.RGUID;
+      // this.xid=n.RGUID;
+      // this.type=2;
+      this.xid=n;
       target.scrollIntoView();
       this.dwDialogVisible=true;
     },

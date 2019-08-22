@@ -16,18 +16,18 @@ const aport1="api-permission";//大师网关
 const aport2="api-yewu";//左星海网关
 // const aport2="http://192.168.3.217:9439";//左星海
 // const aport3="http://10.33.72.144:9439";//正式环境
-// const aport3="api-yewu";//石飞网关
-const aport3="http://10.0.30.161:9439";//石飞
+const aport3="api-yewu";//石飞网关
+// const aport3="http://10.0.30.161:9439";//石飞
 // const aport4="http://10.33.72.144:9440";//正式环境
 const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
 
- const aport6="http://10.33.72.217:9447";//孙
-// const aport6="http://192.168.3.217:9447";
- const aport7="http://10.33.72.218:9436";//游
-// const aport7="http://192.168.3.217:9436";
+ // const aport6="http://10.33.72.217:9447";//孙
+const aport6="http://192.168.3.217:9447";
+ // const aport7="http://10.33.72.218:9436";//游
+const aport7="http://192.168.3.217:9436";
 
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
@@ -73,6 +73,8 @@ const bzlb="/service/getRedisDataByDm?tablename=HX_BZLB"//办证类别
 const sqsy="/service/getRedisDataByDm?tablename=HX_SQSY"//申请事由
 const rydylb="/service/getRedisDataByDm?tablename=HX_RYDYLB"//人员地域类别
 const sqqzzl="/service/getRedisDataByDm?tablename=HX_SQQZZL"//申请签证种类
+const hyzt="/service/getRedisDataByDm?tablename=DM_HYZT"//婚姻状态
+const zjxy="/service/getRedisDataByDm?tablename=DM_ZJXY"//宗教信仰
 const tablists=[];
 export default
 {
@@ -94,6 +96,6 @@ export default
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
   dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb,ymzt,ymzl,sldw,ymsqzt,ymqzzl,
-  bzlb,sqsy,rydylb,sqqzzl,jzztcz
+  bzlb,sqsy,rydylb,sqqzzl,jzztcz,hyzt,zjxy
 
 }

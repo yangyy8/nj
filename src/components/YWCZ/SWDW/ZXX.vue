@@ -64,7 +64,7 @@
                     <span class="input-text">婚姻状态：</span>
                     <el-select v-model="pd.HYZT" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.rjqzzl"
+                        v-for="item in $store.state.hyzt"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
@@ -75,7 +75,7 @@
                     <span class="input-text">宗教信仰：</span>
                     <el-select v-model="pd.ZJXY" filterable clearable multiple collapse-tags default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
-                        v-for="item in $store.state.rjqzzl"
+                        v-for="item in $store.state.zjxy"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
@@ -264,6 +264,8 @@ export default {
     this.$store.dispatch('getRjqzzl');
     this.$store.dispatch('getLgyj');
     this.$store.dispatch('getGljb');
+    this.$store.dispatch('getHyzt');
+    this.$store.dispatch('getZjxy');
     this.userCode=this.$store.state.uname;
     this.userName=this.$store.state.uid;
     this.orgCode=this.$store.state.orgname;
