@@ -723,7 +723,6 @@ export default {
   data(){
     return{
       lxsinfo:{},
-      pp:{},
     }
   },
   mounted(){
@@ -738,14 +737,13 @@ export default {
 
   methods:{
     initData(){
-      switch (this.page) {
+      switch (this.type) {
         case 2://人员画像&在校学生突发增量预警
             this.getData2();
             break;
         default:
 
       }
-
     },
     getData2(){
       this.lxsinfo = this.xid;

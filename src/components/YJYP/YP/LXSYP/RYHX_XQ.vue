@@ -306,12 +306,12 @@
                 label="签发机关">
               </el-table-column>
               <el-table-column
-                prop="inhabiState_desc"
-                label="居住状态">
+                prop="degreeCode_desc"
+                label="身份">
               </el-table-column>
               <el-table-column
-                prop="resideReason_desc"
-                label="居留事由">
+                prop="inhabiState_desc"
+                label="居住状态">
               </el-table-column>
               <el-table-column
                 label="操作" width="120">
