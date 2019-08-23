@@ -214,7 +214,6 @@
 
       <el-tree
         :data="menudata"
-
         show-checkbox
         default-expand-all
         node-key="dm"

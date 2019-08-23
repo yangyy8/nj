@@ -6,7 +6,7 @@
           <el-col :span="8">
             <el-tree
               :data="menudata"
-              :check-strictly="true"
+
               show-checkbox
               default-expand-all
               node-key="dm"
@@ -364,10 +364,11 @@ export default {
         return false;
       }
 
-      for (var i = 0; i < array.length; i++) {
-
-        childrenlist.push(array[i].dm);
-      }
+      // for (var i = 0; i < array.length; i++) {
+      //
+      //   childrenlist.push(array[i].dm);
+      // }
+      childrenlist = this.$refs.tree.getHalfCheckedKeys().concat(this.$refs.tree.getCheckedKeys());
       var url = '';
       var ff = new FormData();
       if (n == 0) {

@@ -59,9 +59,10 @@ export default {
   },
   computed: {
       key() {
-       if(this.$store.state.key!=99){
-         return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
-       }
+        console.log(this.$store.state.key);
+         if(this.$store.state.key!=99){
+           return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
+         }
       }
   },
   watch: {

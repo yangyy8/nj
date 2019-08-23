@@ -551,7 +551,10 @@ export default {
       if (this.pd.sspcs != undefined && this.pd.sspcs != "") {
         ssdw = this.pd.sspcs.substr(0, 12);
       } else {
-        ssdw = this.pd.ssfj.substr(0, 6);
+        if (this.pd.ssfj == undefined || this.pd.ssfj == null || this.pd.ssfj == ""){}else {
+          ssdw = this.pd.ssfj.substr(0, 6);
+        }
+
       }
       console.log(ssdw);
       var searchResult = [];

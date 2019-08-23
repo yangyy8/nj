@@ -57,7 +57,7 @@
           <el-col :span="8">
             <el-tree
               :data="menudata"
-              :check-strictly="true"
+
               show-checkbox
               default-expand-all
               node-key="dm"
@@ -92,6 +92,7 @@ export default {
       },
       defaultChecked:[],
       roleid:'',
+      menurr: [],
     }
   },
   mounted() {
@@ -148,10 +149,36 @@ export default {
       this.$api.post(url1, p,
        r => {
          this.menudata = r.data;
-         this.defaultChecked=lists;
+         var arr = r.data;
+         console.log(arr);
+         this.menurr = [];
+         this.uniteChildSame(arr);
+         console.log('menurr',  this.menurr.length);
+         this.defaultChecked = this.menurr;
+
        });
 
 
+    },
+    uniteChildSame(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].checked == true || arr[i].children != null) {
+            this.selectChildSame(arr[i].children);
+        }
+      }
+    },
+    selectChildSame(arr){
+
+      for (var i = 0; i < arr.length; i++) {
+
+            if(arr[i].children!=null){
+                this.selectChildSame(arr[i].children);
+            }else {
+                if(arr[i].checked==true){
+                  this.menurr.push(arr[i].dm);
+                }
+            }
+      }
     },
     save(){
       let checkList=this.$refs.tree.getCheckedNodes();
@@ -160,14 +187,14 @@ export default {
       console.log('checkList',checkList);
 
     if(checkList.length==0){
-             this.$message.error('请选择功能项！');return false;
+         this.$message.error('请选择功能项！');return false;
     }
 
-     for (var i = 0; i < array.length; i++) {
-
-        childrenlist.push(array[i].dm);
-     }
-
+     // for (var i = 0; i < array.length; i++) {
+     //
+     //    childrenlist.push(array[i].dm);
+     // }
+     childrenlist = this.$refs.tree.getHalfCheckedKeys().concat(this.$refs.tree.getCheckedKeys());
       var ff=new FormData();
       ff.append("token",this.$store.state.token);
       ff.append("roleid",this.roleid);
