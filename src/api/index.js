@@ -20,7 +20,7 @@ var axios = require('axios');
 import store from '../assets/js/store' //注册store
 import { Message } from 'element-ui';
 import { Loading } from 'element-ui';
-import global_ from '../Global.js'
+import global_ from '../Global.js';
 // 自定义判断元素类型JS
 function toType (obj) {
     return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()

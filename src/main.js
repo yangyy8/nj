@@ -13,6 +13,9 @@ import pl from './assets/js/pl.js'
 import router from './router'
 import './assets/icon/iconfont.css'
 import vueValidateEasy from './assets/js/vue-validate-easy'
+import VueImageSwipe from 'vue-image-swipe';
+import 'vue-image-swipe/dist/vue-image-swipe.css';
+
 var validators ={
    cname(val){
      var len = 0;
@@ -44,6 +47,7 @@ var validators ={
 // });
 Vue.use(vueValidateEasy,{validators});
 Vue.use(ElementUI);
+Vue.use(VueImageSwipe);
 Vue.prototype.$api = api;
 Vue.config.productionTip = false
 Vue.prototype.Global = global_;

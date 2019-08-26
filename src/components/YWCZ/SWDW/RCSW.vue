@@ -74,14 +74,14 @@
                border
                style="width: 100%" class="stu-table">
                <el-table-column
-                 prop="XM"
+                 prop="FILENAME"
                  label="附件名">
                </el-table-column>
                <el-table-column
                  label="操作">
                  <template slot-scope="scope">
-                   <el-button type="text" class="a-btn"  title="预览"  icon="el-icon-view" @click=""></el-button>
-                   <el-button type="text" class="a-btn"  title="下载"  icon="el-icon-download" @click=""></el-button>
+                   <el-button type="text" class="a-btn"  title="预览"  icon="el-icon-view" @click="view(scope.row.NR_DESC)"></el-button>
+                   <el-button type="text"  class="a-btn"  title="下载" icon="el-icon-download" @click="downloadImg(scope.row.NR_DESC,scope.row.FILENAME)"></el-button>
                  </template>
                </el-table-column>
              </el-table>
@@ -616,9 +616,30 @@ export default {
     this.getData();
   },
   methods:{
+    getGzcFile(){
+      this.$api.post(this.Global.aport4+'/ES_SWDW_PAPERController/getInfoList',{pd:{YWDTID:this.row.DTID}},
+       r =>{
+         if(r.success){
+           this.tableDatagzc = r.data.resultList;
+         }
+       })
+    },
+    downloadImg(data,name){
+      var a = document.createElement('a');
+      a.href = data;
+      a.setAttribute("download", name)
+      a.click();
+    },
+    view(data){
+      this.$imagePreview({
+        images: [data],
+        index: 0,
+      })
+    },
     getData(){
       if(this.$route.query.hiType=='gzc'){
         this.gzinfo = this.row;
+        this.getGzcFile();
         this.getData0(this.asjCurrentPage,this.asjpageSize);
       }else if(this.$route.query.hiType=='wlj'){
         this.wljinfo = this.row;
