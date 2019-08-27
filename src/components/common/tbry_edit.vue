@@ -395,7 +395,6 @@ export default {
       }
       this.uploadIconData.fileName=this.$refs.upload.uploadFiles[0].name;
 
-      console.log(encodeURIComponent(this.$refs.upload.uploadFiles));
       this.$refs.upload.submit();
     },
     downloadM(data,tt,fname) {

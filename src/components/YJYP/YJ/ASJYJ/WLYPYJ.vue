@@ -266,7 +266,7 @@ export default {
       },1000)
   },
   destroyed(){
-    console.log('我要离开')
+    // console.log('我要离开')
   },
   mounted() {
     this.$store.dispatch('getGjdq');

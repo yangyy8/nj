@@ -12,7 +12,7 @@ activated(){
    this.$router.push({name:'LXSCRJYJ_X',query:{type:2}});
 },
   mounted(){
-
+this.$router.push({name:'LXSCRJYJ_X',query:{type:2}});
   },
 
 }

@@ -11,7 +11,7 @@ export default {
        this.$router.push({name:'LXSSKYJ_X',query:{type:1}});
   },
   mounted(){
-
+this.$router.push({name:'LXSSKYJ_X',query:{type:1}});
   },
 }
 </script>
