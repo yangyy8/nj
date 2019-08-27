@@ -130,7 +130,7 @@
                         </el-option>
                       </el-select>
                     </el-col>
-                    <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                    <!-- <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                       <span class="yy-input-text">数据来源：</span>
                       <el-select v-model="pd.SJLY" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
                         <el-option v-for="item in $store.state.sjly"
@@ -140,7 +140,7 @@
                         >
                         </el-option>
                       </el-select>
-                    </el-col>
+                    </el-col> -->
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                       <span class="yy-input-text">入住日期：</span>
                       <div class="yy-input-input t-flex t-date">
