@@ -421,6 +421,21 @@ import CZXX from '../../../common/czxx_xq'
     drawLine(legend,xAxis,series){
       this.lineChart = echarts.init(document.getElementById('echarts'));
       window.onresize = echarts.init(document.getElementById('echarts')).resize;
+      let label={
+          normal: {
+              show: true,
+              position: 'top'
+          }
+       }
+       for(var i=0;i<series.length;i++){
+         let s=0;
+         for(var j=0;j<series[i].data.length;j++){
+           s+=series[i].data[j];
+           if(s!=0){
+             series[i].label=label;
+           }
+         }
+       }
       let that = this;
       var colors = ['#5793f3', '#d14a61', '#675bba'];
               // 折线图初始化

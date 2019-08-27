@@ -80,8 +80,8 @@
                <el-table-column
                  label="操作">
                  <template slot-scope="scope">
-                   <el-button type="text" class="a-btn"  title="预览"  icon="el-icon-view" @click="view(scope.row.NR_DESC)"></el-button>
-                   <el-button type="text"  class="a-btn"  title="下载" icon="el-icon-download" @click="downloadImg(scope.row.NR_DESC,scope.row.FILENAME)"></el-button>
+                   <el-button type="text" class="a-btn"  title="预览"  icon="el-icon-view" @click="view(scope.row.NR_DESC,scope.row.SJLX)"></el-button>
+                   <el-button type="text"  class="a-btn"  title="下载" icon="el-icon-download" @click="downloadI(scope.row.NR_DESC,scope.row.FILENAME,scope.row.SJLX)"></el-button>
                  </template>
                </el-table-column>
              </el-table>
@@ -624,17 +624,23 @@ export default {
          }
        })
     },
-    downloadImg(data,name){
-      var a = document.createElement('a');
-      a.href = data;
-      a.setAttribute("download", name)
-      a.click();
+    downloadI(data,name,type){
+      if(type=='tp'){
+        var a = document.createElement('a');
+        a.href = data;
+        a.setAttribute("download", name)
+        a.click();
+      }
+
     },
-    view(data){
-      this.$imagePreview({
-        images: [data],
-        index: 0,
-      })
+    view(data,type){
+      if(type=='tp'){
+        this.$imagePreview({
+          images: [data],
+          index: 0,
+        })
+      }
+
     },
     getData(){
       if(this.$route.query.hiType=='gzc'){
