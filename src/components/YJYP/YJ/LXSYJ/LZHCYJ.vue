@@ -12,8 +12,7 @@ activated(){
      this.$router.push({name:'LZHCYJ_X',query:{type:3}});
 },
   mounted(){
-
- this.$router.push({name:'LZHCYJ_X',query:{type:3}});
+    this.$router.push({name:'LZHCYJ_X',query:{type:3}});
   },
 
 }

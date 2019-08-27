@@ -341,6 +341,7 @@ export default {
     }
   },
   activated(){
+     this.Global.indexstate=1;
     this.selectionAll5=[];
     this.selectionReal5=[];
 
@@ -397,7 +398,7 @@ export default {
        this.getRules();
        this.ruleType = this.keyHis;
      }
-     this.Global.indexstate=1;
+
      let _this = this;
      setTimeout(function(){
        console.log('_this.ruleType',_this.ruleType)
@@ -406,6 +407,7 @@ export default {
      },1000)
   },
   mounted() {
+    this.Global.indexstate=1;
     console.log('mounted',this.$store.state.tabList),
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');

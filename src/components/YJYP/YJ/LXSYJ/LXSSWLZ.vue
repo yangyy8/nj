@@ -9,7 +9,7 @@ export default {
 
 },
 activated(){
-     this.$router.push({name:'LXSSWLZ_X',query:{type:0}});
+    this.$router.push({name:'LXSSWLZ_X',query:{type:0}});
 },
   mounted(){
    this.$router.push({name:'LXSSWLZ_X',query:{type:0}});
