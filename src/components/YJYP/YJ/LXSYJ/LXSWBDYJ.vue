@@ -13,7 +13,7 @@ activated(){
 },
   mounted(){
 
-
+   this.$router.push({name:'LXSWBDYJ_X',query:{type:6}});
   },
 
 }

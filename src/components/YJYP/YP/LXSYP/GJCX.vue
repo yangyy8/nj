@@ -476,9 +476,9 @@
   <el-button type="success" size="small" @click="$router.go(-1)">返回</el-button>
   </div>
 <div class="main">
-   <el-row   :gutter="4">
-  <el-col :sm="24" :md="12" :lg="6" :key="index" v-for="(item,index) in items">
-     <el-card class="box-card" style="margin:5px 5px;">
+   <el-row   :gutter="2">
+  <el-col :sm="24" :md="12" :lg="8" :key="index" v-for="(item,index) in items">
+     <el-card class="box-card" style="margin:5px 5px; min-width:350px;">
        <el-row type="flex">
        <el-col :span="2" style="padding:10px;width:140px;">
          <div class="shover"  @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
@@ -488,9 +488,9 @@
        </el-col>
        <el-col :span="22">
          <div class="shover" @click="$router.push({name:'RYHX_XQ',query:{zjhm:item.zjhm,zjhmes:content,stype:type,gjdq:item.gjdq}})">
-           <div class="list">
+           <div class="list" style=" padding-left:10px;">
              <p style="margin-bottom:15px!important"><b>{{item.ywxm}}</b></p>
-             <el-row :gutter="1" style="line-height:22px;">
+             <el-row :gutter="1">
                    <el-col :span="24" class="t-el-content"><div class="t-el-text">性别：</div><div class="t-el-sub">{{item.xb}}</div></el-col>
                    <el-col :span="24" class="t-el-content"><div class="t-el-text">出生日期：</div><div class="t-el-sub">{{item.csrq}}</div></el-col>
                    <el-col :span="24" class="t-el-content"><div class="t-el-text">国家地区：</div><div class="t-el-sub">{{item.gjdqmc}}</div></el-col>
