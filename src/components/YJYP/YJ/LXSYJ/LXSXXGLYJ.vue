@@ -17,13 +17,13 @@
                   <span class="input-text">预警时间：</span>
                   <div class="input-input t-flex t-date">
                     <el-date-picker
-                       v-model="pd0.beginBJSJ" format="yyyy-MM-dd"
+                       v-model="pd.BJSJ_DateRange.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
                        placeholder="开始时间" >
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
-                        v-model="pd0.endBJSJ" format="yyyy-MM-dd"
+                        v-model="pd.BJSJ_DateRange.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
                         placeholder="结束时间" >
                     </el-date-picker>
@@ -244,9 +244,12 @@ export default {
       pageSize: 10,
       TotalResult: 0,
       pd: {BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
-      pd0:{},
-      pd1:{},
-      pd2:{},
+      pd0:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd1:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd2:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd3:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd4:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd5:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
       options: this.pl.ps,
       tableData: [],
       type:'',
@@ -307,24 +310,37 @@ export default {
       selectionReal8:[],
       yuid:[],
       tabList:this.$store.state.tabList,
-      currRouteName:'',
+
     }
   },
   watch:{
-    $route:function(val){
-      this.currRouteName = val.name;
-      // console.log('route',this.currRouteName,val);
+    pd:{
+        handler(newVal, oldVal){
+          console.log(newVal,oldVal,this.type);
+          if(this.type==5){
+            this.pd5=newVal;
+          }else if(this.type==3){
+            this.pd3=newVal;
+          }else if(this.type==0){
+            this.pd0=newVal;
+          }else if(this.type==1){
+            this.pd1=newVal;
+          }else if(this.type==2){
+            this.pd2=newVal;
+          }else if(this.type==4){
+            this.pd4=newVal;
+          }else if(this.type==6){
+            this.pd6=newVal;
+          }else if(this.type==7){
+            this.pd7=newVal;
+          }else if(this.type==8){
+            this.pd8=newVal;
+          }
+        },
+        deep:true
     }
   },
   activated(){
-    // console.log('activated',this.tabList,this.currRouteName)
-    // if(this.tabList+'_X'==this.currRouteName){
-    //   this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
-    //   this.ruleMap=null,
-    //   this.ruleNo=null,
-    //   this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
-    //   localStorage.removeItem("tabList");
-    // }
     this.selectionAll5=[];
     this.selectionReal5=[];
 
@@ -351,8 +367,25 @@ export default {
     this.rulesTotal=0,
     this.type=this.$route.query.type;
     // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
-    this.pd0={};
-
+    if(this.type==5){
+      this.pd = this.pd5;
+    }else if(this.type==3){
+      this.pd = this.pd3;
+    }else if(this.type==0){
+      this.pd = this.pd0;
+    }else if(this.type==1){
+      this.pd = this.pd1;
+    }else if(this.type==2){
+      this.pd = this.pd2;
+    }else if(this.type==4){
+      this.pd = this.pd4;
+    }else if(this.type==6){
+      this.pd = this.pd6;
+    }else if(this.type==7){
+      this.pd = this.pd7;
+    }else if(this.type==8){
+      this.pd = this.pd8;
+    }
     // console.log('this.type',this.type)
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
@@ -409,65 +442,7 @@ export default {
       if(this.type==6){this.selectionReal6=arrReal;this.selectionAll6=arr;this.multipleSelection6=mul}
       if(this.type==8){this.selectionReal8=arrReal;this.selectionAll8=arr;this.multipleSelection8=mul}
     },
-    handleSelectionChange(val){
-      // if(this.type==5){
-      //   this.multipleSelection5 = val;
-      //   for(var i in this.multipleSelection5){
-      //     this.selectionAll5.push(this.multipleSelection5[i]);
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll5)
-      // }
-      // if(this.type==3){
-      //   console.log(val)
-      //   this.multipleSelection3 = val;
-      //   for(var i in this.multipleSelection3){
-      //     this.selectionAll3.push(this.multipleSelection3[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll3)
-      // }
-      // if(this.type==0){
-      //   this.multipleSelection0 = val;
-      //   for(var i in this.multipleSelection0){
-      //     this.selectionAll0.push(this.multipleSelection0[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll0)
-      // }
-      // if(this.type==1){
-      //   this.multipleSelection1 = val;
-      //   for(var i in this.multipleSelection1){
-      //     this.selectionAll1.push(this.multipleSelection1[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll1)
-      // }
-      // if(this.type==2){
-      //   this.multipleSelection2 = val;
-      //   for(var i in this.multipleSelection2){
-      //     this.selectionAll2.push(this.multipleSelection2[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll2)
-      // }
-      // if(this.type==4){
-      //   this.multipleSelection4 = val;
-      //   for(var i in this.multipleSelection4){
-      //     this.selectionAll4.push(this.multipleSelection4[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll4)
-      // }
-      // if(this.type==6){
-      //   this.multipleSelection6 = val;
-      //   for(var i in this.multipleSelection6){
-      //     this.selectionAll6.push(this.multipleSelection6[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll6)
-      // }
-      // if(this.type==8){
-      //   this.multipleSelection8 = val;
-      //   for(var i in this.multipleSelection8){
-      //     this.selectionAll8.push(this.multipleSelection8[i])
-      //   }
-      //   this.handleSelectionFilter(this.selectionAll8)
-      // }
-    },
+    handleSelectionChange(val){},
     selectfn(val,b){
       if(this.type==5){
         this.multipleSelection5 = val;
@@ -824,9 +799,6 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd,map,notIn) {
-
-      this.pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
-      this.pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
       if(pd.hasOwnProperty('YJID')){
         delete pd['YJID']
       }
