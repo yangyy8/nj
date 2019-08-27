@@ -544,7 +544,7 @@ import LZXX from '../../../common/lzxx_xq'
         series: series
       },true)
       console.log('series',series)
-
+      that.lineChart.off('click');
       that.lineChart.on('click',function(params){
         let p={};
         p=Object.assign({}, that.pd);

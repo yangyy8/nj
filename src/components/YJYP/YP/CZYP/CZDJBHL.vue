@@ -476,6 +476,7 @@ import CZXX from '../../../common/czxx_xq'
               ],
               series: series
            },true)
+           that.lineChart.off('click');
            that.lineChart.on('click',function(params){
              let p={};
              p=Object.assign({},that.pd);
