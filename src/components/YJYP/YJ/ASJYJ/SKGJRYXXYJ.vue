@@ -8,11 +8,11 @@ export default {
     return {}
 
 },
-activated(){
-     this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
-},
+  activated(){
+    this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
+  },
   mounted(){
-   // this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
+    this.$router.push({name:'SKGJRYXXYJ_X',query:{type:8}});
   },
 
 }
