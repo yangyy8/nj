@@ -260,6 +260,7 @@ export default {
   },
 
   activated(){
+      console.log('11111')
       let _this = this;
       setTimeout(function(){
         _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);

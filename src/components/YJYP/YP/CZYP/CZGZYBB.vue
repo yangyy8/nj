@@ -455,7 +455,11 @@ import CZXX from '../../../common/czxx_xq'
       CZDialogVisible:false,
       specialKey:'',
       keyOne:'',
-      pdKey:{},
+      pdKey0:{},
+      pdKey1:{},
+      pdKey2:{},
+      pdKey3:{},
+      pdKey4:{},
       pdAll:{},
     }
   },
@@ -478,9 +482,9 @@ import CZXX from '../../../common/czxx_xq'
       this.specialKey = val;
       this.keyOne = valOne;
       if(this.page==0){
-        this.pdKey.SFDM = val;
-        this.pdKey.GJDQ = valOne;
-        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        this.pdKey0.SFDM = val;
+        this.pdKey0.GJDQ = valOne;
+        this.pdAll = Object.assign({},this.pd,this.pdKey0)
         p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/getgzybbryxx',p,
          r =>{
@@ -492,8 +496,8 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==1){
-        this.pdKey.TLSY = val;
-        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        this.pdKey1.TLSY = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey1)
         p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czlnsyryxx',p,
          r =>{
@@ -505,8 +509,8 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==2){
-        this.pdKey.SFDM = val;
-        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        this.pdKey2.SFDM = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey2)
         p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czsffbryxx',p,
          r =>{
@@ -518,8 +522,8 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==3){
-        this.pdKey.GJDQ = val;
-        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        this.pdKey3.GJDQ = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey3)
         p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
          r =>{
@@ -531,8 +535,8 @@ import CZXX from '../../../common/czxx_xq'
          })
       }
       if(this.page==4){
-        this.pdKey.GJDQ = val;
-        this.pdAll = Object.assign({},this.pd,this.pdKey)
+        this.pdKey4.GJDQ = val;
+        this.pdAll = Object.assign({},this.pd,this.pdKey4)
         p.pd=this.pdAll;
         this.$api.post(this.Global.aport2+'/gzybb/czpmq5gjdqryxx',p,
          r =>{
