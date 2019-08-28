@@ -32,8 +32,9 @@
         <div class="tab-content">
           <keep-alive>
             <router-view v-if="$store.state.key==99"></router-view>
+            <router-view v-if="$store.state.key==0" :key="key"></router-view>
           </keep-alive>
-         <router-view v-if="$store.state.key==0" :key="key"></router-view>
+
         </div>
       </el-main>
     </el-container>
@@ -59,7 +60,7 @@ export default {
   },
   computed: {
       key() {
-         if(this.$store.state.key!=99){
+         if(this.$store.state.key==0){
            return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
          }
       }
