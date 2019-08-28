@@ -71,7 +71,7 @@
                   <span class="input-text">签证种类：</span>
                   <el-select v-model="pd.QZZL" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
-                      v-for="item in $store.state.qzzl"
+                      v-for="item in $store.state.rjqzzl"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
@@ -504,7 +504,7 @@
          this.$store.dispatch("getXB");
          this.$store.dispatch("getSsdw");
          this.$store.dispatch("getZjzl");
-         this.$store.dispatch("getQzzl");
+         this.$store.dispatch("getRjqzzl");
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getRzfs");

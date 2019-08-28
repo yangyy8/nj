@@ -250,6 +250,9 @@ export default {
       pd3:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
       pd4:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
       pd5:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd6:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd7:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
+      pd8:{BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]},
       options: this.pl.ps,
       tableData: [],
       type:'',
@@ -341,7 +344,7 @@ export default {
     }
   },
   activated(){
-     this.Global.indexstate=1;
+    this.Global.indexstate=1;
     this.selectionAll5=[];
     this.selectionReal5=[];
 
@@ -365,28 +368,28 @@ export default {
 
     this.selectionAll8=[];
     this.selectionReal8=[];
-    this.rulesTotal=0,
+    this.rulesTotal=0;
     this.type=this.$route.query.type;
     // this.pd={BJSJ_DateRange:{begin:'',end:''},GJ:[],ZJZL:[],QZZL:[]};
-    if(this.type==5){
-      this.pd = this.pd5;
-    }else if(this.type==3){
-      this.pd = this.pd3;
-    }else if(this.type==0){
-      this.pd = this.pd0;
-    }else if(this.type==1){
-      this.pd = this.pd1;
-    }else if(this.type==2){
-      this.pd = this.pd2;
-    }else if(this.type==4){
-      this.pd = this.pd4;
-    }else if(this.type==6){
-      this.pd = this.pd6;
-    }else if(this.type==7){
-      this.pd = this.pd7;
-    }else if(this.type==8){
-      this.pd = this.pd8;
-    }
+    // if(this.type==5){
+    //   this.pd = this.pd5;
+    // }else if(this.type==3){
+    //   this.pd = this.pd3;
+    // }else if(this.type==0){
+    //   this.pd = this.pd0;
+    // }else if(this.type==1){
+    //   this.pd = this.pd1;
+    // }else if(this.type==2){
+    //   this.pd = this.pd2;
+    // }else if(this.type==4){
+    //   this.pd = this.pd4;
+    // }else if(this.type==6){
+    //   this.pd = this.pd6;
+    // }else if(this.type==7){
+    //   this.pd = this.pd7;
+    // }else if(this.type==8){
+    //   this.pd = this.pd8;
+    // }
     // console.log('this.type',this.type)
      if(this.type!=undefined){
        this.$store.commit('getType',this.type)
@@ -408,7 +411,6 @@ export default {
   },
   mounted() {
     this.Global.indexstate=1;
-    console.log('mounted',this.$store.state.tabList),
     this.$store.dispatch('getGjdq');
     this.$store.dispatch('getClzt');
     this.$store.dispatch('getXB');
@@ -682,33 +684,43 @@ export default {
       this.getList(this.CurrentPage, this.pageSize,this.pd,this.ruleMap,this.ruleNo);
     },
     getMXLX(type){
-
+      console.log(parseInt(type))
       switch (parseInt(type)) {
       case 0:
+          this.pd=this.pd0;
           this.pd.MXLX="LXS_SWLZYJ";//留学生市外临住预警
           break;
       case 1:
+        this.pd=this.pd1;
         this.pd.MXLX="LXS_SKYJ";//留学生涉恐预警
         break;
       case 2:
+       this.pd=this.pd2;
        this.pd.MXLX="LXS_CRJTX";//留学生出入境提醒
         break;
       case 3:
+        this.pd=this.pd3;
         this.pd.MXLX="LZ_HC";//临住核查预警
         break;
       case 4:
+          this.pd=this.pd4;
           this.pd.MXLX="CZ_NMYJ";//难民
           break;
       case 5:
+          this.pd=this.pd5;
           this.pd.MXLX="BKYJ";//布控预警
+          console.log(this.pd,this.pd.MXLX);
           break;
       case 6:
+          this.pd=this.pd6;
           this.pd.MXLX="LXS_WBDYJ";//留学生录取未报到预警
           break;
       case 7:
+          this.pd=this.pd7;
           this.pd.MXLX="QZ_HCYJ";//受理、签发信息核查预警
           break;
       case 8:
+          this.pd=this.pd8;
           this.pd.MXLX="ASJ_SKGJRY";//涉恐国家人员预警
           break;
       default:
