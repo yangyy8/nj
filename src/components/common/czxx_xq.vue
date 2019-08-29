@@ -1403,8 +1403,8 @@ export default {
           RYBH:this.rybh,
           YWLB:'0004'
         },
-        "orderType":"DESC",
-	      "orderBy":{value:"CJSJ",dataType:"date"}
+        // "orderType":"DESC",
+	      // "orderBy":{value:"CJSJ",dataType:"date"}
       }
       this.$api.post(this.Global.aport4+'/eS_RY_TPXXController/getResultListByParams',p,
        r =>{
