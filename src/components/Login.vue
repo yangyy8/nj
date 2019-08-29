@@ -19,10 +19,10 @@
           <i slot="prefix" class="el-input__icon"><img src="../assets/img/logo02.png"></i>
         </el-input>
       </div>
-        <div class="login-item2">
+        <!-- <div class="login-item2">
          <el-checkbox v-model="jzmm">记住密码</el-checkbox>
-        <!-- <a class="login-a">忘记密码</a> -->
-        </div>
+         <a class="login-a">忘记密码</a>
+        </div> -->
       <button class="login-btn" @click="login">登录</button>
        <div class="loginmessage">
          供下载内容:
@@ -233,7 +233,7 @@ export default {
 }
 .login-box{
   width: 25%;
-  height: 43%;
+  height: 40%;
   position: fixed;
   top:180px;
   left:50%;
@@ -245,14 +245,14 @@ export default {
   flex-direction: column;
   align-items: center;
   min-width: 400px;
-  min-height: 380px;
+  min-height: 360px;
   /* justify-content:center; */
 }
 .logintitle{
   font-size: 20px; text-align: center; color: #3E79EA;
   margin: 45px 0 15px 0;
 }
-.loginmessage{font-size: 12px; text-align:center;color: #999999; padding: 15px 0px;}
+.loginmessage{font-size: 12px; text-align:center;color: #999999; padding-top: 10px;}
 .login-item{
   margin-top: 20px;
   width: 80%;
