@@ -43,7 +43,7 @@ html,body{
 .br{
   border-right: 1px #e0e4e7 solid;
 }
-
+.el-checkbox__inner{border: 1px solid #999999;}
 ul,li{list-style: none; margin: 0px; padding: 0;}
 a{color: #333;text-decoration: none;}
 .hand{
