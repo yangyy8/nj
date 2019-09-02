@@ -34,9 +34,7 @@
             <router-view v-if="$store.state.key==99"></router-view>
             <router-view v-if="$store.state.key==0" :key="key"></router-view>
           </keep-alive>
-
         </div>
-
       </el-main>
     </el-container>
     <div class="footer">
@@ -73,13 +71,11 @@ export default {
       }
     },
     $route:function(val){
-
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
         if(this.tabList.length>0){
           for(var j=0;j<this.tabList.length;j++){
-
             if(this.tabList[j].name==val.name){
               if(this.tabList[j].query!=val.query){
                 this.tabList[j]=val;
