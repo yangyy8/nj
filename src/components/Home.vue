@@ -37,9 +37,7 @@
             <router-view v-if="$store.state.key.id==0" :key="$store.state.key2"></router-view> -->
 
           </keep-alive>
-
         </div>
-
       </el-main>
     </el-container>
     <div class="footer">
@@ -86,14 +84,16 @@ export default {
       }
     },
     $route:function(val){
+<<<<<<< HEAD
       console.log("$store.state",this.$store.state.key,this.$store.state.key.id)
 
+=======
+>>>>>>> dbe6424c2387e2fdbf0b3f4a8f31175cfd50642e
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
         if(this.tabList.length>0){
           for(var j=0;j<this.tabList.length;j++){
-
             if(this.tabList[j].name==val.name){
               if(this.tabList[j].query!=val.query){
                 this.tabList[j]=val;
