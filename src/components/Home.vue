@@ -84,11 +84,8 @@ export default {
       }
     },
     $route:function(val){
-<<<<<<< HEAD
       console.log("$store.state",this.$store.state.key,this.$store.state.key.id)
 
-=======
->>>>>>> dbe6424c2387e2fdbf0b3f4a8f31175cfd50642e
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
