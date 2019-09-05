@@ -23,16 +23,19 @@
         <!-- <div class="right-main-top"> -->
           <ul class="tabList">
             <li class="tabList-item hand" :title="i.meta.title[i.meta.title.length-1]" :style="{width:tabliwidth}" :class="{'tabList-checked':tabListCheck==i.name}" v-for="(i, index) in tabList">
-              <span @click="tabClicknew(i,99)">{{i.meta.title[i.meta.title.length-1]}}</span>
-              <img src="../assets/img/tab-close1.png" alt="guanbi" @click="close1(index,i)" class="hand" style="padding:8px" v-if="tabListCheck==i.name">
-              <img src="../assets/img/tab-close2.png" alt="" @click="tabList.splice(index, 1)" style="padding:8px" class="hand" v-else>
+              <span :id="i.name" @click="tabClick(i,index)">{{i.meta.title[i.meta.title.length-1]}}</span>
+              <img src="../assets/img/tab-close1.png" alt="guanbi"  @click="close1(index,i)" class="hand" style="padding:8px" v-if="tabListCheck==i.name">
+              <img src="../assets/img/tab-close2.png" alt=""  @click="close2(index,i)" style="padding:8px" class="hand" v-else>
             </li>
           </ul>
         <!-- </div> -->
         <div class="tab-content">
           <keep-alive>
-            <router-view v-if="$store.state.key==99"></router-view>
-            <router-view v-if="$store.state.key==0" :key="key"></router-view>
+            <router-view></router-view>
+            <!--
+            <router-view v-if="$store.state.key.id==99"></router-view>
+            <router-view v-if="$store.state.key.id==0" :key="$store.state.key2"></router-view> -->
+
           </keep-alive>
 
         </div>
@@ -57,22 +60,33 @@ export default {
       tabListCheck:null,
       routeList:this.$route.meta.title,
       an:false,
+      key:'',
+      currentKey:{},
+      checkeditem:null
     };
   },
   computed: {
-      key() {
-         if(this.$store.state.key==0){
-           return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
-         }
-      }
+      // key() {
+      //   console.log("this.$store.state.key",this.$store.state.key)
+      //    if(this.$store.state.key==0){
+      //       return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
+      //       console.log(this.$store.state.key)
+      //       console.log('this.$route.name=',this.$route.name,'this.$route.name +new Date()=',this.$route.name +new Date(),'===',this.$route +new Date())
+      //    }else {
+      //      return this.$route.name !== undefined? this.$route.name +new Date(): this.$route +new Date();
+      //
+      //    }
+      // }
   },
   watch: {
+
     tabList: function(val) {
       if (val.length > 9) {
         this.tabliwidth = Math.floor(100 / (this.tabList.length+1)) + '%'
       }
     },
     $route:function(val){
+      console.log("$store.state",this.$store.state.key,this.$store.state.key.id)
 
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
@@ -90,14 +104,16 @@ export default {
 
           }
         }
+        this.checkeditem=val;
         this.tabList.push(val);
+        this.$store.commit('getTabList',this.tabList);
+
         this.Global.tabLists=this.tabList;
         // console.log("tabList",this.tabList)
       }
     }
   },
   mounted() {
-    // console.log(this.$route.name&&this.$route.meta.father)
     if(this.$route.name!="Home"){
       if(this.$route.meta.father){
         this.$router.push({name:this.$route.meta.father})
@@ -111,21 +127,55 @@ export default {
     this.getname();
   },
   methods: {
-    tabClick(i){
+    tabClick(i,index,is){
       this.$router.push({name:i.name,query:i.query});
+      console.log("this.checkeditem",this.checkeditem)
+
+      if(is){
+        // this.tabList.splice(index, 1);
+        // for(var j=0;j<this.tabList.length;j++){
+        //   if(i.name==this.tabList[j].name){
+        //     alert(i.name)
+        //     this.tabList.splice(j, 1);
+        //   }
+        // }
+        this.close1(index,i,is)
+        // this.$router.push({name:i.name,query:{wjh:'wjh'}});
+        // this.tabList.splice(index, 1);
+      }else{
+        this.checkeditem=i;
+        console.log("this.checkeditem",this.checkeditem)
+        // this.$router.push({name:i.name,query:i.query});
+      }
+
+      this.$store.commit('getActiveTab',i);
     },
     tabClicknew(i,n){
-      this.$store.commit('getKey',n);
-
       this.$router.push({name:i.name,query:i.query});
+      this.$store.commit('getKey',{id:99,name:i.name});
+      // console.log("key",this.$store.state.key)
+    },
+    close2(index,item){
+      // let event = new Event('click');
+      // console.log( document.getElementById(item.name))
+     // document.getElementById(item.name).dispatchEvent(event);  // 触发点击事件
+     this.tabClick(item,index,1)
+      // console.log('this.$store.state.currentKey',this.$store.state.currentKey);
+      // this.tabList.splice(index, 1);
+      // this.tabClick(this.currentKey);
+
     },
     // 关闭tab页面==========================
-    close1(index, item) {
-      // console.log('item.name',item.name);
-      this.$store.commit('getTabList',item.name);
+    close1(index, item,is) {
+      console.log(this.checkeditem,this.tabList[index - 1]);
       this.tabList.splice(index, 1);
       if (index > 0) {
-        this.tabClick(this.tabList[index - 1])
+        if(is){
+          this.tabClick(this.checkeditem)
+        }else{
+          this.tabClick(this.tabList[index - 1])
+
+        }
       }
       if (index == 0) {
         if (this.tabList.length != 0) {
