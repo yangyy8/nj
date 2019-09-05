@@ -64,8 +64,9 @@ export default {
       this.h2Id=serial;
     },
      checklast(name){
-       this.$store.commit("getKey",0);
        this.$router.push({name:name});
+       this.$store.commit("getKey",{id:0,name:name});
+
      },
     getNav(){
       var formData = new FormData();

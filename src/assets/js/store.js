@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../../router'
+
 import global_ from '../../Global.js'
 import api from '../../api/index.js';
 import {
@@ -17,7 +19,8 @@ var store = new Vuex.Store({
     orgname: localStorage.getItem('ORGNAME') || '',
     orgid: localStorage.getItem('ORGID') || '',
     type: localStorage.getItem('Type') || '',
-    key: localStorage.getItem('Key') || '',
+    key: {},
+    key2:'',
     ssdw: [],
     gjdq: [],
     zjzl: [],
@@ -62,11 +65,15 @@ var store = new Vuex.Store({
     jzztcz:[],
     hyzt:[],
     zjxy:[],
-    tabList:localStorage.getItem('tabList') || '',
+    tabList:[],
+    currentKey:null,
   },
   mutations: {
+    getActiveTab(state,data){
+      state.currentKey = data;
+    },
     getTabList(state,data){
-      localStorage.setItem('tabList', data)
+      // localStorage.setItem('tabList', data)
       state.tabList = data;
     },
     getToken(state, data) {
@@ -102,8 +109,11 @@ var store = new Vuex.Store({
       state.type = data;
     },
     getKey(state, data) {
-      localStorage.setItem('Key', data)
+      // localStorage.setItem('Key', data)
       state.key = data;
+      if(data.id==0){
+        state.key2=data.name!== undefined? data.name +new Date(): data.name +new Date();
+      }
     },
     getHyzt(state, data){
       state.hyzt = data;

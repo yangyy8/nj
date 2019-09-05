@@ -43,12 +43,12 @@ export default new Router({
           meta:{title:['预警研判','预警信息','布控预警']},
           component: resolve => require(['@/components/YJYP/YJ/LZYJ/LZBKYJ'], resolve),
         },
-        {
-          path: 'ZBKYJ_X',
-          name: 'ZBKYJ_X',
-          meta:{title:['预警研判','预警信息','布控预警'],father:'ZBKYJ'},
-          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
-        },
+        // {
+        //   path: 'ZBKYJ_X',
+        //   name: 'ZBKYJ_X',
+        //   meta:{title:['预警研判','预警信息','布控预警'],father:'ZBKYJ'},
+        //   component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        // },
         {
           path: 'ZBKYJ_XQ',
           name: 'ZBKYJ_XQ',
@@ -127,12 +127,12 @@ export default new Router({
           meta:{title:['日常管理','常住信息','留学生录取未报到提醒']},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSWBDYJ'], resolve),
         },
-        {
-          path: 'LXSWBDYJ_X',
-          name: 'LXSWBDYJ_X',
-          meta:{title:['日常管理','常住信息','留学生录取未报到提醒'],father:'LXSWBDYJ'},
-          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
-        },
+        // {
+        //   path: 'LXSWBDYJ_X',
+        //   name: 'LXSWBDYJ_X',
+        //   meta:{title:['日常管理','常住信息','留学生录取未报到提醒'],father:'LXSWBDYJ'},
+        //   component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        // },
         {
           path: 'LXSXXGLYJ',
           name: 'LXSXXGLYJ',
@@ -223,12 +223,12 @@ export default new Router({
           meta:{title:['日常管理','常住信息','难民和需求庇护者提醒']},
           component: resolve => require(['@/components/YJYP/YJ/CZYJ/NMXQPHZYJ'], resolve),
         },
-        {
-          path: 'NMXQPHZYJ_X',
-          name: 'NMXQPHZYJ_X',
-          meta:{title:['日常管理','常住信息','难民和需求庇护者提醒'],father:'NMXQPHZYJ'},
-          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
-        },
+        // {
+        //   path: 'NMXQPHZYJ_X',
+        //   name: 'NMXQPHZYJ_X',
+        //   meta:{title:['日常管理','常住信息','难民和需求庇护者提醒'],father:'NMXQPHZYJ'},
+        //   component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        // },
         {
           path: 'NMXQPHZYJ_XQ',
           name: 'NMXQPHZYJ_XQ',
@@ -283,12 +283,12 @@ export default new Router({
           meta:{title:['预警研判','预警信息','违临预判预警详情']},
           component: resolve => require(['@/components/GYZJ/ASJXQ'], resolve),
         },
-        {
-          path: 'SKGJRYXXYJ_X',
-          name: 'SKGJRYXXYJ_X',
-          meta:{title:['数据分析','案件分析','涉恐国家人员信息提醒'],father:'SKGJRYXXYJ'},
-          component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
-        },
+        // {
+        //   path: 'SKGJRYXXYJ_X',
+        //   name: 'SKGJRYXXYJ_X',
+        //   meta:{title:['数据分析','案件分析','涉恐国家人员信息提醒'],father:'SKGJRYXXYJ'},
+        //   component: resolve => require(['@/components/YJYP/YJ/LXSYJ/LXSXXGLYJ'], resolve),
+        // },
         {
           path: 'SKGJRYXXYJ',
           name: 'SKGJRYXXYJ',
@@ -751,7 +751,18 @@ export default new Router({
           meta:{title:['日常管理','涉外单位','居留许可申请作废详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
-
+        {
+          path: 'RYSH',
+          name: 'RYSH',
+          meta:{title:['日常管理','涉外单位','涉外单位人员审核']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RYSH'], resolve),
+        },
+        {
+          path: 'RYSH_XQ',
+          name: 'RYSH_XQ',
+          meta:{title:['日常管理','涉外单位','涉外单位人员审核详情']},
+          component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
+        },
         {
           path: 'ASJYBB',
           name: 'ASJYBB',
