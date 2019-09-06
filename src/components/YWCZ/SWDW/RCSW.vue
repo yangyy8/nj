@@ -66,6 +66,16 @@
               <div class="t-el-content"><div class="t-el-text">申请时间：</div><div class="t-el-sub">{{jlxkinfo.SQSJ}}</div></div>
               <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{jlxkinfo.SBDWMC}}</div></div>
             </div>
+            <div v-if="$route.query.hiType=='rysh'">
+              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{ryshinfo.XM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">性别：</div><div class="t-el-sub">{{ryshinfo.XB}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{ryshinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">单位名称：</div><div class="t-el-sub">{{ryshinfo.SSDWMC}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">单位类别：</div><div class="t-el-sub">{{ryshinfo.DWLB}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">出生日期：</div><div class="t-el-sub">{{ryshinfo.CSRQ}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">身份证号：</div><div class="t-el-sub">{{ryshinfo.ZJHM}}</div></div>
+              <div class="t-el-content"><div class="t-el-text">联系方式：</div><div class="t-el-sub">{{ryshinfo.LXFS}}</div></div>
+            </div>
           </div>
 
           <div class="t-bjxq t-mt10" v-if="$route.query.hiType=='gzc'">
@@ -445,7 +455,21 @@
                   </el-pagination>
                 </div>
              </div>
-            <div class="t-footer">
+
+            <div v-if="$route.query.hiType=='rysh'">
+              <div class="stru-lal" style="padding-top:0px!important">授权申请图片</div>
+              <div class="">
+                <el-carousel height="400px" style="overflow-x:unset">
+                  <el-carousel-item v-for="(item,index) in imgArr" :key="index" v-if="imgshow1">
+                    <img  :src="item" style="height:100%">
+                  </el-carousel-item>
+                  <el-carousel-item v-if="!imgshow1" style="text-align:center">
+                    <img  :src="imgURL" style="height:100%">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+            </div>
+            <div class="t-footer" v-if="$route.query.hiType!='rysh'">
                <div class="stru-lal" style="padding-top:0px!important">核查处理</div>
                <el-row>
                  <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
@@ -481,6 +505,35 @@
                 <el-col :span="24" class="czfont">处理人：{{withname}}</el-col>
               </el-row>
              </div>
+             <div class="t-footer" v-if="$route.query.hiType=='rysh'">
+                <div class="stru-lal" style="padding-top:0px!important">审核处理</div>
+                <el-row>
+                  <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                    <span class="input-text" style="width:70px!important">审核状态：</span>
+                    <el-select v-model="shpc.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input" :disabled="!shShow">
+                      <el-option label="0 - 待审核" value="0"></el-option>
+                      <el-option label="1 - 审核通过" value="1"></el-option>
+                      <el-option label="2 - 审核不通过" value="2"></el-option>
+                      <el-option label="3 - 注销" value="3"></el-option>
+                    </el-select>
+                  </el-col>
+                </el-row>
+                <el-row type="flex" class="mb-15">
+                 <el-col :span="20">
+                   <el-input
+                     type="textarea"
+                     :autosize="{ minRows: 3, maxRows: 3}"
+                     placeholder="审核备注(不超过100个字符)"
+                     v-model="shpc.SHNR"
+                     :disabled="!shShow">
+                   </el-input>
+                 </el-col>
+                 <el-col :span="4"  class="down-btn-area">
+                   <el-button type="primary" v-if="shShow"  size="small" class="mb-5" @click="shSaves()">确定</el-button>
+                   <el-button type="warning" size="small" class="m0" @click="$router.go(-1)" v-show="false">返回</el-button>
+                 </el-col>
+               </el-row>
+              </div>
            </div>
         </el-col>
       </el-row>
@@ -537,6 +590,7 @@ export default {
   data(){
     return {
       imgURL:imgUrl,
+      defaultImg:[imgUrl],
       options:this.pl.ps,
       type:1,
       xid:'',
@@ -583,15 +637,19 @@ export default {
       gxinfo:{},
       slryinfo:{},
       jlxkinfo:{},
+      ryshinfo:{},
 
       pc:{},
       pcl:{},
+      shpc:{},
       withname:this.$store.state.uname,
       hcShow:true,
 
       rybh:'',
       row:{},
-
+      imgArr:[],
+      imgshow1:false,
+      shShow:true,
 
     }
   },
@@ -607,11 +665,18 @@ export default {
     this.row = this.$route.query.row
     this.rybh=this.$route.query.row.RYBH;
     this.hcShow=true;
+    this.shShow=true;
     this.pc.HCBZ='';
+    this.shpc.SHBZ='';
     if(this.row.CLZT=='0'){
       this.hcShow=false;
       this.pc.HCZT = this.row.HCZT;
       this.pc.HCBZ = this.row.HCBZ;
+    }
+    if(this.row.SFYX=='1'){
+      this.shShow=false;
+      this.shpc.SHZT = this.row.SFYX;
+      this.shpc.SHNR = this.row.SHNR;
     }
     this.getData();
   },
@@ -674,7 +739,21 @@ export default {
         this.getLzxx(this.CurrentPage,this.pageSize);
         this.getCrjxx(this.CurrentPage1,this.pageSize1);
         this.getQZXX(this.CurrentPage5,this.pageSize5);
+      }else if(this.$route.query.hiType=='rysh'){
+        this.ryshinfo = this.row;
+        this.getPhoto();
       }
+    },
+    getPhoto(){
+      this.$api.post(this.Global.aport4+'/ES_SWDW_XT_USERShenHeController/getUSERDATABASEEntityByUSERID',{pd:{USERID:this.row.ID}},
+        r => {
+          if(r.success){
+            if(r.data.resultList.length!=0){
+              this.imgArr=r.data.resultList[0].NR_DESC;
+            }
+            this.imgArr.length==0?this.imgshow1=false:this.imgshow1=true;
+          }
+      })
     },
     asjpageSizeChange(val) {
       this.asjpageSize=val;
@@ -886,6 +965,30 @@ export default {
            })
        });
 
+    },
+    shSaves(){
+      if(this.pc.SHBZ=="" || this.pc.SHBZ==undefined){
+        this.$alert('审核结果不能为空！', '提示', {
+          confirmButtonText: '确定',
+        });
+        return;
+      }
+      let p={
+        ID:this.row.ID,
+        SHZT:this.shpc.SHZT,
+        SHNR:this.shpc.SHNR,
+        CLR:this.withname,
+      }
+      this.$api.post(this.Global.aport4+'/ES_SWDW_XT_USERShenHeController/saveSHJG', p,
+        r => {
+          if(r.success){
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            });
+            this.$router.go(-1);
+          }
+        })
     },
   }
 }

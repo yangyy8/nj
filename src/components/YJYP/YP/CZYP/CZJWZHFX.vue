@@ -212,7 +212,7 @@
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
-                  <el-button type="primary"  size="small" @click="download" style="float:right">导出</el-button>
+                  <el-button type="primary"  size="small" @click="download">导出</el-button>
                 </el-col>
               </el-row>
         </div>

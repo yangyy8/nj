@@ -31,16 +31,10 @@
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">审核状态：</span>
                   <el-select v-model="pd.SFYX" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
-                    <el-option label="待审核" value="0"></el-option>
-                    <el-option label="审核通过" value="1"></el-option>
-                    <el-option label="审核不通过" value="2"></el-option>
-                    <el-option label="注销" value="3"></el-option>
-                    <!-- <el-option
-                      v-for="item in $store.state.clzt"
-                      :key="item.dm"
-                      :label="item.dm+' - '+item.mc"
-                      :value="item.dm">
-                    </el-option> -->
+                    <el-option label="0 - 待审核" value="0"></el-option>
+                    <el-option label="1 - 审核通过" value="1"></el-option>
+                    <el-option label="2 - 审核不通过" value="2"></el-option>
+                    <el-option label="3 - 注销" value="3"></el-option>
                   </el-select>
                 </el-col>
           </el-row>
@@ -140,7 +134,8 @@ export default {
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
-      pd: {SSPCS:this.$store.state.orgid},
+      // pd: {SSPCS:this.$store.state.orgid},
+      pd: {},
       options: this.pl.ps,
       tableData: [],
       userCode:'',
@@ -247,8 +242,8 @@ export default {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd,
-        "orderBy":'SBSJ',
-        "orderType":'DESC',
+        // "orderBy":'SBSJ',
+        // "orderType":'DESC',
       };
       this.$api.post(this.Global.aport4+'/ES_SWDW_XT_USERShenHeController/getInfoList', p,
         r => {

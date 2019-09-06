@@ -75,6 +75,7 @@
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
+                  <el-button type="primary"  size="small" @click="download">导出</el-button>
                 </el-col>
               </el-row>
         </div>
@@ -93,7 +94,12 @@
                ref="multipleTable"
                :data="tableData"
                border
+               @select="selectfn"
                style="width: 100%">
+               <el-table-column
+                 type="selection"
+                 width="55">
+               </el-table-column>
                <el-table-column
                    v-for="(val,i) in configHeader"
                    :key="i"
@@ -147,7 +153,12 @@
              ref="multipleTable"
              :data="tableData"
              border
+             @select="selectfn"
              style="width: 100%">
+             <el-table-column
+               type="selection"
+               width="55">
+             </el-table-column>
              <el-table-column
                prop="ZWXM"
                label="中文姓名">
@@ -311,6 +322,11 @@
           form:{},
           falg:false,
           disa:false,
+
+          multipleSelection:[],
+          selectionAll:[],
+          yuid:[],
+          selectionReal:[],
         }
       },
       mounted() {
@@ -325,7 +341,88 @@
 
         this.$store.dispatch("getSldw");
       },
+      watch:{
+        falg:function(newVal,oldVal){
+          this.multipleSelection=[];
+          this.selectionAll=[];
+          this.selectionReal=[];
+        },
+        tableHeadHc:{
+          handler(newVal, oldVal) {
+            if(!(newVal.toString()==oldVal.toString())){
+              this.multipleSelection=[];
+              this.selectionAll=[];
+              this.selectionReal=[];
+            }
+          },
+        }
+      },
       methods: {
+        selectfn(a,b){
+          this.multipleSelection = a;
+          this.dataSelection()
+        },
+        dataSelection(){
+          console.log('this.multipleSelection',this.multipleSelection)
+          this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+          console.log('this.selectionReal',this.selectionReal);
+          this.selectionAll=[];
+          for(var i=0;i<this.selectionReal.length;i++){
+            if(this.selectionReal[i]){
+              for(var j=0;j<this.selectionReal[i].length;j++){
+                this.selectionAll.push(this.selectionReal[i][j])
+              }
+            }
+          }
+          console.log('this.selectionAll',this.selectionAll);
+        },
+        download(){
+          let p={};
+          if(this.tableHeadHc.length==0){//人员导出
+            if(this.selectionAll.length==0){//人员全部导出,无选中的数据
+              p={
+                "pd":this.pd
+              }
+            }else{//人员部分导出
+              this.yuid=[];
+              for(var i in this.selectionAll){
+                this.yuid.push(this.selectionAll[i].RGUID)
+              }
+              this.pd.RGUID=this.yuid;
+              p={
+                "pd":this.pd,
+              }
+            }
+          }else{//统计导出
+            if(this.selectionAll.length==0){//统计全部导出
+              p={
+                "pd":this.pd,
+                "groupList":this.tableHeadHc,
+              }
+            }else{//统计部分导出
+              p={
+                "requestTempList":this.selectionAll,
+                "groupList":this.tableHeadHc,
+              }
+            }
+          }
+          this.$api.post(this.Global.aport5+'/esFnsqxxController/exportFnsqxx',p,
+            r =>{
+              this.downloadM(r)
+            },e=>{},{},'blob')
+        },
+        downloadM (data) {
+            if (!data) {
+                return
+            }
+            let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = url
+            link.setAttribute('download', '签发信息人员列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+            document.body.appendChild(link)
+            link.click()
+        },
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },
@@ -375,6 +472,9 @@
               this.tableHeadHc.push("XCZJZL");
               this.tableHeadHs.push('XCZJZL_DESC')
             }
+            if(pd.hasOwnProperty('RGUID')){
+              delete pd['RGUID']
+            }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
@@ -386,10 +486,10 @@
 
           this.$api.post(this.Global.aport5+'/esFnsqxxController/getCount', p,
             r => {
-              this.tableData = r.data.resultList;
-              this.TotalResult = r.data.totalResult;
               if(r.data.isFenLei=="true"){//统计列表
                 this.falg=true;
+                this.tableData = r.data.resultList;
+                this.TotalResult = r.data.totalResult;
                 this.configHeader=[];
                 let _this = this;
                 for(var i=0;i<_this.tableHeadHs.length;i++){
@@ -404,6 +504,21 @@
                   }
                   _this.configHeader.splice(a,0,obj);
                 }
+                if(this.selectionReal.length==0){//声明一个数组对象
+                  this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                }
+                this.$nextTick(()=>{
+                  this.multipleSelection=[];
+                  for(var a=0;a<this.tableData.length;a++){
+                    for(var b=0;b<this.selectionAll.length;b++){
+                      // console.log('======',this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                      if(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b])){
+                        // console.log(this.chargeObjectEqual(this.tableData[a],this.selectionAll[b]))
+                        this.$refs.multipleTable.toggleRowSelection(this.tableData[a],true);
+                      }
+                    }
+                  }
+                })
               }else {
                 this.falg=false;
                 var url = this.Global.aport5 + "/esFnsqxxController/getResultListByParams";
@@ -412,6 +527,19 @@
                     if (r.success) {
                      this.tableData = r.data.resultList;
                      this.TotalResult = r.data.totalResult;
+                     if(this.selectionReal.length==0){//声明一个数组对象
+                       this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+                     }
+                     this.$nextTick(()=>{
+                       this.multipleSelection=[]
+                       for(var i=0;i<this.tableData.length;i++){
+                         for(var j=0;j<this.selectionAll.length;j++){
+                           if(this.tableData[i].RGUID==this.selectionAll[j].RGUID){
+                             this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                           }
+                         }
+                       }
+                     })
                     }
                   });
               }
