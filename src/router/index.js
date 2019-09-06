@@ -855,6 +855,16 @@ export default new Router({
         meta:{title:['系统管理','系统设置','分类规则管理']},
         component: resolve => require(['@/components/XTGL/XTSZ/FLGZGL'], resolve),
         },
+
+        /* 中管 */
+        {
+        path: 'NDJMBHL',
+        name: 'NDJMBHL',
+        meta:{title:['系统管理','内地居民申请变化量']},
+        component: resolve => require(['@/components/ZG/NDJMBHL'], resolve),
+        },
+
+
       ]
     },
 

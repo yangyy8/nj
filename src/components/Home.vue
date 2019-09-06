@@ -104,7 +104,6 @@ export default {
         this.checkeditem=val;
         this.tabList.push(val);
         this.$store.commit('getTabList',this.tabList);
-
         this.Global.tabLists=this.tabList;
         // console.log("tabList",this.tabList)
       }

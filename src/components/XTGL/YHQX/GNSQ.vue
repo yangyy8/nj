@@ -51,7 +51,37 @@
                      width="60">
                    </el-table-column> -->
                  </el-table>
-                </el-row>
+               </el-row>
+               <div class="middle-foot" style="margin-top:10px">
+                  <div class="page-msg">
+                    <div class="">
+                  共{{TotalResult}}条记录
+                    </div>
+                    <!-- <div class="">
+                      每页显示
+                      <el-select v-model="pageSize" @change="pageSizeChange(pageSize)" placeholder="10" size="mini" class="page-select">
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
+                      条
+                    </div>
+                    <div class="">
+                    共{{Math.ceil(TotalResult/pageSize)}}页
+                    </div> -->
+                  </div>
+                  <el-pagination
+                    background
+                    @current-change="handleCurrentChange"
+                    :current-page.sync ="CurrentPage"
+                    :page-size="pageSize"
+                    layout="prev, pager, next"
+                    :total="TotalResult">
+                  </el-pagination>
+                </div>
 
           </el-col>
           <el-col :span="8">
@@ -100,6 +130,14 @@ export default {
      this.getCompany();
   },
   methods: {
+    pageSizeChange(val) {
+      this.getList(this.CurrentPage, val, this.pd);
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.getList(val, this.pageSize, this.pd);
+      console.log(`当前页: ${val}`);
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },

@@ -6,7 +6,6 @@
           <el-col :span="8">
             <el-tree
               :data="menudata"
-
               show-checkbox
               default-expand-all
               node-key="dm"
@@ -76,7 +75,7 @@
                      </template>
                    </el-table-column>
                  </el-table>
-                   </el-row>
+                </el-row>
                  <div class="middle-foot" style="margin-top:10px">
                     <div class="page-msg">
                       <div class="">
@@ -280,11 +279,11 @@ export default {
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
-      this.getList(this.CurrentPage1, val, this.pd1);
+      this.getList1(this.CurrentPage1, val, this.pd1);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
-      this.getList(val, this.pageSize1, this.pd1);
+      this.getList1(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
     getCompany() {
