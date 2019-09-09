@@ -28,6 +28,7 @@
                     </el-option>
                   </el-select>
                 </el-col>
+                
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">出生日期：</span>
                   <div class="input-input t-flex t-date">
