@@ -9,7 +9,7 @@
     </div>
     <div class="index_nav" v-if="navShow">
       <div class="index_nav2">
-        <div class="index_nav2_box" :class="{'nav_2_check':nav2Id==b.dm}" v-for="(b,ind2) in nav2" @click="getNav2(b)">
+        <div class="index_nav2_box" :class="{'nav_2_check':nav2Id==b.dm}" v-for="(b,ind2) in nav2" @click="getNav2(b)" style="font-size:15px;">
           ● {{b.mc}}
         </div>
       </div>

@@ -36,6 +36,7 @@ const rjkn="/service/getRedisDataByDm?tablename=DM_RJKA"//入境口岸
 const rjsy="/service/getRedisDataByDm?tablename=DM_RJSY"//入境事由
 const qfjg="/service/getRedisDataByDm?tablename=DM_QFJG"//签发机关
 const pcs="/service/getRedisDataByDm?tablename=DM_PCS"//派出所
+
 const jzlx="/service/getRedisDataByDm?tablename=DM_JZLX"//居住类型
 const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质,住房类型
 const jzzt="/service/getRedisDataByDm?tablename=DM_JZZT"//居住状态

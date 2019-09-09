@@ -261,7 +261,7 @@ position: relative!important; padding-left: 8px;}
 }
 .rowcont1{  width: 390px!important;line-height: 50px; font-size: 16px;padding-right: 10px.;}
 .rowcont2{  width: 380px!important;  font-size: 16px; padding-left: 10px; margin-top: 30px;}
-.input-text{ text-align:left!important; width: 28%!important;padding-left: 30px;}
+.input-text{ text-align:left!important; width: 28%!important;padding-left: 30px; color: #55D5F4;}
 .input-input{width: 55%!important;}
 .colleft{text-align: left;}
 .yyryhm{
