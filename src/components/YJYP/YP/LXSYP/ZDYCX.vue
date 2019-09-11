@@ -302,7 +302,10 @@ export default {
      let p={
        "keywords":this.keywords,
        "pageSize":showCount,
-       "page":currentPage
+       "page":currentPage,
+       "token":this.$store.state.token,
+       "userCode":this.$store.state.uid,
+       "userName":this.$store.state.uname
      };
 
      this.$api.post(this.Global.aport6+"/api/es/search/currencySearch",p,r=>{

@@ -1,6 +1,6 @@
 <template lang="html">
   <!-- 宾馆临住信息趋势 -->
-  <div class="yymain">
+  <div class="yymain ndjmbhl">
     <div class="yytitle">
       <el-row type="flex">
         <el-col :span="22" class="br pr-20">
@@ -162,8 +162,89 @@
       </div>
     </div>
 
-    <el-dialog title="临住详情" :visible.sync="detailsDialogVisible" custom-class="big_dialog" :append-to-body="false" :modal="false">
-        <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX>
+    <el-dialog title="内地居民申请变化量详情" :visible.sync="detailsDialogVisible">
+        <!-- <LZXX :type="type" :xid="xid" :rybh="rybh" :random="new Date().getTime()"></LZXX> -->
+
+        <el-form :model="form"  class="crcolor" style="padding:10px;line-height:35px;">
+          <el-row  :gutter="3">
+            <el-col :span="8">
+              <span class="yy-input-text" title="中文姓名">中文姓名：</span>
+                  <el-input placeholder=""  readonly="true" size="small" v-model="form.ZWXM"  class="yy-input-input"></el-input>
+            </el-col>
+
+            <el-col :span="8">
+              <span class="yy-input-text">英文姓名：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.YWXM"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">性别：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.XB_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">出生日期：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.CSRQ"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">出生地：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.CSD_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+
+            <el-col :span="8">
+              <span class="yy-input-text">民族：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.MZ_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">国家地区：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.GJDQ_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">户口所在地：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.HKSZD_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">身份证号码：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SFZH"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">手机号码：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SJHM"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">出境事由：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.CJSY_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text" title="所属派出所">所属派出所：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SSPCS_TEXT"  class="yy-input-input"></el-input>
+            </el-col>
+
+            <el-col :span="8">
+              <span class="yy-input-text">受理单位：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SLDW_TEXT"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text" title="受理日期">受理日期：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SLRQ"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text" title="审批单位">审批单位：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SPDW_TEXT"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text" title="审批日期">审批日期：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.SPJG_DESC"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text" title="审批结果">审批结果：</span>
+              <el-input placeholder="" size="small" v-model="form.SPRQ"  class="yy-input-input"></el-input>
+            </el-col>
+            <el-col :span="8">
+              <span class="yy-input-text">发证日期：</span>
+              <el-input placeholder="" size="small" readonly="true" v-model="form.FZRQ"  class="yy-input-input"></el-input>
+            </el-col>
+
+          </el-row>
+        </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="detailsDialogVisible = false" size="small">取 消</el-button>
       </div>
@@ -183,11 +264,12 @@ import {
     return {
       rybh:'',
       detailsDialogVisible:false,
-      type:1,
+      type:2,
       xid:'',
       page:0,
       fjlist:[],
       pcslist:[],
+      form:{},
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
@@ -254,8 +336,9 @@ import {
                });
            },
     details(i){
-      this.xid=i.DTID;
+      this.xid=i.RGUID;
       this.rybh=i.RYBH;
+      this.form=i;
       this.detailsDialogVisible = true;
     },
     pageSizeChange(val) {
@@ -264,8 +347,6 @@ import {
     handleCurrentChange(val) {
       this.getListTu(val,this.pageSize,this.pdTu);
     },
-
-
     getList(){
       // if((this.pd0.begin==''||this.pd0.begin==undefined||this.pd0.begin==null)&&(this.pd0.end==''||this.pd0.end==undefined||this.pd0.end==null)){
       //   this.$message({
@@ -423,3 +504,9 @@ import {
   }
 }
 </script>
+
+<style>
+.ndjmbhl .el-dialog{
+  min-width: 800px;
+}
+</style>

@@ -10,12 +10,12 @@
       </div>
       <div class="h2" v-if="showArray[ind]" :class="{'h2checked':h2Id==b.dm}" v-for="(b,ind2) in a.children" :key="ind2" @mouseover="checkH2(b.dm)" @mouseout="h2Id=null">
         <i :style="{'background':color[ind]}"></i>
-        <span  class="hand">● {{b.mc}}</span>
+        <span  class="hand" style="font-size:15px; padding-left:10px;">● {{b.mc}}</span>
         <div class="h3" v-if="h2Id==b.dm&&b.children.length">
           <div class="h3_content" v-for="(c,ind3) in b.children" :key="ind3">
             <div v-if="!c.children">
               <div class="h3_2" :class="{'h3_2check':menuPath==c.url}" @click="checklast(c.url)"><i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{c.mc}}</div>
-            </div>
+            </div> 
             <div v-if="c.children">
               <div class="h3_1" >{{c.mc}}</div>
               <el-row  :gutter="2">

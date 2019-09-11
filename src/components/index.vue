@@ -9,7 +9,7 @@
     </div>
     <div class="index_nav" v-if="navShow">
       <div class="index_nav2">
-        <div class="index_nav2_box" :class="{'nav_2_check':nav2Id==b.dm}" v-for="(b,ind2) in nav2" @click="getNav2(b)">
+        <div class="index_nav2_box" :class="{'nav_2_check':nav2Id==b.dm}" v-for="(b,ind2) in nav2" @click="getNav2(b)" style="font-size:15px;">
           ● {{b.mc}}
         </div>
       </div>
@@ -17,7 +17,7 @@
         <div class="index_nav3_box" :class="{'nav_3_check':nav3Id==c.dm}" v-for="(c,ind3) in nav3">
           <div v-if="!c.children">
             <router-link class="h3_2" :class="{'h3_2check':menuPath==c.url}" :to="{ name: c.url }"><i class="el-icon-caret-right" style="color:#a3a7a8"></i>{{c.mc}}</router-link>
-          </div>
+          </div> 
           <div v-if="c.children">
             <div class="h3_1" >{{c.mc}}</div>
             <el-row  :gutter="2">

@@ -112,7 +112,10 @@ export default {
         "keywords":this.content,
         "type":type,
         "pageSize":showCount,
-        "page":currentPage
+        "page":currentPage,
+        "token":this.$store.state.token,
+        "userCode":this.$store.state.uid,
+        "userName":this.$store.state.uname
       };
       this.$api.post(this.Global.aport6+"/api/es/search/generalCountSearch",p,r=>{
         if(r.success){
@@ -146,7 +149,10 @@ export default {
        "keywords":this.content,
        "type":this.type,
        "pageSize":showCount,
-       "page":currentPage
+       "page":currentPage,
+       "token":this.$store.state.token,
+       "userCode":this.$store.state.uid,
+       "userName":this.$store.state.uname
      };
      // var formData = new FormData();
      // formData.append("keywords", this.content);

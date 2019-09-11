@@ -18,7 +18,7 @@ const aport3="api-yewu";//石飞网关
 const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙
 const aport5="api-yanpan";//李文龙研判
-// const aport5="http://10.0.30.47:9438";//李文龙
+// const aport5="http://10.0.30.47:9438";//李文龙 
  // const aport6="http://10.33.72.217:9447";//孙
 const aport6="http://192.168.3.217:9447";
  // const aport7="http://10.33.72.218:9436";//游
@@ -36,6 +36,7 @@ const rjkn="/service/getRedisDataByDm?tablename=DM_RJKA"//入境口岸
 const rjsy="/service/getRedisDataByDm?tablename=DM_RJSY"//入境事由
 const qfjg="/service/getRedisDataByDm?tablename=DM_QFJG"//签发机关
 const pcs="/service/getRedisDataByDm?tablename=DM_PCS"//派出所
+
 const jzlx="/service/getRedisDataByDm?tablename=DM_JZLX"//居住类型
 const zsxz="/service/getRedisDataByDm?tablename=DM_ZSXZ"//住所性质,住房类型
 const jzzt="/service/getRedisDataByDm?tablename=DM_JZZT"//居住状态
