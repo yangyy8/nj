@@ -692,6 +692,9 @@ export default {
         'esCzJzdxx': this.pdczjzd,
         'esCzGzdxx': this.pdczgzd,
         'esAjJbxx': this.pdaj,
+        "token":this.$store.state.token,
+        "userCode":this.$store.state.uid,
+        "userName":this.$store.state.uname
       }
       this.$api.post(this.Global.aport6 + '/api/es/search/advanceSearch', p,
         r => {

@@ -188,7 +188,7 @@
               <span class="yy-input-text">出生地：</span>
               <el-input placeholder="" size="small" readonly="true" v-model="form.CSD_DESC"  class="yy-input-input"></el-input>
             </el-col>
- 
+
             <el-col :span="8">
               <span class="yy-input-text">民族：</span>
               <el-input placeholder="" size="small" readonly="true" v-model="form.MZ_DESC"  class="yy-input-input"></el-input>
@@ -347,8 +347,6 @@ import {
     handleCurrentChange(val) {
       this.getListTu(val,this.pageSize,this.pdTu);
     },
-
-
     getList(){
       // if((this.pd0.begin==''||this.pd0.begin==undefined||this.pd0.begin==null)&&(this.pd0.end==''||this.pd0.end==undefined||this.pd0.end==null)){
       //   this.$message({
