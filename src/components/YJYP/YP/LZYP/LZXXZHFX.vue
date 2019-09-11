@@ -565,14 +565,18 @@ import LZXX from '../../../common/lzxx_xq'
         },
         getPdGj(pd){
           pd.GJDQ=[];
+          let arr=[];
           if(this.pdGjItem.GJDQITEM!=''){
-            pd.GJDQ.push(this.pdGjItem.GJDQITEM)
+            arr.push(this.pdGjItem.GJDQITEM)
           }
           if(this.pdGjItem.SHIGUO!=''){
-            pd.GJDQ.push(this.pdGjItem.SHIGUO)
+            arr.push([this.pdGjItem.SHIGUO])
           }
           if(this.pdGjItem.SANSHIYI!=''){
-            pd.GJDQ.push(this.pdGjItem.SANSHIYI)
+            arr.push([this.pdGjItem.SANSHIYI])
+          }
+          for(var i=0;i<arr.length;i++){
+            pd.GJDQ = pd.GJDQ.concat(arr[i])
           }
           return pd;
         },
