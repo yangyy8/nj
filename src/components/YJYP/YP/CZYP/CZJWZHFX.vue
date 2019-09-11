@@ -28,7 +28,7 @@
                     </el-option>
                   </el-select>
                 </el-col>
-                
+
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">出生日期：</span>
                   <div class="input-input t-flex t-date">
@@ -59,12 +59,34 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">国家地区：</span>
-                  <el-select v-model="pd.GJDQ" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pdGjItem.GJDQITEM" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.gjdq"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                  <span class="input-text">十国人员：</span>
+                  <el-select v-model="pdGjItem.SHIGUO" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTen">
+                    <el-option
+                      v-for="item in tenArr"
+                      :key="item.BM"
+                      :label="item.BM+' - '+item.MC"
+                      :value="item.BM">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                  <span class="input-text">三十一国人员：</span>
+                  <el-select v-model="pdGjItem.SANSHIYI" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTir">
+                    <el-option
+                      v-for="item in tirArr"
+                      :key="item.BM"
+                      :label="item.BM+' - '+item.MC"
+                      :value="item.BM">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -408,6 +430,8 @@
       components:{CZXX},
       data() {
         return {
+          tenArr:[],
+          tirArr:[],
           rybh:'',
           radio1:'0',
           radio2:'0',
@@ -420,7 +444,13 @@
             FJJSSJ_DateRange:{begin:'',end:'',dataType:'date'},
             SJXFSJ_DateRange:{begin:'',end:'',dataType:'date'},
             PCSJSSJ_DateRange:{begin:'',end:'',dataType:'date'},
-            JZZT:"1"
+            JZZT:"1",
+            GJDQ:[],
+          },
+          pdGjItem:{
+            GJDQITEM:'',
+            SHIGUO:'',
+            SANSHIYI:'',
           },
           pm:{},
           imagess:[],
@@ -565,6 +595,7 @@
           console.log('this.selectionAll',this.selectionAll);
         },
         download(){
+          this.getPdGj(this.pd);
           let p={};
           let url="";
           if(this.selectionAll.length==0){//全部导出
@@ -627,6 +658,35 @@
             confirmButtonText: '确定',
           });
         },
+        getGJDQTen(){
+          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_10"}},
+           r =>{
+             if(r.success){
+               this.tenArr = r.data
+             }
+           })
+        },
+        getGJDQTir(){
+          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_31"}},
+           r =>{
+             if(r.success){
+               this.tirArr = r.data
+             }
+           })
+        },
+        getPdGj(pd){
+          pd.GJDQ=[];
+          if(this.pdGjItem.GJDQITEM!=''){
+            pd.GJDQ.push(this.pdGjItem.GJDQITEM)
+          }
+          if(this.pdGjItem.SHIGUO!=''){
+            pd.GJDQ.push(this.pdGjItem.SHIGUO)
+          }
+          if(this.pdGjItem.SANSHIYI!=''){
+            pd.GJDQ.push(this.pdGjItem.SANSHIYI)
+          }
+          return pd;
+        },
         getList(currentPage, showCount, pd) {
              // if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
              //   this.falg=false;
@@ -634,6 +694,8 @@
              // }else {
              //   this.disa=false;
              // }
+
+            this.getPdGj(pd);
             this.tableHeadHc=[];
             this.tableHeadHs=[];
             if(this.pm.GJDQ==true){

@@ -6,20 +6,20 @@
             <el-col :span="22" class="br pr-20">
               <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">中文姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="yy-input-input"></el-input>
+                   <span class="input-text">中文姓名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZWXM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">英文姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="yy-input-input"></el-input>
+                   <span class="input-text">英文姓名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.YWXM" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="yy-input-input"></el-input>
+                   <span class="input-text">证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ZJHM" class="input-input"></el-input>
                 </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="yy-input-text">国家地区：</span>
-                      <el-select v-model="pd.GJDQ"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
+                      <span class="input-text">国家地区：</span>
+                      <el-select v-model="pdGjItem.GJDQITEM"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                         <el-option
                           v-for="item in $store.state.gjdq"
                           :key="item.dm"
@@ -29,8 +29,30 @@
                       </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="yy-input-text">出生日期：</span>
-                      <div class="yy-input-input t-flex t-date">
+                      <span class="input-text">十国人员：</span>
+                      <el-select v-model="pdGjItem.SHIGUO" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTen">
+                        <el-option
+                          v-for="item in tenArr"
+                          :key="item.BM"
+                          :label="item.BM+' - '+item.MC"
+                          :value="item.BM">
+                        </el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                      <span class="input-text">三十一国人员：</span>
+                      <el-select v-model="pdGjItem.SANSHIYI" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTir">
+                        <el-option
+                          v-for="item in tirArr"
+                          :key="item.BM"
+                          :label="item.BM+' - '+item.MC"
+                          :value="item.BM">
+                        </el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                      <span class="input-text">出生日期：</span>
+                      <div class="input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginCSRQ" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyy/MM/dd"
@@ -45,12 +67,12 @@
                      </div>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                       <span class="yy-input-text">年龄：</span>
-                       <el-input placeholder="请输入内容" size="small" v-model="pd.nianLing" class="yy-input-input"></el-input>
+                       <span class="input-text">年龄：</span>
+                       <el-input placeholder="请输入内容" size="small" v-model="pd.nianLing" class="input-input"></el-input>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">性别：</span>
-                      <el-select v-model="pd.XB" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
+                      <span class="input-text">性别：</span>
+                      <el-select v-model="pd.XB" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                         <el-option v-for="item in $store.state.xb"
                          :key="item.dm"
                          :label="item.dm+' - '+item.mc"
@@ -60,8 +82,8 @@
                       </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                       <span class="yy-input-text">所属单位：</span>
-                       <el-select v-model="pd.SSDW" placeholder="请选择"  multiple collapse-tags filterable clearable default-first-option   size="small" class="yy-input-input">
+                       <span class="input-text">所属单位：</span>
+                       <el-select v-model="pd.SSDW" placeholder="请选择"  multiple collapse-tags filterable clearable default-first-option   size="small" class="input-input">
                          <el-option v-for="item in $store.state.ssdw"
                           :key="item.dm"
                           :label="item.mc"
@@ -71,8 +93,8 @@
                        </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">证件种类：</span>
-                      <el-select v-model="pd.ZJZL" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="yy-input-input">
+                      <span class="input-text">证件种类：</span>
+                      <el-select v-model="pd.ZJZL" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="input-input">
                         <el-option v-for="item in $store.state.zjzl"
                          :key="item.dm"
                          :label="item.dm+' - '+item.mc"
@@ -82,8 +104,8 @@
                       </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">签证种类：</span>
-                      <el-select v-model="pd.QZZL" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="yy-input-input">
+                      <span class="input-text">签证种类：</span>
+                      <el-select v-model="pd.QZZL" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="input-input">
                         <el-option v-for="item in $store.state.rjqzzl"
                          :key="item.dm"
                          :label="item.dm+' - '+item.mc"
@@ -93,8 +115,8 @@
                       </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">停留事由：</span>
-                      <el-select v-model="pd.JLSY" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="yy-input-input">
+                      <span class="input-text">停留事由：</span>
+                      <el-select v-model="pd.JLSY" placeholder="请选择"   multiple collapse-tags filterable clearable default-first-option   size="small" class="input-input">
                         <el-option v-for="item in $store.state.rjsy"
                          :key="item.dm"
                          :label="item.dm+' - '+item.mc"
@@ -104,8 +126,8 @@
                       </el-select>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="yy-input-text">停留有效期：</span>
-                      <div class="yy-input-input t-flex t-date">
+                      <span class="input-text">停留有效期：</span>
+                      <div class="input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginTLYXQZ" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyy/MM/dd"
@@ -120,8 +142,8 @@
                      </div>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">住房类型：</span>
-                      <el-select v-model="pd.ZFZL" placeholder="请选择"  multiple collapse-tags filterable clearable default-first-option  size="small" class="yy-input-input">
+                      <span class="input-text">住房类型：</span>
+                      <el-select v-model="pd.ZFZL" placeholder="请选择"  multiple collapse-tags filterable clearable default-first-option  size="small" class="input-input">
                         <el-option v-for="item in $store.state.zsxz"
                          :key="item.dm"
                          :label="item.dm+' - '+item.mc"
@@ -142,8 +164,8 @@
                       </el-select>
                     </el-col> -->
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="yy-input-text">入住日期：</span>
-                      <div class="yy-input-input t-flex t-date">
+                      <span class="input-text">入住日期：</span>
+                      <div class="input-input t-flex t-date">
                         <el-date-picker
                            v-model="pd0.beginZSRQ" format="yyyy-MM-dd"
                            type="date" size="small" value-format="yyyy/MM/dd"
@@ -158,8 +180,8 @@
                      </div>
                     </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                       <span class="yy-input-text">住宿地址：</span>
-                       <el-input placeholder="请输入内容" size="small" v-model="pd.LSDWDZ_Like" class="yy-input-input"></el-input>
+                       <span class="input-text">住宿地址：</span>
+                       <el-input placeholder="请输入内容" size="small" v-model="pd.LSDWDZ_Like" class="input-input"></el-input>
                     </el-col>
               </el-row>
              </el-col>
@@ -351,6 +373,8 @@ import LZXX from '../../../common/lzxx_xq'
         components:{LZXX},
       data() {
         return {
+          tenArr:[],
+          tirArr:[],
           rybh:'',
           radio1:'0',
           radio2:'0',
@@ -362,7 +386,13 @@ import LZXX from '../../../common/lzxx_xq'
               CSRQ_DateRange:{dataType:'date'},
               TLYXQZ_DateRange:{dataType:'date'},
               ZSRQ_DateRange:{dataType:'date'},
+              GJDQ:[],
             },
+          pdGjItem:{
+            GJDQITEM:'',
+            SHIGUO:'',
+            SANSHIYI:'',
+          },
           pm:{},
           imagess:[],
           imgshow1:false,
@@ -450,6 +480,7 @@ import LZXX from '../../../common/lzxx_xq'
         download(){
           let p={};
           let url="";
+          this.getPdGj(this.pd);
           if(this.tableHeadHc.length==0){//人员导出
             url="/linZhuInfoComprehensiveAnalysisController/exportPersonList"
             if(this.selectionAll.length==0){//人员全部导出
@@ -516,8 +547,37 @@ import LZXX from '../../../common/lzxx_xq'
             confirmButtonText: '确定',
           });
         },
+        getGJDQTen(){
+          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_10"}},
+           r =>{
+             if(r.success){
+               this.tenArr = r.data
+             }
+           })
+        },
+        getGJDQTir(){
+          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_31"}},
+           r =>{
+             if(r.success){
+               this.tirArr = r.data
+             }
+           })
+        },
+        getPdGj(pd){
+          pd.GJDQ=[];
+          if(this.pdGjItem.GJDQITEM!=''){
+            pd.GJDQ.push(this.pdGjItem.GJDQITEM)
+          }
+          if(this.pdGjItem.SHIGUO!=''){
+            pd.GJDQ.push(this.pdGjItem.SHIGUO)
+          }
+          if(this.pdGjItem.SANSHIYI!=''){
+            pd.GJDQ.push(this.pdGjItem.SANSHIYI)
+          }
+          return pd;
+        },
         getList(currentPage, showCount, pd) {
-
+           this.getPdGj(pd);
            if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
 
              this.falg=false;

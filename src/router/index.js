@@ -682,49 +682,49 @@ export default new Router({
         {
           path: 'GZC',
           name: 'GZC',
-          meta:{title:['日常管理','涉外单位','公证处']},
+          meta:{title:['日常管理','涉外单位','无刑事制裁证明']},
           component: resolve => require(['@/components/YWCZ/SWDW//GZC'], resolve),
         },
         {
           path: 'GZC_XQ',
           name: 'GZC_XQ',
-          meta:{title:['日常管理','涉外单位','公证处详情']},
+          meta:{title:['日常管理','涉外单位','无刑事制裁证明详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
         {
           path: 'WLJ',
           name: 'WLJ',
-          meta:{title:['日常管理','涉外单位','文旅局']},
+          meta:{title:['日常管理','涉外单位','外籍演员核查']},
           component: resolve => require(['@/components/YWCZ/SWDW//WLJ'], resolve),
         },
         {
           path: 'WLJ_XQ',
           name: 'WLJ_XQ',
-          meta:{title:['日常管理','涉外单位','文旅局详情']},
+          meta:{title:['日常管理','涉外单位','外籍演员核查详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
         {
           path: 'ZXX',
           name: 'ZXX',
-          meta:{title:['日常管理','涉外单位','中小学幼儿园与语言培训机构']},
+          meta:{title:['日常管理','涉外单位','外籍教师核查']},
           component: resolve => require(['@/components/YWCZ/SWDW/ZXX'], resolve),
         },
         {
           path: 'ZXX_XQ',
           name: 'ZXX_XQ',
-          meta:{title:['日常管理','涉外单位','中小学幼儿园与语言培训机构详情']},
+          meta:{title:['日常管理','涉外单位','外籍教师核查详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
         {
           path: 'GX',
           name: 'GX',
-          meta:{title:['日常管理','涉外单位','高校']},
+          meta:{title:['日常管理','涉外单位','高校离校学生上报']},
           component: resolve => require(['@/components/YWCZ/SWDW/GX'], resolve),
         },
         {
           path: 'GX_XQ',
           name: 'GX_XQ',
-          meta:{title:['日常管理','涉外单位','高校详情']},
+          meta:{title:['日常管理','涉外单位','高校离校学生上报详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
         {
@@ -763,6 +763,13 @@ export default new Router({
           meta:{title:['日常管理','涉外单位','涉外单位人员审核详情']},
           component: resolve => require(['@/components/YWCZ/SWDW/RCSW'], resolve),
         },
+        {
+          path: 'TZTB',
+          name: 'TZTB',
+          meta:{title:['日常管理','涉外单位','通知通报']},
+          component: resolve => require(['@/components/YWCZ/SWDW/TZTB'], resolve),
+        },
+
         {
           path: 'ASJYBB',
           name: 'ASJYBB',
