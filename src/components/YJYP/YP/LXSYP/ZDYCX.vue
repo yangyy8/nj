@@ -292,13 +292,11 @@ export default {
       console.log(`当前页: ${val}`);
     },
     getList(currentPage,showCount){
-
       if(this.keywords==""){
         this.$message.error("请选择您要查询的条件!");return ;
       }
       this.items=[];
       this.TotalResult=0;
-
      let p={
        "keywords":this.keywords,
        "pageSize":showCount,
