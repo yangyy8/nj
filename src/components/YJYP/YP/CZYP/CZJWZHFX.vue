@@ -59,34 +59,12 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                   <span class="input-text">国家地区：</span>
-                  <el-select v-model="pdGjItem.GJDQITEM" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                  <el-select v-model="pd.GJDQ" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.gjdq"
                       :key="item.dm"
                       :label="item.dm+' - '+item.mc"
                       :value="item.dm">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">十国人员：</span>
-                  <el-select v-model="pdGjItem.SHIGUO" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTen">
-                    <el-option
-                      v-for="item in tenArr"
-                      :key="item.BM"
-                      :label="item.BM+' - '+item.MC"
-                      :value="item.BM">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="input-text">三十一国人员：</span>
-                  <el-select v-model="pdGjItem.SANSHIYI" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTir">
-                    <el-option
-                      v-for="item in tirArr"
-                      :key="item.BM"
-                      :label="item.BM+' - '+item.MC"
-                      :value="item.BM">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -258,6 +236,8 @@
               <el-checkbox label="服务处所" v-model="pm.FWCS" :disabled="disa"></el-checkbox>
               <el-checkbox label="证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
               <el-checkbox label="性别" v-model="pm.XB" :disabled="disa"></el-checkbox>
+              <el-checkbox label="十国人员" v-model="pm.SHIGUO" :disabled="disa"></el-checkbox>
+              <el-checkbox label="三十一国人员" v-model="pm.SANSHIYIGUO" :disabled="disa"></el-checkbox>
               <!-- <el-button type="primary"  size="small" @click="download" style="float:right">导出Excel</el-button> -->
           </div>
           <div v-if="falg">
@@ -318,6 +298,9 @@
                 layout="prev, pager, next"
                 :total="TotalResult">
               </el-pagination>
+            </div>
+            <div class="totalClass">
+              总数量：<span>{{totalAllResult}}</span>
             </div>
         </div>
         <div v-else>
@@ -445,13 +428,12 @@
             SJXFSJ_DateRange:{begin:'',end:'',dataType:'date'},
             PCSJSSJ_DateRange:{begin:'',end:'',dataType:'date'},
             JZZT:"1",
-            GJDQ:[],
           },
-          pdGjItem:{
-            GJDQITEM:'',
-            SHIGUO:'',
-            SANSHIYI:'',
-          },
+          // pdGjItem:{
+          //   GJDQITEM:'',
+          //   SHIGUO:'',
+          //   SANSHIYI:'',
+          // },
           pm:{},
           imagess:[],
           imgshow1:false,
@@ -514,6 +496,14 @@
               code:'XB_DESC',
               label:'性别'
             },
+            {
+              code:'SHIGUO',
+              label:'十国人员'
+            },
+            {
+              code:'SANSHIYIGUO',
+              label:'三十一国人员'
+            },
           ],
           tableHeadHc:[],
           tableHeadHs:[],
@@ -523,6 +513,7 @@
           falg:false,
           disa:false,
           allData:{},
+          totalAllResult:0,
 
           multipleSelection:[],
           selectionAll:[],
@@ -595,7 +586,6 @@
           console.log('this.selectionAll',this.selectionAll);
         },
         download(){
-          this.getPdGj(this.pd);
           let p={};
           let url="";
           if(this.selectionAll.length==0){//全部导出
@@ -658,35 +648,19 @@
             confirmButtonText: '确定',
           });
         },
-        getGJDQTen(){
-          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_10"}},
-           r =>{
-             if(r.success){
-               this.tenArr = r.data
-             }
-           })
-        },
-        getGJDQTir(){
-          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_31"}},
-           r =>{
-             if(r.success){
-               this.tirArr = r.data
-             }
-           })
-        },
-        getPdGj(pd){
-          pd.GJDQ=[];
-          if(this.pdGjItem.GJDQITEM!=''){
-            pd.GJDQ.push(this.pdGjItem.GJDQITEM)
-          }
-          if(this.pdGjItem.SHIGUO!=''){
-            pd.GJDQ.push(this.pdGjItem.SHIGUO)
-          }
-          if(this.pdGjItem.SANSHIYI!=''){
-            pd.GJDQ.push(this.pdGjItem.SANSHIYI)
-          }
-          return pd;
-        },
+        // getPdGj(pd){
+        //   pd.GJDQ=[];
+        //   if(this.pdGjItem.GJDQITEM!=''){
+        //     pd.GJDQ.push(this.pdGjItem.GJDQITEM)
+        //   }
+        //   if(this.pdGjItem.SHIGUO!=''){
+        //     pd.GJDQ.push(this.pdGjItem.SHIGUO)
+        //   }
+        //   if(this.pdGjItem.SANSHIYI!=''){
+        //     pd.GJDQ.push(this.pdGjItem.SANSHIYI)
+        //   }
+        //   return pd;
+        // },
         getList(currentPage, showCount, pd) {
              // if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
              //   this.falg=false;
@@ -695,44 +669,51 @@
              //   this.disa=false;
              // }
 
-            this.getPdGj(pd);
             this.tableHeadHc=[];
             this.tableHeadHs=[];
             if(this.pm.GJDQ==true){
               this.tableHeadHc.push("GJDQ");
-              this.tableHeadHs.push('GJDQ_DESC')
+              this.tableHeadHs.push('国家地区')
             }
             if(this.pm.JZZT==true){
               this.tableHeadHc.push("JZZT");
-              this.tableHeadHs.push('JZZT_DESC')
+              this.tableHeadHs.push('居住类型状态')
             }
             if(this.pm.JZD_ZRQ==true){
               this.tableHeadHc.push("JZD_ZRQ");
-              this.tableHeadHs.push('JZD_ZRQ')
+              this.tableHeadHs.push('居住地责任区')
             }
             if(this.pm.JZD_PCS==true){
               this.tableHeadHc.push("JZD_PCS");
-              this.tableHeadHs.push('JZD_PCS_DESC')
+              this.tableHeadHs.push('居住地所属派出所')
             }
             if(this.pm.SFDM==true){
               this.tableHeadHc.push("SFDM");
-              this.tableHeadHs.push('SFDM_DESC')
+              this.tableHeadHs.push('身份')
             }
             if(this.pm.QZZL==true){
               this.tableHeadHc.push("QZZL");
-              this.tableHeadHs.push('QZZL_DESC')
+              this.tableHeadHs.push('签证种类')
             }
             if(this.pm.FWCS==true){
               this.tableHeadHc.push("FWCS");
-              this.tableHeadHs.push('FWCS')
+              this.tableHeadHs.push('服务处所')
             }
             if(this.pm.ZJZL==true){
               this.tableHeadHc.push("ZJZL");
-              this.tableHeadHs.push('ZJZL_DESC')
+              this.tableHeadHs.push('证件种类')
             }
             if(this.pm.XB==true){
               this.tableHeadHc.push("XB");
-              this.tableHeadHs.push('XB_DESC')
+              this.tableHeadHs.push('性别')
+            }
+            if(this.pm.SHIGUO==true){
+              this.tableHeadHc.push("SHIGUO");
+              this.tableHeadHs.push('十国人员')
+            }
+            if(this.pm.SHIGUO==true){
+              this.tableHeadHc.push("SANSHIYIGUO");
+              this.tableHeadHs.push('三十一国人员')
             }
             if(pd.hasOwnProperty('RGUID')){
               delete pd['RGUID']
@@ -750,13 +731,14 @@
                 this.falg=true;
                 this.tableData = r.data.resultList;
                 this.TotalResult = r.data.totalResult;
+                this.totalAllResult = r.data.totalAllResult;
                 this.configHeader=[];
                 let _this = this;
                 for(var i=0;i<_this.tableHeadHs.length;i++){
                   var a='';
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].code==_this.tableHeadHs[i]){
+                    if(_this.tableHead[j].label==_this.tableHeadHs[i]){
                       a=j;
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
@@ -847,6 +829,7 @@
     .yy-input-text {
       text-align: left !important;
     }
+
     </style>
     <style>
       .el-button+.el-button{margin-left: 0!important;}

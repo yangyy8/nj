@@ -19,34 +19,12 @@
                 </el-col>
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                       <span class="input-text">国家地区：</span>
-                      <el-select v-model="pdGjItem.GJDQITEM"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
+                      <el-select v-model="pd.GJDQ"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                         <el-option
                           v-for="item in $store.state.gjdq"
                           :key="item.dm"
                           :label="item.dm+' - '+item.mc"
                           :value="item.dm">
-                        </el-option>
-                      </el-select>
-                    </el-col>
-                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="input-text">十国人员：</span>
-                      <el-select v-model="pdGjItem.SHIGUO" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTen">
-                        <el-option
-                          v-for="item in tenArr"
-                          :key="item.BM"
-                          :label="item.BM+' - '+item.MC"
-                          :value="item.BM">
-                        </el-option>
-                      </el-select>
-                    </el-col>
-                    <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                      <span class="input-text">三十一国人员：</span>
-                      <el-select v-model="pdGjItem.SANSHIYI" filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input" @visible-change="getGJDQTir">
-                        <el-option
-                          v-for="item in tirArr"
-                          :key="item.BM"
-                          :label="item.BM+' - '+item.MC"
-                          :value="item.BM">
                         </el-option>
                       </el-select>
                     </el-col>
@@ -267,6 +245,9 @@
               :total="TotalResult">
             </el-pagination>
           </div>
+          <div class="totalClass">
+            总数量：<span>{{totalAllResult}}</span>
+          </div>
         </div>
         <div v-else>
 
@@ -386,13 +367,7 @@ import LZXX from '../../../common/lzxx_xq'
               CSRQ_DateRange:{dataType:'date'},
               TLYXQZ_DateRange:{dataType:'date'},
               ZSRQ_DateRange:{dataType:'date'},
-              GJDQ:[],
             },
-          pdGjItem:{
-            GJDQITEM:'',
-            SHIGUO:'',
-            SANSHIYI:'',
-          },
           pm:{},
           imagess:[],
           imgshow1:false,
@@ -423,6 +398,7 @@ import LZXX from '../../../common/lzxx_xq'
           falg:false,
           disa:false,
           tableHeadHc:[],
+          totalAllResult:0,
 
           multipleSelection:[],
           selectionAll:[],
@@ -480,7 +456,6 @@ import LZXX from '../../../common/lzxx_xq'
         download(){
           let p={};
           let url="";
-          this.getPdGj(this.pd);
           if(this.tableHeadHc.length==0){//人员导出
             url="/linZhuInfoComprehensiveAnalysisController/exportPersonList"
             if(this.selectionAll.length==0){//人员全部导出
@@ -547,41 +522,24 @@ import LZXX from '../../../common/lzxx_xq'
             confirmButtonText: '确定',
           });
         },
-        getGJDQTen(){
-          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_10"}},
-           r =>{
-             if(r.success){
-               this.tenArr = r.data
-             }
-           })
-        },
-        getGJDQTir(){
-          this.$api.post(this.Global.aport5+'/GJDQController/getGJDQByLBBM',{pd:{LBBM:"GJLBGL_31"}},
-           r =>{
-             if(r.success){
-               this.tirArr = r.data
-             }
-           })
-        },
-        getPdGj(pd){
-          pd.GJDQ=[];
-          let arr=[];
-          if(this.pdGjItem.GJDQITEM!=''){
-            arr.push(this.pdGjItem.GJDQITEM)
-          }
-          if(this.pdGjItem.SHIGUO!=''){
-            arr.push([this.pdGjItem.SHIGUO])
-          }
-          if(this.pdGjItem.SANSHIYI!=''){
-            arr.push([this.pdGjItem.SANSHIYI])
-          }
-          for(var i=0;i<arr.length;i++){
-            pd.GJDQ = pd.GJDQ.concat(arr[i])
-          }
-          return pd;
-        },
+        // getPdGj(pd){
+        //   pd.GJDQ=[];
+        //   let arr=[];
+        //   if(this.pdGjItem.GJDQITEM!=''){
+        //     arr.push(this.pdGjItem.GJDQITEM)
+        //   }
+        //   if(this.pdGjItem.SHIGUO!=''){
+        //     arr.push([this.pdGjItem.SHIGUO])
+        //   }
+        //   if(this.pdGjItem.SANSHIYI!=''){
+        //     arr.push([this.pdGjItem.SANSHIYI])
+        //   }
+        //   for(var i=0;i<arr.length;i++){
+        //     pd.GJDQ = pd.GJDQ.concat(arr[i])
+        //   }
+        //   return pd;
+        // },
         getList(currentPage, showCount, pd) {
-           this.getPdGj(pd);
            if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
 
              this.falg=false;
@@ -671,6 +629,7 @@ import LZXX from '../../../common/lzxx_xq'
                 this.falg=true;
                 this.tableData = r.data.resultList;
                 this.TotalResult = r.data.totalResult;
+                this.totalAllResult = r.data.totalAllResult;
                 console.log('this.tableData[0]',this.tableData[0]);
                 let arr=this.tableData[0];
                 let itemKey = Object.keys(arr);
