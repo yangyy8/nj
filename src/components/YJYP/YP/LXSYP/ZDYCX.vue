@@ -324,7 +324,6 @@ export default {
   min-height: 700px;
   margin: 10px;
 }
-
 .qwjs .top {
   width: 100%;
   height: 40px;
