@@ -622,7 +622,9 @@ export default {
       pd:{},
       px:{},
       pcl:{},
-      pc:{},
+      pc:{
+        CHANGE_RESON:''
+      },
       bshow:false,
       xtitle:"",
       lzxxDialogVisible:false,

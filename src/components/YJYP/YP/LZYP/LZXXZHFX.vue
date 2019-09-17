@@ -416,6 +416,9 @@ import LZXX from '../../../common/lzxx_xq'
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getSjly");
       },
+      activated(){
+        this.getList(this.CurrentPage,this.pageSize, this.pd);
+      },
       watch:{
         falg:function(newVal,oldVal){
           console.log('flag',newVal,oldVal)
@@ -540,13 +543,13 @@ import LZXX from '../../../common/lzxx_xq'
         //   return pd;
         // },
         getList(currentPage, showCount, pd) {
-           if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-
-             this.falg=false;
-             this.disa=true;
-           }else {
-             this.disa=false;
-           }
+           // if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
+           //
+           //   this.falg=false;
+           //   this.disa=true;
+           // }else {
+           //   this.disa=false;
+           // }
 
         // if(this.pd0.beginCSRQ!=undefined && this.pd0.endCSRQ!=undefined){
 

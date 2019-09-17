@@ -124,7 +124,7 @@
            <el-table-column
              label="操作" width="80">
              <template slot-scope='scope'>
-              <a @click="downLoad"><el-button type="text"  class="a-btn"  title="下载"  icon="el-icon-download"></el-button></a>
+              <a @click="downLoad(scope.row)"><el-button type="text"  class="a-btn"  title="下载"  icon="el-icon-download"></el-button></a>
             </template>
            </el-table-column>
          </el-table>
@@ -217,13 +217,12 @@ export default {
           }
         })
     },
-    downLoad(){
+    downLoad(row){
       let p={
-        "pd":{RGUID:this.xid}
+        "pd":{RGUID:row.RGUID}
       }
       this.$api.post(this.Global.aport4+'/eS_Tbry_GroupController/getTongBaoPAPERInfoByRGUID',p,
        r =>{
-         
           this.downloadM(r)
        },e=>{},{},'blob')
     },

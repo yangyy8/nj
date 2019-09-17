@@ -3,7 +3,7 @@
   <div class="yymain tshu">
     <div class="yytitle">
       <el-row type="flex">
-        <el-col :span="22" class="br pr-20">
+        <el-col :span="21" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
               <span class="input-text">姓名：</span>
@@ -26,9 +26,9 @@
                 </el-col>
           </el-row>
          </el-col>
-            <el-col :span="4" >
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-              <!-- <el-button type="info" size="small" @click="$router.push('LZXXZHFX')" class="mb-15">返回</el-button> -->
+            <el-col :span="3">
+              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15" style="margin-right:10px">查询</el-button>
+              <el-button type="primary" size="small" @click="$router.go(-1)" class="mb-15">返回</el-button>
             </el-col>
           </el-row>
     </div>

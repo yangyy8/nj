@@ -202,8 +202,28 @@
         </div>
       </div>
       <div class="ak-tab-pane">
-        <div class = "chart" style="width:100%" v-show="page==0">
-          <div id = "echarts" style = "width: 100%;height: 400px"></div>
+        <span><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="pageC=!pageC"></i></span>
+        <!-- <el-button type="primary" size="small"  @click="" v-show="pageC==false">导出</el-button> -->
+        <div v-show="page==0">
+          <div class = "chart" style="width:100%" v-show="pageC==true">
+            <div id = "echarts" style = "width: 100%;height: 400px"></div>
+          </div>
+          <div v-show="pageC==false" class="t-mt10">
+
+            <el-table
+               :data="tableDataC"
+               border
+               style="width: 100%">
+               <el-table-column
+                 prop="rq"
+                 label="日期">
+               </el-table-column>
+               <el-table-column
+                 prop="sl"
+                 label="数量">
+               </el-table-column>
+             </el-table>
+          </div>
         </div>
         <div v-show="page==1">
           <el-table
@@ -297,6 +317,8 @@ import CZXX from '../../../common/czxx_xq'
   components:{CZXX},
   data() {
     return {
+      pageC:true,
+      tableDataC:[],
       CZDialogVisible:false,
       type:3,
       rybh:'',
@@ -355,6 +377,7 @@ import CZXX from '../../../common/czxx_xq'
     this.getListTu(this.pd0,this.pd);
   },
   methods:{
+
     pageSizeChange(val) {
       // this.pageSize=10;
       this.getList(this.CurrentPage,val,this.pdTu);
@@ -379,6 +402,13 @@ import CZXX from '../../../common/czxx_xq'
            this.drawLine(r.data.legend,r.data.xAxis,r.data.series);
          }
        })
+       //表格
+       this.$api.post(this.Global.aport5+'/djbhl/getdjbhltjlb',{pd:pd},
+        r =>{
+          if(r.success){
+            this.tableDataC = r.data.resultList
+          }
+        })
     },
     getList(currentPage,pageSize,pd){
       let p={

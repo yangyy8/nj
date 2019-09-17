@@ -1066,7 +1066,9 @@ export default {
       pp:{},
       pm:{},
       pcl:{},
-      pc:{},
+      pc:{
+        CHANGE_RESON:''
+      },
       pxcrj:{},
       pxlz:{},
       crjinfo:{},
@@ -1107,9 +1109,8 @@ export default {
     this.lzxxDialogVisible=false;
     this.crjDialogVisible=false;
     this.row=this.$route.query.row;
-    this.pc={};
+    this.pc={CHANGE_RESON:''};
     this.qdshow=true;
-    this.pc.CHANGE_RESON='';
     console.log(this.row.RYBH);
     if(this.row!=undefined && (this.row.CLZT=='0'||this.row.CLZT=='CLZT_0')){
       this.qdshow=false;
