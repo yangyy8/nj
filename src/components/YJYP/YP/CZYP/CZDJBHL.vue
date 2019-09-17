@@ -187,7 +187,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getListTu(pd0,pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="page=0;tableData=[];CurrentPage=1;TotalResult=0;getListTu(pd0,pd);getListC(pd0,pd)">查询</el-button>
         </el-col>
       </el-row>
     </div>
@@ -202,8 +202,12 @@
         </div>
       </div>
       <div class="ak-tab-pane">
-        <span><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="pageC=!pageC"></i></span>
-        <!-- <el-button type="primary" size="small"  @click="" v-show="pageC==false">导出</el-button> -->
+        <div class="">
+          <span class="t-fr"><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="changeTu()"></i></span>
+          <el-button type="primary" size="small"  @click="downloadC(pd0,pd)" v-show="pageC==false">导出</el-button>
+          <div style="clear:both"></div>
+        </div>
+
         <div v-show="page==0">
           <div class = "chart" style="width:100%" v-show="pageC==true">
             <div id = "echarts" style = "width: 100%;height: 400px"></div>
@@ -377,7 +381,14 @@ import CZXX from '../../../common/czxx_xq'
     this.getListTu(this.pd0,this.pd);
   },
   methods:{
-
+    changeTu(){
+      this.pageC=!this.pageC;
+      if(this.pageC==true){
+        this.getListTu(this.pd0,this.pd);
+      }else{
+        this.getListC(this.pd0,this.pd)
+      }
+    },
     pageSizeChange(val) {
       // this.pageSize=10;
       this.getList(this.CurrentPage,val,this.pdTu);
@@ -389,6 +400,19 @@ import CZXX from '../../../common/czxx_xq'
     changeTime(time,timeReal){
       time.begin==''?timeReal.begin='':time.begin==null?timeReal.begin=null:timeReal.begin=time.begin+' 00:00:00';
       time.end==''?timeReal.end='':time.end==null?timeReal.end=null:timeReal.end=time.end+' 00:00:00';
+    },
+    getListC(pd0,pd){
+      this.changeTime(pd0.SJXFSJ_DateRange,pd.SJXFSJ_DateRange);
+      this.changeTime(pd0.CSRQ_DateRange,pd.CSRQ_DateRange);
+      this.changeTime(pd0.TLYXQ_DateRange,pd.TLYXQ_DateRange);
+      this.changeTime(pd0.FJJSSJ_DateRange,pd.FJJSSJ_DateRange);
+      //表格
+      this.$api.post(this.Global.aport5+'/djbhl/getdjbhltjlb',{pd:pd},
+       r =>{
+         if(r.success){
+           this.tableDataC = r.data.resultList
+         }
+       })
     },
     getListTu(pd0,pd){
       this.changeTime(pd0.SJXFSJ_DateRange,pd.SJXFSJ_DateRange);
@@ -402,13 +426,35 @@ import CZXX from '../../../common/czxx_xq'
            this.drawLine(r.data.legend,r.data.xAxis,r.data.series);
          }
        })
-       //表格
-       this.$api.post(this.Global.aport5+'/djbhl/getdjbhltjlb',{pd:pd},
-        r =>{
-          if(r.success){
-            this.tableDataC = r.data.resultList
-          }
-        })
+    },
+    downloadC(pd0,pd){
+      if(this.tableDataC.length==0){
+        this.$message({
+          message: '列表无数据！',
+          type: 'warning'
+        });
+        return
+      }
+      this.changeTime(pd0.SJXFSJ_DateRange,pd.SJXFSJ_DateRange);
+      this.changeTime(pd0.CSRQ_DateRange,pd.CSRQ_DateRange);
+      this.changeTime(pd0.TLYXQ_DateRange,pd.TLYXQ_DateRange);
+      this.changeTime(pd0.FJJSSJ_DateRange,pd.FJJSSJ_DateRange);
+      this.$api.post(this.Global.aport5+'/djbhl/exportdjbhlchart',{pd:pd},
+       r =>{
+         this.downloadM(r);
+       },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '常住登记变化量列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
     },
     getList(currentPage,pageSize,pd){
       let p={

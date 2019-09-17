@@ -68,6 +68,9 @@
   padding: 30px 5% 30px 0%;
   border-radius: 10px;
 }
+.t-fr{
+  float: right;
+}
 .t-mt10{
   margin-top: 10px!important;
 }
