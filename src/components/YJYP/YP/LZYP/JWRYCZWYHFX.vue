@@ -362,7 +362,7 @@
 
 <script scoped>
 import {
-  ToArray
+  ToArray,sortByKey
 } from '@/assets/js/ToArray.js'
 import {
   createMapL,
@@ -552,7 +552,7 @@ export default {
       var url = this.Global.aport2 + "/data_report/selectSsfjDm";
       this.$api.post(url, p,
         r => {
-          this.ssfj = r.data.SSFJ;
+          this.ssfj = sortByKey(r.data.SSFJ,'dm');
         })
     },
     getPcs() {
@@ -592,7 +592,7 @@ export default {
       var url = this.Global.aport2 + "/data_report/selectZrqDm";
       this.$api.post(url, p,
         r => {
-          this.zrq = r.data.ZRQ;
+          this.zrq =sortByKey(r.data.ZRQ,'dm');
         })
     },
     doset() {

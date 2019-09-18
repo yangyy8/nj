@@ -73,7 +73,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">审核状态：</span>
-                    <el-select v-model="pd.SHZT" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.SHBM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
                       <el-option
                         v-for="(item,ind) in $store.state.shzt"
                         :key="ind"

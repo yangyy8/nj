@@ -15,7 +15,7 @@
              <div class="fxcont" v-if="show">
                 <el-row :gutter="1">
                   <el-col :span="24">
-                      <span class="yy-input-text"><font color="red">*</font> 所属分局：</span>
+                      <span class="yy-input-text">所属分局：</span>
                       <el-select v-model="pd.ssfj" filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
                         <el-option
                           v-for="(item,ind) in ssfj"
@@ -101,23 +101,14 @@
                   <el-col :span="24"  v-show="lgshow">
                     <el-col :span="24">
                         <span class="yy-input-text">住宿宾馆：</span>
-                        <el-select
-                         v-model="pd.zsbg"
-                         filterable
-                         clearable
-                         remote
-                         reserve-keyword
-                         placeholder="请输入关键词"
-                         :remote-method="remoteMethod"
-                         :loading="loading"
-                          size="small"  class="yy-input-input">
-                         <el-option
-                           v-for="(item,ind0) in zsbg"
-                           :key="ind0"
-                           :label="item.mc"
-                           :value="item.dm">
-                         </el-option>
-                       </el-select>
+                        <el-select v-model="pd.zsbg" placeholder="请搜索" size="small" class="yy-input-input"  filterable clearable  :filter-method="userFilter">
+                        <el-option
+                          v-for="item in zsbg"
+                          :key="item.dm"
+                          :label="item.mc"
+                          :value="item.dm">
+                        </el-option>
+                      </el-select>
                     </el-col>
                   </el-col>
                 </el-row>
@@ -226,7 +217,8 @@
 </template>
 
 <script scoped>
-import {ToArray} from '@/assets/js/ToArray.js'
+import {ToArray,sortByKey} from '@/assets/js/ToArray.js'
+import {formatDate,getServerDate} from '@/assets/js/date.js'
 import {createMapL,getSearh} from '@/assets/js/SuperMap/lzmap.js'
 let lzvm;
 export default {
@@ -235,6 +227,7 @@ export default {
       CurrentPage: 1,
       pageSize: 5,
       TotalResult: 0,
+      allUserList:{},
        pd:{},
        swdw:[],
        show:true,
@@ -250,7 +243,7 @@ export default {
        bzhid:'',
        mc:'',
        lrdw:'',
-       centers:[],
+       centers:[32.03613281, 118.78211975],
     }
   },
   mounted() {
@@ -259,13 +252,34 @@ export default {
     this.$store.dispatch('getRjsy');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getRjqzzl');
+    this.pd.beginTime=formatDate(getServerDate(),'yyyy-MM-dd');
+    this.pd.endTime=formatDate(getServerDate(),'yyyy-MM-dd');
     createMapL();
     this.getFJ();
-    this.getZsbg();
+    this.getUserWhiteList();
   },
   methods:{
+    userFilter(query = '') {
+             let arr = this.allUserList.filter((item) => {
+              if(item.mc!=undefined){
+                  return item.mc.includes(query)
+               }
+             })
+             if (arr.length > 50) {
+               this.zsbg = arr.slice(0, 50)
+             } else {
+               this.zsbg= arr
+             }
+           },
+    getUserWhiteList() {
+               this.$api.get(this.Global.aport1+this.Global.zsbg, null,
+                r => {
+                    this.allUserList=ToArray(r.data);
+                    this.userFilter();
+               });
+        },
     pageSizeChange(val) {
-        this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc);
+      this.getRyxx(this.CurrentPage,val,this.bzhid,this.mc);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
@@ -279,23 +293,11 @@ export default {
       };
       this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
         r => {
-          this.ssfj = r.data.SSFJ;
+          this.ssfj = sortByKey(r.data.SSFJ,'dm');
+
         })
     },
-    remoteMethod(query) {
-        if (query !== '') {
-          this.loading = true;
-          setTimeout(() => {
-            this.loading = false;
-            this.zsbg = this.list.filter(item => {
-              return item.mc.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-            });
-          }, 200);
-        } else {
-          this.zsbg = [];
-        }
-      },
+
       changtab(){
         this.show=!this.show;
       },
@@ -334,52 +336,52 @@ export default {
     doSearch() {
       // 以下为查询ES，由于es_lz_lzxx被删除，暂时注释掉。
       // 数据模拟
-      if (this.pd.ssfj == undefined || this.pd.ssfj == "") {
-        this.$message.error("请选择所属分局!");
-        return;
-      } else {
-        var ssj = this.pd.ssfj.substr(0, 6);
-        switch (ssj) {
-          case '320116': //六合区
-            this.centers = [32.39215480155289, 118.81641980133281];
-            break;
-          case '320112': //江北新区
-            this.centers = [32.03613281, 118.78211975];
-            break;
-          case '320113': //栖霞区
-            this.centers = [32.137307901838255, 118.9995913711449];
-            break;
-          case '320102': //玄武区
-            this.centers = [32.062475576087024, 118.8436456413333];
-            break;
-          case '320106': //鼓楼区
-            this.centers = [32.08265178165445, 118.75812113098544];
-            break;
-          case '320111': //浦口区
-            this.centers = [31.943626916199264, 118.35524238617728];
-            break;
-          case '320104': //秦淮区
-            this.centers = [32.01143013679143, 118.81736758064937];
-            break;
-          case '320105': //建邺区
-            this.centers = [32.0275950355325, 118.70538415685343];
-            break;
-          case '320114': //雨花台区
-            this.centers = [31.94205101079558, 118.69497417187063];
-            break;
-          case '320115': //江宁区
-            this.centers = [31.865733721334237, 118.79198266097109];
-            break;
-          case '320124 ': //溧水区
-            this.centers = [31.726803147547287, 119.1224894259463];
-            break;
-          case '320125 ': //高淳区
-            this.centers = [31.3703836314495, 119.19202124153713];
-            break;
-          default:
-
-        }
-      }
+      // if (this.pd.ssfj == undefined || this.pd.ssfj == "") {
+      //   this.$message.error("请选择所属分局!");
+      //   return;
+      // } else {
+      //   var ssj = this.pd.ssfj.substr(0, 6);
+      //   switch (ssj) {
+      //     case '320116': //六合区
+      //       this.centers = [32.39215480155289, 118.81641980133281];
+      //       break;
+      //     case '320112': //江北新区
+      //       this.centers = [32.03613281, 118.78211975];
+      //       break;
+      //     case '320113': //栖霞区
+      //       this.centers = [32.137307901838255, 118.9995913711449];
+      //       break;
+      //     case '320102': //玄武区
+      //       this.centers = [32.062475576087024, 118.8436456413333];
+      //       break;
+      //     case '320106': //鼓楼区
+      //       this.centers = [32.08265178165445, 118.75812113098544];
+      //       break;
+      //     case '320111': //浦口区
+      //       this.centers = [31.943626916199264, 118.35524238617728];
+      //       break;
+      //     case '320104': //秦淮区
+      //       this.centers = [32.01143013679143, 118.81736758064937];
+      //       break;
+      //     case '320105': //建邺区
+      //       this.centers = [32.0275950355325, 118.70538415685343];
+      //       break;
+      //     case '320114': //雨花台区
+      //       this.centers = [31.94205101079558, 118.69497417187063];
+      //       break;
+      //     case '320115': //江宁区
+      //       this.centers = [31.865733721334237, 118.79198266097109];
+      //       break;
+      //     case '320124 ': //溧水区
+      //       this.centers = [31.726803147547287, 119.1224894259463];
+      //       break;
+      //     case '320125 ': //高淳区
+      //       this.centers = [31.3703836314495, 119.19202124153713];
+      //       break;
+      //     default:
+      //
+      //   }
+      // }
       if(this.pd.beginTime==undefined  && this.pd.endTime==undefined){
         this.$message.error("请输入住宿的开始时间或结束时间!");return ;
       }

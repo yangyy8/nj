@@ -372,7 +372,7 @@
 
 <script scoped>
 import {
-  ToArray
+  ToArray,sortByKey
 } from '@/assets/js/ToArray.js'
 import {
   createMapL,
@@ -434,7 +434,7 @@ export default {
       };
       this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
         r => {
-          this.ssfj = r.data.SSFJ;
+          this.ssfj = sortByKey(r.data.SSFJ,'dm');
         })
     },
     getSSPCS(arr) {

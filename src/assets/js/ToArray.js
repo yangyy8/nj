@@ -8,7 +8,7 @@ export function ToArray(data) {
 
     return sortByKey(returnValue,'dm');
 };
-function sortByKey(array,key){
+export function sortByKey(array,key){
   return array.sort(function(a,b){
     var x = a[key];
     var y = b[key];
