@@ -9,6 +9,12 @@
   -ms-flex-align: center;
   align-items: center; */
 }
+.iconbtn{
+  font-size: 25px;
+}
+.iconbtn:hover{
+  color: #399bfe;
+}
 .totalClass{
   /* text-align: right; */
   padding: 10px 30px 0px 0px;
@@ -62,6 +68,9 @@
   padding: 30px 5% 30px 0%;
   border-radius: 10px;
 }
+.t-fr{
+  float: right;
+}
 .t-mt10{
   margin-top: 10px!important;
 }
@@ -79,6 +88,9 @@
 }
 .t-ml0{
   margin-left: 0!important;
+}
+.t-ml10{
+  margin-left: 10px!important;
 }
 .t-must{
   color: red;

@@ -101,7 +101,7 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd,ruleMap,ruleNo)">查询</el-button>
           <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
         </el-col>
       </el-row>
