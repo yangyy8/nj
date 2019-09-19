@@ -218,6 +218,9 @@
 </template>
 
 <script scoped>
+import {
+  ToArray,sortByKey
+} from '@/assets/js/ToArray.js'
 import {createMapL,getSearch} from '@/assets/js/SuperMap/lxssmmap.js'
 let lxsvm;
 export default {
@@ -303,7 +306,7 @@ export default {
       var url=this.Global.aport2+"/data_report/selectSsfjDm";
       this.$api.post(url,p,
       r=>{
-        this.ssfj=r.data.SSFJ;
+        this.ssfj=sortByKey(r.data.SSFJ,'dm');
       })
     },
     getSSPCS(arr) {

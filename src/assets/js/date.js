@@ -67,3 +67,18 @@ export function dayGap(start,end,type){//相差天数  type =1 到分  type=0 �
 export function tabclick(e){
   console.log("###########",e)
 }
+
+//获取服务器时间
+export   function getServerDate(){
+        var xhr = null;
+        if(window.XMLHttpRequest){
+          xhr = new window.XMLHttpRequest();
+        }else{ // ie
+          xhr = new ActiveObject("Microsoft")
+        }
+
+        xhr.open("GET","/",false)//false不可变
+        xhr.send(null);
+        var date = xhr.getResponseHeader("Date");
+        return new Date(date);
+    }

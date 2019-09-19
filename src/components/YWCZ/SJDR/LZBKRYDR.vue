@@ -66,7 +66,8 @@
     <div class="yycontent">
       <!-- <div class="yylbt mb-15">留学生录入未报到信息导入</div> -->
       <el-row class="mb-15">
-        <el-button type="primary"  size="small" @click="showUpload">批量导入</el-button>
+        <el-button type="primary"  size="small" @click="edits(0,'')">新增</el-button>
+        <el-button type="warning"  size="small" @click="showUpload">批量导入</el-button>
         <el-button type="success" size="small" @click="download">模板下载</el-button>
         </el-row>
       <el-table
@@ -115,7 +116,7 @@
              label="操作" width="120">
              <template slot-scope="scope">
              <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="details(scope.row)"></el-button>
-             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edits(scope.row)"></el-button>
+             <el-button type="text"  class="a-btn"  title="编辑"  icon="el-icon-edit" @click="edits(1,scope.row)"></el-button>
              <el-button type="text"  class="a-btn"  title="删除"  icon="el-icon-delete" @click="deletes(scope.row)"></el-button>
 
              </template>
@@ -177,7 +178,7 @@
     </el-form>
   </el-dialog>
 
-  <el-dialog title="编辑" :visible.sync="editsDialogVisible">
+  <el-dialog :title="dialogText" :visible.sync="editsDialogVisible">
     <el-form   ref="editform">
       <el-row :gutter="2"  class="mb-6">
 
@@ -296,6 +297,7 @@ export default {
       nation: [],
       fileList: [],
       actions: "",
+      dialogText:'新增',
       uploadDialogVisible: false,
       detailsDialogVisible:false,
       editsDialogVisible:false,
@@ -304,6 +306,7 @@ export default {
       mapForm:{},
       options:this.pl.options,
       tableData: [],
+      isadd:0,
 
     }
   },
@@ -346,14 +349,28 @@ export default {
       this.detailsDialogVisible=true;
       this.mapForm=n;
     },
-    edits(n){
+    edits(t,n){
+      console.log('n-----',n);
       this.editsDialogVisible=true;
+      if(t==1){
+      this.isadd=1;
       this.editform=n;
+      this.dialogText="编辑";
+    }else {
+      this.isadd=0;
+      this.dialogText="新增";
+    }
+
+
     },
     editsItem(formName)
     {
       this.editform.token=this.$store.state.token;
-      this.$api.post(this.Global.aport3+'/drlzbk/updateLZBK', this.editform,
+      var url=this.Global.aport3+'/drlzbk/addLZBK';
+      if(this.isadd==1){
+        url=this.Global.aport3+'/drlzbk/updateLZBK';
+      }
+      this.$api.post(url, this.editform,
       r => {
         if(r.code=="1000001"){
             window.location.href ="#/";
@@ -363,12 +380,13 @@ export default {
             message: '保存成功！',
             type: 'success'
           });
+          this.editsDialogVisible = false;
+          this.getList(this.CurrentPage,this.pageSize,this.pd);
         } else {
           this.$message.error(r.Message);
         }
         this.$refs[afrom].resetFields();
-        this.editsDialogVisible = false;
-        this.getList(this.CurrentPage,this.pageSize,this.pd);
+
 
       }, e => {
         this.$message.error('失败了');

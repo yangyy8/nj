@@ -85,7 +85,6 @@ export default {
     },
     $route:function(val){
       console.log("$store.state",this.$store.state.key,this.$store.state.key.id)
-
       if(val.meta.title&&!val.meta.father){
         this.tabListCheck=val.name
         this.routeList=val.meta.title
@@ -163,6 +162,7 @@ export default {
     },
     // 关闭tab页面==========================
     close1(index, item,is) {
+      console.log('==========',index,item,is);
       console.log(this.checkeditem,this.tabList[index - 1]);
       this.tabList.splice(index, 1);
       if (index > 0) {

@@ -855,6 +855,13 @@ export default new Router({
           meta:{title:['数据分析','图帧人像','图帧身份','境外人员轨迹']},
           component: resolve => require(['@/components/XTGL/RZCK/JWRYGJ'], resolve),
         },
+        /* 背景审查 */
+        {
+        path: 'BJSC',
+        name: 'BJSC',
+        meta:{title:['日常管理','涉外单位','背景审查']},
+        component: resolve => require(['@/components/XTGL/XTSZ/BJSC'], resolve),
+        },
         /* shy添加 */
         {
         path: 'FLGZGL',
