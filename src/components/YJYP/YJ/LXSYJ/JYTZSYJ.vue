@@ -195,7 +195,15 @@ export default {
     }
   },
   activated(){
-      this.getList(this.CurrentPage, this.pageSize, this.pd);
+    for(var i=0;i<this.$store.state.clzt.length;i++){
+      if(this.$store.state.clzt[i].dm=='1'){
+        this.$set(this.pd,'CLZT','1')
+      }
+      if(this.$store.state.clzt[i].dm=='CLZT_1'){
+        this.$set(this.pd,'CLZT','CLZT_1')
+      }
+    }
+    this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   mounted() {
     this.$store.dispatch('getGjdq');

@@ -497,11 +497,11 @@
               label:'性别'
             },
             {
-              code:'SHIGUO',
+              code:'GJDQ_DESC',
               label:'十国人员'
             },
             {
-              code:'SANSHIYIGUO',
+              code:'GJDQ_DESC',
               label:'三十一国人员'
             },
           ],
@@ -745,6 +745,7 @@
                     }
                   }
                   _this.configHeader.splice(a,0,obj);
+                  console.log(this.configHeader)
                 }
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))

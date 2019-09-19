@@ -112,13 +112,13 @@ export default new Router({
         {
           path: 'JYTZSYJ',
           name: 'JYTZSYJ',
-          meta:{title:['日常管理','常住信息','教育厅招生预警、审核']},
+          meta:{title:['日常管理','常住信息','教育厅招生审核']},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/JYTZSYJ'], resolve),
         },
         {
           path: 'JYTZSYJ-XQ',
           name: 'JYTZSYJ-XQ',
-          meta:{title:['日常管理','常住信息','教育厅招生预警、审核详情']},
+          meta:{title:['日常管理','常住信息','教育厅招生审核详情']},
           component: resolve => require(['@/components/YJYP/YJ/LXSYJ/JYTZSYJ-XQ'], resolve),
         },
         {
