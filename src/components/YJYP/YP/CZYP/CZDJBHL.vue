@@ -213,7 +213,6 @@
             <div id = "echarts" style = "width: 100%;height: 400px"></div>
           </div>
           <div v-show="pageC==false" class="t-mt10">
-
             <el-table
                :data="tableDataC"
                border

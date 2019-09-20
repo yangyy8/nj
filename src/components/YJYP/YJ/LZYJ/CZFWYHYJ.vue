@@ -203,7 +203,14 @@ export default {
     }
   },
   activated(){
-
+    for(var i=0;i<this.$store.state.clzt.length;i++){
+      if(this.$store.state.clzt[i].dm=='1'){
+        this.$set(this.pd,'CLZT','1')
+      }
+      if(this.$store.state.clzt[i].dm=='CLZT_1'){
+        this.$set(this.pd,'CLZT','CLZT_1')
+      }
+    }
   },
   mounted() {
     this.$store.dispatch('getGjdq');
