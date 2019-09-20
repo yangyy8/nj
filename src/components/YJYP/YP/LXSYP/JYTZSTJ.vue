@@ -6,20 +6,20 @@
             <el-col :span="22" class="br pr-20">
               <el-row align="center"   :gutter="2">
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">中文姓名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.CNAME" class="yy-input-input"></el-input>
+                   <span class="input-text">中文姓名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.CNAME" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">英文姓：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.EFAMILY" class="yy-input-input"></el-input>
+                   <span class="input-text">英文姓：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.EFAMILY" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">英文名：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ENAME" class="yy-input-input"></el-input>
+                   <span class="input-text">英文名：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ENAME" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                  <span class="yy-input-text">性别：</span>
-                  <el-select v-model="pd.SEX" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
+                  <span class="input-text">性别：</span>
+                  <el-select v-model="pd.SEX" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
                     <el-option v-for="item in $store.state.xb"
                      :key="item.dm"
                      :label="item.dm+' - '+item.mc"
@@ -28,8 +28,8 @@
                   </el-select>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="yy-input-text">出生日期：</span>
-                  <div class="yy-input-input t-flex t-date">
+                  <span class="input-text">出生日期：</span>
+                  <div class="input-input t-flex t-date">
                     <el-date-picker
                        v-model="pd.BIRTHDAY_DateRange.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyy/MM/dd"
@@ -44,29 +44,29 @@
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">证件号码：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.PASSNO" class="yy-input-input"></el-input>
+                   <span class="input-text">证件号码：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.PASSNO" class="input-input"></el-input>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">学习开始时间：</span>
+                   <span class="input-text">学习开始时间：</span>
                    <el-date-picker
                       v-model="pd.STASTUDY_Begin.begin" format="yyyy-MM-dd"
                       type="date" size="small" value-format="yyyy/MM/dd"
-                      placeholder="开始时间" class="yy-input-input">
+                      placeholder="开始时间" class="input-input">
                    </el-date-picker>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">学习结束时间：</span>
+                   <span class="input-text">学习结束时间：</span>
                    <el-date-picker
                       v-model="pd.ENDSTUDY_End.end" format="yyyy-MM-dd"
                       type="date" size="small" value-format="yyyy/MM/dd"
-                      placeholder="开始时间" class="yy-input-input">
+                      placeholder="开始时间" class="input-input">
                    </el-date-picker>
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
-                  <span class="yy-input-text">国家地区：</span>
-                  <el-select v-model="pd.NATIONALITY"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="yy-input-input">
+                  <span class="input-text">国家地区：</span>
+                  <el-select v-model="pd.NATIONALITY"  multiple collapse-tags filterable clearable default-first-option  placeholder="请选择"  size="small" class="input-input">
                     <el-option
                       v-for="item in $store.state.gjdq"
                       :key="item.dm"
@@ -77,24 +77,24 @@
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">学生类别：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.STUTYPE" class="yy-input-input"></el-input>
+                   <span class="input-text">学生类别：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.STUTYPE" class="input-input"></el-input>
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">申请学校：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.ACCACADEMY" class="yy-input-input"></el-input>
+                   <span class="input-text">申请学校：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.ACCACADEMY" class="input-input"></el-input>
                 </el-col>
 
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="yy-input-text">推荐人：</span>
-                   <el-input placeholder="请输入内容" size="small" v-model="pd.COMPANY" class="yy-input-input"></el-input>
+                   <span class="input-text">推荐人：</span>
+                   <el-input placeholder="请输入内容" size="small" v-model="pd.COMPANY" class="input-input"></el-input>
                 </el-col>
               </el-row>
              </el-col>
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+                  <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
                 </el-col>
               </el-row>
@@ -303,7 +303,7 @@
           imgshow2:true,
           shm:false,
           lg:false,
-          type:1,
+          type:3,
           xid:'',
           random:'',
           lxsDialogVisible:false,
@@ -401,9 +401,9 @@
             }else{//人员部分导出
               this.yuid=[];
               for(var i in this.selectionAll){
-                this.yuid.push(this.selectionAll[i].DTID)
+                this.yuid.push(this.selectionAll[i].RGUID)
               }
-              this.pd.DTID=this.yuid;
+              this.pd.RGUID=this.yuid;
               p={
                 "pd":this.pd,
               }
@@ -492,8 +492,8 @@
               this.tableHeadHc.push("SANSHIYIGUO");
               this.tableHeadHs.push("三十一国人员");
             }
-            if(pd.hasOwnProperty('DTID')){
-              delete pd['DTID']
+            if(pd.hasOwnProperty('RGUID')){
+              delete pd['RGUID']
             }
           let p = {
             "currentPage": currentPage,
@@ -554,7 +554,7 @@
                        this.multipleSelection=[]
                        for(var i=0;i<this.tableData.length;i++){
                          for(var j=0;j<this.selectionAll.length;j++){
-                           if(this.tableData[i].DTID==this.selectionAll[j].DTID){
+                           if(this.tableData[i].RGUID==this.selectionAll[j].RGUID){
                              // console.log(this.tableData[i].RGUID,this.selectionAll[j].RGUID,'this.selectionAll======',this.selectionAll)
                              this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
                            }
@@ -568,7 +568,7 @@
         },
         details(i) {
           this.random=new Date().getTime();
-          this.xid=i.DTID;
+          this.xid=i.RGUID;
           this.lxsDialogVisible = true;
         },
       }

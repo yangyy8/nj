@@ -102,7 +102,7 @@
          </el-col>
             <el-col :span="2" class="down-btn-area">
               <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-              <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+              <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button>
             </el-col>
           </el-row>
     </div>
@@ -361,12 +361,12 @@ export default {
         link.click()
     },
     pageSizeChange(val) {
+      this.pageSize=val;
       this.getList(this.CurrentPage, val, this.pd);
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.CurrentPage=val;
       this.getList(val, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
     },
     open(content) {
       this.$alert(content, '提示', {

@@ -345,11 +345,14 @@ export default {
   methods:{
     initData(){
       switch (this.page) {
-        case 1://教育厅招生统计
+        case 1://
             this.getData1();
             break;
         case 2://人员画像
             this.getData2();
+            break;
+        case 3://教育厅招生统计
+            this.getData3();
             break;
         default:
       }
@@ -376,7 +379,16 @@ export default {
           }
       })
     },
-
+    getData3(){
+      this.pp.RGUID=this.id;
+      let p={
+        "pd":this.pp
+      };
+      this.$api.post(this.Global.aport5+'/jiaoYuTing202Controller/getEntityByRGUID', p,
+       r => {
+        this.lxsinfo=r.data;
+     })
+    },
 
 
   },

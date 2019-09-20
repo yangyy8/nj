@@ -241,6 +241,7 @@
              border
              class="stu-table"
              style="width: 100%"
+             @select="selectfn"
              @selection-change="handleSelectionChange1">
              <el-table-column
                type="selection"
@@ -334,8 +335,8 @@ export default {
     ],
       tableData: [],
       tableData1:[],
-      multipleSelection:[],
-      multipleSelection1:[],
+
+      // multipleSelection1:[],
     roleid:'',
     menudata:[],
     defaultProps: {
@@ -343,6 +344,10 @@ export default {
       label: 'mc'
     },
     defaultChecked:[],
+    multipleSelection:[],
+    selectionAll:[],
+    yuid:[],
+    selectionReal:[],
 
     }
   },
@@ -352,11 +357,29 @@ export default {
      this.getList(this.CurrentPage, this.pageSize, this.pd);
   },
   methods: {
+    selectfn(a,b){
+      this.multipleSelection = a;
+      this.dataSelection()
+    },
+    dataSelection(){
+      // console.log('this.multipleSelection',this.multipleSelection)
+      this.selectionReal.splice(this.CurrentPage1-1,1,this.multipleSelection);
+      // console.log('this.selectionReal',this.selectionReal);
+      this.selectionAll=[];
+      for(var i=0;i<this.selectionReal.length;i++){
+        if(this.selectionReal[i]){
+          for(var j=0;j<this.selectionReal[i].length;j++){
+            this.selectionAll.push(this.selectionReal[i][j])
+          }
+        }
+      }
+      // console.log('this.selectionAll',this.selectionAll);
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleSelectionChange1(val) {
-      this.multipleSelection1 = val;
+      // this.multipleSelection1 = val;
     },
     pageSizeChange(val) {
       this.getList(this.CurrentPage, val, this.pd);
@@ -367,10 +390,12 @@ export default {
       console.log(`当前页: ${val}`);
     },
     pageSizeChange1(val) {
+      this.pageSize1=val;
       this.getList1(this.CurrentPage1, val, this.pd1);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange1(val) {
+      this.CurrentPage1=val;
       this.getList1(val, this.pageSize1, this.pd1);
       console.log(`当前页: ${val}`);
     },
@@ -401,7 +426,7 @@ export default {
          });
     },
     getList1(currentPage, showCount, pd) {
-      let _this=this;
+      // let _this=this;
       var formData = new FormData();
         formData.append("currentPage", currentPage);
         formData.append("showCount", showCount);
@@ -414,12 +439,24 @@ export default {
          r => {
            this.tableData1 = r.data.resultList;
            this.TotalResult1 = r.data.totalCount;
-
-           _this.$refs.multipleTable1.$nextTick(() => {
-               _this.tableData1.forEach(obj => {
-                 _this.$refs.multipleTable1.toggleRowSelection(obj, obj.checked)
-               })
+           if(this.selectionReal.length==0){//声明一个数组对象
+             this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+           }
+           this.$nextTick(()=>{
+             this.multipleSelection=[]
+             for(var i=0;i<this.tableData1.length;i++){
+               for(var j=0;j<this.selectionAll.length;j++){
+                 if(this.tableData1[i].id==this.selectionAll[j].id){
+                   this.$refs.multipleTable1.toggleRowSelection(this.tableData1[i],true);
+                 }
+               }
+             }
            })
+           // _this.$refs.multipleTable1.$nextTick(() => {
+           //     _this.tableData1.forEach(obj => {
+           //       _this.$refs.multipleTable1.toggleRowSelection(obj, obj.checked)
+           //     })
+           // })
          });
     },
     adds(n,i){
@@ -602,23 +639,22 @@ export default {
 
        },
        relationyh(i){
-
          this.roleid=i.id;
          this.getList1(this.CurrentPage1, this.pageSize1, this.pd1);
-
-          this.yhDialogVisible=true;
+         this.yhDialogVisible=true;
        },
 
        yhItem()
        {
+         console.log(this.multipleSelection)
          var formData = new FormData();
-         if (this.multipleSelection1.length == 0) {
+         if (this.multipleSelection.length == 0) {
                this.$message.error('请选择用户列表内容！');
               return;
          }
          var checkeds=[];var userids=[];
-         for (var i = 0; i < this.multipleSelection1.length; i++)
-         {  var s = this.multipleSelection1[i].id;
+         for (var i = 0; i < this.selectionAll.length; i++)
+         {  var s = this.selectionAll[i].id;
              userids.push(s);
              var gg=true;
              checkeds.push(gg);

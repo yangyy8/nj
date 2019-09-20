@@ -82,6 +82,28 @@
                     <span class="input-text">签证号码：</span>
                     <el-input placeholder="请输入内容" size="small" v-model="pd.QZHM" class="input-input"></el-input>
                 </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">所属分局：</span>
+                    <el-select v-model="pd.FJ" @change="getPSC(pd.FJ)" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in getallfj"
+                        :key="item.DM"
+                        :label="item.DM+' - '+item.MC"
+                        :value="item.DM">
+                      </el-option>
+                    </el-select>
+                </el-col>
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text" title="所属派出所">所属派出所：</span>
+                    <el-select v-model="pd.PCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                      <el-option
+                        v-for="item in PSC"
+                        :key="item.DM"
+                        :label="item.MC"
+                        :value="item.DM">
+                      </el-option>
+                    </el-select>
+                </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
                   <span class="input-text">处理状态：</span>
                   <el-select v-model="pd.CLZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input">
@@ -98,7 +120,7 @@
          </el-col>
         <el-col :span="2" class="down-btn-area">
           <el-button type="success" size="small"  class="t-mb" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
-          <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+          <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -150,6 +172,14 @@
            <el-table-column
              prop="BJSJ"
              label="预警时间">
+           </el-table-column>
+           <el-table-column
+             prop="FJ_DESC"
+             label="所属分局">
+           </el-table-column>
+           <el-table-column
+             prop="PCS_DESC"
+             label="所属派出所">
            </el-table-column>
            <el-table-column
              prop="CLZT_DESC"
@@ -253,6 +283,9 @@ export default {
       orgName:'',
       form:{},
       addlg:{},
+      getallfj:[],
+      PSC:[],
+
       multipleSelection:[],
       selectionAll:[],
       yuid:[],
@@ -284,9 +317,26 @@ export default {
     this.userCode=this.$store.state.uname;
     this.userName=this.$store.state.uid;
     this.orgCode=this.$store.state.orgname;
-    this.orgName=this.$store.state.orgid
+    this.orgName=this.$store.state.orgid;
+    this.getFj();
   },
   methods: {
+    getFj(){
+      this.$api.post(this.Global.aport5+'/djbhl/getallfj',{},
+       r =>{
+         if(r.success){
+           this.getallfj=r.data;
+         }
+       })
+    },
+    getPSC(i){
+      this.$api.post(this.Global.aport5+'/djbhl/getpcsbyfjdm',{fjdm:i},
+      r =>{
+        if(r.success){
+          this.PSC=r.data;
+        }
+      })
+    },
     handleSelectionChange(val) {
       // this.multipleSelection = val;
       // for(var i in this.multipleSelection){

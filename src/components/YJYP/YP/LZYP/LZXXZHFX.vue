@@ -165,7 +165,7 @@
              </el-col>
                 <el-col :span="2" class="down-btn-area">
                   <el-button type="success" size="small" @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-                  <el-button type="success" size="small"  class="t-ml0" @click="download">导出</el-button>
+                  <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button>
                   <!-- <el-button type="" size="small" @click="" class="mb-15"> 重置</el-button> -->
                 </el-col>
               </el-row>
@@ -218,7 +218,7 @@
                  label="操作" width="100">
                  <template slot-scope="scope">
                  <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="$router.push({name:'JWRYXX',query:{row:scope.row,queryPd:pd}})"></el-button>
-                 <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="aa(scope)"></el-button>
+                 <!-- <el-button type="text"  class="a-btn"  title="详情"  icon="el-icon-document" @click="aa(scope)"></el-button> -->
                  </template>
                </el-table-column>
           </el-table>

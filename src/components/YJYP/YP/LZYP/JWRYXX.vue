@@ -3,7 +3,7 @@
   <div class="yymain tshu">
     <div class="yytitle">
       <el-row type="flex">
-        <el-col :span="21" class="br pr-20">
+        <el-col :span="20" class="br pr-20">
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
               <span class="input-text">姓名：</span>
@@ -26,21 +26,25 @@
                 </el-col>
           </el-row>
          </el-col>
-            <el-col :span="3">
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15" style="margin-right:10px">查询</el-button>
-              <el-button type="primary" size="small" @click="$router.go(-1)" class="mb-15">返回</el-button>
+            <el-col :span="4">
+              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15 t-mr10">查询</el-button>
+              <el-button type="primary" size="small" @click="$router.go(-1)" class="mb-15 t-mr10">返回</el-button>
+              <el-button type="warning" size="small" @click="download" class="mb-15">导出</el-button>
             </el-col>
           </el-row>
     </div>
     <div class="yycontent">
       <div class="yylbt mb-15">人员列表</div>
-
       <el-table
            ref="multipleTable"
            :data="tableData"
            border
            style="width: 100%"
-           @selection-change="handleSelectionChange">
+           @select="selectfn">
+           <el-table-column
+             type="selection"
+             width="55">
+           </el-table-column>
            <el-table-column
              prop="ZWXM"
              label="中文姓名">
@@ -373,7 +377,10 @@ export default {
     ],
       row:[],
       queryPd:{},
-
+      multipleSelection:[],
+      selectionAll:[],
+      yuid:[],
+      selectionReal:[],
     }
   },
   activated() {
@@ -386,29 +393,105 @@ export default {
       this.$store.dispatch('getGjdq');
   },
   methods: {
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
+    selectfn(a,b){
+      this.multipleSelection = a;
+      this.dataSelection()
+    },
+    dataSelection(){
+      console.log('this.multipleSelection',this.multipleSelection)
+      this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+      console.log('this.selectionReal',this.selectionReal);
+      this.selectionAll=[];
+      for(var i=0;i<this.selectionReal.length;i++){
+        if(this.selectionReal[i]){
+          for(var j=0;j<this.selectionReal[i].length;j++){
+            this.selectionAll.push(this.selectionReal[i][j])
+          }
+        }
+      }
+      console.log('this.selectionAll',this.selectionAll);
+    },
+    download(){
+      let p={};
+      let url="";
+      url="/linZhuInfoComprehensiveAnalysisController/exportPersonList";
+      this.objCompare(this.row,this.queryPd)
+      this.pd = Object.assign({},this.pd,this.row,this.queryPd);
+      if(this.selectionAll.length==0){//人员全部导出
+        p={
+          "pd":this.pd,
+          "orderBy":{value:"ZSRQ",dataType:"date"},
+          "orderType":"DESC"
+        }
+      }else{//人员部分导出
+        this.yuid=[];
+        for(var i in this.selectionAll){
+          this.yuid.push(this.selectionAll[i].DTID)
+        }
+        this.pd.DTID=this.yuid;
+        p={
+          "pd":this.pd,
+        }
+      }
+      this.$api.post(this.Global.aport5+url,p,
+        r =>{
+          console.log(r);
+          this.downloadM(r)
+        },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '临住信息综合分析列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
     },
     pageSizeChange(val) {
+      this.pageSize=val;
       this.getList(this.CurrentPage, val, this.pd);
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.CurrentPage=val;
       this.getList(val, this.pageSize, this.pd);
       console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
       this.objCompare(this.row,this.queryPd)
       pd = Object.assign({},pd,this.row,this.queryPd);
+      if(pd.hasOwnProperty('DTID')){
+        delete pd['DTID']
+      }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
-        "pd": pd
+        "pd": pd,
+        "orderBy":{value:"ZSRQ",dataType:"date"},
+        "orderType":"DESC"
       };
       this.$api.post(this.Global.aport5+'/linZhuInfoComprehensiveAnalysisController/getComprehensivePersonList', p,
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
+          if(this.selectionReal.length==0){//声明一个数组对象
+            this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+          }
+          this.$nextTick(()=>{
+            this.multipleSelection=[]
+            for(var i=0;i<this.tableData.length;i++){
+              for(var j=0;j<this.selectionAll.length;j++){
+                if(this.tableData[i].DTID==this.selectionAll[j].DTID){
+                  // console.log(this.tableData[i].RGUID,this.selectionAll[j].RGUID,'this.selectionAll======',this.selectionAll)
+                  this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                }
+              }
+            }
+          })
         })
     },
     details(i) {

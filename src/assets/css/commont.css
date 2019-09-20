@@ -71,6 +71,9 @@
 .t-fr{
   float: right;
 }
+.t-mr10{
+  margin-right: 10px!important;
+}
 .t-mt10{
   margin-top: 10px!important;
 }

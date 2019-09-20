@@ -11,7 +11,7 @@
                   <el-option
                     v-for="(item,ind) in ssfj"
                     :key="ind"
-                    :label="item.mc"
+                    :label="item.dm+' - '+item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -22,7 +22,7 @@
                   <el-option
                     v-for="item in $store.state.pcs"
                     :key="item.dm"
-                    :label="item.mc"
+                    :label="item.dm+' - '+item.mc"
                     :value="item.dm">
                   </el-option>
                 </el-select>
@@ -100,7 +100,8 @@
           </el-row>
          </el-col>
         <el-col :span="2" class="down-btn-area">
-          <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)">查询</el-button>
+          <el-button type="success" size="small"  @click="CurrentPage=1;getList(CurrentPage,pageSize,pd)" class="t-mb">查询</el-button>
+          <el-button type="primary" size="small"  class="t-ml0" @click="download">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -109,11 +110,13 @@
       <el-table
            :data="tableData"
            border
-           style="width: 100%">
-           <!-- <el-table-column
+           style="width: 100%"
+           ref="multipleTable"
+           @select="selectfn">
+           <el-table-column
              type="selection"
              width="55">
-           </el-table-column> -->
+           </el-table-column>
            <el-table-column
              prop="XZQH_DESC"
              label="行政区划">
@@ -201,10 +204,22 @@ export default {
       options: this.pl.ps,
       tableData: [],
         zrq: [],
-      pd:{ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}}
+      pd:{ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}},
+      multipleSelection:[],
+      selectionAll:[],
+      yuid:[],
+      selectionReal:[],
     }
   },
   activated(){
+    for(var i=0;i<this.$store.state.clzt.length;i++){
+      if(this.$store.state.clzt[i].dm=='1'){
+        this.$set(this.pd,'CLZT','1')
+      }
+      if(this.$store.state.clzt[i].dm=='CLZT_1'){
+        this.$set(this.pd,'CLZT','CLZT_1')
+      }
+    }
     let _this = this;
     setTimeout(function(){
       _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
@@ -242,6 +257,61 @@ export default {
           this.zrq = r.data.ZRQ;
         })
     },
+    selectfn(a,b){
+      this.multipleSelection = a;
+      this.dataSelection()
+    },
+    dataSelection(){
+      // console.log('this.multipleSelection',this.multipleSelection)
+      this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+      // console.log('this.selectionReal',this.selectionReal);
+      this.selectionAll=[];
+      for(var i=0;i<this.selectionReal.length;i++){
+        if(this.selectionReal[i]){
+          for(var j=0;j<this.selectionReal[i].length;j++){
+            this.selectionAll.push(this.selectionReal[i][j])
+          }
+        }
+      }
+      // console.log('this.selectionAll',this.selectionAll);
+    },
+    download(){
+      let p={};
+      if(this.selectionAll.length==0){//全部导出
+         p={
+          "pd":this.pd,
+          "orderBy":'BJSJ',
+          "orderType":'DESC'
+        }
+      }else{//导出选中
+        this.yuid=[];
+        for(var i in this.selectionAll){
+          this.yuid.push(this.selectionAll[i].YJID)
+        };
+        this.pd.YJID=this.yuid;
+         p={
+          "pd":this.pd,
+          "orderBy":'BJSJ',
+          "orderType":'DESC',
+        }
+      }
+      this.$api.post(this.Global.aport4+'/fangWuWarningInfoController/exportByMxLx',p,
+        r =>{
+          this.downloadM(r)
+        },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '重点关注出租屋报表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
+    },
     pageSizeChange(val) {
       this.pageSize=val;
       this.getList(this.CurrentPage, this.pageSize, this.pd);
@@ -258,6 +328,9 @@ export default {
       pd.ZSRQ_DateRange.end=this.pd0.endZSRQ;
       pd.BJSJ_DateRange.begin=this.pd0.beginBJSJ;
       pd.BJSJ_DateRange.end=this.pd0.endBJSJ;
+      if(pd.hasOwnProperty('YJID')){
+        delete pd['YJID']
+      }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -269,6 +342,21 @@ export default {
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
+          if(this.selectionReal.length==0){//声明一个数组对象
+            this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+          }
+          this.$nextTick(()=>{
+            this.multipleSelection=[]
+             // let arr=this.selectionReal[currentPage-1]
+             // console.log("arr",arr)
+            for(var i=0;i<this.tableData.length;i++){
+              for(var j=0;j<this.selectionAll.length;j++){
+                if(this.tableData[i].YJID==this.selectionAll[j].YJID){
+                  this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                }
+              }
+            }
+          })
         })
     },
   }

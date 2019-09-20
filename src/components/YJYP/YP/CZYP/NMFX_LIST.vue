@@ -27,19 +27,24 @@
           </el-row>
          </el-col>
             <el-col :span="4" >
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15">查询</el-button>
-              <el-button type="info" size="small" @click="$router.push('NMFX')" class="mb-15">返回</el-button>
+              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15 t-mr10">查询</el-button>
+              <el-button type="info" size="small" @click="$router.go(-1)" class="mb-15 t-mr10">返回</el-button>
+              <el-button type="warning" size="small" @click="download" class="mb-15">导出</el-button>
             </el-col>
           </el-row>
     </div>
     <div class="yycontent">
       <div class="yylbt mb-15">人员信息列表</div>
-
       <el-table
            :data="tableData"
            border
+           ref="multipleTable"
            style="width: 100%"
-          >
+           @select="selectfn">
+           <el-table-column
+             type="selection"
+             width="55">
+           </el-table-column>
           <el-table-column
             prop="GJDQ_DESC"
             label="国家地区">
@@ -143,6 +148,10 @@ export default {
     ],
       row:[],
       queryPd:{},
+      multipleSelection:[],
+      selectionAll:[],
+      yuid:[],
+      selectionReal:[],
     }
   },
   activated() {
@@ -155,16 +164,69 @@ export default {
       this.$store.dispatch('getGjdq');
   },
   methods: {
+    selectfn(a,b){
+      this.multipleSelection = a;
+      this.dataSelection()
+    },
+    dataSelection(){
+      // console.log('this.multipleSelection',this.multipleSelection)
+      this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
+      // console.log('this.selectionReal',this.selectionReal);
+      this.selectionAll=[];
+      for(var i=0;i<this.selectionReal.length;i++){
+        if(this.selectionReal[i]){
+          for(var j=0;j<this.selectionReal[i].length;j++){
+            this.selectionAll.push(this.selectionReal[i][j])
+          }
+        }
+      }
+      // console.log('this.selectionAll',this.selectionAll);
+    },
+    download(){
+      let p={};
+      this.objCompare(this.row,this.queryPd)
+      this.pd = Object.assign({},this.pd,this.row,this.queryPd);
+      if(this.selectionAll.length==0){//人员全部导出,无选中的数据
+        p={
+          "pd":this.pd
+        }
+      }else{//人员部分导出
+        this.yuid=[];
+        for(var i in this.selectionAll){
+          this.yuid.push(this.selectionAll[i].RGUID)
+        }
+        this.pd.RGUID=this.yuid;
+        p={
+          "pd":this.pd,
+        }
+      }
+      this.$api.post(this.Global.aport5+'/nanMinController/export',p,
+        r =>{
+          this.downloadM(r)
+        },e=>{},{},'blob')
+    },
+    downloadM (data) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', '难民综合分析列表'+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     pageSizeChange(val) {
+      this.pageSize=val;
       this.getList(this.CurrentPage, val, this.pd);
-      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
+      this.CurrentPage=val;
       this.getList(val, this.pageSize, this.pd);
-      console.log(`当前页: ${val}`);
     },
     getList(currentPage, showCount, pd) {
       this.objCompare(this.row,this.queryPd)
@@ -185,7 +247,9 @@ export default {
      {
        this.pc.SFDM=pd.SFDM;
      }
-
+     if(pd.hasOwnProperty('RGUID')){
+       delete pd['RGUID']
+     }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
@@ -195,6 +259,20 @@ export default {
         r => {
           this.tableData = r.data.resultList;
           this.TotalResult = r.data.totalResult;
+          if(this.selectionReal.length==0){//声明一个数组对象
+            this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
+          }
+          this.$nextTick(()=>{
+            this.multipleSelection=[]
+            for(var i=0;i<this.tableData.length;i++){
+              for(var j=0;j<this.selectionAll.length;j++){
+                if(this.tableData[i].RGUID==this.selectionAll[j].RGUID){
+                  // console.log(this.tableData[i].RGUID,this.selectionAll[j].RGUID,'this.selectionAll======',this.selectionAll)
+                  this.$refs.multipleTable.toggleRowSelection(this.tableData[i],true);
+                }
+              }
+            }
+          })
         })
     },
 

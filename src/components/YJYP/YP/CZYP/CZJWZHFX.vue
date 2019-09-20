@@ -572,9 +572,9 @@
           this.dataSelection()
         },
         dataSelection(){
-          console.log('this.multipleSelection',this.multipleSelection)
+          // console.log('this.multipleSelection',this.multipleSelection)
           this.selectionReal.splice(this.CurrentPage-1,1,this.multipleSelection);
-          console.log('this.selectionReal',this.selectionReal);
+          // console.log('this.selectionReal',this.selectionReal);
           this.selectionAll=[];
           for(var i=0;i<this.selectionReal.length;i++){
             if(this.selectionReal[i]){
@@ -583,7 +583,7 @@
               }
             }
           }
-          console.log('this.selectionAll',this.selectionAll);
+          // console.log('this.selectionAll',this.selectionAll);
         },
         download(){
           let p={};
