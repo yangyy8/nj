@@ -155,7 +155,7 @@ export default {
         this.card1 = true;
         this.card2 = false;
       } else {
-  this.val01=n;this.val03=mc;
+        this.val01=n;this.val03=mc;
         this.name3 = mc;
         this.cities3 = [];
         let p = {
@@ -168,6 +168,7 @@ export default {
             this.cshow=true;
             for (var i = 0; i < array.length; i++) {
               this.cshow=false;
+              this.card2 = true;
               var list = {};
               list.bjmc = array[i].bjmc;
               list.bjsm = array[i].bjsm;
@@ -176,7 +177,6 @@ export default {
                 var spp = arr.substring(1, arr.length - 1).split(',');
                 // console.log(spp, spp.length);
                 list.bjz = spp;
-
               } else {
                 list.bjz = array[i].bjz;
               }
@@ -193,7 +193,7 @@ export default {
             // console.log('this.cities3', this.cities3.length);
 
           });
-        this.card2 = true;
+
       }
 
     },
