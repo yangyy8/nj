@@ -434,7 +434,7 @@
        layout="prev, pager, next"
        :total="TotalResult1">
      </el-pagination>-->
-    </div> 
+    </div>
     <CRJXXRY :type="type" :xid="xid" :random="randomcrj" v-if="crjshow"></CRJXXRY>
     <div slot="footer" class="dialog-footer">
       <el-button @click="crjDialogVisible = false" size="small">取 消</el-button>
@@ -622,7 +622,28 @@ export default {
       window.location.href =url;
     },
     download(){
-      let p={};
+      console.log('this.tableData',this.tableData);
+      if(this.tableData.length==0){
+        this.$message({
+         message: '列表还没有数据，请进行查询！',
+         type: 'warning'
+        });
+        return;
+      }
+      var arr=this.tableData;
+      var srr=[];
+      for (var i = 0; i < arr.length; i++) {
+      srr.push(arr[i].RYBH);
+      }
+    var pes={
+      "RYBH":srr
+    };
+
+      let p={
+        "pd": pes,
+        "userCode":this.$store.state.uid,
+        "userName":this.$store.state.uname,
+      };
       // if(this.selectionAll.length==0){//全部导出
       //    p={
       //     "pd":this.pd,
@@ -641,12 +662,13 @@ export default {
       //     "orderType":'DESC',
       //   }
       // }
-      this.$api.post(this.Global.aport4+'/warningInfoController/exportByMxLx',p,
+      this.$api.post(this.Global.aport2+'/bjsc/exportdate',p,
         r =>{
           this.downloadM(r)
         },e=>{},{},'blob')
     },
     downloadM (data) {
+      console.log(data);
         if (!data) {
             return
         }
