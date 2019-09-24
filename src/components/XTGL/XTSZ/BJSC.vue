@@ -569,15 +569,13 @@ export default {
     //   // console.log('this.selectionAll',this.selectionAll);
     // },
     uploadFile(event){//获取上传的文件
-      if(event.target.files[0].type!="application/vnd.ms-excel"){
-        this.$message({
-              offset:50,
-              showClose: true,
-              message: '请上传.xls或者.xlsx文件！',
-              type: 'error'
-            });
-        return ;
+      const isEXL = event.target.files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      const isExls=event.target.files[0].type==='application/vnd.ms-excel';
+
+      if (!isEXL && !isExls) {
+        this.$message.error('上传文件只能是 xlsx或者xls 格式!'); return false;
       }
+
        this.fileData=event.target.files;
      },
      upload(){//上传文件
@@ -591,7 +589,10 @@ export default {
        this.$api.post(this.Global.aport2+'/bjsc/getplbjsc',p,
         r =>{
           if(r.success){
+            this.uploadDialogVisible=false;
+            this.fileData=[];
             this.tableData=r.data.resultList;
+
           }else{
             this.$confirm('上传文件存在错误信息, 是否导出错误信息?', '提示', {
               confirmButtonText: '确定',
