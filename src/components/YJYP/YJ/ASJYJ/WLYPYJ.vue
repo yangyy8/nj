@@ -83,7 +83,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.FJ" @change="getPSC(pd.FJ)" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.FJ" @change="getPSC(pd.FJ)" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" :disabled="juState=='1'?false:true">
                       <el-option
                         v-for="item in getallfj"
                         :key="item.DM"
@@ -287,6 +287,7 @@ export default {
       selectionAll:[],
       yuid:[],
       selectionReal:[],
+      juState:'',
     }
   },
 
@@ -298,6 +299,9 @@ export default {
         if(this.$store.state.clzt[i].dm=='CLZT_1'){
           this.$set(this.pd,'CLZT','CLZT_1')
         }
+      }
+      if(this.juState=='2'){
+        this.pd.FJ = this.orgCode
       }
       let _this = this;
       setTimeout(function(){
@@ -317,8 +321,10 @@ export default {
     this.$store.dispatch('getGljb');
     this.userCode=this.$store.state.uname;
     this.userName=this.$store.state.uid;
-    this.orgCode=this.$store.state.orgname;
-    this.orgName=this.$store.state.orgid;
+    this.orgName=this.$store.state.orgname;
+    this.orgCode=this.$store.state.orgid;
+    this.juState=this.$store.state.juState;
+    console.log('this.juState',this.juState)
     this.getFj();
   },
   methods: {

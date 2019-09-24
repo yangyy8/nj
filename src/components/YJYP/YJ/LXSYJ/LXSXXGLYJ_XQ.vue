@@ -136,7 +136,7 @@
                  label="签证号码">
                </el-table-column>
                <el-table-column
-                 prop="QZYXQ"
+                 prop="QZYXQZ"
                  label="签证有效期至">
                </el-table-column>
                <el-table-column

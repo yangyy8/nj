@@ -173,11 +173,11 @@
                label="国家地区">
              </el-table-column>
              <el-table-column
-               prop="CSQR"
+               prop="CSRQ"
                label="出生日期">
              </el-table-column>
              <el-table-column
-               prop="ZJJL_DESC"
+               prop="ZJZL_DESC"
                label="证件种类">
              </el-table-column>
              <el-table-column
