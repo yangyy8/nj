@@ -102,12 +102,9 @@
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15 t-tjCheck">
-              <el-checkbox label="国家地区" v-model="pm.NATIONALITY" :disabled="disa"></el-checkbox>
-              <el-checkbox label="学生类别" v-model="pm.STUTYPE" :disabled="disa"></el-checkbox>
-              <el-checkbox label="申请学校" v-model="pm.ACCACADEMY" :disabled="disa"></el-checkbox>
-              <el-checkbox label="推荐人" v-model="pm.COMPANY" :disabled="disa"></el-checkbox>
-              <el-checkbox label="十国人员" v-model="pm.SHIGUO" :disabled="disa"></el-checkbox>
-              <el-checkbox label="三十一国人员" v-model="pm.SANSHIYIGUO" :disabled="disa"></el-checkbox>
+              <el-checkbox-group v-model="checkedList">
+                <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+              </el-checkbox-group>
           </div>
           <div v-if="falg">
             <el-table
@@ -322,6 +319,34 @@
           }
         ],
           tableData: [],
+          checkItem:[
+            {
+              code:'NATIONALITY',
+              label:'国家地区'
+            },
+            {
+              code:'STUTYPE',
+              label:'学生类别'
+            },
+            {
+              code:'ACCACADEMY',
+              label:'申请学校'
+            },
+            {
+              code:'COMPANY',
+              label:'推荐人'
+            },
+            {
+              code:'SHIGUO',
+              label:'十国人员'
+            },
+            {
+              code:'SANSHIYIGUO',
+              label:'三十一国人员'
+            },
+          ],
+          checkedList:[],
+          checkItemReal:[],
           tableHead:[
             {
               code:'GJDQ_DESC',
@@ -339,17 +364,7 @@
               code:'COMPANY',
               label:'推荐人'
             },
-            {
-              code:'GJDQ_DESC',
-              label:'十国人员'
-            },
-            {
-              code:'GJDQ_DESC',
-              label:'三十一国人员'
-            },
           ],
-          tableHeadHc:[],
-          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -393,7 +408,7 @@
         },
         download(){
           let p={};
-          if(this.tableHeadHc.length==0){//人员导出
+          if(this.checkedList.length==0){//人员导出
             if(this.selectionAll.length==0){//人员全部导出,无选中的数据
               p={
                 "pd":this.pd
@@ -412,12 +427,12 @@
             if(this.selectionAll.length==0){//统计全部导出
               p={
                 "pd":this.pd,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }else{//统计部分导出
               p={
                 "requestTempList":this.selectionAll,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }
           }
@@ -460,48 +475,24 @@
           });
         },
         getList(currentPage, showCount, pd) {
-             if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-               this.falg=false;
-               this.disa=true;
-             }else {
-               this.disa=false;
-             }
-            this.tableHeadHc=[];
-            this.tableHeadHs=[];
-            if(this.pm.NATIONALITY==true){
-              this.tableHeadHc.push("NATIONALITY");
-              this.tableHeadHs.push("国家地区");
+          this.checkItemReal=[];
+          for(var i=0;i<this.checkedList.length;i++){
+            for(var j=0;j<this.checkItem.length;j++){
+              if(this.checkedList[i] == this.checkItem[j].code){
+                this.checkItemReal.push(this.checkItem[j])
+              }
             }
-            if(this.pm.STUTYPE==true){
-              this.tableHeadHc.push("STUTYPE");
-              this.tableHeadHs.push("学生类别");
-            }
-            if(this.pm.ACCACADEMY==true){
-              this.tableHeadHc.push("ACCACADEMY");
-              this.tableHeadHs.push("申请学校");
-            }
-            if(this.pm.COMPANY==true){
-              this.tableHeadHc.push("COMPANY");
-              this.tableHeadHs.push("推荐人");
-            }
-            if(this.pm.SHIGUO==true){
-              this.tableHeadHc.push("SHIGUO");
-              this.tableHeadHs.push("十国人员");
-            }
-            if(this.pm.SANSHIYIGUO==true){
-              this.tableHeadHc.push("SANSHIYIGUO");
-              this.tableHeadHs.push("三十一国人员");
-            }
-            if(pd.hasOwnProperty('RGUID')){
-              delete pd['RGUID']
-            }
+          }
+          if(pd.hasOwnProperty('RGUID')){
+            delete pd['RGUID']
+          }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
             "orderBy":'',
             "orderType":'DESC',
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           };
 
           this.$api.post(this.Global.aport5+'/jiaoYuTing202Controller/getCount', p,
@@ -512,18 +503,29 @@
                 this.TotalResult = r.data.totalResult;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHs.length;i++){
-                  var a='';
+                for(var i=0;i<_this.checkItemReal.length;i++){
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].label==_this.tableHeadHs[i]){
-                      a=j;
+                    if(_this.checkItemReal[i].code=='SHIGUO'||_this.checkItemReal[i].code=='SANSHIYIGUO'){
+                      obj.code='GJDQ_DESC';
+                      obj.label='国家地区';
+                    }
+                    if(_this.tableHead[j].label==_this.checkItemReal[i].label){
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
                     }
                   }
-                  _this.configHeader.splice(a,0,obj);
+                  _this.configHeader.push(obj);
                 }
+                var arrAfter=[];
+                var arrReal=[];
+                for(var h=0;h<this.configHeader.length;h++){
+                  if(arrAfter.indexOf(this.configHeader[h].code)==-1){
+                    arrAfter.push(this.configHeader[h].code);
+                    arrReal.push(this.configHeader[h]);
+                  }
+                }
+                this.configHeader=arrReal;
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
                 }

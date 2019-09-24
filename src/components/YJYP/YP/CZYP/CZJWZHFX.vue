@@ -227,17 +227,9 @@
             </el-col>
           </el-row>
           <div class="mb-15 t-tjCheck">
-              <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
-              <el-checkbox label="居住类型状态" v-model="pm.JZZT" :disabled="disa"></el-checkbox>
-              <el-checkbox label="居住地责任区" v-model="pm.JZD_ZRQ" :disabled="disa"></el-checkbox>
-              <el-checkbox label="居住地所属派出所" v-model="pm.JZD_PCS" :disabled="disa"></el-checkbox>
-              <el-checkbox label="身份" v-model="pm.SFDM" :disabled="disa"></el-checkbox>
-              <el-checkbox label="签证种类" v-model="pm.QZZL" :disabled="disa"></el-checkbox>
-              <el-checkbox label="服务处所" v-model="pm.FWCS" :disabled="disa"></el-checkbox>
-              <el-checkbox label="证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
-              <el-checkbox label="性别" v-model="pm.XB" :disabled="disa"></el-checkbox>
-              <el-checkbox label="十国人员" v-model="pm.SHIGUO" :disabled="disa"></el-checkbox>
-              <el-checkbox label="三十一国人员" v-model="pm.SANSHIYIGUO" :disabled="disa"></el-checkbox>
+              <el-checkbox-group v-model="checkedList">
+                <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+              </el-checkbox-group>
               <!-- <el-button type="primary"  size="small" @click="download" style="float:right">导出Excel</el-button> -->
           </div>
           <div v-if="falg">
@@ -459,6 +451,54 @@
           }
         ],
           tableData: [],
+          checkItem:[
+            {
+              code:'GJDQ',
+              label:'国家地区'
+            },
+            {
+              code:'JZZT',
+              label:'居住类型状态'
+            },
+            {
+              code:'JZD_ZRQ',
+              label:'居住地责任区'
+            },
+            {
+              code:'JZD_PCS',
+              label:'居住地所属派出所'
+            },
+            {
+              code:'SFDM',
+              label:'身份'
+            },
+            {
+              code:'QZZL',
+              label:'签证种类'
+            },
+            {
+              code:'FWCS',
+              label:'服务处所'
+            },
+            {
+              code:'ZJZL',
+              label:'证件种类'
+            },
+            {
+              code:'XB',
+              label:'性别'
+            },
+            {
+              code:'SHIGUO',
+              label:'十国人员'
+            },
+            {
+              code:'SANSHIYIGUO',
+              label:'三十一国人员'
+            },
+          ],
+          checkedList:[],
+          checkItemReal:[],
           tableHead:[
             {
               code:'GJDQ_DESC',
@@ -496,17 +536,7 @@
               code:'XB_DESC',
               label:'性别'
             },
-            {
-              code:'GJDQ_DESC',
-              label:'十国人员'
-            },
-            {
-              code:'GJDQ_DESC',
-              label:'三十一国人员'
-            },
           ],
-          tableHeadHc:[],
-          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -539,7 +569,7 @@
           this.selectionAll=[];
           this.selectionReal=[];
         },
-        tableHeadHc:{
+        checkedList:{
           handler(newVal, oldVal) {
             if(!(newVal.toString()==oldVal.toString())){
               this.multipleSelection=[];
@@ -589,18 +619,18 @@
           let p={};
           let url="";
           if(this.selectionAll.length==0){//全部导出
-            if(this.tableHeadHc.length==0){//人员全部导出
+            if(this.checkedList.length==0){//人员全部导出
               p={
                "pd":this.pd,
              }
             }else{//统计全部导出
              p={
                "pd":this.pd,
-               "groupList":this.tableHeadHc,
+               "groupList":this.checkedList,
              }
             }
           }else{//导出选中
-            if(this.tableHeadHc.length==0){//人员选中导出
+            if(this.checkedList.length==0){//人员选中导出
               this.yuid=[];
               for(var i in this.selectionAll){
                 this.yuid.push(this.selectionAll[i].RGUID)
@@ -612,7 +642,7 @@
             }else{//统计选中导出
               p={
                 "requestTempList":this.selectionAll,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }
           }
@@ -662,67 +692,22 @@
         //   return pd;
         // },
         getList(currentPage, showCount, pd) {
-             // if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-             //   this.falg=false;
-             //   this.disa=true;
-             // }else {
-             //   this.disa=false;
-             // }
-
-            this.tableHeadHc=[];
-            this.tableHeadHs=[];
-            if(this.pm.GJDQ==true){
-              this.tableHeadHc.push("GJDQ");
-              this.tableHeadHs.push('国家地区')
+          this.checkItemReal=[];
+          for(var i=0;i<this.checkedList.length;i++){
+            for(var j=0;j<this.checkItem.length;j++){
+              if(this.checkedList[i] == this.checkItem[j].code){
+                this.checkItemReal.push(this.checkItem[j])
+              }
             }
-            if(this.pm.JZZT==true){
-              this.tableHeadHc.push("JZZT");
-              this.tableHeadHs.push('居住类型状态')
-            }
-            if(this.pm.JZD_ZRQ==true){
-              this.tableHeadHc.push("JZD_ZRQ");
-              this.tableHeadHs.push('居住地责任区')
-            }
-            if(this.pm.JZD_PCS==true){
-              this.tableHeadHc.push("JZD_PCS");
-              this.tableHeadHs.push('居住地所属派出所')
-            }
-            if(this.pm.SFDM==true){
-              this.tableHeadHc.push("SFDM");
-              this.tableHeadHs.push('身份')
-            }
-            if(this.pm.QZZL==true){
-              this.tableHeadHc.push("QZZL");
-              this.tableHeadHs.push('签证种类')
-            }
-            if(this.pm.FWCS==true){
-              this.tableHeadHc.push("FWCS");
-              this.tableHeadHs.push('服务处所')
-            }
-            if(this.pm.ZJZL==true){
-              this.tableHeadHc.push("ZJZL");
-              this.tableHeadHs.push('证件种类')
-            }
-            if(this.pm.XB==true){
-              this.tableHeadHc.push("XB");
-              this.tableHeadHs.push('性别')
-            }
-            if(this.pm.SHIGUO==true){
-              this.tableHeadHc.push("SHIGUO");
-              this.tableHeadHs.push('十国人员')
-            }
-            if(this.pm.SHIGUO==true){
-              this.tableHeadHc.push("SANSHIYIGUO");
-              this.tableHeadHs.push('三十一国人员')
-            }
-            if(pd.hasOwnProperty('RGUID')){
-              delete pd['RGUID']
-            }
+          }
+          if(pd.hasOwnProperty('RGUID')){
+            delete pd['RGUID']
+          }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           };
 
           this.$api.post(this.Global.aport5+'/changZhuController/getCount', p,
@@ -734,19 +719,29 @@
                 this.totalAllResult = r.data.totalAllResult;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHs.length;i++){
-                  var a='';
+                for(var i=0;i<_this.checkItemReal.length;i++){
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].label==_this.tableHeadHs[i]){
-                      a=j;
+                    if(_this.checkItemReal[i].code=='SHIGUO'||_this.checkItemReal[i].code=='SANSHIYIGUO'){
+                      obj.code='GJDQ_DESC';
+                      obj.label='国家地区';
+                    }
+                    if(_this.tableHead[j].label==_this.checkItemReal[i].label){
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
                     }
                   }
-                  _this.configHeader.splice(a,0,obj);
-                  console.log(this.configHeader)
+                  _this.configHeader.push(obj);
                 }
+                var arrAfter=[];
+                var arrReal=[];
+                for(var h=0;h<this.configHeader.length;h++){
+                  if(arrAfter.indexOf(this.configHeader[h].code)==-1){
+                    arrAfter.push(this.configHeader[h].code);
+                    arrReal.push(this.configHeader[h]);
+                  }
+                }
+                this.configHeader=arrReal;
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
                 }

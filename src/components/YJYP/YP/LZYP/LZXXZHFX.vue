@@ -130,17 +130,6 @@
                         </el-option>
                       </el-select>
                     </el-col>
-                    <!-- <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                      <span class="yy-input-text">数据来源：</span>
-                      <el-select v-model="pd.SJLY" placeholder="请选择"  filterable clearable default-first-option size="small" class="yy-input-input">
-                        <el-option v-for="item in $store.state.sjly"
-                         :key="item.dm"
-                         :label="item.dm+' - '+item.mc"
-                         :value="item.dm"
-                        >
-                        </el-option>
-                      </el-select>
-                    </el-col> -->
                     <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                       <span class="input-text">入住日期：</span>
                       <div class="input-input t-flex t-date">
@@ -424,10 +413,6 @@ import LZXX from '../../../common/lzxx_xq'
             label:'住房类型'
           },
           {
-            code:'SJLY',
-            label:'数据来源'
-          },
-          {
             code:'LSDWDZ',
             label:'住宿地址'
           },
@@ -461,10 +446,6 @@ import LZXX from '../../../common/lzxx_xq'
           {
             code:'ZFZL_DESC',
             label:'住房类型'
-          },
-          {
-            code:'SJLY_DESC',
-            label:'数据来源'
           },
           {
             code:'LSDWDZ',
@@ -724,56 +705,6 @@ import LZXX from '../../../common/lzxx_xq'
                   });
               }
             })
-        },
-        getInfo(key){
-          switch (key) {
-            case 'count_DESC':
-              return  "统计数量";
-              break;
-            case 'GJDQ_DESC':
-              return  "国家地区";
-              break;
-            case 'WAIGSIG':
-              return  "外国人和四种人分布";
-              break;
-            case 'ZJZL_DESC':
-              return  "证件种类";
-              break;
-            case 'QZZL_DESC':
-              return  "签证(注)种类";
-              break;
-            case 'JLSY_DESC':
-              return  "停留事由";
-              break;
-            case 'SHIGUO':
-              return  "十国人员";
-              break;
-            case 'ZFZL_DESC':
-              return  "住房类型";
-              break;
-            case 'LRDW_DESC':
-              return  "所属单位";
-              break;
-            case 'XB_DESC':
-              return  "性别";
-              break;
-            case 'SANSHIYIGUO':
-              return  "三十一国人员";
-              break;
-            case 'SJLY_DESC':
-              return  "数据来源";
-              break;
-            // case 'DJDWMC':
-            //   return  "住宿单位";
-            //   break;
-            case 'LSDWDZ':
-              return  "住宿地址";
-              break;
-            default:
-            break;
-
-          }
-
         },
         details(i) {
 
