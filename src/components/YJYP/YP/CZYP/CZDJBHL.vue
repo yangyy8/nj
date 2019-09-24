@@ -203,8 +203,8 @@
       </div>
       <div class="ak-tab-pane">
         <div class="">
-          <span class="t-fr"><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="changeTu()"></i></span>
-          <el-button type="primary" size="small"  @click="downloadC(pd0,pd)" v-show="pageC==false">导出</el-button>
+          <span class="t-fr"><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="changeTu()" v-show="page==0"></i></span>
+          <el-button type="primary" size="small"  @click="downloadC(pd0,pd)" v-show="pageC==false&&page==0">导出</el-button>
           <div style="clear:both"></div>
         </div>
 

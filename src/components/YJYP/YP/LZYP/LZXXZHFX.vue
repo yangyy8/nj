@@ -174,22 +174,9 @@
 
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15 t-tjCheck">
-            <!-- <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-            <div style="margin: 15px 0;"></div> -->
-                <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
-                <el-checkbox label="证件种类" v-model="pm.ZJZL" :disabled="disa"></el-checkbox>
-                <el-checkbox label="所属单位" v-model="pm.LRDW" :disabled="disa"></el-checkbox>
-                <el-checkbox label="性别" v-model="pm.XB" :disabled="disa"></el-checkbox>
-                <el-checkbox label="签证(注)种类" v-model="pm.QZZL" :disabled="disa"></el-checkbox>
-                <el-checkbox label="停留事由" v-model="pm.JLSY" :disabled="disa"></el-checkbox>
-                <el-checkbox label="十国人员" v-model="pm.SHIGUO" :disabled="disa"></el-checkbox>
-                <el-checkbox label="三十一国人员" v-model="pm.SANSHIYIGUO" :disabled="disa"></el-checkbox>
-                <el-checkbox label="外国人和四种人分布" v-model="pm.WAIGSIG" :disabled="disa"></el-checkbox>
-                <el-checkbox label="住房类型" v-model="pm.ZFZL" :disabled="disa"></el-checkbox>
-                <!-- <el-checkbox label="所属责任区" v-model="pm.SSZRQ" :disabled="disa"></el-checkbox> -->
-                <el-checkbox label="数据来源" v-model="pm.SJLY" :disabled="disa"></el-checkbox>
-                <!-- <el-checkbox label="住宿单位" v-model="pm.DJDWMC" :disabled="disa"></el-checkbox> -->
-                <el-checkbox label="住宿地址" v-model="pm.LSDWDZ" :disabled="disa"></el-checkbox>
+            <el-checkbox-group v-model="checkedList">
+              <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+            </el-checkbox-group>
           </div>
           <div v-if="falg">
           <el-table
@@ -207,12 +194,10 @@
                    :key="i"
                    :prop="val.code"
                    :label="val.label">
-                   <!-- <template slot-scope="scope">
-                     <el-tooltip :content="scope.row.LSDWDZ" placement="top" effect="light" v-if="scope.column.property=='LSDWDZ'">
-                       <span>{{scope.row.LSDWDZ}}</span>
-                     </el-tooltip>
-                     <span v-else>{{scope.row.val.code}}</span>
-                   </template> -->
+               </el-table-column>
+               <el-table-column
+                 prop="count_DESC"
+                 label="统计数量">
                </el-table-column>
                <el-table-column
                  label="操作" width="100">
@@ -375,7 +360,6 @@ import LZXX from '../../../common/lzxx_xq'
               TLYXQZ_DateRange:{dataType:'date'},
               ZSRQ_DateRange:{dataType:'date'},
             },
-          pm:{},
           imagess:[],
           imgshow1:false,
           imgshow2:true,
@@ -398,6 +382,57 @@ import LZXX from '../../../common/lzxx_xq'
 
           }
         ],
+        checkItem:[
+          {
+            code:'GJDQ',
+            label:'国家地区'
+          },
+          {
+            code:'ZJZL',
+            label:'证件种类'
+          },
+          {
+            code:'LRDW',
+            label:'所属单位'
+          },
+          {
+            code:'XB',
+            label:'性别'
+          },
+          {
+            code:'QZZL',
+            label:'签证(注)种类'
+          },
+          {
+            code:'JLSY',
+            label:'停留事由'
+          },
+          {
+            code:'SHIGUO',
+            label:'十国人员'
+          },
+          {
+            code:'SANSHIYIGUO',
+            label:'三十一国人员'
+          },
+          {
+            code:'WAIGSIG',
+            label:'外国人和四种人分布'
+          },
+          {
+            code:'ZFZL',
+            label:'住房类型'
+          },
+          {
+            code:'SJLY',
+            label:'数据来源'
+          },
+          {
+            code:'LSDWDZ',
+            label:'住宿地址'
+          },
+        ],
+        checkedList:[],
         tableHead:[
           {
             code:'GJDQ_DESC',
@@ -420,20 +455,8 @@ import LZXX from '../../../common/lzxx_xq'
             label:'签证(注)种类'
           },
           {
-            code:'SJLY_DESC',
+            code:'JLSY_DESC',
             label:'停留事由'
-          },
-          {
-            code:'GJDQ_DESC',
-            label:'十国人员'
-          },
-          {
-            code:'GJDQ_DESC',
-            label:'三十一国人员'
-          },
-          {
-            code:'GJDQ_DESC',
-            label:'外国人和四种人分布'
           },
           {
             code:'ZFZL_DESC',
@@ -453,9 +476,6 @@ import LZXX from '../../../common/lzxx_xq'
           pd0:{},
           form:{},
           falg:false,
-          disa:false,
-          tableHeadHc:[],
-          tableHeadHs:[],
           totalAllResult:0,
 
           multipleSelection:[],
@@ -485,7 +505,7 @@ import LZXX from '../../../common/lzxx_xq'
           this.selectionAll=[];
           this.selectionReal=[];
         },
-        tableHeadHc:{
+        checkedList:{
           handler(newVal, oldVal) {
             if(!(newVal.toString()==oldVal.toString())){
               console.log(newVal,oldVal)
@@ -522,7 +542,7 @@ import LZXX from '../../../common/lzxx_xq'
         download(){
           let p={};
           let url="";
-          if(this.tableHeadHc.length==0){//人员导出
+          if(this.checkedList.length==0){//人员导出
             url="/linZhuInfoComprehensiveAnalysisController/exportPersonList"
             if(this.selectionAll.length==0){//人员全部导出
               p={
@@ -543,12 +563,12 @@ import LZXX from '../../../common/lzxx_xq'
             if(this.selectionAll.length==0){//统计全部导出
               p={
                 "pd":this.pd,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }else{//统计部分导出
               p={
                 "requestTempList":this.selectionAll,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }
           }
@@ -606,101 +626,22 @@ import LZXX from '../../../common/lzxx_xq'
         //   return pd;
         // },
         getList(currentPage, showCount, pd) {
-           // if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-           //
-           //   this.falg=false;
-           //   this.disa=true;
-           // }else {
-           //   this.disa=false;
-           // }
-
-        // if(this.pd0.beginCSRQ!=undefined && this.pd0.endCSRQ!=undefined){
-
           this.pd.CSRQ_DateRange.begin=this.pd0.beginCSRQ;
           this.pd.CSRQ_DateRange.end=this.pd0.endCSRQ;
-
-        // }else if(this.pd0.beginCSRQ==undefined && this.pd0.endCSRQ==undefined){
-
-        // }else{
-            // this.open("出生日期开始时间和结束时间都不能为空！");return ;
-        // }
-        // if(this.pd0.beginTLYXQZ!=undefined && this.pd0.endTLYXQZ!=undefined){
           this.pd.TLYXQZ_DateRange.begin=this.pd0.beginTLYXQZ;
           this.pd.TLYXQZ_DateRange.end=this.pd0.endTLYXQZ;
-        // }else if(this.pd0.beginTLYXQZ==undefined && this.pd0.endTLYXQZ==undefined){}
-        // else {
-            // this.open("停留有效期开始时间和结束时间都不能为空！");return ;
-        // }
-        // if(this.pd0.beginZSRQ!=undefined && this.pd0.endZSRQ!=undefined){
           this.pd.ZSRQ_DateRange.begin=this.pd0.beginZSRQ;
           this.pd.ZSRQ_DateRange.end=this.pd0.endZSRQ;
-        // }else if(this.pd0.beginZSRQ==undefined && this.pd0.endZSRQ==undefined){}else {
-            // this.open("入住日期开始时间和结束时间都不能为空！");return ;
-        // }
-            this.tableHeadHc=[];
-            this.tableHeadHs=[];
-            if(this.pm.GJDQ==true){
-              this.tableHeadHc.push("GJDQ");
-              this.tableHeadHs.push('国家地区')
-            }
-            if(this.pm.ZJZL==true){
-              this.tableHeadHc.push("ZJZL");
-              this.tableHeadHs.push('证件种类')
-            }
-            if(this.pm.LRDW==true){
-              this.tableHeadHc.push("LRDW");
-              this.tableHeadHs.push('所属单位')
-            }
-            if(this.pm.XB==true){
-              this.tableHeadHc.push("XB");
-              this.tableHeadHs.push('性别')
-            }
-            if(this.pm.QZZL==true){
-              this.tableHeadHc.push("QZZL");
-              this.tableHeadHs.push('签证(注)种类')
-            }
-            if(this.pm.JLSY==true){
-              this.tableHeadHc.push("JLSY");
-              this.tableHeadHs.push('停留事由')
-            }
-            if(this.pm.SHIGUO==true){
-              this.tableHeadHc.push("SHIGUO");
-              this.tableHeadHs.push('十国人员')
-            }
-            if(this.pm.SANSHIYIGUO==true){
-              this.tableHeadHc.push("SANSHIYIGUO");
-              this.tableHeadHs.push('三十一国人员')
-            }
-            if(this.pm.WAIGSIG==true){
-              this.tableHeadHc.push("WAIGSIG");
-              this.tableHeadHs.push('外国人和四种人分布')
-            }
-            if(this.pm.ZFZL==true){
-              this.tableHeadHc.push("ZFZL");
-              this.tableHeadHs.push('住房类型')
-            }
-            if(this.pm.SJLY==true){
-              this.tableHeadHc.push("SJLY");
-              this.tableHeadHs.push('数据来源')
-            }
-            if(this.pm.LSDWDZ==true){
-              this.tableHeadHc.push("LSDWDZ");
-              this.tableHeadHs.push('住宿地址')
-            }
-            // if(this.pm.DJDWMC==true){
-            //   this.tableHeadHc.push("DJDWMC");
-            //   this.tableHeadHs.push('国家地区')
-            // }
-            if(pd.hasOwnProperty('DTID')){
-              delete pd['DTID']
-            }
+          if(pd.hasOwnProperty('DTID')){
+            delete pd['DTID']
+          }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
             "orderBy":'',
             "orderType":'DESC',
-            "groupList":this.tableHeadHc
+            "groupList":this.checkedList
           };
 
           this.$api.post(this.Global.aport5+'/linZhuInfoComprehensiveAnalysisController/getComprehensiveAnalysis', p,
@@ -712,19 +653,36 @@ import LZXX from '../../../common/lzxx_xq'
                 this.totalAllResult = r.data.totalAllResult;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHs.length;i++){
-                  var a='';
+                for(var i=0;i<_this.checkedList.length;i++){
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].label==_this.tableHeadHs[i]){
-                      a=j;
-                      obj.code=_this.tableHead[j].code;
-                      obj.label=_this.tableHead[j].label;
+                    if(_this.checkedList[i]=='SHIGUO'||_this.checkedList[i]=='SANSHIYIGUO'||_this.checkedList[i]=='WAIGSIG'){
+                      obj.code='GJDQ_DESC';
+                      obj.label='国家地区';
+                    }
+                    if(_this.tableHead[j].code.indexOf('DESC')!=-1){
+                      if(_this.tableHead[j].code.split('_')[0]==_this.checkedList[i]){
+                        obj.code=_this.tableHead[j].code;
+                        obj.label=_this.tableHead[j].label;
+                      }
+                    }else{
+                      if(_this.tableHead[j].code==_this.checkedList[i]){
+                        obj.code=_this.tableHead[j].code;
+                        obj.label=_this.tableHead[j].label;
+                      }
                     }
                   }
-                  _this.configHeader.splice(a,0,obj);
-                  console.log(this.configHeader)
+                  _this.configHeader.push(obj);
                 }
+                var arrAfter=[];
+                var arrReal=[];
+                for(var i=0;i<this.configHeader.length;i++){
+                  if(arrAfter.indexOf(this.configHeader[i].code)==-1){
+                    arrAfter.push(this.configHeader[i].code);
+                    arrReal.push(this.configHeader[i])
+                  }
+                }
+                this.configHeader = arrReal;
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
                 }

@@ -104,8 +104,22 @@ export default {
      }
     this.initJzmm();
 
+    console.log('this.$store.state.orgid',this.$store.state.orgid)
   },
   methods:{
+    getJuState(){
+      let p={
+        "currentPage":1,
+        "showCount":10,
+        "pd":{"DM":this.$store.state.orgid}
+      }
+      this.$api.post(this.Global.aport4+'/LRDWController/getMCAndJBByDM',p,
+       r =>{
+         if(r.success){
+           this.$store.commit('getJuS',r.data[0].JB);
+         }
+       })
+    },
     initJzmm(){
       if(sessionStorage.getItem('jzmm')==1){
         this.user={
@@ -155,7 +169,7 @@ export default {
                     this.$store.commit('getType','99')
                     this.Global.hasEnter="1";
                     this.$router.push({name: 'Index'});
-
+                    this.getJuState();
                   }
               }else {
                   this.$message.error("用户名或者密码输入错误！");return;

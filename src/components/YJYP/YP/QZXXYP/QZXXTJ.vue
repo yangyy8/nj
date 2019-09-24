@@ -348,11 +348,11 @@
               label:'国家地区'
             },
             {
-              code:'XCZJZL_DESC',
+              code:'ZJZL_DESC',
               label:'证件种类'
             },
             {
-              code:'XCQZZL_DESC',
+              code:'QZZL_DESC',
               label:'所持签证种类'
             },
             {
@@ -519,11 +519,11 @@
             }
             if(this.pm.XCZJZL==true){
               this.tableHeadHc.push("XCZJZL");
-              this.tableHeadHs.push('XCZJZL_DESC')
+              this.tableHeadHs.push('ZJZL_DESC')
             }
             if(this.pm.XCQZZL==true){
               this.tableHeadHc.push("XCQZZL");
-              this.tableHeadHs.push('XCQZZL_DESC')
+              this.tableHeadHs.push('QZZL_DESC')
             }
             if(this.pm.SQQZZL==true){
               this.tableHeadHc.push("SQQZZL");
