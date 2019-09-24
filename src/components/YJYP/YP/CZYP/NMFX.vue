@@ -109,10 +109,13 @@
     <div class="yycontent">
       <div class="yylbt mb-15">统计类别</div>
       <div class="mb-15 t-tjCheck">
-        <el-checkbox label="国家地区" v-model="pm.GJDQDM" :disabled="disa"></el-checkbox>
+        <el-checkbox-group v-model="checkedList">
+          <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+        </el-checkbox-group>
+        <!-- <el-checkbox label="国家地区" v-model="pm.GJDQDM" :disabled="disa"></el-checkbox>
         <el-checkbox label="性别" v-model="pm.XBDM" :disabled="disa"></el-checkbox>
         <el-checkbox label="户室人数" v-model="pm.RS_Nokeyword" :disabled="disa"></el-checkbox>
-        <el-checkbox label="身份类型" v-model="pm.SFDM" :disabled="disa"></el-checkbox>
+        <el-checkbox label="身份类型" v-model="pm.SFDM" :disabled="disa"></el-checkbox> -->
       </div>
         <div v-if="falg">
           <el-table
@@ -130,6 +133,10 @@
                    :key="i"
                    :prop="val.props"
                    :label="val.label">
+               </el-table-column>
+               <el-table-column
+                 prop="count_DESC"
+                 label="统计数量">
                </el-table-column>
                <el-table-column
                  label="操作" width="100">
@@ -259,14 +266,50 @@ export default {
         value: 30,
         label: "30"
       },
-
+    ],
+    checkItem:[
+      {
+        code:'GJDQDM',
+        label:'国家地区'
+      },
+      {
+        code:'XBDM',
+        label:'性别'
+      },
+      {
+        code:'RS_Nokeyword',
+        label:'户室人数'
+      },
+      {
+        code:'SFDM',
+        label:'身份类型'
+      },
+    ],
+    checkedList:[],
+    checkItemReal:[],
+    tableHead:[
+      {
+        code:'GJDQ_DESC',
+        label:'国家地区'
+      },
+      {
+        code:'XBDM_DESC',
+        label:'性别'
+      },
+      {
+        code:'RS',
+        label:'户室人数'
+      },
+      {
+        code:'SFDM_DESC',
+        label:'身份类型'
+      },
     ],
     num:0,
     multipleSelection:[],
     selectionAll:[],
     yuid:[],
     selectionReal:[],
-    tableHeadHc:[],
     }
   },
   mounted() {
@@ -280,7 +323,7 @@ export default {
       this.selectionAll=[];
       this.selectionReal=[];
     },
-    tableHeadHc:{
+    checkedList:{
       handler(newVal, oldVal) {
         console.log(newVal,oldVal);
         if(!(newVal.toString()==oldVal.toString())){
@@ -315,7 +358,7 @@ export default {
     },
     download(){
       let p={};
-      if(this.tableHeadHc.length==0){//人员导出
+      if(this.checkedList.length==0){//人员导出
         if(this.selectionAll.length==0){//人员全部导出,无选中的数据
           p={
             "pd":this.pd
@@ -334,12 +377,12 @@ export default {
         if(this.selectionAll.length==0){//统计全部导出
           p={
             "pd":this.pd,
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           }
         }else{//统计部分导出
           p={
             "requestTempList":this.selectionAll,
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           }
         }
       }
@@ -374,58 +417,53 @@ export default {
       });
     },
     getList(currentPage, showCount, pd) {
-   if(this.pd.XM!=undefined || this.pd.XBDM!=undefined || this.pd.HZHM!=undefined){
-     this.falg=false;
-     this.disa=true;
-   }else {
-      this.disa=false;
-   }
-    if(this.pd0.beginCS!=undefined && this.pd0.endCS!=undefined){
-      this.pd.CSRQ_DateRange.begin=this.pd0.beginCS;
-      this.pd.CSRQ_DateRange.end=this.pd0.endCS;
-    }else if(this.pd0.beginCS==undefined && this.pd0.endCS==undefined){
-     }else{
-        this.open("出生日期开始时间和结束时间都不能为空！");return ;
-    }
-    if(this.pd0.beginZC!=undefined && this.pd0.endZC!=undefined){
-      this.pd.ZCRQ_DateRange.begin=this.pd0.beginZC;
-      this.pd.ZCRQ_DateRange.end=this.pd0.endZC;
-    }else if(this.pd0.beginZC==undefined && this.pd0.endZC==undefined){
-   }else{
-        this.open("注册日期的开始时间和结束时间都不能为空！");return ;
-    }
-
-    if(this.rs!=0)
-    {
-      this.pd.RS=this.rs;
-    }else{
-      if(this.pd.hasOwnProperty('RS')){
-        delete this.pd.RS
+   // if(this.pd.XM!=undefined || this.pd.XBDM!=undefined || this.pd.HZHM!=undefined){
+   //   this.falg=false;
+   //   this.disa=true;
+   // }else {
+   //    this.disa=false;
+   // }
+      if(this.pd0.beginCS!=undefined && this.pd0.endCS!=undefined){
+        this.pd.CSRQ_DateRange.begin=this.pd0.beginCS;
+        this.pd.CSRQ_DateRange.end=this.pd0.endCS;
+      }else if(this.pd0.beginCS==undefined && this.pd0.endCS==undefined){
+       }else{
+          this.open("出生日期开始时间和结束时间都不能为空！");return ;
       }
-    }
-        this.tableHeadHc=[];
-        if(this.pm.GJDQDM==true){
-          this.tableHeadHc.push("GJDQDM");
+      if(this.pd0.beginZC!=undefined && this.pd0.endZC!=undefined){
+        this.pd.ZCRQ_DateRange.begin=this.pd0.beginZC;
+        this.pd.ZCRQ_DateRange.end=this.pd0.endZC;
+      }else if(this.pd0.beginZC==undefined && this.pd0.endZC==undefined){
+     }else{
+          this.open("注册日期的开始时间和结束时间都不能为空！");return ;
+      }
+
+      if(this.rs!=0)
+      {
+        this.pd.RS=this.rs;
+      }else{
+        if(this.pd.hasOwnProperty('RS')){
+          delete this.pd.RS
         }
-        if(this.pm.XBDM==true){
-          this.tableHeadHc.push("XBDM");
+      }
+      this.checkItemReal=[];
+      for(var i=0;i<this.checkedList.length;i++){
+        for(var j=0;j<this.checkItem.length;j++){
+          if(this.checkedList[i] == this.checkItem[j].code){
+            this.checkItemReal.push(this.checkItem[j])
+          }
         }
-        if(this.pm.RS_Nokeyword==true){
-          this.tableHeadHc.push("RS_Nokeyword");
-        }
-        if(this.pm.SFDM==true){
-          this.tableHeadHc.push("SFDM");
-        }
-        if(pd.hasOwnProperty('RGUID')){
-          delete pd['RGUID']
-        }
+      }
+      if(pd.hasOwnProperty('RGUID')){
+        delete pd['RGUID']
+      }
       let p = {
         "currentPage": currentPage,
         "showCount": showCount,
         "pd": pd,
         "orderBy":'ZCRQ',
         "orderType":'DESC',
-        "groupList":this.tableHeadHc
+        "groupList":this.checkedList
       };
 
       this.$api.post(this.Global.aport5+'/nanMinController/getCount', p,
@@ -434,28 +472,18 @@ export default {
             this.falg=true;
             this.tableData = r.data.resultList;
             this.TotalResult = r.data.totalResult;
-            // console.log('this.tableData[0]',this.tableData[0]);
-            let arr=this.tableData[0];
-            let itemKey = Object.keys(arr);
-            let res = itemKey.filter(function(item,index,array){
-             //元素值，元素的索引，原数组。
-            // if(item=="WAIGSIG" || item=="SHIGUO" ||item=="SANSHIYIGUO" || item=="LSDWDZ")
-            //  {
-            //    return item;
-            //
-            //  }else{
-             return item.indexOf('_DESC')>=0;
-           // }
-            });
             this.configHeader=[];
-            res.forEach( key => {
-               let headItem = {
-                   props : key,
-                   label : this.getInfo(key),
-               }
-               this.configHeader.push(headItem)
-             })
-            this.allnum=r.data.totalAllResult;
+            let _this = this;
+            for(var i=0;i<_this.checkItemReal.length;i++){
+              var obj={};
+              for(var j=0;j<_this.tableHead.length;j++){
+                if(_this.tableHead[j].label==_this.checkItemReal[i].label){
+                  obj.code=_this.tableHead[j].code;
+                  obj.label=_this.tableHead[j].label;
+                }
+              }
+              _this.configHeader.push(obj);
+            }
             if(this.selectionReal.length==0){//声明一个数组对象
               this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))
             }
