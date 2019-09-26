@@ -68,10 +68,14 @@ var store = new Vuex.Store({
     tabList:[],
     currentKey:null,
     juState:'',
+    pcsToju:'',
   },
   mutations: {
     getJuS(state,data){
       state.juState = data;
+    },
+    PcsToJu(state,data){
+      state.pcsToju = data;
     },
     getActiveTab(state,data){
       state.currentKey = data;

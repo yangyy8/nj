@@ -82,12 +82,9 @@
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15">
-              <el-checkbox label="国家地区" v-model="pm.GJDQ" :disabled="disa"></el-checkbox>
-              <el-checkbox label="审批结果" v-model="pm.SPJG" :disabled="disa"></el-checkbox>
-              <el-checkbox label="申请类别" v-model="pm.SQLB" :disabled="disa"></el-checkbox>
-              <el-checkbox label="申请事由" v-model="pm.SQSY" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持签证种类" v-model="pm.XCQZZL" :disabled="disa"></el-checkbox>
-              <el-checkbox label="所持证件种类" v-model="pm.XCZJZL" :disabled="disa"></el-checkbox>
+            <el-checkbox-group v-model="checkedList">
+              <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+            </el-checkbox-group>
           </div>
           <div v-if="falg">
             <el-table
@@ -289,6 +286,34 @@
           }
         ],
           tableData: [],
+          checkItem:[
+            {
+              code:'GJDQ',
+              label:'国家地区'
+            },
+            {
+              code:'SPJG',
+              label:'审批结果'
+            },
+            {
+              code:'SQLB',
+              label:'申请类别'
+            },
+            {
+              code:'SQSY',
+              label:'申请事由'
+            },
+            {
+              code:'XCQZZL',
+              label:'所持签证种类'
+            },
+            {
+              code:'XCZJZL',
+              label:'所持证件种类'
+            },
+          ],
+          checkedList:[],
+          checkItemReal:[],
           tableHead:[
             {
               code:'GJDQ_DESC',
@@ -315,8 +340,6 @@
               label:'所持证件种类'
             },
           ],
-          tableHeadHc:[],
-          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -338,8 +361,7 @@
          this.$store.dispatch("getRjsy");
          this.$store.dispatch("getZsxz");
          this.$store.dispatch("getSjly");
-
-        this.$store.dispatch("getSldw");
+         this.$store.dispatch("getSldw");
       },
       watch:{
         falg:function(newVal,oldVal){
@@ -347,7 +369,7 @@
           this.selectionAll=[];
           this.selectionReal=[];
         },
-        tableHeadHc:{
+        checkedList:{
           handler(newVal, oldVal) {
             if(!(newVal.toString()==oldVal.toString())){
               this.multipleSelection=[];
@@ -378,7 +400,7 @@
         },
         download(){
           let p={};
-          if(this.tableHeadHc.length==0){//人员导出
+          if(this.checkedList.length==0){//人员导出
             if(this.selectionAll.length==0){//人员全部导出,无选中的数据
               p={
                 "pd":this.pd
@@ -397,12 +419,12 @@
             if(this.selectionAll.length==0){//统计全部导出
               p={
                 "pd":this.pd,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }else{//统计部分导出
               p={
                 "requestTempList":this.selectionAll,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }
           }
@@ -440,48 +462,24 @@
           });
         },
         getList(currentPage, showCount, pd) {
-             if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-               this.falg=false;
-               this.disa=true;
-             }else {
-               this.disa=false;
-             }
-            this.tableHeadHc=[];
-            this.tableHeadHs=[];
-            if(this.pm.GJDQ==true){
-              this.tableHeadHc.push("GJDQ");
-              this.tableHeadHs.push('GJDQ_DESC')
+          this.checkItemReal=[];
+          for(var i=0;i<this.checkedList.length;i++){
+            for(var j=0;j<this.checkItem.length;j++){
+              if(this.checkedList[i] == this.checkItem[j].code){
+                this.checkItemReal.push(this.checkItem[j])
+              }
             }
-            if(this.pm.SPJG==true){
-              this.tableHeadHc.push("SPJG");
-              this.tableHeadHs.push('SPJG_DESC')
-            }
-            if(this.pm.SQLB==true){
-              this.tableHeadHc.push("SQLB");
-              this.tableHeadHs.push('SQLB_DESC')
-            }
-            if(this.pm.SQSY==true){
-              this.tableHeadHc.push("SQSY");
-              this.tableHeadHs.push('SQSY_DESC')
-            }
-            if(this.pm.XCQZZL==true){
-              this.tableHeadHc.push("XCQZZL");
-              this.tableHeadHs.push('XCQZZL_DESC')
-            }
-            if(this.pm.XCZJZL==true){
-              this.tableHeadHc.push("XCZJZL");
-              this.tableHeadHs.push('XCZJZL_DESC')
-            }
-            if(pd.hasOwnProperty('RGUID')){
-              delete pd['RGUID']
-            }
+          }
+          if(pd.hasOwnProperty('RGUID')){
+            delete pd['RGUID']
+          }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
             "orderBy":'',
             "orderType":'DESC',
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           };
 
           this.$api.post(this.Global.aport5+'/esFnsqxxController/getCount', p,
@@ -492,17 +490,15 @@
                 this.TotalResult = r.data.totalResult;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHs.length;i++){
-                  var a='';
+                for(var i=0;i<_this.checkItemReal.length;i++){
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].code==_this.tableHeadHs[i]){
-                      a=j;
+                    if(_this.tableHead[j].label==_this.checkItemReal[i].label){
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
                     }
                   }
-                  _this.configHeader.splice(a,0,obj);
+                  _this.configHeader.push(obj);
                 }
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))

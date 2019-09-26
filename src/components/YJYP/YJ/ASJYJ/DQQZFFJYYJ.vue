@@ -303,14 +303,8 @@ export default {
     this.getFj();
    },
    activated(){
-     for(var i=0;i<this.$store.state.clzt.length;i++){
-       if(this.$store.state.clzt[i].dm=='1'){
-         this.$set(this.pd,'CLZT','1')
-       }
-       if(this.$store.state.clzt[i].dm=='CLZT_1'){
-         this.$set(this.pd,'CLZT','CLZT_1')
-       }
-     }
+     if(this.Global.serviceState==0){this.$set(this.pd,'CLZT','CLZT_1')};
+     if(this.Global.serviceState==1){this.$set(this.pd,'CLZT','1')};
      let _this = this;
      setTimeout(function(){
        _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);

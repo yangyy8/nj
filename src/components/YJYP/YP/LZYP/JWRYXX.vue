@@ -26,9 +26,9 @@
                 </el-col>
           </el-row>
          </el-col>
-            <el-col :span="4">
-              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15 t-mr10">查询</el-button>
-              <el-button type="primary" size="small" @click="$router.go(-1)" class="mb-15 t-mr10">返回</el-button>
+            <el-col :span="4" class="t-btnFlex">
+              <el-button type="success" size="small" @click="getList(CurrentPage,pageSize,pd)" class="mb-15 tt-mr10">查询</el-button>
+              <el-button type="primary" size="small" @click="$router.go(-1)" class="mb-15 tt-mr10">返回</el-button>
               <el-button type="warning" size="small" @click="download" class="mb-15">导出</el-button>
             </el-col>
           </el-row>

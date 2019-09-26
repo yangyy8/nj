@@ -25,6 +25,8 @@ const aport7="http://10.33.72.218:9436";//游
 // const aport7="http://192.168.3.217:9436";
 const aport8="http://10.33.72.144:9438";//中管
 // const aport8="http://192.168.3.217:9438";
+const serviceState=0 //217
+// const serviceState=1 //公安网
 
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
@@ -80,6 +82,7 @@ export default
   xsd,//相似度
   type,
   indexstate,
+  serviceState,
   userName,//用户名
   token,//用户token身份
   hasEnter,//用户登录状态

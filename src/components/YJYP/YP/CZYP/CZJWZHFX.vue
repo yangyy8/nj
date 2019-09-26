@@ -230,7 +230,6 @@
               <el-checkbox-group v-model="checkedList">
                 <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
               </el-checkbox-group>
-              <!-- <el-button type="primary"  size="small" @click="download" style="float:right">导出Excel</el-button> -->
           </div>
           <div v-if="falg">
             <el-table
