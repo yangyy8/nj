@@ -24,6 +24,12 @@ export default new Router({
     component:resolve => require(['@/components/homemap'], resolve),
     },
     {
+    path:'/Screen',
+    name:'Screen',
+    meta: {logined:true},
+    component:resolve => require(['@/components/Screen'], resolve),
+    },
+    {
     path:'/indexmap',
     name:'Indexmap',
     meta: {logined:true},
