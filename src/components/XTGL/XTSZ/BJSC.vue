@@ -569,12 +569,12 @@ export default {
     //   // console.log('this.selectionAll',this.selectionAll);
     // },
     uploadFile(event){//获取上传的文件
-      const isEXL = event.target.files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-      const isExls=event.target.files[0].type==='application/vnd.ms-excel';
-
-      if (!isEXL && !isExls) {
-        this.$message.error('上传文件只能是 xlsx或者xls 格式!'); return false;
-      }
+      // const isEXL = event.target.files[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      // const isExls=event.target.files[0].type==='application/vnd.ms-excel';
+      //
+      // if (!isEXL && !isExls) {
+      //   this.$message.error('上传文件只能是 xlsx或者xls 格式!'); return false;
+      // }
 
        this.fileData=event.target.files;
      },
