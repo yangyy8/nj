@@ -117,6 +117,14 @@ export default {
        r =>{
          if(r.success){
            this.$store.commit('getJuS',r.data[0].JB);
+           if(this.$store.state.juState=='3'){
+             this.$api.post(this.Global.aport4+'/LRDWController/getParentByDM',p,
+              r =>{
+                if(r.success){
+                  this.$store.commit('PcsToJu',r.data.DM);
+                }
+              })
+           }
          }
        })
     },

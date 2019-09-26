@@ -455,7 +455,24 @@
                   </el-pagination>
                 </div>
              </div>
-
+             <div v-if="$route.query.hiType=='jlxk'">
+               <el-table
+                  :data="tableDatajlxk"
+                  border
+                  style="width: 100%" class="stu-table">
+                  <el-table-column
+                    prop="FILENAME"
+                    label="文件名">
+                  </el-table-column>
+                  <el-table-column
+                    label="操作">
+                    <template slot-scope="scope">
+                      <!-- <el-button type="text" class="a-btn"  title="预览"  icon="el-icon-view" @click="viewFiles(scope.row.state)"></el-button> -->
+                      <el-button type="text"  class="a-btn"  title="下载" icon="el-icon-download" @click="downFiles(scope.row.state)"></el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+             </div>
             <div v-if="$route.query.hiType=='rysh'">
               <div class="stru-lal" style="padding-top:0px!important">授权申请图片</div>
               <div class="">
@@ -631,6 +648,16 @@ export default {
 
       gzinfo:{},
       tableDatagzc:[],
+      tableDatajlxk:[
+        {
+          FILENAME:'宣布作废审批表',
+          state:'1',
+        },
+        {
+          FILENAME:'居留许可宣布作废公示',
+          state:'2',
+        }
+      ],
 
       wljinfo:{},
       zxxinfo:{},
@@ -705,7 +732,56 @@ export default {
           index: 0,
         })
       }
-
+    },
+    viewFiles(){
+      this.$api.post(this.Global.aport4+'/JLXKXBZFWarningInfoController/exportZFSPBByDTID',{pd:{DTID:this.row.DTID}},
+       r =>{
+         this.viewM(r,'宣布作废审批表')
+       },e=>{},{},'blob')
+    },
+    downFiles(val){
+      if(val=='1'){
+        this.$api.post(this.Global.aport4+'/JLXKXBZFWarningInfoController/exportZFSPBByDTID',{pd:{DTID:this.row.DTID}},
+         r =>{
+           this.downloadM(r,'宣布作废审批表')
+         },e=>{},{},'blob')
+      }else if(val=='2'){
+        this.$api.post(this.Global.aport4+'/JLXKXBZFWarningInfoController/exportZFGSByDTIDs',{pd:{DTIDs:[this.row.DTID]}},
+         r =>{
+           if (!r) {
+               return
+           }
+           let url = window.URL.createObjectURL(new Blob([r],{type:"application/doc"}))
+           let link = document.createElement('a')
+           link.style.display = 'none'
+           link.href = url
+           link.setAttribute('download', '作废公示表'+this.format(new Date(),'yyyyMMddhhmmss')+'.doc')
+           document.body.appendChild(link)
+           link.click()
+         },e=>{},{},'blob')
+      }
+    },
+    viewM(data,name){
+      if (!data) {
+          return
+      }
+      let url = window.URL.createObjectURL(new Blob([data],{type:"application/pdf"}));
+      // var fileUrl = "../../../../static/pdf/web/viewer.html?file="+url;
+      // window.open(fileUrl)
+      // console.log(url,'===')
+      window.open(url)
+    },
+    downloadM (data,name) {
+        if (!data) {
+            return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:"application/xls"}))
+        let link = document.createElement('a')
+        link.style.display = 'none'
+        link.href = url
+        link.setAttribute('download', name+this.format(new Date(),'yyyyMMddhhmmss')+'.xls')
+        document.body.appendChild(link)
+        link.click()
     },
     getData(){
       if(this.$route.query.hiType=='gzc'){

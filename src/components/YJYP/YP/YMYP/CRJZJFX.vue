@@ -86,9 +86,9 @@
         <div class="yycontent">
           <div class="yylbt mb-15">统计类别</div>
           <div class="mb-15">
-              <el-checkbox label="移民申请种类" v-model="pm.YMSQZTDM" :disabled="disa"></el-checkbox>
-              <el-checkbox label="前往国" v-model="pm.QWGDM" :disabled="disa"></el-checkbox>
-              <el-checkbox label="移民种类" v-model="pm.YMZLDM" :disabled="disa"></el-checkbox>
+            <el-checkbox-group v-model="checkedList">
+              <el-checkbox v-for="item in checkItem" :label="item.code" :key="item.code">{{item.label}}</el-checkbox>
+            </el-checkbox-group>
           </div>
           <div v-if="falg">
             <el-table
@@ -347,6 +347,22 @@
           }
         ],
           tableData: [],
+          checkItem:[
+            {
+              code:'YMSQZTDM',
+              label:'移民申请种类'
+            },
+            {
+              code:'QWGDM',
+              label:'前往国'
+            },
+            {
+              code:'YMZLDM',
+              label:'移民种类'
+            },
+          ],
+          checkedList:[],
+          checkItemReal:[],
           tableHead:[
             {
               code:'YMSQZTDM_DESC',
@@ -361,8 +377,6 @@
               label:'移民种类'
             },
           ],
-          tableHeadHc:[],
-          tableHeadHs:[],
           configHeader:[],
           pd0:{},
           form:{},
@@ -396,7 +410,7 @@
           this.selectionAll=[];
           this.selectionReal=[];
         },
-        tableHeadHc:{
+        checkedList:{
           handler(newVal, oldVal) {
             if(!(newVal.toString()==oldVal.toString())){
               this.multipleSelection=[];
@@ -427,7 +441,7 @@
         },
         download(){
           let p={};
-          if(this.tableHeadHc.length==0){//人员导出
+          if(this.checkedList.length==0){//人员导出
             if(this.selectionAll.length==0){//人员全部导出,无选中的数据
               p={
                 "pd":this.pd
@@ -446,12 +460,12 @@
             if(this.selectionAll.length==0){//统计全部导出
               p={
                 "pd":this.pd,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }else{//统计部分导出
               p={
                 "requestTempList":this.selectionAll,
-                "groupList":this.tableHeadHc,
+                "groupList":this.checkedList,
               }
             }
           }
@@ -489,55 +503,40 @@
           });
         },
         getList(currentPage, showCount, pd) {
-             if(this.pd.ZWXM!=undefined || this.pd.YWXM!=undefined || this.pd.ZJHM!=undefined){
-               this.falg=false;
-               this.disa=true;
-             }else {
-               this.disa=false;
-             }
-            this.tableHeadHc=[];
-            this.tableHeadHs=[];
-            if(this.pm.YMSQZTDM==true){
-              this.tableHeadHc.push("YMSQZTDM");
-              this.tableHeadHs.push("YMSQZTDM_DESC");
+          this.checkItemReal=[];
+          for(var i=0;i<this.checkedList.length;i++){
+            for(var j=0;j<this.checkItem.length;j++){
+              if(this.checkedList[i] == this.checkItem[j].code){
+                this.checkItemReal.push(this.checkItem[j])
+              }
             }
-            if(this.pm.QWGDM==true){
-              this.tableHeadHc.push("QWGDM");
-              this.tableHeadHs.push("QWGDM_DESC");
-            }
-            if(this.pm.YMZLDM==true){
-              this.tableHeadHc.push("YMZLDM");
-              this.tableHeadHs.push("YMZLDM_DESC");
-            }
-            if(pd.hasOwnProperty('RGUID')){
-              delete pd['RGUID']
-            }
+          }
+          if(pd.hasOwnProperty('RGUID')){
+            delete pd['RGUID']
+          }
           let p = {
             "currentPage": currentPage,
             "showCount": showCount,
             "pd": pd,
-            "groupList":this.tableHeadHc,
+            "groupList":this.checkedList,
           };
-
           this.$api.post(this.Global.aport5+'/esYmController/getCount', p,
             r => {
-              this.tableData = r.data.resultList;
-              this.TotalResult = r.data.totalAllResult;
               if(r.data.isFenLei=="true"){//统计列表
                 this.falg=true;
+                this.tableData = r.data.resultList;
+                this.TotalResult = r.data.totalAllResult;
                 this.configHeader=[];
                 let _this = this;
-                for(var i=0;i<_this.tableHeadHs.length;i++){
-                  var a='';
+                for(var i=0;i<_this.checkItemReal.length;i++){
                   var obj={};
                   for(var j=0;j<_this.tableHead.length;j++){
-                    if(_this.tableHead[j].code==_this.tableHeadHs[i]){
-                      a=j;
+                    if(_this.tableHead[j].label==_this.checkItemReal[i].label){
                       obj.code=_this.tableHead[j].code;
                       obj.label=_this.tableHead[j].label;
                     }
                   }
-                  _this.configHeader.splice(a,0,obj);
+                  _this.configHeader.push(obj);
                 }
                 if(this.selectionReal.length==0){//声明一个数组对象
                   this.selectionReal=new Array(Math.ceil(this.TotalResult/showCount))

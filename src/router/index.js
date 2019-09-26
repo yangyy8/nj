@@ -18,6 +18,12 @@ export default new Router({
     component:resolve => require(['@/components/index'], resolve),
     },
     {
+    path:'/indexNew',
+    name:'IndexNew',
+    meta: {logined:true},
+    component:resolve => require(['@/components/indexNew'], resolve),
+    },
+    {
     path:'/homemap',
     name:'Homemap',
     meta: {logined:true},

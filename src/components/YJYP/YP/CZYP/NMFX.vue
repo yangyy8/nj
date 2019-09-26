@@ -437,7 +437,6 @@ export default {
      }else{
           this.open("注册日期的开始时间和结束时间都不能为空！");return ;
       }
-
       if(this.rs!=0)
       {
         this.pd.RS=this.rs;

@@ -341,14 +341,8 @@ export default {
     }
   },
   activated(){
-    for(var i=0;i<this.$store.state.clzt.length;i++){
-      if(this.$store.state.clzt[i].dm=='1'){
-        this.$set(this.pd,'CLZT','1')
-      }
-      if(this.$store.state.clzt[i].dm=='CLZT_1'){
-        this.$set(this.pd,'CLZT','CLZT_1')
-      }
-    }
+    if(this.Global.serviceState==0){this.$set(this.pd,'CLZT','CLZT_1')};
+    if(this.Global.serviceState==1){this.$set(this.pd,'CLZT','1')};
     this.Global.indexstate=1;
     this.selectionAll5=[];
     this.selectionReal5=[];
@@ -491,7 +485,6 @@ export default {
           for(var i in this.selectionAll5){
             this.yuid.push(this.selectionAll5[i].YJID)
           };
-          console.log('============',this.selectionAll5,this.yuid)
           this.pd.YJID=this.yuid;
            p={
             "pd":this.pd,
@@ -680,7 +673,6 @@ export default {
       this.getList(this.CurrentPage, this.pageSize,this.pd,this.ruleMap,this.ruleNo);
     },
     getMXLX(type){
-      console.log(parseInt(type))
       switch (parseInt(type)) {
       case 0:
           this.pd.MXLX="LXS_SWLZYJ";//留学生市外临住预警
@@ -699,7 +691,7 @@ export default {
           break;
       case 5:
           this.pd.MXLX="BKYJ";//布控预警
-          console.log(this.pd,this.pd.MXLX);
+          // console.log(this.pd,this.pd.MXLX);
           break;
       case 6:
           this.pd.MXLX="LXS_WBDYJ";//留学生录取未报到预警
@@ -714,13 +706,13 @@ export default {
          break;
        }
 
-       console.log('this.pd.MXLX',this.pd.MXLX);
+       // console.log('this.pd.MXLX',this.pd.MXLX);
       if(this.pd.MXLX!=undefined){
        this.getList(this.CurrentPage, this.pageSize, this.pd,this.ruleMap,this.ruleNo);
        }
     },
     tabClick(i){
-      console.log(i)
+      // console.log(i)
       this.$router.push({name:i.name})
     },
     close1(index) {
