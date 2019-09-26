@@ -83,7 +83,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">所属分局：</span>
-                    <el-select v-model="pd.FJ" @change="getPSC(pd.FJ)" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.FJ" @change="getPSC(pd.FJ)" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" :disabled="juState=='1'?false:true">
                       <el-option
                         v-for="item in getallfj"
                         :key="item.DM"
@@ -94,7 +94,7 @@
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text" title="所属派出所">所属派出所：</span>
-                    <el-select v-model="pd.PCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                    <el-select v-model="pd.PCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" :disabled="juState=='3'">
                       <el-option
                         v-for="item in PSC"
                         :key="item.DM"
@@ -337,12 +337,21 @@ export default {
       selectionReal8:[],
       yuid:[],
       tabList:this.$store.state.tabList,
-
+      juState:'',
     }
   },
   activated(){
     if(this.Global.serviceState==0){this.$set(this.pd,'CLZT','CLZT_1')};
     if(this.Global.serviceState==1){this.$set(this.pd,'CLZT','1')};
+    if(this.juState=='2'){//分局登录
+      this.pd.FJ = this.orgCode;
+      this.getPSC(this.pd.FJ);
+    }
+    if(this.juState=='3'){//派出所登录
+      this.pd.FJ = this.$store.state.pcsToju;
+      this.getPSC(this.pd.FJ);
+      this.pd.PCS = this.orgCode;
+    }
     this.Global.indexstate=1;
     this.selectionAll5=[];
     this.selectionReal5=[];
@@ -393,8 +402,9 @@ export default {
     this.$store.dispatch('getGljb');
     this.userCode=this.$store.state.uname;
     this.userName=this.$store.state.uid;
-    this.orgCode=this.$store.state.orgname;
-    this.orgName=this.$store.state.orgid;
+    this.orgName=this.$store.state.orgname;
+    this.orgCode=this.$store.state.orgid;
+    this.juState=this.$store.state.juState;
     this.getFj();
   },
   methods: {
@@ -407,6 +417,7 @@ export default {
        })
     },
     getPSC(i){
+      this.$set(this.pd,'PCS','');
       this.$api.post(this.Global.aport5+'/djbhl/getpcsbyfjdm',{fjdm:i},
       r =>{
         if(r.success){

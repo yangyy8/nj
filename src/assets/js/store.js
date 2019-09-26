@@ -19,6 +19,7 @@ var store = new Vuex.Store({
     orgname: localStorage.getItem('ORGNAME') || '',
     orgid: localStorage.getItem('ORGID') || '',
     type: localStorage.getItem('Type') || '',
+    juState:localStorage.getItem('juState') || '',
     key: {},
     key2:'',
     ssdw: [],
@@ -67,11 +68,11 @@ var store = new Vuex.Store({
     zjxy:[],
     tabList:[],
     currentKey:null,
-    juState:'',
     pcsToju:'',
   },
   mutations: {
     getJuS(state,data){
+      localStorage.setItem('juState', data);
       state.juState = data;
     },
     PcsToJu(state,data){

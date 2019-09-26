@@ -220,7 +220,6 @@ export default {
             this.$store.commit('getOrgname',r.data.ssdw.mc)
             this.$store.commit('getOrgid',r.data.ssdw.dm)
             this.$store.commit('getType','99')
-            console.log(this.$store.state.token)
             // this.$store.state.token=r.data.token;
             this.Global.hasEnter="1";
             this.$router.push({name: 'Index',params:{ id:'1'}});

@@ -7,23 +7,23 @@
           <el-row align="center"   :gutter="2">
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                 <span class="input-text">所属分局：</span>
-                <el-select v-model="pd.XZQHDM" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                <el-select v-model="pd.XZQHDM" filterable clearable @change="getPSC(pd.XZQHDM)" default-first-option placeholder="请选择"  size="small" class="input-input" :disabled="juState=='1'?false:true">
                   <el-option
-                    v-for="(item,ind) in ssfj"
-                    :key="ind"
-                    :label="item.dm+' - '+item.mc"
-                    :value="item.dm">
+                    v-for="(item,ind) in getallfj"
+                    :key="item.DM"
+                    :label="item.DM+' - '+item.MC"
+                    :value="item.DM">
                   </el-option>
                 </el-select>
             </el-col>
             <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                 <span class="input-text">派出所：</span>
-                <el-select v-model="pd.PCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">
+                <el-select v-model="pd.PCS" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input" :disabled="juState=='3'">
                   <el-option
-                    v-for="item in $store.state.pcs"
-                    :key="item.dm"
-                    :label="item.dm+' - '+item.mc"
-                    :value="item.dm">
+                    v-for="item in PSC"
+                    :key="item.DM"
+                    :label="item.MC"
+                    :value="item.DM">
                   </el-option>
                 </el-select>
             </el-col>
@@ -119,7 +119,7 @@
            </el-table-column>
            <el-table-column
              prop="XZQH_DESC"
-             label="行政区划">
+             label="所属分局">
            </el-table-column>
            <el-table-column
              prop="PCS_DESC"
@@ -196,24 +196,36 @@
 export default {
   data() {
     return {
-      ssfj:[],
+      getallfj:[],
       CurrentPage: 1,
       pageSize: 10,
       TotalResult: 0,
       pd0: {},
       options: this.pl.ps,
       tableData: [],
-        zrq: [],
+      zrq: [],
+      PSC:[],
       pd:{ZSRQ_DateRange:{dataType:'date'},BJSJ_DateRange:{}},
       multipleSelection:[],
       selectionAll:[],
       yuid:[],
       selectionReal:[],
+      juState:'',
+      orgCode:'',
     }
   },
   activated(){
     if(this.Global.serviceState==0){this.$set(this.pd,'CLZT','CLZT_1')};
     if(this.Global.serviceState==1){this.$set(this.pd,'CLZT','1')};
+    if(this.juState=='2'){//分局登录
+      this.pd.XZQHDM = this.orgCode;
+      this.getPSC(this.pd.XZQHDM);
+    }
+    if(this.juState=='3'){//派出所登录
+      this.pd.XZQHDM = this.$store.state.pcsToju;
+      this.getPSC(this.pd.XZQHDM);
+      this.pd.PCS = this.orgCode;
+    }
     let _this = this;
     setTimeout(function(){
       _this.getList(_this.CurrentPage, _this.pageSize, _this.pd);
@@ -225,20 +237,39 @@ export default {
     this.$store.dispatch('getXzqh');
     this.$store.dispatch('getClzt');
     this.$store.dispatch('getShzt');
+    this.juState=this.$store.state.juState;
+    this.orgCode=this.$store.state.orgid;
     this.getZrq();
-    this.getFJ();
+    this.getFj();
   },
 
   methods: {
-    getFJ() {
-      let p = {
-        "operatorId": this.$store.state.uid,
-        "operatorNm": this.$store.state.uname
-      };
-      this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
-        r => {
-          this.ssfj = r.data.SSFJ;
-        })
+    // getFJ() {
+    //   let p = {
+    //     "operatorId": this.$store.state.uid,
+    //     "operatorNm": this.$store.state.uname
+    //   };
+    //   this.$api.post(this.Global.aport2 + '/data_report/selectSsfjDm', p,
+    //     r => {
+    //       this.ssfj = r.data.SSFJ;
+    //     })
+    // },
+    getFj(){
+      this.$api.post(this.Global.aport5+'/djbhl/getallfj',{},
+       r =>{
+         if(r.success){
+           this.getallfj=r.data;
+         }
+       })
+    },
+    getPSC(i){
+      this.$set(this.pd,'PCS','');
+      this.$api.post(this.Global.aport5+'/djbhl/getpcsbyfjdm',{fjdm:i},
+      r =>{
+        if(r.success){
+          this.PSC=r.data;
+        }
+      })
     },
     getZrq() {
       let p = {
