@@ -69,6 +69,7 @@ var store = new Vuex.Store({
     tabList:[],
     currentKey:null,
     pcsToju:'',
+    sqlb:'',
   },
   mutations: {
     getJuS(state,data){
@@ -255,6 +256,9 @@ var store = new Vuex.Store({
     },
     getJzztcz(state,data){
       state.jzztcz=data;
+    },
+    getSqlb(state,data){
+      state.sqlb=data;
     }
   },
   actions: {
@@ -524,6 +528,12 @@ var store = new Vuex.Store({
       api.get(global_.aport1 + global_.sqqzzl, null,
         r => {
           context.commit('getSqqzzl', ToArray(r.data))
+        })
+    },
+    getSqlb(context){
+      api.get(global_.aport1 + global_.sqlb, null,
+        r => {
+          context.commit('getSqlb', ToArray(r.data))
         })
     },
   }

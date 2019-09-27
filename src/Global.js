@@ -19,14 +19,15 @@ const aport4="api-yujing";//李文龙 预警
 // const aport4="http://192.168.3.217:9440";//李文龙
 const aport5="api-yanpan";//李文龙研判
 // const aport5="http://10.0.30.47:9438";//李文龙
+
 const aport6="http://10.33.72.217:9447";//孙
 // const aport6="http://192.168.3.217:9447";
 const aport7="http://10.33.72.218:9436";//游
 // const aport7="http://192.168.3.217:9436";
 const aport8="http://10.33.72.144:9438";//中管
 // const aport8="http://192.168.3.217:9438";
-const serviceState=0 //217
-// const serviceState=1 //公安网
+// const serviceState=0 //217
+const serviceState=1 //公安网
 
 const xyaddress="http://10.33.66.183:8081/map/poi";//坐标地址
 const dmall="/data_report/selectDmList"; //加载全部代码
@@ -75,6 +76,7 @@ const rydylb="/service/getRedisDataByDm?tablename=HX_RYDYLB"//人员地域类别
 const sqqzzl="/service/getRedisDataByDm?tablename=HX_SQQZZL"//申请签证种类
 const hyzt="/service/getRedisDataByDm?tablename=DM_HYZT"//婚姻状态
 const zjxy="/service/getRedisDataByDm?tablename=DM_ZJXY"//宗教信仰
+const sqlb="/service/getRedisDataByDm?tablename=HX_SQLB"//申请类别
 const tablists=[];
 export default
 {
@@ -97,6 +99,5 @@ export default
   xyaddress,
   gjdq,zjzl,qzzl,rjkn,rjsy,qfjg,pcs,jzlx,zsxz,jzzt,xzqh,jtgx,sflx,xb,rjqzzl,dmall,ssdw,
   dwlb,dwxz,zsbg,tlyxq,sf,tablists,clzt,sjly,rzfs,zflx,jzztlx,xxdm,erxxdm,shzt,tbry,lgyj,gljb,ymzt,ymzl,sldw,ymsqzt,ymqzzl,
-  bzlb,sqsy,rydylb,sqqzzl,jzztcz,hyzt,zjxy
-
+  bzlb,sqsy,rydylb,sqqzzl,jzztcz,hyzt,zjxy,sqlb
 }
