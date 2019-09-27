@@ -147,9 +147,34 @@
         </div>
       </div>
       <div class="ak-tab-pane">
-        <div class = "chart" style="width:100%" v-show="page==0">
-          <div id = "echarts" style = "width: 100%;height: 400px"></div>
+        <div class="">
+          <span class="t-fr"><i class="iconbtn hand" :class="{'el-icon-s-grid':pageC==true,'el-icon-s-data':pageC==false}" :title="pageC==true?'转为列表':'转为图表'" @click="changeTu()" v-show="page==0"></i></span>
+          <el-button type="primary" size="small"  @click="downloadC()" v-show="pageC==false&&page==0">导出</el-button>
+          <div style="clear:both"></div>
         </div>
+        <div v-show="page==0">
+          <div class = "chart" style="width:100%" v-show="pageC==true">
+            <div id = "echarts" style = "width: 100%;height: 400px"></div>
+          </div>
+          <div v-show="pageC==false" class="t-mt10">
+            <el-table
+               :data="tableDataC"
+               border
+               style="width: 100%">
+               <el-table-column
+                 prop="rq"
+                 label="日期">
+               </el-table-column>
+               <el-table-column
+                   v-for="(val,i) in tableHeader"
+                   :key="i"
+                   :prop="val.code"
+                   :label="val.lable">
+               </el-table-column>
+             </el-table>
+          </div>
+        </div>
+
         <div v-show="page==1"  style="width:100%;text-align:right;">
                 <el-button type="primary" size="small" class="mb-5" @click="exportexcel">导出</el-button>
           <el-table
@@ -253,6 +278,9 @@ import LZXX from '../../../common/lzxx_xq'
    components:{LZXX},
   data() {
     return {
+      pageC:true,
+      tableDataC:[],
+      tableHeader:[],
       rybh:'',
       detailsDialogVisible:false,
       type:1,
@@ -304,6 +332,41 @@ import LZXX from '../../../common/lzxx_xq'
 
   },
   methods:{
+    changeTu(){
+      this.pageC=!this.pageC;
+      if(this.pageC==true){
+        this.getList();
+      }else{
+        this.getListC()
+      }
+    },
+    getListC(){
+      this.pd0.begin==''?this.pd.LRRQ_DateRange.begin='':this.pd0.begin==null?this.pd.LRRQ_DateRange.begin=null:this.pd.LRRQ_DateRange.begin=this.pd0.begin+'000000';
+      this.pd0.end==''?this.pd.LRRQ_DateRange.end='':this.pd0.end==null?this.pd.LRRQ_DateRange.end=null:this.pd.LRRQ_DateRange.end=this.pd0.end+'000000';
+      //表格
+      this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/getListByParam',{pd:this.pd},
+       r =>{
+         if(r.success){
+           this.tableHeader = r.data.table;
+           this.tableDataC = r.data.resultList;
+         }
+       })
+    },
+    downloadC(){
+      if(this.tableDataC.length==0){
+        this.$message({
+          message: '列表无数据！',
+          type: 'warning'
+        });
+        return
+      }
+      this.pd0.begin==''?this.pd.LRRQ_DateRange.begin='':this.pd0.begin==null?this.pd.LRRQ_DateRange.begin=null:this.pd.LRRQ_DateRange.begin=this.pd0.begin+'000000';
+      this.pd0.end==''?this.pd.LRRQ_DateRange.end='':this.pd0.end==null?this.pd.LRRQ_DateRange.end=null:this.pd.LRRQ_DateRange.end=this.pd0.end+'000000';
+      this.$api.post(this.Global.aport4+'/eS_LZ_LZXXController/exportList',{pd:this.pd},
+       r =>{
+         this.downloadM(r);
+       },e=>{},{},'blob')
+    },
     details(i){
       this.xid=i.DTID;
       this.rybh=i.RYBH;

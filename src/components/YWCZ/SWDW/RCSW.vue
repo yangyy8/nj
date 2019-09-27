@@ -2,79 +2,82 @@
   <div class="yymain">
     <div class="yycontent">
       <el-row :gutter="10">
-        <el-col :span="4">
+        <el-col :span="6">
           <div class="t-bjxq">
-            <img :src="imgURL" alt="" style="width:100%;">
+            <!-- <img :src="imgURL" alt="" style="width:100%;"> -->
+            <div class="del-title">
+              <span>个人信息</span>
+            </div>
             <div v-if="$route.query.hiType=='gzc'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gzinfo.YWX}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gzinfo.YWM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gzinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">公证处单位：</div><div class="t-el-sub">{{gzinfo.GZCDW}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{gzinfo.HZHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">曾持护照号码：</div><div class="t-el-sub">{{gzinfo.CCHZHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">需核查时间段：</div><div class="t-el-sub">{{gzinfo.HCSJ}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{gzinfo.SBSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文姓：</div><div class="t-el-sub fw600">{{gzinfo.YWX}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文名：</div><div class="t-el-sub fw600">{{gzinfo.YWM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{gzinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">公证处单位：</div><div class="t-el-sub fw600">{{gzinfo.GZCDW}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">护照号码：</div><div class="t-el-sub fw600">{{gzinfo.HZHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">曾持护照号码：</div><div class="t-el-sub fw600">{{gzinfo.CCHZHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">需核查时间段：</div><div class="t-el-sub fw600">{{gzinfo.HCSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub fw600">{{gzinfo.SBSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='wlj'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{wljinfo.YWX}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{wljinfo.YWM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{wljinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{wljinfo.SBDWMC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{wljinfo.ZJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub">{{wljinfo.SBSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文姓：</div><div class="t-el-sub fw600">{{wljinfo.YWX}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文名：</div><div class="t-el-sub fw600">{{wljinfo.YWM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{wljinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">上报单位：</div><div class="t-el-sub fw600">{{wljinfo.SBDWMC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">证件号码：</div><div class="t-el-sub fw600">{{wljinfo.ZJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">数据上报时间：</div><div class="t-el-sub fw600">{{wljinfo.SBSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='zxx'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{zxxinfo.YWX}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{zxxinfo.YWM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{zxxinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{zxxinfo.ZJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">签证种类：</div><div class="t-el-sub">{{zxxinfo.QZZL_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">停留有效期：</div><div class="t-el-sub">{{zxxinfo.TLYXQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">婚姻状态：</div><div class="t-el-sub">{{zxxinfo.HYZT}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">宗教信仰：</div><div class="t-el-sub">{{zxxinfo.ZJXY}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">学历：</div><div class="t-el-sub">{{zxxinfo.XL}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">职业资格：</div><div class="t-el-sub">{{zxxinfo.ZYZG}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">授课课程：</div><div class="t-el-sub">{{zxxinfo.SKKC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{zxxinfo.SJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">电子邮箱：</div><div class="t-el-sub">{{zxxinfo.DZYX}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">境内联系人：</div><div class="t-el-sub">{{zxxinfo.JNLXR}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">联系人手机号码：</div><div class="t-el-sub">{{zxxinfo.LXRSJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">居住地址：</div><div class="t-el-sub">{{zxxinfo.JZDZ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文姓：</div><div class="t-el-sub fw600">{{zxxinfo.YWX}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文名：</div><div class="t-el-sub fw600">{{zxxinfo.YWM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{zxxinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">证件号码：</div><div class="t-el-sub fw600">{{zxxinfo.ZJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">签证种类：</div><div class="t-el-sub fw600">{{zxxinfo.QZZL_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">停留有效期：</div><div class="t-el-sub fw600">{{zxxinfo.TLYXQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">婚姻状态：</div><div class="t-el-sub fw600">{{zxxinfo.HYZT}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">宗教信仰：</div><div class="t-el-sub fw600">{{zxxinfo.ZJXY}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">学历：</div><div class="t-el-sub fw600">{{zxxinfo.XL}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">职业资格：</div><div class="t-el-sub fw600">{{zxxinfo.ZYZG}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">授课课程：</div><div class="t-el-sub fw600">{{zxxinfo.SKKC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">手机号码：</div><div class="t-el-sub fw600">{{zxxinfo.SJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">电子邮箱：</div><div class="t-el-sub fw600">{{zxxinfo.DZYX}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">境内联系人：</div><div class="t-el-sub fw600">{{zxxinfo.JNLXR}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">联系人手机号码：</div><div class="t-el-sub fw600">{{zxxinfo.LXRSJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">居住地址：</div><div class="t-el-sub fw600">{{zxxinfo.JZDZ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='gx'">
-              <div class="t-el-content"><div class="t-el-text">英文姓：</div><div class="t-el-sub">{{gxinfo.YWX}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">英文名：</div><div class="t-el-sub">{{gxinfo.YWM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{gxinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">证件号码：</div><div class="t-el-sub">{{gxinfo.ZJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{gxinfo.SBDWMC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">核查时间：</div><div class="t-el-sub">{{gxinfo.HCSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文姓：</div><div class="t-el-sub fw600">{{gxinfo.YWX}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">英文名：</div><div class="t-el-sub fw600">{{gxinfo.YWM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{gxinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">证件号码：</div><div class="t-el-sub fw600">{{gxinfo.ZJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">上报单位：</div><div class="t-el-sub fw600">{{gxinfo.SBDWMC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">核查时间：</div><div class="t-el-sub fw600">{{gxinfo.HCSJ}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='slry'">
-              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{slryinfo.XM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{slryinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{slryinfo.HZHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">失联时间：</div><div class="t-el-sub">{{slryinfo.SLSJ}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">简要情况：</div><div class="t-el-sub">{{slryinfo.JYQK}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">手机号码：</div><div class="t-el-sub">{{slryinfo.SJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">姓名：</div><div class="t-el-sub fw600">{{slryinfo.XM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{slryinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">护照号码：</div><div class="t-el-sub fw600">{{slryinfo.HZHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">失联时间：</div><div class="t-el-sub fw600">{{slryinfo.SLSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">简要情况：</div><div class="t-el-sub fw600">{{slryinfo.JYQK}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">手机号码：</div><div class="t-el-sub fw600">{{slryinfo.SJHM}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='jlxk'">
-              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{jlxkinfo.XM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{jlxkinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">护照号码：</div><div class="t-el-sub">{{jlxkinfo.HZHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">签证有效期：</div><div class="t-el-sub">{{jlxkinfo.QZYXQ}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">申请作废原因：</div><div class="t-el-sub">{{jlxkinfo.SQZFYY}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">申请时间：</div><div class="t-el-sub">{{jlxkinfo.SQSJ}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">上报单位：</div><div class="t-el-sub">{{jlxkinfo.SBDWMC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">姓名：</div><div class="t-el-sub fw600">{{jlxkinfo.XM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{jlxkinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">护照号码：</div><div class="t-el-sub fw600">{{jlxkinfo.HZHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">签证有效期：</div><div class="t-el-sub fw600">{{jlxkinfo.QZYXQ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">申请作废原因：</div><div class="t-el-sub fw600">{{jlxkinfo.SQZFYY}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">申请时间：</div><div class="t-el-sub fw600">{{jlxkinfo.SQSJ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">上报单位：</div><div class="t-el-sub fw600">{{jlxkinfo.SBDWMC}}</div></div>
             </div>
             <div v-if="$route.query.hiType=='rysh'">
-              <div class="t-el-content"><div class="t-el-text">姓名：</div><div class="t-el-sub">{{ryshinfo.XM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">性别：</div><div class="t-el-sub">{{ryshinfo.XB}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">国籍：</div><div class="t-el-sub">{{ryshinfo.GJDQ_DESC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">单位名称：</div><div class="t-el-sub">{{ryshinfo.SSDWMC}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">单位类别：</div><div class="t-el-sub">{{ryshinfo.DWLB}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">出生日期：</div><div class="t-el-sub">{{ryshinfo.CSRQ}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">身份证号：</div><div class="t-el-sub">{{ryshinfo.ZJHM}}</div></div>
-              <div class="t-el-content"><div class="t-el-text">联系方式：</div><div class="t-el-sub">{{ryshinfo.LXFS}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">姓名：</div><div class="t-el-sub fw600">{{ryshinfo.XM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">性别：</div><div class="t-el-sub fw600">{{ryshinfo.XB}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">国籍：</div><div class="t-el-sub fw600">{{ryshinfo.GJDQ_DESC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">单位名称：</div><div class="t-el-sub fw600">{{ryshinfo.SSDWMC}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">单位类别：</div><div class="t-el-sub fw600">{{ryshinfo.DWLB}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">出生日期：</div><div class="t-el-sub fw600">{{ryshinfo.CSRQ}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">身份证号：</div><div class="t-el-sub fw600">{{ryshinfo.ZJHM}}</div></div>
+              <div class="t-el-content del-pb"><div class="t-el-text">联系方式：</div><div class="t-el-sub fw600">{{ryshinfo.LXFS}}</div></div>
             </div>
           </div>
 
@@ -97,10 +100,10 @@
              </el-table>
           </div>
         </el-col>
-        <el-col :span="20">
+        <el-col :span="18">
           <div class="t-bjrt">
-            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'">
-              <div class="stru-lal">临住信息</div>
+            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'" class="t-mb16">
+              <div class="sw-title">临住信息</div>
               <el-table
                  ref="multipleTable"
                  :data="tableData"
@@ -165,13 +168,13 @@
                 </div>
             </div>
 
-            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'">
-             <div class="stru-lal">出入境信息</div>
+            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'" class="t-mb16">
+             <div class="sw-title">出入境信息</div>
              <el-table
                 ref="multipleTable"
                 :data="tableData1"
                 border
-                style="width: 100%" class="stu-table">
+                style="width: 100%" class="stu-table sw-table">
                 <el-table-column
                   prop="IOSTRING"
                   label="出入境日期">
@@ -223,12 +226,12 @@
                </div>
             </div>
 
-            <div v-if="$route.query.hiType=='gzc'||$route.query.hiType=='wlj'||$route.query.hiType=='zxx'||$route.query.hiType=='slry'">
-              <div class="stru-lal">案事件信息</div>
+            <div v-if="$route.query.hiType=='gzc'||$route.query.hiType=='wlj'||$route.query.hiType=='zxx'||$route.query.hiType=='slry'" class="t-mb16">
+              <div class="sw-title">案事件信息</div>
               <el-table
                  :data="asjData"
                  border
-                 style="width: 100%" class="stu-table">
+                 style="width: 100%" class="stu-table sw-table">
                  <el-table-column
                    prop="ASJBH"
                    label="案事件编号">
@@ -288,12 +291,12 @@
               </div>
             </div>
 
-            <div v-if="$route.query.hiType=='wlj'">
-             <div class="stru-lal">通报人员信息</div>
+            <div v-if="$route.query.hiType=='wlj'" class="t-mb16">
+             <div class="sw-title">通报人员信息</div>
              <el-table
                 :data="tableData3"
                 border
-                style="width: 100%" class="stu-table">
+                style="width: 100%" class="stu-table sw-table">
                 <el-table-column
                   prop="TBRYZL"
                   label="通报人员类别"
@@ -323,13 +326,13 @@
               </el-table>
             </div>
 
-            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='slry'">
-              <div class="stru-lal">警综渉警信息</div>
+            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='slry'" class="t-mb16">
+              <div class="sw-title">警综渉警信息</div>
               <el-table
                  ref="multipleTable"
                  :data="sjtableData"
                  border
-                 style="width: 100%" class="stu-table">
+                 style="width: 100%" class="stu-table sw-table">
                  <el-table-column
                    prop="SJRYDJDW"
                    label="涉警人员登记单位">
@@ -393,8 +396,8 @@
                 </div>
             </div>
 
-            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'">
-              <div class="stru-lal">签证信息</div>
+            <div v-if="$route.query.hiType=='zxx'||$route.query.hiType=='gx'||$route.query.hiType=='slry'||$route.query.hiType=='jlxk'" class="t-mb16">
+              <div class="sw-title">签证信息</div>
               <el-table
                    ref="multipleTable"
                    :data="tableData5"
@@ -455,11 +458,11 @@
                   </el-pagination>
                 </div>
              </div>
-             <div v-if="$route.query.hiType=='jlxk'">
+             <div v-if="$route.query.hiType=='jlxk'" class="t-mb16">
                <el-table
                   :data="tableDatajlxk"
                   border
-                  style="width: 100%" class="stu-table">
+                  style="width: 100%" class="stu-table sw-table">
                   <el-table-column
                     prop="FILENAME"
                     label="文件名">
@@ -474,43 +477,42 @@
                 </el-table>
              </div>
             <div v-if="$route.query.hiType=='rysh'">
-              <div class="stru-lal" style="padding-top:0px!important">授权申请图片</div>
-              <div class="">
+              <div>
+                <img src="../../../assets/img/author-img.png" style="vertical-align: -5px;">
+                <span class="aImg-title">授权申请图片</span>
+              </div>
+              <div class="t-mt15 t-mb28">
                 <el-carousel height="400px" style="overflow-x:unset">
                   <el-carousel-item v-for="(item,index) in imgArr" :key="index" v-if="imgshow1">
-                    <img  :src="item" style="height:100%">
+                    <img  :src="item" style="height: 352px;width: 600px;">
                   </el-carousel-item>
                   <el-carousel-item v-if="!imgshow1" style="text-align:center">
-                    <img  :src="imgURL" style="height:100%">
+                    <img  :src="imgURL" style="height: 352px;width: 600px;">
                   </el-carousel-item>
                 </el-carousel>
               </div>
             </div>
-            <div class="t-footer" v-if="$route.query.hiType!='rysh'">
-               <div class="stru-lal" style="padding-top:0px!important">核查处理</div>
+            <div class="t-check" v-if="$route.query.hiType!='rysh'">
+               <div class="aImg-title t-mb10">核查处理</div>
                <el-row>
-                 <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
-                   <span class="input-text" style="width:70px!important">核查状态：</span>
-                   <el-select v-model="pc.HCZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input" :disabled="!hcShow">
+                 <el-col :span="20" class="input-item t-mb10">
+                   <span class="input-text t-mb10" style="width:70px!important">核查状态：</span>
+                   <el-select v-model="pc.HCZT" placeholder="请选择"  filterable clearable default-first-option class="input-input t-width31 inputInner" :disabled="!hcShow">
                      <el-option label="否" value="0"></el-option>
                      <el-option label="是" value="1"></el-option>
-                     <!-- <el-option
-                       v-for="item in $store.state.shzt"
-                       :key="item.dm"
-                       :label="item.dm+' - '+item.mc"
-                       :value="item.dm">
-                     </el-option> -->
                    </el-select>
                  </el-col>
                </el-row>
-               <el-row type="flex" class="mb-15">
+               <el-row type="flex" class="mb-15 t-ml70">
                 <el-col :span="20">
                   <el-input
                     type="textarea"
-                    :autosize="{ minRows: 3, maxRows: 3}"
+                    :autosize="{ minRows: 4, maxRows: 4}"
                     placeholder="核查备注(不超过100个字符)"
                     v-model="pc.HCBZ"
-                    :disabled="!hcShow">
+                    :disabled="!hcShow"
+                    class="inputInner"
+                    style="width:99%">
                   </el-input>
                 </el-col>
                 <el-col :span="4"  class="down-btn-area">
@@ -519,15 +521,18 @@
                 </el-col>
               </el-row>
               <el-row type="flex">
-                <el-col :span="24" class="czfont">处理人：{{withname}}</el-col>
+                <el-col :span="24" class="czfont t-ml70">处理人：{{withname}}</el-col>
               </el-row>
              </div>
              <div class="t-footer" v-if="$route.query.hiType=='rysh'">
-                <div class="stru-lal" style="padding-top:0px!important">审核处理</div>
-                <el-row>
-                  <el-col  :sm="24" :md="12" :lg="8"   class="input-item">
+                <div class="t-mb10">
+                  <img src="../../../assets/img/application-img.png" style="vertical-align: -5px;">
+                  <span class="aImg-title">审核处理</span>
+                </div>
+                <el-row class="t-ml24">
+                  <el-col  :span="20"   class="input-item t-mb10">
                     <span class="input-text" style="width:70px!important">审核状态：</span>
-                    <el-select v-model="shpc.SHZT" placeholder="请选择"  filterable clearable default-first-option size="small" class="input-input" :disabled="!shShow">
+                    <el-select v-model="shpc.SHZT" placeholder="请选择"  filterable clearable default-first-option  class="input-input t-width31 inputInner" :disabled="!shShow">
                       <el-option label="0 - 待审核" value="0"></el-option>
                       <el-option label="1 - 审核通过" value="1"></el-option>
                       <el-option label="2 - 审核不通过" value="2"></el-option>
@@ -535,14 +540,16 @@
                     </el-select>
                   </el-col>
                 </el-row>
-                <el-row type="flex" class="mb-15">
+                <el-row type="flex" class="t-ml94">
                  <el-col :span="20">
                    <el-input
                      type="textarea"
-                     :autosize="{ minRows: 3, maxRows: 3}"
+                     :autosize="{ minRows: 4, maxRows: 4}"
                      placeholder="审核备注(不超过100个字符)"
                      v-model="shpc.SHNR"
-                     :disabled="!shShow">
+                     :disabled="!shShow"
+                     class="inputInner"
+                     style="width:99%">
                    </el-input>
                  </el-col>
                  <el-col :span="4"  class="down-btn-area">
