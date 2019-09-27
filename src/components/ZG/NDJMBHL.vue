@@ -51,7 +51,17 @@
                       <el-input placeholder="请输入内容" size="small" v-model="pd1.end" style="width:66%;"></el-input>
                  </div>
                 </el-col>
-
+                <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
+                    <span class="input-text">申请类别：</span>
+                    <el-select v-model="pd.SQLB" filterable clearable multiple collapse-tags default-first-option placeholder="请输入所在地"  size="small" class="input-input" :filter-method="userFilter">
+                      <el-option
+                        v-for="item in sqlb"
+                        :key="item.dm"
+                        :label="item.dm+' - '+item.mc"
+                        :value="item.dm">
+                      </el-option>
+                    </el-select>
+                </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">选择显示类别：</span>
                     <el-select v-model="pd.XSLB" filterable clearable default-first-option placeholder="请选择"  size="small" class="input-input">

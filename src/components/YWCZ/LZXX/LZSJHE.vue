@@ -955,7 +955,7 @@ export default {
           return false;
         }
       } else if (this.form.gjdq == "") {
-        this.open('国家地区不能为空！！');
+        this.open('国家地区不能为空！');
         return false;
       } else {
 
@@ -964,6 +964,11 @@ export default {
           return false;
         }
       }
+      if(this.form.rjsy == "") {
+        this.open('入境事由不能为空！');
+        return false;
+      }
+
       this.form.hcl_gnw = this.hcl_gnw;
       this.form.hcq_gnw = this.hcq_gnw;
       if (this.hcq_gnw == "0") {

@@ -427,13 +427,13 @@ export default {
     },
     beforeAvatarUpload(file) {
 
-      const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-      const isExls=file.type==='application/vnd.ms-excel';
-
-      if (!isEXL && !isExls) {
-        this.$message.error('上传文件只能是 xlsx或者xls 格式!');
-      }
-      return isEXL?isEXL:isExls;
+      // const isEXL = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      // const isExls=file.type==='application/vnd.ms-excel';
+      //
+      // if (!isEXL && !isExls) {
+      //   this.$message.error('上传文件只能是 xlsx或者xls 格式!');
+      // }
+      // return isEXL?isEXL:isExls;
     },
     showUpload() {
       this.uploadDialogVisible = true;
