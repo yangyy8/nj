@@ -79,9 +79,7 @@ function renderBzhid(data) {
     markerLayer.clearLayers();
    // var mm=data.dm.split("号");
    var  uurl="DZMC='"+data.dm+"'";
-
     mapSqlSearch(uurl,0, 5, function(features) {
-
       if (features.length > 0) {
         // var x = features[0].properties.SMX;
         // var y = features[0].properties.SMY;
@@ -92,15 +90,12 @@ function renderBzhid(data) {
       }
       else {
         var ss=window.lxsvm.getXY(data.dm,function(datae){
-
           if(datae!=undefined && datae.ycoord>0 && datae.xcoord>0){
            var das=[];
            das.push(datae.ycoord);
            das.push(datae.xcoord);
-
            renderMarkerbzh(das, data,data.dm);
          }
-
         });
         //alert("地图库中未录入该地址的坐标。");
       }
@@ -124,9 +119,6 @@ function mapSqlSearch(attributeFilter, from, to, callback) {
     callback(features);
   });
 }
-
-
-
 export function renderMarkerbzh(point, data,mc) {
   if(ty==1){
    map.flyTo(point,11);
@@ -145,22 +137,16 @@ export function renderMarkerbzh(point, data,mc) {
     num: data.count
   });
   markerLayer.addLayer(tempMarker);
-
   markerLayer.on("mousemove", function(e) {
     e.layer.bindPopup("<div style='font-weight:bold; font-size: 13px; padding-bottom:5px'>" + e.layer.options.pcsmc + "</div><div>" + "总人数：" + e.layer.options.num + "</div>").openPopup();
   });
   markerLayer.on("mouseout", function(e) {
     e.layer.closePopup();
   });
-
   tempMarker.on('click', function(e) {
-
     window.lxsvm.getRyxx(1,5,data.DTIDS,mc);
-
   });
 }
-
-
 //处理geometry数据数组中经纬度 与 leaflet.js API中构建polygon(纬，经)矛盾
 var changeLonAndLat = function(arr) {
   var arrresult = [];

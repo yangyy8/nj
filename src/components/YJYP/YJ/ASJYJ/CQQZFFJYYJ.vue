@@ -34,8 +34,6 @@
              </div>
             </el-collapse-transition>
         </div>
-
-
         <div class="bghome">
           <el-dialog :title="diatext" :visible.sync="bzhDialogVisible">
             <el-table

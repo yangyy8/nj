@@ -1,4 +1,5 @@
 export function formatDate(date, fmt) {
+
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
     }
@@ -76,9 +77,9 @@ export   function getServerDate(){
         }else{ // ie
           xhr = new ActiveObject("Microsoft")
         }
-
         xhr.open("GET","/",false)//false不可变
         xhr.send(null);
         var date = xhr.getResponseHeader("Date");
-        return new Date(date);
+        console.log(formatDate(new Date(date),"yyyy-MM-dd"));
+        return formatDate(new Date(date),"yyyy-MM-dd");
     }
