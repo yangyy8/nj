@@ -593,6 +593,7 @@ import LZXX from '../../../common/lzxx_xq'
       console.log('series',series)
       that.lineChart.off('click');
       that.lineChart.on('click',function(params){
+        console.log(params)
         let p={};
         p=Object.assign({}, that.pd);
         if(p.hasOwnProperty('LRDW_BH_Like')){delete p.LRDW_BH_Like};
