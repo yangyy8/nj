@@ -148,11 +148,11 @@ a{color: #333;text-decoration: none;}
   margin:0 0 15px 0;
   font-size: 12px!important;
 }
-.el-table td, .el-table th.is-leaf {
+/* .el-table td, .el-table th.is-leaf {
     border-bottom: 1px solid #E5ECF1;
-}
+} */
 .el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
-    border-right: 1px solid #E5ECF1;
+    border-right: 1px solid #e5f5fb;
 }
 /* .el-table--border, .el-table--group {
     border: 1px solid #E5ECF1;
