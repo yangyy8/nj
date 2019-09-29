@@ -11,19 +11,19 @@
                     <el-date-picker
                         v-model="pd0.begin" format="yyyy-MM-dd"
                        type="date" size="small" value-format="yyyyMMdd"
-                       placeholder="开始时间" >
+                       placeholder="开始时间">
                     </el-date-picker>
                     <span class="septum">-</span>
                     <el-date-picker
                         v-model="pd0.end" format="yyyy-MM-dd"
                         type="date" size="small" value-format="yyyyMMdd"
-                        placeholder="结束时间" >
+                        placeholder="结束时间">
                     </el-date-picker>
                  </div>
                 </el-col>
                 <el-col  :sm="24" :md="12" :lg="8"  class="input-item">
                     <span class="input-text">户口所在地：</span>
-                    <el-select v-model="pd.HKSZD" filterable clearable default-first-option placeholder="请输入所在地"  size="small" class="input-input" :filter-method="userFilter">
+                    <el-select v-model="pd.HKSZD" filterable clearable multiple collapse-tags default-first-option placeholder="请输入所在地"  size="small" class="input-input" :filter-method="userFilter">
                       <el-option
                         v-for="item in hkszd"
                         :key="item.dm"
@@ -55,7 +55,7 @@
                     <span class="input-text">申请类别：</span>
                     <el-select v-model="pd.SQLB" filterable clearable multiple collapse-tags default-first-option placeholder="请输入所在地"  size="small" class="input-input" :filter-method="userFilter">
                       <el-option
-                        v-for="item in sqlb"
+                        v-for="item in $store.state.sqlb"
                         :key="item.dm"
                         :label="item.dm+' - '+item.mc"
                         :value="item.dm">
@@ -112,7 +112,7 @@
                label="国家地区">
              </el-table-column>
              <el-table-column
-               prop="CSQR"
+               prop="CSRQ"
                label="出生日期">
              </el-table-column>
              <el-table-column
@@ -316,6 +316,7 @@ import {
   },
   mounted(){
     this.$store.dispatch("getXB");
+    this.$store.dispatch("getSqlb");
     // this.pd0.begin=formatDate(new Date(),'yyyyMMdd');
     // this.pd0.end=formatDate(new Date(),'yyyyMMdd');
     // this.getFJ();

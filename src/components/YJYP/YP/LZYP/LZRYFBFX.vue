@@ -228,7 +228,7 @@ export default {
       pageSize: 5,
       TotalResult: 0,
       allUserList:{},
-       pd:{},
+       pd:{beginTime:'',endTime:''},
        swdw:[],
        show:true,
        bzhshow:false,
@@ -252,8 +252,9 @@ export default {
     this.$store.dispatch('getRjsy');
     this.$store.dispatch('getZjzl');
     this.$store.dispatch('getRjqzzl');
-    this.pd.beginTime=formatDate(getServerDate(),'yyyy-MM-dd');
-    this.pd.endTime=formatDate(getServerDate(),'yyyy-MM-dd');
+
+    this.pd.beginTime=getServerDate();
+    this.pd.endTime=getServerDate();
     createMapL();
     this.getFJ();
     this.getUserWhiteList();
